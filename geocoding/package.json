@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "csv-parse": "^6.1.0",
+    "csv-stringify": "^6.6.0",
+    "got": "^14.4.7",
+    "open-location-code": "^1.0.3",
+    "p-limit": "^7.1.0"
+  }
+}
