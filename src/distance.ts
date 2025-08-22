@@ -1,4 +1,4 @@
-export type Coord = [number, number];
+export type Coord = readonly [number, number];
 
 /**
  * Compute pairwise Euclidean distances between a list of IDs.
@@ -45,7 +45,7 @@ export function minutesAtMph(distance: number, mph: number): number {
   return (distance / mph) * 60;
 }
 
-export type Coordinate = [number, number];
+export type Coordinate = readonly [number, number];
 
 // Haversine formula to compute great-circle distance between two points on Earth in miles
 function haversineMiles(a: Coordinate, b: Coordinate): number {
