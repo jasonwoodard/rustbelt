@@ -10,17 +10,17 @@
     "lint": "eslint . --ext .ts"
   },
   "dependencies": {
-    "commander": "*",
-    "seedrandom": "*",
-    "open-location-code": "*"
+    "commander": "^14.0.0",
+    "seedrandom": "^3.0.5",
+    "open-location-code": "^1.0.3"
   },
   "devDependencies": {
-    "typescript": "*",
-    "tsx": "*",
-    "eslint": "*",
-    "@typescript-eslint/parser": "*",
-    "@typescript-eslint/eslint-plugin": "*",
-    "prettier": "*",
-    "vitest": "*"
+    "typescript": "^5.9.2",
+    "tsx": "^4.20.4",
+    "eslint": "^9.33.0",
+    "@typescript-eslint/parser": "^8.40.0",
+    "@typescript-eslint/eslint-plugin": "^8.40.0",
+    "prettier": "^3.6.2",
+    "vitest": "^3.2.4"
   }
 }
