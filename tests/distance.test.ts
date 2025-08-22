@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { pairwiseDistances } from '../src/distance';
+import { minutesAtMph, buildMatrix, Coordinate } from '../src/distance';
 
 describe('pairwiseDistances', () => {
   it('computes distances when all coordinates are present', () => {
@@ -24,6 +25,8 @@ describe('pairwiseDistances', () => {
     expect(() => pairwiseDistances(ids, idToCoord)).toThrow(
       'Missing coordinates for id "b"'
     );
+  });
+});
 
 describe('minutesAtMph', () => {
   it('throws on zero mph', () => {
@@ -33,6 +36,7 @@ describe('minutesAtMph', () => {
   it('throws on negative mph', () => {
     expect(() => minutesAtMph(1, -5)).toThrow('greater than 0');
   });
+});
 
 describe('buildMatrix', () => {
   const coords: Coordinate[] = [
