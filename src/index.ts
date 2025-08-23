@@ -19,6 +19,7 @@ program
     parseFloat,
   )
   .option('--seed <seed>', 'Random seed', parseFloat)
+  .option('--verbose', 'Print heuristic steps')
   .action((opts) => {
     const result = solveDay({
       tripPath: opts.trip,
@@ -26,6 +27,7 @@ program
       mph: opts.mph,
       defaultDwellMin: opts.defaultDwell,
       seed: opts.seed,
+      verbose: opts.verbose,
     });
     console.log(result.json);
   });

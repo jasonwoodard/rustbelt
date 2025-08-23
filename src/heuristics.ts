@@ -16,6 +16,7 @@ function hhmmToMin(time: string): number {
 export interface HeuristicCtx extends ScheduleCtx {
   candidateIds: ID[];
   seed?: number;
+  verbose?: boolean;
 }
 
 export function planDay(ctx: HeuristicCtx): ID[] {
@@ -67,7 +68,7 @@ function seedMustVisits(
 function greedyInsert(
   order: ID[],
   remaining: ID[],
-  ctx: ScheduleCtx,
+  ctx: HeuristicCtx,
   rng: seedrandom.PRNG,
 ): void {
   while (remaining.length > 0) {
@@ -106,10 +107,13 @@ function greedyInsert(
     if (bestId == null) break;
     order.splice(bestPos, 0, bestId);
     remaining.splice(remaining.indexOf(bestId), 1);
+    if (ctx.verbose) {
+      console.log(`insert ${bestId} at ${bestPos}`);
+    }
   }
 }
 
-function twoOpt(order: ID[], ctx: ScheduleCtx): void {
+function twoOpt(order: ID[], ctx: HeuristicCtx): void {
   let improved = true;
   while (improved) {
     improved = false;
@@ -117,6 +121,7 @@ function twoOpt(order: ID[], ctx: ScheduleCtx): void {
     const baseDrive = computeTimeline(order, ctx).totalDriveMin;
     outer: for (let i = 0; i < order.length - 1; i++) {
       for (let j = i + 1; j < order.length; j++) {
+        const before = order.slice(i, j + 1);
         const candidate = order.slice();
         const segment = candidate.slice(i, j + 1).reverse();
         candidate.splice(i, segment.length, ...segment);
@@ -127,6 +132,10 @@ function twoOpt(order: ID[], ctx: ScheduleCtx): void {
           (Math.abs(slack - baseSlack) < 1e-9 && drive < baseDrive - 1e-9)
         ) {
           order.splice(0, order.length, ...candidate);
+          if (ctx.verbose) {
+            const after = candidate.slice(i, j + 1);
+            console.log('2-opt swap', before, '->', after);
+          }
           improved = true;
           break outer;
         }
@@ -135,7 +144,7 @@ function twoOpt(order: ID[], ctx: ScheduleCtx): void {
   }
 }
 
-function relocate(order: ID[], ctx: ScheduleCtx): void {
+function relocate(order: ID[], ctx: HeuristicCtx): void {
   let improved = true;
   while (improved) {
     improved = false;
@@ -156,6 +165,9 @@ function relocate(order: ID[], ctx: ScheduleCtx): void {
           (Math.abs(slack - baseSlack) < 1e-9 && drive < baseDrive - 1e-9)
         ) {
           order.splice(0, order.length, ...candidate);
+          if (ctx.verbose) {
+            console.log(`relocate ${id} from ${i} to ${j}`);
+          }
           improved = true;
           break outer;
         }
