@@ -1,0 +1,260 @@
+import { OpenLocationCode } from 'open-location-code';
+import type {
+  Anchor,
+  Coord,
+  DayConfig,
+  Store,
+  TripConfig,
+  LockSpec,
+} from '../types';
+import type { TripInput } from '../types';
+
+function ensureValidCoord(lat: number, lon: number): Coord {
+  if (
+    Number.isNaN(lat) ||
+    Number.isNaN(lon) ||
+    lat < -90 ||
+    lat > 90 ||
+    lon < -180 ||
+    lon > 180
+  ) {
+    throw new Error(`Invalid coordinates: ${lat},${lon}`);
+  }
+  return [lat, lon];
+}
+
+/**
+ * Parse a location string into `[lat, lon]` coordinates.
+ * Supports `lat,lon`, Plus Codes, and Google Maps URLs containing `@lat,lon`.
+ */
+export function parseLocation(input: string): Coord {
+  if (typeof input !== 'string') {
+    throw new Error('Location must be a string');
+  }
+  const str = input.trim();
+
+  // Direct "lat,lon" string
+  const latLon = str.match(/^(-?\d+(?:\.\d+)?)[,\s]+(-?\d+(?:\.\d+)?)(?:.*)$/);
+  if (latLon) {
+    const lat = parseFloat(latLon[1]);
+    const lon = parseFloat(latLon[2]);
+    return ensureValidCoord(lat, lon);
+  }
+
+  // Google Maps URL with @lat,lon
+  const urlMatch = str.match(/@(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/);
+  if (urlMatch) {
+    const lat = parseFloat(urlMatch[1]);
+    const lon = parseFloat(urlMatch[2]);
+    return ensureValidCoord(lat, lon);
+  }
+
+  // Plus Code
+  try {
+    const decoded = OpenLocationCode.decode(str);
+    return ensureValidCoord(
+      decoded.latitudeCenter,
+      decoded.longitudeCenter,
+    );
+  } catch {
+    /* noop */
+  }
+
+  throw new Error(
+    `Unable to parse location: "${input}". Provide lat/lon, a full Plus Code, or a Maps URL with @lat,lon.`,
+  );
+}
+
+type PlainObj = Record<string, unknown>;
+
+function parseAnchor(obj: PlainObj): Anchor {
+  if (!obj || typeof obj.id !== 'string') {
+    throw new Error('Anchor must have an id');
+  }
+  const id = obj.id;
+  const name = typeof obj.name === 'string' ? obj.name : id;
+  let coord: Coord;
+  if (typeof obj.lat === 'number' && typeof obj.lon === 'number') {
+    coord = ensureValidCoord(obj.lat, obj.lon);
+  } else if (typeof obj.location === 'string') {
+    coord = parseLocation(obj.location);
+  } else {
+    throw new Error(`Anchor ${id} missing coordinates`);
+  }
+  return { id, name, coord };
+}
+
+function parseStore(obj: PlainObj): Store {
+  if (!obj || typeof obj.id !== 'string') {
+    throw new Error('Store must have an id');
+  }
+  const id = obj.id;
+  const name = typeof obj.name === 'string' ? obj.name : id;
+  let coord: Coord;
+  if (typeof obj.lat === 'number' && typeof obj.lon === 'number') {
+    coord = ensureValidCoord(obj.lat, obj.lon);
+  } else if (typeof obj.location === 'string') {
+    coord = parseLocation(obj.location);
+  } else {
+    throw new Error(`Store ${id} missing coordinates`);
+  }
+
+  const store: Store = { id, name, coord };
+
+  if (obj.dwellMin !== undefined) {
+    const dwell = Number(obj.dwellMin);
+    if (!Number.isFinite(dwell) || dwell < 0) {
+      throw new Error(`Invalid dwellMin for store ${id}`);
+    }
+    store.dwellMin = dwell;
+  }
+
+  if (obj.score !== undefined) {
+    const score = Number(obj.score);
+    if (Number.isFinite(score)) {
+      store.score = score;
+    }
+  }
+
+  if (obj.tags) {
+    if (Array.isArray(obj.tags)) {
+      store.tags = obj.tags.map(String);
+    } else if (typeof obj.tags === 'string') {
+      store.tags = obj.tags
+        .split(/[;,|]/)
+        .map((s: string) => s.trim())
+        .filter(Boolean);
+    }
+  }
+
+  if (obj.dayId !== undefined) {
+    store.dayId = String(obj.dayId);
+  }
+
+  return store;
+}
+
+function parseDay(obj: PlainObj): DayConfig {
+  if (!obj || typeof obj.dayId !== 'string') {
+    throw new Error('Day must have dayId');
+  }
+  const win = obj.window as PlainObj;
+  const day: DayConfig = {
+    dayId: obj.dayId,
+    start: parseAnchor(obj.start as PlainObj),
+    end: parseAnchor(obj.end as PlainObj),
+    window: { start: String(win.start), end: String(win.end) },
+  };
+
+  if (obj.mph !== undefined) {
+    day.mph = Number(obj.mph);
+  }
+  if (obj.defaultDwellMin !== undefined) {
+    day.defaultDwellMin = Number(obj.defaultDwellMin);
+  }
+  if (obj.mustVisitIds) {
+    if (!Array.isArray(obj.mustVisitIds)) {
+      throw new Error('mustVisitIds must be an array');
+    }
+    day.mustVisitIds = obj.mustVisitIds.map(String);
+  }
+  if (obj.locks) {
+    day.locks = obj.locks as LockSpec[];
+  }
+
+  return day;
+}
+
+function parseTripConfig(obj?: PlainObj): TripConfig {
+  const cfg: TripConfig = {};
+  if (!obj) return cfg;
+  if (obj.mph !== undefined) cfg.mph = Number(obj.mph);
+  if (obj.defaultDwellMin !== undefined)
+    cfg.defaultDwellMin = Number(obj.defaultDwellMin);
+  if (obj.seed !== undefined) cfg.seed = Number(obj.seed);
+  if (obj.snapDuplicateToleranceMeters !== undefined)
+    cfg.snapDuplicateToleranceMeters = Number(
+      obj.snapDuplicateToleranceMeters,
+    );
+  return cfg;
+}
+
+function parseCsvStores(csv: string): PlainObj[] {
+  const rows: PlainObj[] = [];
+  const lines = csv
+    .trim()
+    .split(/\r?\n/)
+    .filter((l) => l.trim().length > 0);
+  if (lines.length === 0) return rows;
+  const headers = lines[0].split(',').map((h) => h.trim());
+  for (let i = 1; i < lines.length; i++) {
+    const values = lines[i].split(',');
+    const obj: PlainObj = {};
+    headers.forEach((h, idx) => {
+      const v = values[idx];
+      if (v !== undefined) obj[h] = v.trim();
+    });
+    rows.push(obj);
+  }
+  return rows;
+}
+
+/**
+ * Parse trip JSON (and optional CSV list of stores) into typed structures with validation.
+ */
+export function parseTrip(json: PlainObj, storesCsv?: string): TripInput {
+  if (typeof json !== 'object' || json === null) {
+    throw new Error('Trip JSON must be an object');
+  }
+
+  const config = parseTripConfig(json.config as PlainObj);
+  const days = Array.isArray(json.days)
+    ? json.days.map((d) => parseDay(d as PlainObj))
+    : [];
+
+  let storeObjs: PlainObj[] = Array.isArray(json.stores)
+    ? [...(json.stores as PlainObj[])]
+    : [];
+  if (storesCsv) {
+    storeObjs = storeObjs.concat(parseCsvStores(storesCsv));
+  }
+  const stores = storeObjs.map(parseStore);
+
+  // Validate unique IDs across anchors and stores
+  const seen = new Set<string>();
+  const checkUnique = (id: string) => {
+    if (seen.has(id)) {
+      throw new Error(`Duplicate id: ${id}`);
+    }
+    seen.add(id);
+  };
+  for (const day of days) {
+    checkUnique(day.start.id);
+    checkUnique(day.end.id);
+  }
+  for (const store of stores) {
+    checkUnique(store.id);
+  }
+
+  const storeById = new Map<string, Store>();
+  for (const s of stores) storeById.set(s.id, s);
+
+  // Validate must-visit IDs exist
+  for (const day of days) {
+    if (!day.mustVisitIds) continue;
+    for (const id of day.mustVisitIds) {
+      const store = storeById.get(id);
+      if (!store) {
+        throw new Error(`Must-visit id not found: ${id}`);
+      }
+      if (store.dayId && store.dayId !== day.dayId) {
+        throw new Error(
+          `Must-visit id ${id} not available on day ${day.dayId}`,
+        );
+      }
+    }
+  }
+
+  return { config, days, stores };
+}
+
