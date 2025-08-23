@@ -86,5 +86,19 @@ describe('performance', () => {
     },
     { timeout: 30000 }
   );
+
+  it(
+    'scales to very large candidate sets',
+    () => {
+      const ctx = buildRandomCtx(300, 456);
+      const start = performance.now();
+      const order = planDay(ctx);
+      const duration = performance.now() - start;
+      expect(isFeasible(order, ctx)).toBe(true);
+      expect(order.length).toBeLessThanOrEqual(ctx.candidateIds.length);
+      expect(duration).toBeLessThan(60000);
+    },
+    { timeout: 120000 }
+  );
 });
 
