@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { parseTrip } from '../io/parse';
 import { planDay } from '../heuristics';
-import { computeTimeline, slackMin } from '../schedule';
+import { computeTimeline, slackMin, isFeasible } from '../schedule';
 import { emitItinerary, EmitResult } from '../io/emit';
 import type { ID, Store, DayPlan } from '../types';
 
@@ -11,6 +11,11 @@ export interface SolveDayOptions {
   mph?: number;
   defaultDwellMin?: number;
   seed?: number;
+}
+
+function hhmmToMin(time: string): number {
+  const [hh, mm] = time.split(':').map(Number);
+  return hh * 60 + mm;
 }
 
 export function solveDay(opts: SolveDayOptions): EmitResult {
@@ -52,7 +57,13 @@ export function solveDay(opts: SolveDayOptions): EmitResult {
   };
 
   const order = planDay(ctx);
+  const feasible = isFeasible(order, ctx);
   const timeline = computeTimeline(order, ctx);
+  if (!feasible) {
+    const endMin = hhmmToMin(ctx.window.end);
+    const deficit = timeline.hotelETAmin - endMin;
+    throw new Error(`must visits exceed day window by ${Math.round(deficit)} min`);
+  }
 
   const dayPlan: DayPlan = {
     dayId: day.dayId,
