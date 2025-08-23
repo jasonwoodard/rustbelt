@@ -5,13 +5,8 @@ import {
   slackMin,
   ScheduleCtx,
 } from './schedule';
-import type { ID, Coord } from './types';
-
-function distance(a: Coord, b: Coord): number {
-  const dx = a[0] - b[0];
-  const dy = a[1] - b[1];
-  return Math.hypot(dx, dy);
-}
+import { haversineMiles } from './distance';
+import type { ID } from './types';
 
 export interface HeuristicCtx extends ScheduleCtx {
   candidateIds: ID[];
@@ -41,7 +36,7 @@ function seedMustVisits(
     let bestDist = Infinity;
     const bestIds: ID[] = [];
     for (const id of remaining) {
-      const dist = distance(currentCoord, ctx.stores[id].coord);
+      const dist = haversineMiles(currentCoord, ctx.stores[id].coord);
       if (dist < bestDist - 1e-9) {
         bestDist = dist;
         bestIds.length = 0;

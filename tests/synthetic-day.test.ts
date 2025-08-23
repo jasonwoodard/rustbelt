@@ -5,17 +5,19 @@ import type { HeuristicCtx } from '../src/heuristics';
 import seedrandom from 'seedrandom';
 import { performance } from 'node:perf_hooks';
 
+const MILE_TO_DEG = 1 / 69; // Approximate degrees per mile at the equator
+
 function buildSyntheticCtx(): HeuristicCtx {
   return {
     start: { id: 'S', name: 'start', coord: [0, 0] },
-    end: { id: 'E', name: 'end', coord: [10, 0] },
+    end: { id: 'E', name: 'end', coord: [10 * MILE_TO_DEG, 0] },
     window: { start: '08:00', end: '18:00' },
     mph: 60,
     defaultDwellMin: 0,
     stores: {
-      A: { id: 'A', name: 'A', coord: [2, 0] },
-      B: { id: 'B', name: 'B', coord: [5, 0] },
-      C: { id: 'C', name: 'C', coord: [8, 0] },
+      A: { id: 'A', name: 'A', coord: [2 * MILE_TO_DEG, 0] },
+      B: { id: 'B', name: 'B', coord: [5 * MILE_TO_DEG, 0] },
+      C: { id: 'C', name: 'C', coord: [8 * MILE_TO_DEG, 0] },
     },
     mustVisitIds: ['B'],
     candidateIds: ['A', 'B', 'C'],
@@ -46,13 +48,20 @@ function buildRandomCtx(count: number, seed = 1): HeuristicCtx {
   const candidateIds: string[] = [];
   for (let i = 0; i < count; i++) {
     const id = `S${i}`;
-    const coord: [number, number] = [rng() * 100, rng() * 100];
+    const coord: [number, number] = [
+      rng() * 100 * MILE_TO_DEG,
+      rng() * 100 * MILE_TO_DEG,
+    ];
     stores[id] = { id, name: id, coord };
     candidateIds.push(id);
   }
   return {
     start: { id: 'S', name: 'start', coord: [0, 0] },
-    end: { id: 'E', name: 'end', coord: [100, 100] },
+    end: {
+      id: 'E',
+      name: 'end',
+      coord: [100 * MILE_TO_DEG, 100 * MILE_TO_DEG],
+    },
     window: { start: '08:00', end: '20:00' },
     mph: 60,
     defaultDwellMin: 0,
