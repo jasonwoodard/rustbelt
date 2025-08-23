@@ -25,6 +25,12 @@ describe('solveDay', () => {
     expect(data.days[0].metrics.storesVisited).toBe(3);
   });
 
+  it('produces stable itinerary output (FR-31)', () => {
+    const tripPath = join(__dirname, '../fixtures/simple-trip.json');
+    const result = solveDay({ tripPath, dayId: 'D1' });
+    expect(JSON.parse(result.json)).toMatchSnapshot();
+  });
+
   it('throws if must visits exceed day window', () => {
     const tripPath = join(
       __dirname,

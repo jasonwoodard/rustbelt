@@ -1,0 +1,18 @@
+{
+  "config": { "mph": 60, "defaultDwellMin": 0, "seed": 1 },
+  "days": [
+    {
+      "dayId": "D1",
+      "start": { "id": "S", "name": "start", "lat": 0, "lon": 0 },
+      "end": { "id": "H", "name": "end", "lat": 0.145, "lon": 0 },
+      "window": { "start": "08:00", "end": "18:00" }
+    }
+  ],
+  "stores": [
+    { "id": "A", "name": "A", "lat": 0.0145, "lon": 0 },
+    { "id": "B", "name": "B", "lat": 0.029, "lon": 0 },
+    { "id": "C", "name": "C", "lat": 0.0435, "lon": 0 },
+    { "id": "D", "name": "D", "lat": 0.058, "lon": 0 },
+    { "id": "E", "name": "E", "lat": 0.0725, "lon": 0 }
+  ]
+}
