@@ -1,4 +1,4 @@
-import { minutesAtMph } from './distance';
+import { minutesAtMph, haversineMiles } from './distance';
 import type {
   Anchor,
   Store,
@@ -35,18 +35,12 @@ function minToHhmm(min: number): string {
   return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
 }
 
-function distanceMiles(a: Coord, b: Coord): number {
-  const dx = a[0] - b[0];
-  const dy = a[1] - b[1];
-  return Math.hypot(dx, dy);
-}
-
 function legMetrics(
   from: Coord,
   to: Coord,
   mph: number,
 ): { dist: number; driveMin: number } {
-  const dist = distanceMiles(from, to);
+  const dist = haversineMiles(from, to);
   return { dist, driveMin: minutesAtMph(dist, mph) };
 }
 
