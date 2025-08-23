@@ -8,4 +8,9 @@ describe('CLI', () => {
     expect(program.version()).toBe('0.1.0');
     expect(program.commands.map((c) => c.name())).toContain('solve-day');
   });
+
+  it('registers verbose flag for solve-day', () => {
+    const cmd = program.commands.find((c) => c.name() === 'solve-day');
+    expect(cmd?.options.some((o) => o.long === '--verbose')).toBe(true);
+  });
 });

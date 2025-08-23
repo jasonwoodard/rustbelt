@@ -11,6 +11,7 @@ export interface SolveDayOptions {
   mph?: number;
   defaultDwellMin?: number;
   seed?: number;
+  verbose?: boolean;
 }
 
 function hhmmToMin(time: string): number {
@@ -54,6 +55,7 @@ export function solveDay(opts: SolveDayOptions): EmitResult {
     mustVisitIds: day.mustVisitIds,
     candidateIds,
     seed: opts.seed ?? trip.config.seed,
+    verbose: opts.verbose,
   };
 
   const order = planDay(ctx);
