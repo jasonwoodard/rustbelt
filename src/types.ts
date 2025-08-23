@@ -68,3 +68,10 @@ export interface DayPlan {
   };
 }
 
+
+export interface TripInput {
+  config: TripConfig;
+  days: DayConfig[];
+  stores: Store[];
+}
+
