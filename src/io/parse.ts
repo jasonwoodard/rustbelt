@@ -8,6 +8,7 @@ import type {
   LockSpec,
 } from '../types';
 import type { TripInput } from '../types';
+import { haversineMiles } from '../distance';
 
 function ensureValidCoord(lat: number, lon: number): Coord {
   if (
@@ -218,7 +219,7 @@ export function parseTrip(json: PlainObj, storesCsv?: string): TripInput {
   if (storesCsv) {
     storeObjs = storeObjs.concat(parseCsvStores(storesCsv));
   }
-  const stores = storeObjs.map(parseStore);
+  let stores = storeObjs.map(parseStore);
 
   // Validate unique IDs across anchors and stores
   const seen = new Set<string>();
@@ -234,6 +235,27 @@ export function parseTrip(json: PlainObj, storesCsv?: string): TripInput {
   }
   for (const store of stores) {
     checkUnique(store.id);
+  }
+
+  const tol = config.snapDuplicateToleranceMeters;
+  if (tol && tol > 0) {
+    const toleranceMiles = tol / 1609.344;
+    const deduped: Store[] = [];
+    for (const s of stores) {
+      const match = deduped.find(
+        (d) => haversineMiles(d.coord, s.coord) <= toleranceMiles,
+      );
+      if (match) {
+        if (match.id !== s.id) {
+          console.warn(
+            `Dropping store ${s.id} at ${s.coord} as duplicate of ${match.id}`,
+          );
+        }
+        continue; // skip duplicate
+      }
+      deduped.push(s);
+    }
+    stores = deduped;
   }
 
   const storeById = new Map<string, Store>();
