@@ -8,6 +8,11 @@ import {
 import { haversineMiles } from './distance';
 import type { ID } from './types';
 
+function hhmmToMin(time: string): number {
+  const [hh, mm] = time.split(':').map(Number);
+  return hh * 60 + mm;
+}
+
 export interface HeuristicCtx extends ScheduleCtx {
   candidateIds: ID[];
   seed?: number;
@@ -16,6 +21,12 @@ export interface HeuristicCtx extends ScheduleCtx {
 export function planDay(ctx: HeuristicCtx): ID[] {
   const rng = seedrandom(String(ctx.seed ?? 0));
   const order = seedMustVisits(ctx, rng);
+  if (!isFeasible(order, ctx)) {
+    const { hotelETAmin } = computeTimeline(order, ctx);
+    const endMin = hhmmToMin(ctx.window.end);
+    const deficit = hotelETAmin - endMin;
+    throw new Error(`must visits exceed day window by ${Math.round(deficit)} min`);
+  }
   const remaining = ctx.candidateIds.filter((id) => !order.includes(id));
   greedyInsert(order, remaining, ctx, rng);
   twoOpt(order, ctx);
