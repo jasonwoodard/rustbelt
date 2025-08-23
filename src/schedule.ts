@@ -41,6 +41,15 @@ function distanceMiles(a: Coord, b: Coord): number {
   return Math.hypot(dx, dy);
 }
 
+function legMetrics(
+  from: Coord,
+  to: Coord,
+  mph: number,
+): { dist: number; driveMin: number } {
+  const dist = distanceMiles(from, to);
+  return { dist, driveMin: minutesAtMph(dist, mph) };
+}
+
 export function computeTimeline(order: ID[], ctx: ScheduleCtx): TimelineResult {
   const startMin = hhmmToMin(ctx.window.start);
   const stops: StopPlan[] = [];
@@ -65,8 +74,11 @@ export function computeTimeline(order: ID[], ctx: ScheduleCtx): TimelineResult {
       throw new Error(`Unknown store id: ${id}`);
     }
 
-    const dist = distanceMiles(currentCoord, store.coord);
-    const driveMin = minutesAtMph(dist, ctx.mph);
+    const { dist, driveMin } = legMetrics(
+      currentCoord,
+      store.coord,
+      ctx.mph,
+    );
     currentTime += driveMin;
     totalDriveMin += driveMin;
 
@@ -94,8 +106,11 @@ export function computeTimeline(order: ID[], ctx: ScheduleCtx): TimelineResult {
   }
 
   // leg to end
-  const dist = distanceMiles(currentCoord, ctx.end.coord);
-  const driveMin = minutesAtMph(dist, ctx.mph);
+  const { dist, driveMin } = legMetrics(
+    currentCoord,
+    ctx.end.coord,
+    ctx.mph,
+  );
   currentTime += driveMin;
   totalDriveMin += driveMin;
 
