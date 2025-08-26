@@ -2,6 +2,7 @@ import { Command } from 'commander';
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { solveDay } from './app/solveDay';
+import { reoptimizeDay } from './app/reoptimizeDay';
 import { emitKml } from './io/emitKml';
 import type { DayPlan } from './types';
 
@@ -25,17 +26,36 @@ program
   )
   .option('--seed <seed>', 'Random seed', parseFloat)
   .option('--verbose', 'Print heuristic steps')
+  .option('--now <HH:mm>', 'Reoptimize from this time')
+  .option('--at <lat,lon>', 'Current location')
   .option('--out <file>', 'Write itinerary JSON to this path (overwrite)')
   .option('--kml [file]', 'Write KML to this path (or stdout)')
   .action((opts) => {
-    const result = solveDay({
-      tripPath: opts.trip,
-      dayId: opts.day,
-      mph: opts.mph,
-      defaultDwellMin: opts.defaultDwell,
-      seed: opts.seed,
-      verbose: opts.verbose,
-    });
+    let result;
+    if (opts.now && opts.at) {
+      const [lat, lon] = opts.at.split(',').map(Number);
+      result = reoptimizeDay(
+        opts.now,
+        [lat, lon],
+        {
+          tripPath: opts.trip,
+          dayId: opts.day,
+          mph: opts.mph,
+          defaultDwellMin: opts.defaultDwell,
+          seed: opts.seed,
+          verbose: opts.verbose,
+        },
+      );
+    } else {
+      result = solveDay({
+        tripPath: opts.trip,
+        dayId: opts.day,
+        mph: opts.mph,
+        defaultDwellMin: opts.defaultDwell,
+        seed: opts.seed,
+        verbose: opts.verbose,
+      });
+    }
   
     if (opts.out) {
       mkdirSync(dirname(opts.out), { recursive: true });
