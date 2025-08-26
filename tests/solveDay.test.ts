@@ -6,11 +6,7 @@ import { readFileSync } from 'node:fs';
 import { parseTrip } from '../src/io/parse';
 import { computeTimeline } from '../src/schedule';
 import type { Store } from '../src/types';
-
-function hhmmToMin(time: string): number {
-  const [hh, mm] = time.split(':').map(Number);
-  return hh * 60 + mm;
-}
+import { hhmmToMin } from '../src/time';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

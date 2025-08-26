@@ -6,6 +6,7 @@ import type {
   Coord,
   StopPlan,
 } from './types';
+import { hhmmToMin, minToHhmm } from './time';
 
 export interface ScheduleCtx {
   start: Anchor;
@@ -22,17 +23,6 @@ export interface TimelineResult {
   totalDriveMin: number;
   totalDwellMin: number;
   hotelETAmin: number;
-}
-
-function hhmmToMin(time: string): number {
-  const [hh, mm] = time.split(':').map(Number);
-  return hh * 60 + mm;
-}
-
-function minToHhmm(min: number): string {
-  const h = Math.floor(min / 60);
-  const m = Math.round(min % 60);
-  return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
 }
 
 function legMetrics(
