@@ -793,6 +793,8 @@ export interface StopPlan {
   type: "start" | "store" | "end";
   arrive: string;
   depart: string;
+  lat: number;
+  lon: number;
   dwellMin?: number;
   legIn?: Leg;
 }
