@@ -1,0 +1,93 @@
+{
+  "config": {
+    "mph": 50,
+    "defaultDwellMin": 30,
+    "seed": 42
+  },
+  "days": [
+    {
+      "dayId": "D1",
+      "start": {
+        "id": "S",
+        "name": "Start",
+        "lat": 42.336873,
+        "lon": -83.0418499
+      },
+      "end": {
+        "id": "E",
+        "name": "End",
+        "lat": 42.4585473,
+        "lon": -83.7898064
+      },
+      "window": {
+        "start": "09:00",
+        "end": "17:00"
+      }
+    }
+  ],
+  "stores": [
+    {
+      "id": "VWT-OakPark",
+      "name": "Value World Thrift",
+      "lat": 42.457659382447,
+      "lon": -83.181801001668
+    },
+    {
+      "id": "VWT-Westland",
+      "name": "Value World Thrift",
+      "lat": 42.343181412273,
+      "lon": -83.388254959552
+    },
+    {
+      "id": "VWT-Eastpointe",
+      "name": "Value World Thrift",
+      "lat": 42.478985165724,
+      "lon": -82.926959459334
+    },
+    {
+      "id": "VWT-Southgate",
+      "name": "Value World Thrift",
+      "lat": 42.219891152932,
+      "lon": -83.193964111776
+    },
+    {
+      "id": "VWT-Taylor",
+      "name": "Value World Thrift",
+      "lat": 42.255786246719,
+      "lon": -83.256431414123
+    }
+  ]
+}		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
