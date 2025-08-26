@@ -1,9 +1,6 @@
-export { solveDay as reoptimizeDay } from './solveDay';
-export type { SolveDayOptions as ReoptimizeDayOptions } from './solveDay';
-
 import { readFileSync } from 'node:fs';
 import { parseTrip } from '../io/parse';
-import { planDay } from '../heuristics';
+import { planDay, type ProgressFn } from '../heuristics';
 import { computeTimeline, slackMin, isFeasible } from '../schedule';
 import { emitItinerary, EmitResult } from '../io/emit';
 import type { ID, Store, DayPlan, LockSpec, Coord } from '../types';
@@ -18,6 +15,7 @@ export interface ReoptimizeDayOptions {
   verbose?: boolean;
   locks?: LockSpec[];
   completedIds?: ID[];
+  progress?: ProgressFn;
 }
 
 export function reoptimizeDay(
@@ -80,6 +78,7 @@ export function reoptimizeDay(
     candidateIds,
     seed: opts.seed ?? trip.config.seed,
     verbose: opts.verbose,
+    progress: opts.progress,
   };
 
   const order = planDay(ctx);
