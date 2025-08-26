@@ -7,11 +7,7 @@ import {
 } from './schedule';
 import { haversineMiles } from './distance';
 import type { ID } from './types';
-
-function hhmmToMin(time: string): number {
-  const [hh, mm] = time.split(':').map(Number);
-  return hh * 60 + mm;
-}
+import { hhmmToMin } from './time';
 
 export interface HeuristicCtx extends ScheduleCtx {
   candidateIds: ID[];

@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { computeTimeline, slackMin } from '../src/schedule';
 import type { ScheduleCtx } from '../src/schedule';
+import { hhmmToMin } from '../src/time';
 
 function buildCtx(): ScheduleCtx {
   return {
@@ -13,11 +14,6 @@ function buildCtx(): ScheduleCtx {
       A: { id: 'A', name: 'A', coord: [5, 0] },
     },
   };
-}
-
-function hhmmToMin(time: string): number {
-  const [hh, mm] = time.split(':').map(Number);
-  return hh * 60 + mm;
 }
 
 describe('schedule utilities', () => {
