@@ -5,7 +5,8 @@ import type { ID } from './types';
 export type InfeasibilitySuggestion =
   | { type: 'extendEnd'; minutes: number }
   | { type: 'dropMustVisit'; storeId: ID; minutesSaved: number }
-  | { type: 'dropStore'; storeId: ID; minutesSaved: number };
+  | { type: 'dropStore'; storeId: ID; minutesSaved: number }
+  | { type: 'relaxLock'; storeId: ID; minutesSaved: number };
 
 /**
  * Analyze infeasible schedules and suggest relaxations ranked by time saved.
@@ -55,6 +56,33 @@ export function adviseInfeasible(
         storeId: id,
         minutesSaved: Math.round(saved),
       });
+    }
+  }
+
+  // Relax locked stop positions
+  if (ctx.locks && ctx.locks.length > 0) {
+    const lockedIds = Array.from(new Set(ctx.locks.map((l) => l.storeId)));
+    for (const id of lockedIds) {
+      if (!order.includes(id)) {
+        continue;
+      }
+      const filtered = order.filter((s) => s !== id);
+      let bestHotel = Infinity;
+      for (let i = 0; i <= filtered.length; i++) {
+        const candidate = [...filtered.slice(0, i), id, ...filtered.slice(i)];
+        const t = computeTimeline(candidate, ctx);
+        if (t.hotelETAmin < bestHotel) {
+          bestHotel = t.hotelETAmin;
+        }
+      }
+      const saved = timeline.hotelETAmin - bestHotel;
+      if (saved > 0) {
+        suggestions.push({
+          type: 'relaxLock',
+          storeId: id,
+          minutesSaved: Math.round(saved),
+        });
+      }
     }
   }
 

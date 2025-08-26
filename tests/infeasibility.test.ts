@@ -25,4 +25,29 @@ describe('infeasibility advisor', () => {
       | undefined;
     expect(drop?.storeId).toBeDefined();
   });
+
+  it('suggests relaxing locked stops', () => {
+    const MILE_TO_DEG = 1 / 69;
+    const ctx: ScheduleCtx = {
+      start: { id: 'S', name: 'S', coord: [0, 0] },
+      end: { id: 'E', name: 'E', coord: [10 * MILE_TO_DEG, 0] },
+      window: { start: '00:00', end: '00:20' },
+      mph: 60,
+      defaultDwellMin: 0,
+      stores: {
+        A: { id: 'A', name: 'A', coord: [1 * MILE_TO_DEG, 0] },
+        B: { id: 'B', name: 'B', coord: [9 * MILE_TO_DEG, 0] },
+      },
+      locks: [{ storeId: 'B', index: 0 }],
+    };
+    const order = ['B', 'A'];
+    const suggestions = adviseInfeasible(order, ctx);
+    const types = suggestions.map((s) => s.type);
+    expect(types).toContain('relaxLock');
+    const relax = suggestions.find(
+      (s) => s.type === 'relaxLock' && s.storeId === 'B',
+    ) as { type: 'relaxLock'; storeId: string; minutesSaved: number } | undefined;
+    expect(relax).toBeDefined();
+    expect(relax!.minutesSaved).toBeGreaterThan(0);
+  });
 });
