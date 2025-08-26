@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { parseTrip } from '../io/parse';
 import { planDay, type ProgressFn } from '../heuristics';
 import { computeTimeline, slackMin, isFeasible } from '../schedule';
+import { adviseInfeasible } from '../infeasibility';
 import { emitItinerary, EmitResult } from '../io/emit';
 import type { ID, Store, DayPlan, LockSpec, Coord } from '../types';
 import { hhmmToMin } from '../time';
@@ -81,13 +82,36 @@ export function reoptimizeDay(
     progress: opts.progress,
   };
 
-  const order = planDay(ctx);
+  let order: ID[];
+  try {
+    order = planDay(ctx);
+  } catch (err) {
+    const adviceOrder = Array.from(
+      new Set([
+        ...(ctx.mustVisitIds ?? []),
+        ...(ctx.locks?.map((l) => l.storeId) ?? []),
+      ]),
+    );
+    const suggestions = adviseInfeasible(adviceOrder, ctx);
+    const newErr = new Error(
+      `${(err as Error).message}; suggestions: ${JSON.stringify(suggestions)}`,
+    );
+    (newErr as Error & { suggestions?: unknown[] }).suggestions = suggestions;
+    throw newErr;
+  }
   const feasible = isFeasible(order, ctx);
   const timeline = computeTimeline(order, ctx);
   if (!feasible) {
+    const suggestions = adviseInfeasible(order, ctx);
     const endMin = hhmmToMin(ctx.window.end);
     const deficit = timeline.hotelETAmin - endMin;
-    throw new Error(`must visits exceed day window by ${Math.round(deficit)} min`);
+    const err = new Error(
+      `must visits exceed day window by ${Math.round(deficit)} min; suggestions: ${JSON.stringify(
+        suggestions,
+      )}`,
+    );
+    (err as Error & { suggestions?: unknown[] }).suggestions = suggestions;
+    throw err;
   }
 
   const dayPlan: DayPlan = {

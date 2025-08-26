@@ -5,6 +5,7 @@ import type {
   ID,
   Coord,
   StopPlan,
+  LockSpec,
 } from './types';
 import { hhmmToMin, minToHhmm } from './time';
 
@@ -16,6 +17,7 @@ export interface ScheduleCtx {
   defaultDwellMin: number;
   stores: Record<ID, Store>;
   mustVisitIds?: ID[];
+  locks?: LockSpec[];
 }
 
 export interface TimelineResult {

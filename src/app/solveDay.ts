@@ -67,7 +67,13 @@ export function solveDay(opts: SolveDayOptions): EmitResult {
   try {
     order = planDay(ctx);
   } catch (err) {
-    const suggestions = adviseInfeasible(ctx.mustVisitIds ?? [], ctx);
+    const adviceOrder = Array.from(
+      new Set([
+        ...(ctx.mustVisitIds ?? []),
+        ...(ctx.locks?.map((l) => l.storeId) ?? []),
+      ]),
+    );
+    const suggestions = adviseInfeasible(adviceOrder, ctx);
     const newErr = new Error(
       `${(err as Error).message}; suggestions: ${JSON.stringify(suggestions)}`,
     );
