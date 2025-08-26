@@ -2,6 +2,8 @@ import { Command } from 'commander';
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { solveDay } from './app/solveDay';
+import { emitKml } from './io/emitKml';
+import type { DayPlan } from './types';
 
 export const program = new Command();
 
@@ -24,6 +26,7 @@ program
   .option('--seed <seed>', 'Random seed', parseFloat)
   .option('--verbose', 'Print heuristic steps')
   .option('--out <file>', 'Write itinerary JSON to this path (overwrite)')
+  .option('--kml [file]', 'Write KML to this path (or stdout)')
   .action((opts) => {
     const result = solveDay({
       tripPath: opts.trip,
@@ -39,7 +42,19 @@ program
       writeFileSync(opts.out, result.json, 'utf8');
       console.log(`Wrote ${opts.out}`);
     }
-    
+
+    if (opts.kml !== undefined) {
+      const data = JSON.parse(result.json) as { days: DayPlan[] };
+      const kml = emitKml(data.days);
+      if (typeof opts.kml === 'string') {
+        mkdirSync(dirname(opts.kml), { recursive: true });
+        writeFileSync(opts.kml, kml, 'utf8');
+        console.log(`Wrote ${opts.kml}`);
+      } else {
+        console.log(kml);
+      }
+    }
+
     if (opts.verbose) {
       console.log(result.json);
     }
