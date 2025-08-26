@@ -55,12 +55,15 @@ export function computeTimeline(order: ID[], ctx: ScheduleCtx): TimelineResult {
   let currentCoord: Coord = ctx.start.coord;
 
   // start stop
+  const [startLat, startLon] = ctx.start.coord;
   stops.push({
     id: ctx.start.id,
     name: ctx.start.name,
     type: 'start',
     arrive: minToHhmm(currentTime),
     depart: minToHhmm(currentTime),
+    lat: startLat,
+    lon: startLon,
   });
 
   for (const id of order) {
@@ -82,12 +85,15 @@ export function computeTimeline(order: ID[], ctx: ScheduleCtx): TimelineResult {
     currentTime += dwell;
     totalDwellMin += dwell;
 
+    const [lat, lon] = store.coord;
     stops.push({
       id: store.id,
       name: store.name,
       type: 'store',
       arrive: minToHhmm(arriveMin),
       depart: minToHhmm(currentTime),
+      lat,
+      lon,
       dwellMin: dwell,
       legIn: {
         fromId: currentId,
@@ -110,12 +116,15 @@ export function computeTimeline(order: ID[], ctx: ScheduleCtx): TimelineResult {
   currentTime += driveMin;
   totalDriveMin += driveMin;
 
+  const [endLat, endLon] = ctx.end.coord;
   stops.push({
     id: ctx.end.id,
     name: ctx.end.name,
     type: 'end',
     arrive: minToHhmm(currentTime),
     depart: minToHhmm(currentTime),
+    lat: endLat,
+    lon: endLon,
     legIn: {
       fromId: currentId,
       toId: ctx.end.id,
