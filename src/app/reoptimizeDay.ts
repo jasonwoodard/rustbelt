@@ -1,3 +1,6 @@
+export { solveDay as reoptimizeDay } from './solveDay';
+export type { SolveDayOptions as ReoptimizeDayOptions } from './solveDay';
+
 import { readFileSync } from 'node:fs';
 import { parseTrip } from '../io/parse';
 import { planDay } from '../heuristics';

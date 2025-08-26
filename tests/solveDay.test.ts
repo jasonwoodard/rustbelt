@@ -51,8 +51,20 @@ describe('solveDay', () => {
     const { hotelETAmin } = computeTimeline(day.mustVisitIds!, ctx);
     const endMin = hhmmToMin(day.window.end);
     const deficit = Math.round(hotelETAmin - endMin);
-    expect(() => solveDay({ tripPath, dayId: 'D1' })).toThrowError(
-      `must visits exceed day window by ${deficit} min`,
-    );
+    try {
+      solveDay({ tripPath, dayId: 'D1' });
+      throw new Error('expected solveDay to throw');
+    } catch (err) {
+      const e = err as Error;
+      expect(e.message).toContain(
+        `must visits exceed day window by ${deficit} min`,
+      );
+      const match = e.message.match(/suggestions: (.*)$/);
+      expect(match).not.toBeNull();
+      const suggestions = JSON.parse(match![1]);
+      const types = suggestions.map((s: { type: string }) => s.type);
+      expect(types).toContain('extendEnd');
+      expect(types).toContain('dropMustVisit');
+    }
   });
 });
