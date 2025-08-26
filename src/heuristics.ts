@@ -13,7 +13,20 @@ export interface HeuristicCtx extends ScheduleCtx {
   seed?: number;
   verbose?: boolean;
   locks?: LockSpec[];
+  progress?: ProgressFn;
 }
+
+export interface ProgressMetrics {
+  slackMin: number;
+  totalDriveMin: number;
+  hotelETAmin: number;
+}
+
+export type ProgressFn = (
+  phase: 'greedy' | '2-opt' | 'relocate',
+  order: ID[],
+  metrics: ProgressMetrics,
+) => void;
 
 interface LockPlacement {
   order: ID[];
@@ -83,9 +96,26 @@ export function planDay(ctx: HeuristicCtx): ID[] {
   }
   const remaining = ctx.candidateIds.filter((id) => !order.includes(id));
   greedyInsert(order, remaining, ctx, rng, prefix, suffix);
+  reportProgress('greedy', order, ctx);
   twoOpt(order, ctx, prefix, suffix);
+  reportProgress('2-opt', order, ctx);
   relocate(order, ctx, prefix, suffix);
+  reportProgress('relocate', order, ctx);
   return order;
+}
+
+function reportProgress(
+  phase: 'greedy' | '2-opt' | 'relocate',
+  order: ID[],
+  ctx: HeuristicCtx,
+): void {
+  if (!ctx.progress) return;
+  const t = computeTimeline(order, ctx);
+  ctx.progress(phase, order.slice(), {
+    slackMin: slackMin(order, ctx),
+    totalDriveMin: t.totalDriveMin,
+    hotelETAmin: t.hotelETAmin,
+  });
 }
 
 function greedyInsert(

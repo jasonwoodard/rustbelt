@@ -26,6 +26,7 @@ program
   )
   .option('--seed <seed>', 'Random seed', parseFloat)
   .option('--verbose', 'Print heuristic steps')
+  .option('--progress', 'Print heuristic progress')
   .option('--now <HH:mm>', 'Reoptimize from this time')
   .option('--at <lat,lon>', 'Current location')
   .option('--out <file>', 'Write itinerary JSON to this path (overwrite)')
@@ -44,6 +45,14 @@ program
           defaultDwellMin: opts.defaultDwell,
           seed: opts.seed,
           verbose: opts.verbose,
+          progress: opts.progress
+            ? (phase, order, metrics) =>
+                console.log(
+                  `progress ${phase}: stops=${order.length} slack=${metrics.slackMin.toFixed(
+                    1,
+                  )} drive=${metrics.totalDriveMin.toFixed(1)}`,
+                )
+            : undefined,
         },
       );
     } else {
@@ -54,6 +63,14 @@ program
         defaultDwellMin: opts.defaultDwell,
         seed: opts.seed,
         verbose: opts.verbose,
+        progress: opts.progress
+          ? (phase, order, metrics) =>
+              console.log(
+                `progress ${phase}: stops=${order.length} slack=${metrics.slackMin.toFixed(
+                  1,
+                )} drive=${metrics.totalDriveMin.toFixed(1)}`,
+              )
+          : undefined,
       });
     }
   

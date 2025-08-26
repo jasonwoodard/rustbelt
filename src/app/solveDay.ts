@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { parseTrip } from '../io/parse';
-import { planDay } from '../heuristics';
+import { planDay, type ProgressFn } from '../heuristics';
 import { computeTimeline, slackMin, isFeasible } from '../schedule';
 import { adviseInfeasible } from '../infeasibility';
 import { emitItinerary, EmitResult } from '../io/emit';
@@ -14,6 +14,7 @@ export interface SolveDayOptions {
   seed?: number;
   verbose?: boolean;
   locks?: LockSpec[];
+  progress?: ProgressFn;
 }
 
 function hhmmToMin(time: string): number {
@@ -59,6 +60,7 @@ export function solveDay(opts: SolveDayOptions): EmitResult {
     candidateIds,
     seed: opts.seed ?? trip.config.seed,
     verbose: opts.verbose,
+    progress: opts.progress,
   };
 
   let order: ID[];
