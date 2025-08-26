@@ -55,9 +55,7 @@ program
       }
     }
 
-    if (opts.verbose) {
-      console.log(result.json);
-    }
+    console.log(result.json);
   });
   
 export function run(argv: readonly string[] = process.argv): Command {
