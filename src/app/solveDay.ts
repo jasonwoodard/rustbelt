@@ -3,7 +3,7 @@ import { parseTrip } from '../io/parse';
 import { planDay } from '../heuristics';
 import { computeTimeline, slackMin, isFeasible } from '../schedule';
 import { emitItinerary, EmitResult } from '../io/emit';
-import type { ID, Store, DayPlan } from '../types';
+import type { ID, Store, DayPlan, LockSpec } from '../types';
 
 export interface SolveDayOptions {
   tripPath: string;
@@ -12,6 +12,7 @@ export interface SolveDayOptions {
   defaultDwellMin?: number;
   seed?: number;
   verbose?: boolean;
+  locks?: LockSpec[];
 }
 
 function hhmmToMin(time: string): number {
@@ -53,6 +54,7 @@ export function solveDay(opts: SolveDayOptions): EmitResult {
     defaultDwellMin,
     stores,
     mustVisitIds: day.mustVisitIds,
+    locks: opts.locks ?? day.locks,
     candidateIds,
     seed: opts.seed ?? trip.config.seed,
     verbose: opts.verbose,
