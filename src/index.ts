@@ -50,7 +50,7 @@ export function run(argv: readonly string[] = process.argv): Command {
   return program;
 }
 
-import { pathToFileURL, fileURLToPath } from 'node:url';
+import { fileURLToPath } from 'node:url';
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
   run();

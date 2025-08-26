@@ -787,7 +787,15 @@ export interface TripInput { config: TripConfig; days: DayConfig\[\]; stores: St
 
 export interface Leg { fromId: ID; toId: ID; driveMin: number; distanceMi: number; }
 
-export interface StopPlan { id: ID; type: "start" | "store" | "end"; arrive: string; depart: string; dwellMin?: number; legIn?: Leg; }
+export interface StopPlan {
+  id: ID;
+  name: string;
+  type: "start" | "store" | "end";
+  arrive: string;
+  depart: string;
+  dwellMin?: number;
+  legIn?: Leg;
+}
 
 export interface DayPlan {
 

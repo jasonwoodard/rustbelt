@@ -50,6 +50,7 @@ export interface Leg {
 
 export interface StopPlan {
   id: ID;
+  name: string;
   type: "start" | "store" | "end";
   arrive: string;
   depart: string;
