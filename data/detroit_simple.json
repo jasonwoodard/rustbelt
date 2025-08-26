@@ -16,16 +16,30 @@
       "end": {
         "id": "E",
         "name": "End",
-        "lat": 42.4585473,
+        "lat": 42.336873,
         "lon": -83.0418499
       },
       "window": {
         "start": "09:00",
         "end": "17:00"
-      }
+      },
+      "mustVisitIds": ["VogueVint", "VWT-Southfield"]
+      
     }
   ],
   "stores": [
+    {
+      "id": "VWT-Warren",
+      "name": "Value World Thrift",
+      "lat": 42.490817636058,
+      "lon": -83.083943979949
+    },
+    {
+      "id": "VWT-Southfield",
+      "name": "Value World Thrift",
+      "lat": 42.442742196635,
+      "lon": -83.295836478484
+    },
     {
       "id": "VWT-OakPark",
       "name": "Value World Thrift",
@@ -55,6 +69,12 @@
       "name": "Value World Thrift",
       "lat": 42.255786246719,
       "lon": -83.256431414123
+    },
+    {
+      "id": "VogueVint",
+      "name": "Vogue Vintage",
+      "lat": 42.465465383937,
+      "lon": -83.12332615312
     }
   ]
 }		
