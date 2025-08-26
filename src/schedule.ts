@@ -57,6 +57,7 @@ export function computeTimeline(order: ID[], ctx: ScheduleCtx): TimelineResult {
   // start stop
   stops.push({
     id: ctx.start.id,
+    name: ctx.start.name,
     type: 'start',
     arrive: minToHhmm(currentTime),
     depart: minToHhmm(currentTime),
@@ -83,6 +84,7 @@ export function computeTimeline(order: ID[], ctx: ScheduleCtx): TimelineResult {
 
     stops.push({
       id: store.id,
+      name: store.name,
       type: 'store',
       arrive: minToHhmm(arriveMin),
       depart: minToHhmm(currentTime),
@@ -110,6 +112,7 @@ export function computeTimeline(order: ID[], ctx: ScheduleCtx): TimelineResult {
 
   stops.push({
     id: ctx.end.id,
+    name: ctx.end.name,
     type: 'end',
     arrive: minToHhmm(currentTime),
     depart: minToHhmm(currentTime),

@@ -16,6 +16,7 @@ exports[`solveDay > produces stable itinerary output (FR-31) 1`] = `
           "arrive": "00:00",
           "depart": "00:00",
           "id": "S",
+          "name": "start",
           "type": "start",
         },
         {
@@ -29,6 +30,7 @@ exports[`solveDay > produces stable itinerary output (FR-31) 1`] = `
             "fromId": "S",
             "toId": "A",
           },
+          "name": "A",
           "type": "store",
         },
         {
@@ -42,6 +44,7 @@ exports[`solveDay > produces stable itinerary output (FR-31) 1`] = `
             "fromId": "A",
             "toId": "B",
           },
+          "name": "B",
           "type": "store",
         },
         {
@@ -55,6 +58,7 @@ exports[`solveDay > produces stable itinerary output (FR-31) 1`] = `
             "fromId": "B",
             "toId": "C",
           },
+          "name": "C",
           "type": "store",
         },
         {
@@ -67,6 +71,7 @@ exports[`solveDay > produces stable itinerary output (FR-31) 1`] = `
             "fromId": "C",
             "toId": "E",
           },
+          "name": "end",
           "type": "end",
         },
       ],
