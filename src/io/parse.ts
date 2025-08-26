@@ -68,6 +68,18 @@ export function parseLocation(input: string): Coord {
 
 type PlainObj = Record<string, unknown>;
 
+const MISSING_COORDS_MSG = 'missing coordinates';
+
+function parseCoord(obj: PlainObj): Coord {
+  if (typeof obj.lat === 'number' && typeof obj.lon === 'number') {
+    return ensureValidCoord(obj.lat, obj.lon);
+  }
+  if (typeof obj.location === 'string') {
+    return parseLocation(obj.location);
+  }
+  throw new Error(MISSING_COORDS_MSG);
+}
+
 function parseAnchor(obj: PlainObj): Anchor {
   if (!obj || typeof obj.id !== 'string') {
     throw new Error('Anchor must have an id');
@@ -75,12 +87,13 @@ function parseAnchor(obj: PlainObj): Anchor {
   const id = obj.id;
   const name = typeof obj.name === 'string' ? obj.name : id;
   let coord: Coord;
-  if (typeof obj.lat === 'number' && typeof obj.lon === 'number') {
-    coord = ensureValidCoord(obj.lat, obj.lon);
-  } else if (typeof obj.location === 'string') {
-    coord = parseLocation(obj.location);
-  } else {
-    throw new Error(`Anchor ${id} missing coordinates`);
+  try {
+    coord = parseCoord(obj);
+  } catch (err) {
+    if ((err as Error).message === MISSING_COORDS_MSG) {
+      throw new Error(`Anchor ${id} missing coordinates`);
+    }
+    throw err;
   }
   return { id, name, coord };
 }
@@ -92,12 +105,13 @@ function parseStore(obj: PlainObj): Store {
   const id = obj.id;
   const name = typeof obj.name === 'string' ? obj.name : id;
   let coord: Coord;
-  if (typeof obj.lat === 'number' && typeof obj.lon === 'number') {
-    coord = ensureValidCoord(obj.lat, obj.lon);
-  } else if (typeof obj.location === 'string') {
-    coord = parseLocation(obj.location);
-  } else {
-    throw new Error(`Store ${id} missing coordinates`);
+  try {
+    coord = parseCoord(obj);
+  } catch (err) {
+    if ((err as Error).message === MISSING_COORDS_MSG) {
+      throw new Error(`Store ${id} missing coordinates`);
+    }
+    throw err;
   }
 
   const store: Store = { id, name, coord };
