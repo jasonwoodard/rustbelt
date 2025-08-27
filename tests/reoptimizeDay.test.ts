@@ -3,6 +3,9 @@ import { reoptimizeDay } from '../src/app/reoptimizeDay';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { writeFileSync } from 'node:fs';
+import { computeTimeline } from '../src/schedule';
+import type { Store } from '../src/types';
+import { hhmmToMin } from '../src/time';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -57,5 +60,88 @@ describe('reoptimizeDay', () => {
       .map((s) => s.id);
     expect(storeIds).toEqual(['B']);
     expect(data.days[0].stops[0].arrive).toBe('00:03');
+  });
+
+  it('throws if must visits exceed day window', () => {
+    const MILE_TO_DEG = 1 / 69;
+    const trip = {
+      config: { mph: 60, defaultDwellMin: 0, seed: 1 },
+      days: [
+        {
+          dayId: 'D1',
+          start: {
+            id: 'S',
+            name: 'start',
+            lat: 0,
+            lon: 0,
+            coord: [0, 0],
+          },
+          end: {
+            id: 'E',
+            name: 'end',
+            lat: 0,
+            lon: 0,
+            coord: [0, 0],
+          },
+          window: { start: '00:00', end: '00:11' },
+          mustVisitIds: ['A', 'B'],
+        },
+      ],
+      stores: [
+        {
+          id: 'A',
+          name: 'A',
+          lat: 3 * MILE_TO_DEG,
+          lon: 4 * MILE_TO_DEG,
+          coord: [3 * MILE_TO_DEG, 4 * MILE_TO_DEG],
+        },
+        {
+          id: 'B',
+          name: 'B',
+          lat: -3 * MILE_TO_DEG,
+          lon: 4 * MILE_TO_DEG,
+          coord: [-3 * MILE_TO_DEG, 4 * MILE_TO_DEG],
+        },
+      ],
+    };
+    const tmpPath = join(__dirname, 'tmp-infeasible-trip.json');
+    writeFileSync(tmpPath, JSON.stringify(trip));
+    const day = trip.days[0];
+    const stores: Record<string, Store> = {};
+    for (const s of trip.stores) {
+      stores[s.id] = s;
+    }
+    const ctx = {
+      start: day.start,
+      end: day.end,
+      window: day.window,
+      mph: 60,
+      defaultDwellMin: 0,
+      stores,
+    };
+    const { hotelETAmin } = computeTimeline(day.mustVisitIds!, ctx);
+    const endMin = hhmmToMin(day.window.end);
+    const deficit = Math.round(hotelETAmin - endMin);
+    try {
+      reoptimizeDay('00:00', [0, 0], { tripPath: tmpPath, dayId: 'D1' });
+      throw new Error('expected reoptimizeDay to throw');
+    } catch (err) {
+      const e = err as Error;
+      expect(e.message).toContain(
+        `must visits exceed day window by ${deficit} min`,
+      );
+      expect(e.message).toContain('Must-visit chain exceeds window');
+      const match = e.message.match(/suggestions: (.*)$/);
+      expect(match).not.toBeNull();
+      const suggestions = JSON.parse(match![1]);
+      const types = suggestions.map((s: { type: string }) => s.type);
+      expect(types).toContain('extendEnd');
+      expect(types).toContain('dropMustVisit');
+      expect(
+        suggestions.every(
+          (s: { reason?: string }) => typeof s.reason === 'string',
+        ),
+      ).toBe(true);
+    }
   });
 });
