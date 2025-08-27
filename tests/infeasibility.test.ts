@@ -21,9 +21,14 @@ describe('infeasibility advisor', () => {
     expect(types).toContain('extendEnd');
     expect(types).toContain('dropStore');
     const drop = suggestions.find((s) => s.type === 'dropStore') as
-      | { type: 'dropStore'; storeId: string }
+      | { type: 'dropStore'; storeId: string; reason: string }
       | undefined;
     expect(drop?.storeId).toBeDefined();
+    expect(drop?.reason).toBe('Store set exceeds window');
+    const extend = suggestions.find((s) => s.type === 'extendEnd') as
+      | { type: 'extendEnd'; reason: string }
+      | undefined;
+    expect(extend?.reason).toBe('Schedule exceeds window');
   });
 
   it('suggests relaxing locked stops', () => {
@@ -46,8 +51,14 @@ describe('infeasibility advisor', () => {
     expect(types).toContain('relaxLock');
     const relax = suggestions.find(
       (s) => s.type === 'relaxLock' && s.storeId === 'B',
-    ) as { type: 'relaxLock'; storeId: string; minutesSaved: number } | undefined;
+    ) as {
+      type: 'relaxLock';
+      storeId: string;
+      minutesSaved: number;
+      reason: string;
+    } | undefined;
     expect(relax).toBeDefined();
     expect(relax!.minutesSaved).toBeGreaterThan(0);
+    expect(relax!.reason).toBe('Lock constraints exceed window');
   });
 });

@@ -3,10 +3,10 @@ import { hhmmToMin } from './time';
 import type { ID } from './types';
 
 export type InfeasibilitySuggestion =
-  | { type: 'extendEnd'; minutes: number }
-  | { type: 'dropMustVisit'; storeId: ID; minutesSaved: number }
-  | { type: 'dropStore'; storeId: ID; minutesSaved: number }
-  | { type: 'relaxLock'; storeId: ID; minutesSaved: number };
+  | { type: 'extendEnd'; minutes: number; reason: string }
+  | { type: 'dropMustVisit'; storeId: ID; minutesSaved: number; reason: string }
+  | { type: 'dropStore'; storeId: ID; minutesSaved: number; reason: string }
+  | { type: 'relaxLock'; storeId: ID; minutesSaved: number; reason: string };
 
 /**
  * Analyze infeasible schedules and suggest relaxations ranked by time saved.
@@ -23,7 +23,11 @@ export function adviseInfeasible(
     return suggestions;
   }
 
-  suggestions.push({ type: 'extendEnd', minutes: Math.round(deficit) });
+  suggestions.push({
+    type: 'extendEnd',
+    minutes: Math.round(deficit),
+    reason: 'Schedule exceeds window',
+  });
 
   // Must-visit chain infeasibility
   if (ctx.mustVisitIds && ctx.mustVisitIds.length > 0) {
@@ -37,6 +41,7 @@ export function adviseInfeasible(
           type: 'dropMustVisit',
           storeId: id,
           minutesSaved: Math.round(saved),
+          reason: 'Must-visit chain exceeds window',
         });
       }
     }
@@ -55,6 +60,7 @@ export function adviseInfeasible(
         type: 'dropStore',
         storeId: id,
         minutesSaved: Math.round(saved),
+        reason: 'Store set exceeds window',
       });
     }
   }
@@ -81,6 +87,7 @@ export function adviseInfeasible(
           type: 'relaxLock',
           storeId: id,
           minutesSaved: Math.round(saved),
+          reason: 'Lock constraints exceed window',
         });
       }
     }
