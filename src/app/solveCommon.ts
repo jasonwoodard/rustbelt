@@ -3,6 +3,7 @@ import { parseTrip } from '../io/parse';
 import { planDay, type ProgressFn } from '../heuristics';
 import { computeTimeline, slackMin, isFeasible, type ScheduleCtx } from '../schedule';
 import { adviseInfeasible } from '../infeasibility';
+import type { InfeasibilitySuggestion } from '../infeasibility';
 import { hhmmToMin } from '../time';
 import type { ID, Store, DayPlan, LockSpec, Coord } from '../types';
 
@@ -18,6 +19,19 @@ export interface SolveCommonOptions {
   locks?: LockSpec[];
   completedIds?: ID[];
   progress?: ProgressFn;
+}
+
+export function augmentErrorWithReasons(err: unknown): Error {
+  const e = err as Error & { suggestions?: InfeasibilitySuggestion[] };
+  if (e.suggestions && !e.message.includes('reasons:')) {
+    const reasons = Array.from(
+      new Set(e.suggestions.map((s) => s.reason)),
+    ).join('; ');
+    const newErr = new Error(`${e.message}; reasons: ${reasons}`);
+    (newErr as Error & { suggestions?: unknown[] }).suggestions = e.suggestions;
+    return newErr;
+  }
+  return e;
 }
 
 export function solveCommon(opts: SolveCommonOptions): DayPlan {

@@ -1,8 +1,7 @@
 import { emitItinerary, EmitResult } from '../io/emit';
-import { solveCommon } from './solveCommon';
+import { solveCommon, augmentErrorWithReasons } from './solveCommon';
 import type { ID, LockSpec, Coord } from '../types';
 import type { ProgressFn } from '../heuristics';
-import type { InfeasibilitySuggestion } from '../infeasibility';
 
 export interface ReoptimizeDayOptions {
   tripPath: string;
@@ -38,19 +37,7 @@ export function reoptimizeDay(
 
     return emitItinerary([dayPlan]);
   } catch (err) {
-    const e = err as Error & {
-      suggestions?: InfeasibilitySuggestion[];
-    };
-    if (e.suggestions && !e.message.includes('reasons:')) {
-      const reasons = Array.from(
-        new Set(e.suggestions.map((s) => s.reason)),
-      ).join('; ');
-      const newErr = new Error(`${e.message}; reasons: ${reasons}`);
-      (newErr as Error & { suggestions?: unknown[] }).suggestions =
-        e.suggestions;
-      throw newErr;
-    }
-    throw e;
+    throw augmentErrorWithReasons(err);
   }
 }
 
