@@ -4,6 +4,7 @@ import {
   isFeasible,
   slackMin,
   ScheduleCtx,
+  buildDistanceMatrix,
 } from './schedule';
 import type { ID, LockSpec } from './types';
 import { hhmmToMin } from './time';
@@ -85,6 +86,9 @@ function seedMustVisits(
 }
 
 export function planDay(ctx: HeuristicCtx): ID[] {
+  if (!ctx.distanceMatrix) {
+    ctx.distanceMatrix = buildDistanceMatrix(ctx);
+  }
   const rng = seedrandom(String(ctx.seed ?? 0));
   const { order, prefix, suffix } = applyLocks(ctx);
   seedMustVisits(order, ctx, prefix, suffix);
