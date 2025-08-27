@@ -93,8 +93,13 @@ export function solveCommon(opts: SolveCommonOptions): DayPlan {
       ]),
     );
     const suggestions = adviseInfeasible(adviceOrder, ctx);
+    const reasons = Array.from(new Set(suggestions.map((s) => s.reason))).join(
+      '; ',
+    );
     const newErr = new Error(
-      `${(err as Error).message}; suggestions: ${JSON.stringify(suggestions)}`,
+      `${(err as Error).message}; reasons: ${reasons}; suggestions: ${JSON.stringify(
+        suggestions,
+      )}`,
     );
     (newErr as Error & { suggestions?: unknown[] }).suggestions = suggestions;
     throw newErr;
@@ -105,10 +110,13 @@ export function solveCommon(opts: SolveCommonOptions): DayPlan {
     const suggestions = adviseInfeasible(order, ctx);
     const endMin = hhmmToMin(ctx.window.end);
     const deficit = timeline.hotelETAmin - endMin;
+    const reasons = Array.from(new Set(suggestions.map((s) => s.reason))).join(
+      '; ',
+    );
     const err = new Error(
-      `must visits exceed day window by ${Math.round(deficit)} min; suggestions: ${JSON.stringify(
-        suggestions,
-      )}`,
+      `must visits exceed day window by ${Math.round(
+        deficit,
+      )} min; reasons: ${reasons}; suggestions: ${JSON.stringify(suggestions)}`,
     );
     (err as Error & { suggestions?: unknown[] }).suggestions = suggestions;
     throw err;

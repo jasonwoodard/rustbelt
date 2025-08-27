@@ -59,12 +59,18 @@ describe('solveDay', () => {
       expect(e.message).toContain(
         `must visits exceed day window by ${deficit} min`,
       );
+      expect(e.message).toContain('Must-visit chain exceeds window');
       const match = e.message.match(/suggestions: (.*)$/);
       expect(match).not.toBeNull();
       const suggestions = JSON.parse(match![1]);
       const types = suggestions.map((s: { type: string }) => s.type);
       expect(types).toContain('extendEnd');
       expect(types).toContain('dropMustVisit');
+      expect(
+        suggestions.every(
+          (s: { reason?: string }) => typeof s.reason === 'string',
+        ),
+      ).toBe(true);
     }
   });
 });
