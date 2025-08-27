@@ -1,4 +1,4 @@
-import { minutesAtMph, haversineMiles } from './distance';
+import { minutesAtMph, haversineMiles, buildMatrix } from './distance';
 import type {
   Anchor,
   Store,
@@ -18,6 +18,7 @@ export interface ScheduleCtx {
   stores: Record<ID, Store>;
   mustVisitIds?: ID[];
   locks?: LockSpec[];
+  distanceMatrix?: DistanceMatrix;
 }
 
 export interface TimelineResult {
@@ -27,12 +28,50 @@ export interface TimelineResult {
   hotelETAmin: number;
 }
 
+export interface DistanceMatrix {
+  ids: ID[];
+  matrix: number[][];
+  idIndex: Record<ID, number>;
+}
+
+export function buildDistanceMatrix(ctx: ScheduleCtx): DistanceMatrix {
+  const ids: ID[] = [];
+  const coords: Coord[] = [];
+  const idIndex: Record<ID, number> = {};
+  function add(id: ID, coord: Coord) {
+    if (idIndex[id] != null) return;
+    idIndex[id] = ids.length;
+    ids.push(id);
+    coords.push(coord);
+  }
+  add(ctx.start.id, ctx.start.coord);
+  add(ctx.end.id, ctx.end.coord);
+  for (const s of Object.values(ctx.stores)) {
+    add(s.id, s.coord);
+  }
+  return { ids, matrix: buildMatrix(coords), idIndex };
+}
+
 function legMetrics(
+  fromId: ID,
   from: Coord,
+  toId: ID,
   to: Coord,
   mph: number,
+  matrix?: DistanceMatrix,
 ): { dist: number; driveMin: number } {
-  const dist = haversineMiles(from, to);
+  let dist: number;
+  if (matrix) {
+    const i = matrix.idIndex[fromId];
+    const j = matrix.idIndex[toId];
+    if (i != null && j != null) {
+      dist = matrix.matrix[i][j];
+    } else {
+      dist = haversineMiles(from, to);
+    }
+  } else {
+    dist = haversineMiles(from, to);
+  }
   return { dist, driveMin: minutesAtMph(dist, mph) };
 }
 
@@ -45,6 +84,7 @@ export function computeTimeline(order: ID[], ctx: ScheduleCtx): TimelineResult {
   let currentTime = startMin;
   let currentId: ID = ctx.start.id;
   let currentCoord: Coord = ctx.start.coord;
+  const matrix = ctx.distanceMatrix;
 
   // start stop
   const [startLat, startLon] = ctx.start.coord;
@@ -65,9 +105,12 @@ export function computeTimeline(order: ID[], ctx: ScheduleCtx): TimelineResult {
     }
 
     const { dist, driveMin } = legMetrics(
+      currentId,
       currentCoord,
+      store.id,
       store.coord,
       ctx.mph,
+      matrix,
     );
     currentTime += driveMin;
     totalDriveMin += driveMin;
@@ -101,9 +144,12 @@ export function computeTimeline(order: ID[], ctx: ScheduleCtx): TimelineResult {
 
   // leg to end
   const { dist, driveMin } = legMetrics(
+    currentId,
     currentCoord,
+    ctx.end.id,
     ctx.end.coord,
     ctx.mph,
+    matrix,
   );
   currentTime += driveMin;
   totalDriveMin += driveMin;
