@@ -58,7 +58,7 @@ program
                 console.log(
                   `progress ${phase}: stops=${order.length} slack=${metrics.slackMin.toFixed(
                     1,
-                  )} drive=${metrics.totalDriveMin.toFixed(1)}`,
+                  )} drive=${metrics.totalDriveMin.toFixed(1)} eta=${metrics.hotelETAmin.toFixed(1)}`,
                 )
             : undefined,
         },
@@ -76,7 +76,7 @@ program
               console.log(
                 `progress ${phase}: stops=${order.length} slack=${metrics.slackMin.toFixed(
                   1,
-                )} drive=${metrics.totalDriveMin.toFixed(1)}`,
+                )} drive=${metrics.totalDriveMin.toFixed(1)} eta=${metrics.hotelETAmin.toFixed(1)}`,
               )
           : undefined,
       });

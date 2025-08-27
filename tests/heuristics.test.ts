@@ -34,5 +34,22 @@ describe('heuristics', () => {
     const b = planDay(ctx2);
     expect(a).toEqual(b);
   });
+
+  it('reports progress snapshots with metrics', () => {
+    const ctx = buildCtx();
+    const phases: string[] = [];
+    const metrics: number[][] = [];
+    ctx.progress = (phase, _order, m) => {
+      phases.push(phase);
+      metrics.push([m.slackMin, m.totalDriveMin, m.hotelETAmin]);
+    };
+    planDay(ctx);
+    expect(phases).toEqual(['greedy', 'greedy', 'greedy', '2-opt', 'relocate']);
+    for (const [slack, drive, eta] of metrics) {
+      expect(typeof slack).toBe('number');
+      expect(typeof drive).toBe('number');
+      expect(typeof eta).toBe('number');
+    }
+  });
 });
 
