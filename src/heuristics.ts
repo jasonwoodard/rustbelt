@@ -165,6 +165,7 @@ function greedyInsert(
     if (ctx.verbose) {
       console.log(`insert ${bestId} at ${bestPos}`);
     }
+    reportProgress('greedy', order, ctx);
   }
 }
 
@@ -196,6 +197,7 @@ function twoOpt(
             const after = candidate.slice(i, j + 1);
             console.log('2-opt swap', before, '->', after);
           }
+          reportProgress('2-opt', order, ctx);
           improved = true;
           break outer;
         }
@@ -233,6 +235,7 @@ function relocate(
           if (ctx.verbose) {
             console.log(`relocate ${id} from ${i} to ${j}`);
           }
+          reportProgress('relocate', order, ctx);
           improved = true;
           break outer;
         }
