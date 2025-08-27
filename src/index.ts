@@ -29,12 +29,19 @@ program
   .option('--progress', 'Print heuristic progress')
   .option('--now <HH:mm>', 'Reoptimize from this time')
   .option('--at <lat,lon>', 'Current location')
+  .option('--done <ids>', 'Comma-separated list of completed store IDs')
   .option('--out <file>', 'Write itinerary JSON to this path (overwrite)')
   .option('--kml [file]', 'Write KML to this path (or stdout)')
   .action((opts) => {
     let result;
     if (opts.now && opts.at) {
       const [lat, lon] = opts.at.split(',').map(Number);
+      const completedIds = opts.done
+        ? String(opts.done)
+            .split(',')
+            .map((s) => s.trim())
+            .filter(Boolean)
+        : undefined;
       result = reoptimizeDay(
         opts.now,
         [lat, lon],
@@ -45,6 +52,7 @@ program
           defaultDwellMin: opts.defaultDwell,
           seed: opts.seed,
           verbose: opts.verbose,
+          completedIds,
           progress: opts.progress
             ? (phase, order, metrics) =>
                 console.log(
