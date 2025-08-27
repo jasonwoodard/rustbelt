@@ -5,6 +5,18 @@ import { solveDay } from './app/solveDay';
 import { reoptimizeDay } from './app/reoptimizeDay';
 import { emitKml } from './io/emitKml';
 import type { DayPlan } from './types';
+import type { ProgressFn } from './heuristics';
+
+function buildProgressLogger(verbose: boolean): ProgressFn {
+  return (phase, order, metrics) => {
+    const detail = verbose ? ` order=${order.join(',')}` : '';
+    console.log(
+      `progress ${phase}: stops=${order.length} slack=${metrics.slackMin.toFixed(
+        1,
+      )} drive=${metrics.totalDriveMin.toFixed(1)} eta=${metrics.hotelETAmin.toFixed(1)}${detail}`,
+    );
+  };
+}
 
 export const program = new Command();
 
@@ -54,12 +66,7 @@ program
           verbose: opts.verbose,
           completedIds,
           progress: opts.progress
-            ? (phase, order, metrics) =>
-                console.log(
-                  `progress ${phase}: stops=${order.length} slack=${metrics.slackMin.toFixed(
-                    1,
-                  )} drive=${metrics.totalDriveMin.toFixed(1)} eta=${metrics.hotelETAmin.toFixed(1)}`,
-                )
+            ? buildProgressLogger(Boolean(opts.verbose))
             : undefined,
         },
       );
@@ -72,12 +79,7 @@ program
         seed: opts.seed,
         verbose: opts.verbose,
         progress: opts.progress
-          ? (phase, order, metrics) =>
-              console.log(
-                `progress ${phase}: stops=${order.length} slack=${metrics.slackMin.toFixed(
-                  1,
-                )} drive=${metrics.totalDriveMin.toFixed(1)} eta=${metrics.hotelETAmin.toFixed(1)}`,
-              )
+          ? buildProgressLogger(Boolean(opts.verbose))
           : undefined,
       });
     }
