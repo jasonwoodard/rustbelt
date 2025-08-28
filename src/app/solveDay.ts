@@ -1,6 +1,6 @@
 import { emitItinerary, EmitResult } from '../io/emit';
 import { solveCommon, augmentErrorWithReasons } from './solveCommon';
-import type { LockSpec } from '../types';
+import type { LockSpec, DayPlan } from '../types';
 import type { ProgressFn } from '../heuristics';
 
 export interface SolveDayOptions {
@@ -15,7 +15,11 @@ export interface SolveDayOptions {
   lambda?: number;
 }
 
-export function solveDay(opts: SolveDayOptions): EmitResult {
+export interface SolveDayResult extends EmitResult {
+  metrics: DayPlan['metrics'];
+}
+
+export function solveDay(opts: SolveDayOptions): SolveDayResult {
   try {
     const dayPlan = solveCommon({
       tripPath: opts.tripPath,
@@ -28,8 +32,8 @@ export function solveDay(opts: SolveDayOptions): EmitResult {
       progress: opts.progress,
       lambda: opts.lambda,
     });
-
-    return emitItinerary([dayPlan]);
+    const emit = emitItinerary([dayPlan]);
+    return { ...emit, metrics: dayPlan.metrics };
   } catch (err) {
     throw augmentErrorWithReasons(err);
   }

@@ -1,5 +1,7 @@
 export type ID = string;
 
+export const BREAK_ID: ID = '__break__';
+
 export type Coord = readonly [number, number];
 
 export interface Anchor {
@@ -32,6 +34,9 @@ export interface DayConfig {
   defaultDwellMin?: number;
   mustVisitIds?: ID[];
   locks?: LockSpec[]; // v0.2+
+  maxDriveTime?: number;
+  maxStops?: number;
+  breakWindow?: { start: string; end: string };
 }
 
 export interface TripConfig {
@@ -51,7 +56,7 @@ export interface Leg {
 export interface StopPlan {
   id: ID;
   name: string;
-  type: "start" | "store" | "end";
+  type: "start" | "store" | "break" | "end";
   arrive: string;
   depart: string;
   lat: number;
@@ -70,6 +75,8 @@ export interface DayPlan {
     totalDriveMin: number;
     totalDwellMin: number;
     slackMin: number;
+    limitViolations?: string[];
+    bindingConstraints?: string[];
   };
 }
 

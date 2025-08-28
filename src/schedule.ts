@@ -7,6 +7,7 @@ import type {
   StopPlan,
   LockSpec,
 } from './types';
+import { BREAK_ID } from './types';
 import { hhmmToMin, minToHhmm } from './time';
 
 export interface ScheduleCtx {
@@ -19,6 +20,9 @@ export interface ScheduleCtx {
   mustVisitIds?: ID[];
   locks?: LockSpec[];
   distanceMatrix?: DistanceMatrix;
+  maxDriveTime?: number;
+  maxStops?: number;
+  breakWindow?: { start: string; end: string };
 }
 
 export interface TimelineResult {
@@ -26,6 +30,7 @@ export interface TimelineResult {
   totalDriveMin: number;
   totalDwellMin: number;
   hotelETAmin: number;
+  break?: { arriveMin: number; departMin: number };
 }
 
 export interface DistanceMatrix {
@@ -85,6 +90,16 @@ export function computeTimeline(order: ID[], ctx: ScheduleCtx): TimelineResult {
   let currentId: ID = ctx.start.id;
   let currentCoord: Coord = ctx.start.coord;
   const matrix = ctx.distanceMatrix;
+  const breakStart = ctx.breakWindow
+    ? hhmmToMin(ctx.breakWindow.start)
+    : null;
+  const breakEnd = ctx.breakWindow
+    ? hhmmToMin(ctx.breakWindow.end)
+    : null;
+  const breakDur =
+    breakStart != null && breakEnd != null ? breakEnd - breakStart : 0;
+  let breakArrive: number | null = null;
+  let breakDepart: number | null = null;
 
   // start stop
   const [startLat, startLon] = ctx.start.coord;
@@ -99,6 +114,30 @@ export function computeTimeline(order: ID[], ctx: ScheduleCtx): TimelineResult {
   });
 
   for (const id of order) {
+    if (id === BREAK_ID) {
+      if (breakStart == null || breakEnd == null) {
+        throw new Error('breakWindow required for break stop');
+      }
+      const arriveMin = Math.max(currentTime, breakStart);
+      const departMin = arriveMin + breakDur;
+      breakArrive = arriveMin;
+      breakDepart = departMin;
+      totalDwellMin += breakDur;
+      const [lat, lon] = currentCoord;
+      stops.push({
+        id: BREAK_ID,
+        name: 'Break',
+        type: 'break',
+        arrive: minToHhmm(arriveMin),
+        depart: minToHhmm(departMin),
+        lat,
+        lon,
+        dwellMin: breakDur,
+      });
+      currentTime = departMin;
+      continue;
+    }
+
     const store = ctx.stores[id];
     if (!store) {
       throw new Error(`Unknown store id: ${id}`);
@@ -172,7 +211,16 @@ export function computeTimeline(order: ID[], ctx: ScheduleCtx): TimelineResult {
     },
   });
 
-  return { stops, totalDriveMin, totalDwellMin, hotelETAmin: currentTime };
+  const result: TimelineResult = {
+    stops,
+    totalDriveMin,
+    totalDwellMin,
+    hotelETAmin: currentTime,
+  };
+  if (breakArrive != null && breakDepart != null) {
+    result.break = { arriveMin: breakArrive, departMin: breakDepart };
+  }
+  return result;
 }
 
 export function isFeasible(order: ID[], ctx: ScheduleCtx): boolean {
@@ -183,10 +231,30 @@ export function isFeasible(order: ID[], ctx: ScheduleCtx): boolean {
       }
     }
   }
+  if (ctx.maxStops != null) {
+    const count = order.filter((id) => id !== BREAK_ID).length;
+    if (count > ctx.maxStops) return false;
+  }
+  if (ctx.breakWindow && !order.includes(BREAK_ID)) {
+    return false;
+  }
 
-  const { hotelETAmin } = computeTimeline(order, ctx);
+  const t = computeTimeline(order, ctx);
   const endMin = hhmmToMin(ctx.window.end);
-  return hotelETAmin <= endMin;
+  if (t.hotelETAmin > endMin) return false;
+  if (ctx.maxDriveTime != null && t.totalDriveMin > ctx.maxDriveTime) {
+    return false;
+  }
+  if (ctx.breakWindow) {
+    const bwStart = hhmmToMin(ctx.breakWindow.start);
+    const bwEnd = hhmmToMin(ctx.breakWindow.end);
+    const b = t.break;
+    if (!b) return false;
+    if (b.arriveMin < bwStart || b.departMin > bwEnd) {
+      return false;
+    }
+  }
+  return true;
 }
 
 export function slackMin(order: ID[], ctx: ScheduleCtx): number {

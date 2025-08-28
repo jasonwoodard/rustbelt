@@ -6,6 +6,7 @@ import { adviseInfeasible } from '../infeasibility';
 import type { InfeasibilitySuggestion } from '../infeasibility';
 import { hhmmToMin } from '../time';
 import type { ID, Store, DayPlan, LockSpec, Coord } from '../types';
+import { BREAK_ID } from '../types';
 
 export interface SolveCommonOptions {
   tripPath: string;
@@ -69,6 +70,10 @@ export function solveCommon(opts: SolveCommonOptions): DayPlan {
   let mustVisitIds = day.mustVisitIds?.filter((id) => candidateIds.includes(id));
   let locks = (opts.locks ?? day.locks)?.filter((l) => candidateIds.includes(l.storeId));
 
+  if (day.breakWindow) {
+    mustVisitIds = [...(mustVisitIds ?? []), BREAK_ID];
+  }
+
   const start = { ...day.start, coord: opts.startCoord ?? day.start.coord };
   const window = { start: opts.windowStart ?? day.window.start, end: day.window.end };
 
@@ -79,10 +84,15 @@ export function solveCommon(opts: SolveCommonOptions): DayPlan {
     mph,
     defaultDwellMin,
     stores,
+    maxDriveTime: day.maxDriveTime,
+    maxStops: day.maxStops,
+    breakWindow: day.breakWindow,
   };
 
   if (opts.completedIds || opts.startCoord || opts.windowStart) {
-    candidateIds = candidateIds.filter((id) => isFeasible([id], baseCtx));
+    candidateIds = candidateIds.filter((id) =>
+      isFeasible(day.breakWindow ? [id, BREAK_ID] : [id], baseCtx),
+    );
     mustVisitIds = mustVisitIds?.filter((id) => candidateIds.includes(id));
     locks = locks?.filter((l) => candidateIds.includes(l.storeId));
   }
@@ -140,18 +150,40 @@ export function solveCommon(opts: SolveCommonOptions): DayPlan {
 
   let totalScore = 0;
   for (const id of order) {
-    totalScore += ctx.stores[id].score ?? 0;
+    totalScore += ctx.stores[id]?.score ?? 0;
+  }
+  const storeVisits = order.filter((id) => id !== BREAK_ID).length;
+
+  const limitViolations: string[] = [];
+  const bindingConstraints: string[] = [];
+  if (ctx.maxDriveTime != null) {
+    if (timeline.totalDriveMin > ctx.maxDriveTime + 1e-9) {
+      limitViolations.push('maxDriveTime');
+    } else if (Math.abs(timeline.totalDriveMin - ctx.maxDriveTime) < 1e-9) {
+      bindingConstraints.push('maxDriveTime');
+    }
+  }
+  if (ctx.maxStops != null) {
+    if (storeVisits > ctx.maxStops) {
+      limitViolations.push('maxStops');
+    } else if (storeVisits === ctx.maxStops) {
+      bindingConstraints.push('maxStops');
+    }
   }
 
   const dayPlan: DayPlan = {
     dayId: day.dayId,
     stops: timeline.stops,
     metrics: {
-      storesVisited: order.length,
+      storesVisited: storeVisits,
       totalScore,
       totalDriveMin: timeline.totalDriveMin,
       totalDwellMin: timeline.totalDwellMin,
       slackMin: slackMin(order, ctx),
+      limitViolations: limitViolations.length ? limitViolations : undefined,
+      bindingConstraints: bindingConstraints.length
+        ? bindingConstraints
+        : undefined,
     },
   };
 

@@ -177,6 +177,17 @@ function parseDay(obj: PlainObj): DayConfig {
     day.locks = obj.locks as LockSpec[];
   }
 
+  if (obj.maxDriveTime !== undefined) {
+    day.maxDriveTime = Number(obj.maxDriveTime);
+  }
+  if (obj.maxStops !== undefined) {
+    day.maxStops = Number(obj.maxStops);
+  }
+  if (obj.breakWindow) {
+    const bw = obj.breakWindow as PlainObj;
+    day.breakWindow = { start: String(bw.start), end: String(bw.end) };
+  }
+
   return day;
 }
 
