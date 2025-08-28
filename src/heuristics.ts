@@ -8,6 +8,7 @@ import {
 } from './schedule';
 import type { ID, LockSpec } from './types';
 import { hhmmToMin } from './time';
+import { BREAK_ID } from './types';
 
 export interface HeuristicCtx extends ScheduleCtx {
   candidateIds: ID[];
@@ -36,6 +37,10 @@ function totalScore(order: ID[], ctx: HeuristicCtx): number {
     sum += ctx.stores[id]?.score ?? 0;
   }
   return sum;
+}
+
+function storeCount(order: ID[]): number {
+  return order.filter((id) => id !== BREAK_ID).length;
 }
 
 function objective(order: ID[], ctx: HeuristicCtx): number {
@@ -145,6 +150,9 @@ function greedyInsert(
   suffix = 0,
 ): void {
   while (remaining.length > 0) {
+    if (ctx.maxStops != null && storeCount(order) >= ctx.maxStops) {
+      break;
+    }
     const base = computeTimeline(order, ctx);
     const baseEta = base.hotelETAmin;
     let bestId: ID | null = null;
@@ -160,6 +168,8 @@ function greedyInsert(
       for (let pos = prefix; pos <= order.length - suffix; pos++) {
         const candidate = order.slice();
         candidate.splice(pos, 0, id);
+        if (ctx.maxStops != null && storeCount(candidate) > ctx.maxStops)
+          continue;
         if (!isFeasible(candidate, ctx)) continue;
         const t = computeTimeline(candidate, ctx);
         const delta = t.hotelETAmin - baseEta;
