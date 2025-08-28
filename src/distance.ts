@@ -42,8 +42,10 @@ export function minutesAtMph(distance: number, mph: number): number {
 // Haversine formula to compute great-circle distance between two points on Earth in miles
 export function haversineMiles(a: Coord, b: Coord): number {
   const toRad = (deg: number) => (deg * Math.PI) / 180;
-  const [lat1, lon1] = a.map(toRad) as [number, number];
-  const [lat2, lon2] = b.map(toRad) as [number, number];
+  const lat1: number = toRad(a[0]);
+  const lon1: number = toRad(a[1]);
+  const lat2: number = toRad(b[0]);
+  const lon2: number = toRad(b[1]);
   const dLat = lat2 - lat1;
   const dLon = lon2 - lon1;
   const h =
