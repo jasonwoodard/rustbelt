@@ -40,7 +40,7 @@ FRs broken down by implementation milestone (v0.x)
 
 - **FR-5** Objective: **score/utility** mode (or blend)  
 - **FR-12** Daily caps (max drive/stops) & optional break window  
-- **FR-15** Spatial filter: corridor/polygon (deferred stretch)  
+ 
 - **FR-22** Robustness buffers & **On-Time Risk**
 
 ## v0.4 — Explainability & Scenarios (Stretch)
@@ -51,6 +51,7 @@ FRs broken down by implementation milestone (v0.x)
 ## Out of Scope / De-scoped (for now)
 
 - **FR-7** Store hours/time windows (assume open)  
+- **FR-15** Spatial filter: corridor/polygon
 - **FR-19** Turn-by-turn export / deep links  
 - **FR-23** Special cluster handling (keep exact-coordinate dedupe only)  
 - **FR-26**, **FR-27** Presets (nice-to-have future)
