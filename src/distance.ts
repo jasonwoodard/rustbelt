@@ -1,4 +1,4 @@
-export type Coord = readonly [number, number];
+import type { Coord } from './types';
 
 /**
  * Compute pairwise Euclidean distances between a list of IDs.
@@ -39,10 +39,8 @@ export function minutesAtMph(distance: number, mph: number): number {
   return (distance / mph) * 60;
 }
 
-export type Coordinate = readonly [number, number];
-
 // Haversine formula to compute great-circle distance between two points on Earth in miles
-export function haversineMiles(a: Coordinate, b: Coordinate): number {
+export function haversineMiles(a: Coord, b: Coord): number {
   const toRad = (deg: number) => (deg * Math.PI) / 180;
   const [lat1, lon1] = a.map(toRad) as [number, number];
   const [lat2, lon2] = b.map(toRad) as [number, number];
@@ -59,7 +57,7 @@ export function haversineMiles(a: Coordinate, b: Coordinate): number {
  * Build a symmetric distance matrix in miles for the provided coordinates.
  * Only the upper triangle (j > i) is computed and mirrored to the lower triangle.
  */
-export function buildMatrix(coords: Coordinate[]): number[][] {
+export function buildMatrix(coords: Coord[]): number[][] {
   const n = coords.length;
   const matrix: number[][] = Array.from({ length: n }, () => Array(n).fill(0));
 
