@@ -1,8 +1,8 @@
 {
   "config": {
-    "mph": 50,
+    "mph": 35,
     "defaultDwellMin": 30,
-    "seed": 42
+    "seed": 25
   },
   "days": [
     {
@@ -24,7 +24,6 @@
         "end": "17:00"
       },
       "mustVisitIds": ["VogueVint", "VWT-Southfield"]
-      
     }
   ],
   "stores": [
@@ -77,37 +76,4 @@
       "lon": -83.12332615312
     }
   ]
-}		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+}
