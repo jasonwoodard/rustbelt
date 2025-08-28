@@ -13,6 +13,8 @@ export interface SolveDayOptions {
   locks?: LockSpec[];
   progress?: ProgressFn;
   lambda?: number;
+  robustnessFactor?: number;
+  riskThresholdMin?: number;
 }
 
 export interface SolveDayResult extends EmitResult {
@@ -31,6 +33,8 @@ export function solveDay(opts: SolveDayOptions): SolveDayResult {
       locks: opts.locks,
       progress: opts.progress,
       lambda: opts.lambda,
+      robustnessFactor: opts.robustnessFactor,
+      riskThresholdMin: opts.riskThresholdMin,
     });
     const emit = emitItinerary([dayPlan]);
     return { ...emit, metrics: dayPlan.metrics };

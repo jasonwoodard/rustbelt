@@ -45,6 +45,16 @@ program
   .option('--done <ids>', 'Comma-separated list of completed store IDs')
   .option('--out <file>', 'Write itinerary JSON to this path (overwrite)')
   .option('--kml [file]', 'Write KML to this path (or stdout)')
+  .option(
+    '--robustness <factor>',
+    'Multiply travel times by this factor',
+    parseFloat,
+  )
+  .option(
+    '--risk-threshold <min>',
+    'Slack threshold minutes for on-time risk',
+    parseFloat,
+  )
   .action((opts) => {
     let result;
     if (opts.now && opts.at) {
@@ -70,6 +80,8 @@ program
           progress: opts.progress
             ? buildProgressLogger(Boolean(opts.verbose))
             : undefined,
+          robustnessFactor: opts.robustness,
+          riskThresholdMin: opts['risk-threshold'],
         },
       );
     } else {
@@ -84,6 +96,8 @@ program
         progress: opts.progress
           ? buildProgressLogger(Boolean(opts.verbose))
           : undefined,
+        robustnessFactor: opts.robustness,
+        riskThresholdMin: opts['risk-threshold'],
       });
     }
   
