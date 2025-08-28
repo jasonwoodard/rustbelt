@@ -111,7 +111,7 @@ FR-14 (lock/pin), FR-21 (mid-day re-opt), FR-13 (infeasibility & minimal relaxat
 ## v0.3 — Power Controls & Robustness
 
 **FRs included:**  
-FR-5 (score/utility objective mode), FR-12 (daily limits: max drive time/stops; optional break window; defaults off), FR-15 (corridor/polygon), FR-22 (robustness buffers \+ risk view).
+FR-5 (score/utility objective mode), FR-12 (daily limits: max drive time/stops; optional break window; defaults off), FR-22 (robustness buffers \+ risk view).
 
 **User story:** “I can bias towards higher-value stores, enforce daily caps, confine routes to an I-80/I-90 corridor, and add a global timing buffer with risk indicators.”
 
