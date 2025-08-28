@@ -1,10 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import {
-  pairwiseDistances,
-  minutesAtMph,
-  buildMatrix,
-  Coordinate,
-} from '../src/distance';
+import { pairwiseDistances, minutesAtMph, buildMatrix } from '../src/distance';
+import type { Coord } from '../src/types';
 
 describe('pairwiseDistances', () => {
   it('computes distances when all coordinates are present', () => {
@@ -43,7 +39,7 @@ describe('minutesAtMph', () => {
 });
 
 describe('buildMatrix', () => {
-  const coords: Coordinate[] = [
+  const coords: Coord[] = [
     [37.7749, -122.4194], // San Francisco
     [34.0522, -118.2437], // Los Angeles
     [40.7128, -74.006], // New York
