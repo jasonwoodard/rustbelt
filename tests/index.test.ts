@@ -21,6 +21,11 @@ describe('CLI', () => {
     expect(cmd?.options.some((o) => o.long === '--progress')).toBe(true);
   });
 
+  it('registers lambda flag for solve-day', () => {
+    const cmd = program.commands.find((c) => c.name() === 'solve-day');
+    expect(cmd?.options.some((o) => o.long === '--lambda')).toBe(true);
+  });
+
   it('registers done flag for solve-day', () => {
     const cmd = program.commands.find((c) => c.name() === 'solve-day');
     const opt = cmd?.options.find((o) => o.long === '--done');

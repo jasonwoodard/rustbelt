@@ -136,6 +136,7 @@ export function computeTimeline(order: ID[], ctx: ScheduleCtx): TimelineResult {
         driveMin,
         distanceMi: dist,
       },
+      score: store.score,
     });
 
     currentId = store.id;

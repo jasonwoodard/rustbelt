@@ -19,12 +19,31 @@ describe('solveDay', () => {
     const ids = data.days[0].stops.map((s: { id: string }) => s.id);
     expect(ids).toEqual(['S', 'A', 'B', 'C', 'E']);
     expect(data.days[0].metrics.storesVisited).toBe(3);
+    expect(data.days[0].metrics.totalScore).toBe(0);
   });
 
   it('produces stable itinerary output (FR-31)', () => {
     const tripPath = join(__dirname, '../fixtures/simple-trip.json');
     const result = solveDay({ tripPath, dayId: 'D1' });
     expect(JSON.parse(result.json)).toMatchSnapshot();
+  });
+
+  it('respects store scores when lambda=1', () => {
+    const tripPath = join(__dirname, '../fixtures/scored-trip.json');
+    const resCount = solveDay({ tripPath, dayId: 'D1' });
+    const dataCount = JSON.parse(resCount.json);
+    const storesCount = dataCount.days[0].stops
+      .filter((s: { type: string }) => s.type === 'store')
+      .map((s: { id: string }) => s.id);
+    expect(storesCount).toEqual(['A']);
+
+    const resScore = solveDay({ tripPath, dayId: 'D1', lambda: 1 });
+    const dataScore = JSON.parse(resScore.json);
+    const storesScore = dataScore.days[0].stops
+      .filter((s: { type: string }) => s.type === 'store')
+      .map((s: { id: string }) => s.id);
+    expect(storesScore).toEqual(['B']);
+    expect(dataScore.days[0].metrics.totalScore).toBe(100);
   });
 
   it('throws if must visits exceed day window', () => {

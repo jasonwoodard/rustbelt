@@ -58,6 +58,7 @@ export interface StopPlan {
   lon: number;
   dwellMin?: number;
   legIn?: Leg;
+  score?: number;
 }
 
 export interface DayPlan {
@@ -65,6 +66,7 @@ export interface DayPlan {
   stops: StopPlan[];
   metrics: {
     storesVisited: number;
+    totalScore: number;
     totalDriveMin: number;
     totalDwellMin: number;
     slackMin: number;

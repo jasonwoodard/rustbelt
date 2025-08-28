@@ -15,6 +15,7 @@ export interface HeuristicCtx extends ScheduleCtx {
   verbose?: boolean;
   locks?: LockSpec[];
   progress?: ProgressFn;
+  lambda?: number;
 }
 
 export interface ProgressMetrics {
@@ -28,6 +29,19 @@ export type ProgressFn = (
   order: ID[],
   metrics: ProgressMetrics,
 ) => void;
+
+function totalScore(order: ID[], ctx: HeuristicCtx): number {
+  let sum = 0;
+  for (const id of order) {
+    sum += ctx.stores[id]?.score ?? 0;
+  }
+  return sum;
+}
+
+function objective(order: ID[], ctx: HeuristicCtx): number {
+  const lambda = ctx.lambda ?? 0;
+  return lambda * totalScore(order, ctx) + (1 - lambda) * order.length;
+}
 
 interface LockPlacement {
   order: ID[];
@@ -135,10 +149,14 @@ function greedyInsert(
     const baseEta = base.hotelETAmin;
     let bestId: ID | null = null;
     let bestPos = -1;
+    let bestValue = -Infinity;
     let bestDelta = Infinity;
     let bestSlack = -Infinity;
     let bestDrive = Infinity;
+    const lambda = ctx.lambda ?? 0;
     for (const id of remaining) {
+      const storeVal =
+        lambda * (ctx.stores[id]?.score ?? 0) + (1 - lambda);
       for (let pos = prefix; pos <= order.length - suffix; pos++) {
         const candidate = order.slice();
         candidate.splice(pos, 0, id);
@@ -147,16 +165,19 @@ function greedyInsert(
         const delta = t.hotelETAmin - baseEta;
         const slack = slackMin(candidate, ctx);
         if (
-          delta < bestDelta - 1e-9 ||
-          (Math.abs(delta - bestDelta) < 1e-9 &&
-            (slack > bestSlack + 1e-9 ||
-              (Math.abs(slack - bestSlack) < 1e-9 &&
-                (t.totalDriveMin < bestDrive - 1e-9 ||
-                  (Math.abs(t.totalDriveMin - bestDrive) < 1e-9 &&
-                    rng() < 0.5)))))
+          storeVal > bestValue + 1e-9 ||
+          (Math.abs(storeVal - bestValue) < 1e-9 &&
+            (delta < bestDelta - 1e-9 ||
+              (Math.abs(delta - bestDelta) < 1e-9 &&
+                (slack > bestSlack + 1e-9 ||
+                  (Math.abs(slack - bestSlack) < 1e-9 &&
+                    (t.totalDriveMin < bestDrive - 1e-9 ||
+                      (Math.abs(t.totalDriveMin - bestDrive) < 1e-9 &&
+                        rng() < 0.5)))))))
         ) {
           bestId = id;
           bestPos = pos;
+          bestValue = storeVal;
           bestDelta = delta;
           bestSlack = slack;
           bestDrive = t.totalDriveMin;
@@ -182,6 +203,7 @@ function twoOpt(
   let improved = true;
   while (improved) {
     improved = false;
+    const baseObj = objective(order, ctx);
     const baseSlack = slackMin(order, ctx);
     const baseDrive = computeTimeline(order, ctx).totalDriveMin;
     outer: for (let i = prefix; i < order.length - suffix - 1; i++) {
@@ -191,10 +213,15 @@ function twoOpt(
         const segment = candidate.slice(i, j + 1).reverse();
         candidate.splice(i, segment.length, ...segment);
         if (!isFeasible(candidate, ctx)) continue;
+        const candObj = objective(candidate, ctx);
         const slack = slackMin(candidate, ctx);
         const drive = computeTimeline(candidate, ctx).totalDriveMin;
-        if (slack > baseSlack + 1e-9 ||
-          (Math.abs(slack - baseSlack) < 1e-9 && drive < baseDrive - 1e-9)
+        if (
+          candObj > baseObj + 1e-9 ||
+          (Math.abs(candObj - baseObj) < 1e-9 &&
+            (slack > baseSlack + 1e-9 ||
+              (Math.abs(slack - baseSlack) < 1e-9 &&
+                drive < baseDrive - 1e-9)))
         ) {
           order.splice(0, order.length, ...candidate);
           if (ctx.verbose) {
@@ -219,6 +246,7 @@ function relocate(
   let improved = true;
   while (improved) {
     improved = false;
+    const baseObj = objective(order, ctx);
     const baseSlack = slackMin(order, ctx);
     const baseDrive = computeTimeline(order, ctx).totalDriveMin;
     outer: for (let i = prefix; i < order.length - suffix; i++) {
@@ -230,10 +258,15 @@ function relocate(
         const candidate = removed.slice();
         candidate.splice(j, 0, id);
         if (!isFeasible(candidate, ctx)) continue;
+        const candObj = objective(candidate, ctx);
         const slack = slackMin(candidate, ctx);
         const drive = computeTimeline(candidate, ctx).totalDriveMin;
-        if (slack > baseSlack + 1e-9 ||
-          (Math.abs(slack - baseSlack) < 1e-9 && drive < baseDrive - 1e-9)
+        if (
+          candObj > baseObj + 1e-9 ||
+          (Math.abs(candObj - baseObj) < 1e-9 &&
+            (slack > baseSlack + 1e-9 ||
+              (Math.abs(slack - baseSlack) < 1e-9 &&
+                drive < baseDrive - 1e-9)))
         ) {
           order.splice(0, order.length, ...candidate);
           if (ctx.verbose) {

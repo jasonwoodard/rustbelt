@@ -19,6 +19,7 @@ export interface SolveCommonOptions {
   locks?: LockSpec[];
   completedIds?: ID[];
   progress?: ProgressFn;
+  lambda?: number;
 }
 
 export function augmentErrorWithReasons(err: unknown): Error {
@@ -94,6 +95,7 @@ export function solveCommon(opts: SolveCommonOptions): DayPlan {
     seed: opts.seed ?? trip.config.seed,
     verbose: opts.verbose,
     progress: opts.progress,
+    lambda: opts.lambda,
   };
 
   let order: ID[];
@@ -136,11 +138,17 @@ export function solveCommon(opts: SolveCommonOptions): DayPlan {
     throw err;
   }
 
+  let totalScore = 0;
+  for (const id of order) {
+    totalScore += ctx.stores[id].score ?? 0;
+  }
+
   const dayPlan: DayPlan = {
     dayId: day.dayId,
     stops: timeline.stops,
     metrics: {
       storesVisited: order.length,
+      totalScore,
       totalDriveMin: timeline.totalDriveMin,
       totalDwellMin: timeline.totalDwellMin,
       slackMin: slackMin(order, ctx),

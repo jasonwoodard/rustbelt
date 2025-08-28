@@ -14,13 +14,13 @@ function toMarkdown(days: DayPlan[]): string {
   const lines: string[] = [
     '# Itinerary Summary',
     '',
-    '| Day | Stores Visited | Total Drive (min) | Total Dwell (min) | Slack (min) |',
-    '| --- | ---------------:| -----------------:| -----------------:| ----------:|',
+    '| Day | Stores Visited | Total Score | Total Drive (min) | Total Dwell (min) | Slack (min) |',
+    '| --- | ---------------:| -----------:| -----------------:| -----------------:| ----------:|',
   ];
   for (const d of days) {
     const m = d.metrics;
     lines.push(
-      `| ${d.dayId} | ${m.storesVisited} | ${m.totalDriveMin.toFixed(
+      `| ${d.dayId} | ${m.storesVisited} | ${m.totalScore.toFixed(1)} | ${m.totalDriveMin.toFixed(
         1,
       )} | ${m.totalDwellMin.toFixed(1)} | ${m.slackMin.toFixed(1)} |`,
     );
