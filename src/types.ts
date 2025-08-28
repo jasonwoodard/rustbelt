@@ -37,6 +37,8 @@ export interface DayConfig {
   maxDriveTime?: number;
   maxStops?: number;
   breakWindow?: { start: string; end: string };
+  robustnessFactor?: number;
+  riskThresholdMin?: number;
 }
 
 export interface TripConfig {
@@ -44,6 +46,8 @@ export interface TripConfig {
   defaultDwellMin?: number;
   seed?: number;
   snapDuplicateToleranceMeters?: number;
+  robustnessFactor?: number;
+  riskThresholdMin?: number;
 }
 
 export interface Leg {
@@ -75,6 +79,7 @@ export interface DayPlan {
     totalDriveMin: number;
     totalDwellMin: number;
     slackMin: number;
+    onTimeRisk: number;
     limitViolations?: string[];
     bindingConstraints?: string[];
   };

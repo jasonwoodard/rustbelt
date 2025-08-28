@@ -187,6 +187,12 @@ function parseDay(obj: PlainObj): DayConfig {
     const bw = obj.breakWindow as PlainObj;
     day.breakWindow = { start: String(bw.start), end: String(bw.end) };
   }
+  if (obj.robustnessFactor !== undefined) {
+    day.robustnessFactor = Number(obj.robustnessFactor);
+  }
+  if (obj.riskThresholdMin !== undefined) {
+    day.riskThresholdMin = Number(obj.riskThresholdMin);
+  }
 
   return day;
 }
@@ -202,6 +208,10 @@ function parseTripConfig(obj?: PlainObj): TripConfig {
     cfg.snapDuplicateToleranceMeters = Number(
       obj.snapDuplicateToleranceMeters,
     );
+  if (obj.robustnessFactor !== undefined)
+    cfg.robustnessFactor = Number(obj.robustnessFactor);
+  if (obj.riskThresholdMin !== undefined)
+    cfg.riskThresholdMin = Number(obj.riskThresholdMin);
   return cfg;
 }
 

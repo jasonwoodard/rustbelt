@@ -14,6 +14,8 @@ export interface ReoptimizeDayOptions {
   completedIds?: ID[];
   progress?: ProgressFn;
   lambda?: number;
+  robustnessFactor?: number;
+  riskThresholdMin?: number;
 }
 
 export function reoptimizeDay(
@@ -35,6 +37,8 @@ export function reoptimizeDay(
       locks: opts.locks,
       progress: opts.progress,
       lambda: opts.lambda,
+      robustnessFactor: opts.robustnessFactor,
+      riskThresholdMin: opts.riskThresholdMin,
     });
 
     return emitItinerary([dayPlan]);

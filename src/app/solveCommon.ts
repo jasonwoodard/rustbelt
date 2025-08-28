@@ -1,7 +1,13 @@
 import { readFileSync } from 'node:fs';
 import { parseTrip } from '../io/parse';
 import { planDay, type ProgressFn } from '../heuristics';
-import { computeTimeline, slackMin, isFeasible, type ScheduleCtx } from '../schedule';
+import {
+  computeTimeline,
+  slackMin,
+  isFeasible,
+  type ScheduleCtx,
+  onTimeRisk,
+} from '../schedule';
 import { adviseInfeasible } from '../infeasibility';
 import type { InfeasibilitySuggestion } from '../infeasibility';
 import { hhmmToMin } from '../time';
@@ -21,6 +27,8 @@ export interface SolveCommonOptions {
   completedIds?: ID[];
   progress?: ProgressFn;
   lambda?: number;
+  robustnessFactor?: number;
+  riskThresholdMin?: number;
 }
 
 export function augmentErrorWithReasons(err: unknown): Error {
@@ -51,6 +59,16 @@ export function solveCommon(opts: SolveCommonOptions): DayPlan {
     opts.defaultDwellMin ??
     day.defaultDwellMin ??
     trip.config.defaultDwellMin ??
+    0;
+  const robustnessFactor =
+    opts.robustnessFactor ??
+    day.robustnessFactor ??
+    trip.config.robustnessFactor ??
+    1;
+  const riskThresholdMin =
+    opts.riskThresholdMin ??
+    day.riskThresholdMin ??
+    trip.config.riskThresholdMin ??
     0;
 
   const stores: Record<ID, Store> = {};
@@ -87,6 +105,7 @@ export function solveCommon(opts: SolveCommonOptions): DayPlan {
     maxDriveTime: day.maxDriveTime,
     maxStops: day.maxStops,
     breakWindow: day.breakWindow,
+    robustnessFactor,
   };
 
   if (opts.completedIds || opts.startCoord || opts.windowStart) {
@@ -180,6 +199,7 @@ export function solveCommon(opts: SolveCommonOptions): DayPlan {
       totalDriveMin: timeline.totalDriveMin,
       totalDwellMin: timeline.totalDwellMin,
       slackMin: slackMin(order, ctx),
+      onTimeRisk: onTimeRisk(timeline, ctx.window.end, riskThresholdMin),
       limitViolations: limitViolations.length ? limitViolations : undefined,
       bindingConstraints: bindingConstraints.length
         ? bindingConstraints

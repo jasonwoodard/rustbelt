@@ -6,6 +6,7 @@ exports[`solveDay > produces stable itinerary output (FR-31) 1`] = `
     {
       "dayId": "D1",
       "metrics": {
+        "onTimeRisk": 0,
         "slackMin": 748.0590557204848,
         "storesVisited": 3,
         "totalDriveMin": 690.9409442795152,
