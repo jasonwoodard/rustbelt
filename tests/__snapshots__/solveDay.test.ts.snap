@@ -10,6 +10,7 @@ exports[`solveDay > produces stable itinerary output (FR-31) 1`] = `
         "storesVisited": 3,
         "totalDriveMin": 690.9409442795152,
         "totalDwellMin": 0,
+        "totalScore": 0,
       },
       "stops": [
         {

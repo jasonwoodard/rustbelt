@@ -13,6 +13,7 @@ export interface ReoptimizeDayOptions {
   locks?: LockSpec[];
   completedIds?: ID[];
   progress?: ProgressFn;
+  lambda?: number;
 }
 
 export function reoptimizeDay(
@@ -33,6 +34,7 @@ export function reoptimizeDay(
       verbose: opts.verbose,
       locks: opts.locks,
       progress: opts.progress,
+      lambda: opts.lambda,
     });
 
     return emitItinerary([dayPlan]);

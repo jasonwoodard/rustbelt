@@ -37,6 +37,7 @@ program
     parseFloat,
   )
   .option('--seed <seed>', 'Random seed', parseFloat)
+  .option('--lambda <lambda>', 'Score weighting (0=count,1=score)', parseFloat)
   .option('--verbose', 'Print heuristic steps')
   .option('--progress', 'Print heuristic progress')
   .option('--now <HH:mm>', 'Reoptimize from this time')
@@ -63,6 +64,7 @@ program
           mph: opts.mph,
           defaultDwellMin: opts.defaultDwell,
           seed: opts.seed,
+          lambda: opts.lambda,
           verbose: opts.verbose,
           completedIds,
           progress: opts.progress
@@ -77,6 +79,7 @@ program
         mph: opts.mph,
         defaultDwellMin: opts.defaultDwell,
         seed: opts.seed,
+        lambda: opts.lambda,
         verbose: opts.verbose,
         progress: opts.progress
           ? buildProgressLogger(Boolean(opts.verbose))

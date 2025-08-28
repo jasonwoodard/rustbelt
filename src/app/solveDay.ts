@@ -12,6 +12,7 @@ export interface SolveDayOptions {
   verbose?: boolean;
   locks?: LockSpec[];
   progress?: ProgressFn;
+  lambda?: number;
 }
 
 export function solveDay(opts: SolveDayOptions): EmitResult {
@@ -25,6 +26,7 @@ export function solveDay(opts: SolveDayOptions): EmitResult {
       verbose: opts.verbose,
       locks: opts.locks,
       progress: opts.progress,
+      lambda: opts.lambda,
     });
 
     return emitItinerary([dayPlan]);
