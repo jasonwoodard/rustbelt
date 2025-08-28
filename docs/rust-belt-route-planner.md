@@ -1007,7 +1007,7 @@ If metric is required later, gate it behind a single `units` flag and convert **
 
 ## C. Implement First (file order)
 
-1. `/src/core/cost.ts` — `haversineMi`, `minutesAtMph`, `buildMatrix()`  
+1. `/src/distance.ts` — `haversineMiles`, `minutesAtMph`, `buildMatrix()`
 2. `/src/core/types.ts` — types in §6.2 (imperial-only)  
 3. `/src/core/schedule.ts` — `computeTimeline`, `isFeasible`, `slackMin`  
 4. `/src/core/heuristics.ts` — seed → greedy insert (min feasible Δtime) → 2-opt/relocate; seeded tie-breaks  

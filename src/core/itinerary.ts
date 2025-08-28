@@ -1,4 +1,4 @@
-import { driveMinutes, haversineMiles, buildMatrix } from './cost';
+import { driveMinutes, haversineMiles, buildMatrix } from '../distance';
 import type {
   Anchor,
   Store,
