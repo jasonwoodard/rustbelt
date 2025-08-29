@@ -1,10 +1,12 @@
 import { Command } from 'commander';
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync, readFileSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { solveDay } from './app/solveDay';
 import { reoptimizeDay } from './app/reoptimizeDay';
 import { emitKml } from './io/emitKml';
-import type { DayPlan } from './types';
+import { emitCsv } from './io/emitCsv';
+import { parseTrip } from './io/parse';
+import type { DayPlan, ID } from './types';
 import type { ProgressFn } from './heuristics';
 
 function buildProgressLogger(verbose: boolean): ProgressFn {
@@ -45,6 +47,7 @@ program
   .option('--done <ids>', 'Comma-separated list of completed store IDs')
   .option('--out <file>', 'Write itinerary JSON to this path (overwrite)')
   .option('--kml [file]', 'Write KML to this path (or stdout)')
+  .option('--csv <file>', 'Write store stops CSV to this path')
   .option(
     '--robustness <factor>',
     'Multiply travel times by this factor',
@@ -100,15 +103,40 @@ program
         riskThresholdMin: opts['risk-threshold'],
       });
     }
-  
+
+    const data = JSON.parse(result.json) as { days: DayPlan[] };
+
     if (opts.out) {
       mkdirSync(dirname(opts.out), { recursive: true });
       writeFileSync(opts.out, result.json, 'utf8');
       console.log(`Wrote ${opts.out}`);
     }
 
+    if (opts.csv) {
+      const runTs = new Date().toISOString();
+      const rawTrip = readFileSync(opts.trip, 'utf8');
+      const trip = parseTrip(JSON.parse(rawTrip));
+      const mustVisitByDay: Record<string, ReadonlySet<ID>> = {};
+      for (const d of trip.days) {
+        if (d.mustVisitIds) {
+          mustVisitByDay[d.dayId] = new Set(d.mustVisitIds);
+        }
+      }
+      const storeMustVisitIds = new Set(
+        trip.stores
+          .filter((s) => (s.tags ?? []).some((t) => /must[-_]?visit/i.test(t)))
+          .map((s) => s.id),
+      );
+      const csv = emitCsv(data.days, runTs, opts.seed ?? trip.config.seed, {
+        mustVisitByDay,
+        storeMustVisitIds,
+      });
+      mkdirSync(dirname(opts.csv), { recursive: true });
+      writeFileSync(opts.csv, csv, 'utf8');
+      console.log(`Wrote ${opts.csv}`);
+    }
+
     if (opts.kml !== undefined) {
-      const data = JSON.parse(result.json) as { days: DayPlan[] };
       const kml = emitKml(data.days);
       if (typeof opts.kml === 'string') {
         mkdirSync(dirname(opts.kml), { recursive: true });
