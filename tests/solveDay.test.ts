@@ -92,4 +92,19 @@ describe('solveDay', () => {
       ).toBe(true);
     }
   });
+
+  it('throws when start→end drive equals window', () => {
+    const tripPath = join(__dirname, '../fixtures/drive-equals-window.json');
+    expect(() => solveDay({ tripPath, dayId: 'D1' })).toThrow(
+      'start to end drive time 60 min >= window 60 min',
+    );
+  });
+
+  it('plans when start→end drive is shorter than window', () => {
+    const tripPath = join(__dirname, '../fixtures/drive-within-window.json');
+    const result = solveDay({ tripPath, dayId: 'D1' });
+    const data = JSON.parse(result.json);
+    const ids = data.days[0].stops.map((s: { id: string }) => s.id);
+    expect(ids).toEqual(['S', 'E']);
+  });
 });

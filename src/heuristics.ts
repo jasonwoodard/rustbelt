@@ -108,6 +108,15 @@ export function planDay(ctx: HeuristicCtx): ID[] {
   if (!ctx.distanceMatrix) {
     ctx.distanceMatrix = buildDistanceMatrix(ctx);
   }
+  const startMin = hhmmToMin(ctx.window.start);
+  const endMin = hhmmToMin(ctx.window.end);
+  const windowMin = endMin - startMin;
+  const driveMin = computeTimeline([], ctx).totalDriveMin;
+  if (driveMin >= windowMin) {
+    throw new Error(
+      `start to end drive time ${Math.round(driveMin)} min >= window ${windowMin} min`,
+    );
+  }
   const rng = seedrandom(String(ctx.seed ?? 0));
   const { order, prefix, suffix } = applyLocks(ctx);
   seedMustVisits(order, ctx, prefix, suffix);
