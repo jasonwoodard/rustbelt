@@ -1,4 +1,5 @@
 {
+  "$schema": "../docs/trip-schema.json",
   "config": {
     "mph": 35,
     "defaultDwellMin": 30,
