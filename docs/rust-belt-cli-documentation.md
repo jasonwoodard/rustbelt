@@ -8,14 +8,14 @@ This document describes how to use the `rustbelt` command-line interface.
 rustbelt solve-day --trip <file> --day <id> [options]
 ```
 
-`solve-day` is the default command, so it can be omitted. The tool reads a trip JSON file and produces an itinerary for the specified day. When `--now` and `--at` are provided, the solver reoptimizes the remaining day from the given time and location.
+`solve-day` is the default command, so it can be omitted. The tool reads a trip JSON file and produces an itinerary for the specified day. The trip file must contain a `days` array with `dayId` values; `--day` selects which entry to solve. The flag is required—omitting it or providing a non‑existent `dayId` causes the CLI to exit with an error. When `--now` and `--at` are provided, the solver reoptimizes the remaining day from the given time and location.
 
 ## Options
 
 | Flag | Description |
 | --- | --- |
 | `--trip <file>` | Path to trip JSON file |
-| `--day <id>` | Day id to solve |
+| `--day <id>` | Day id to solve (required) |
 | `--mph <mph>` | Average speed in mph |
 | `--default-dwell <min>` | Default dwell minutes |
 | `--seed <seed>` | Random seed |

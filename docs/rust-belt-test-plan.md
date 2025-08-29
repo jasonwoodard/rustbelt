@@ -14,12 +14,13 @@ The steps below exercise the CLI, verify itinerary outputs, and ensure no store 
 
 1. Build a trip JSON (`trips/rust-belt.json`) with:
    - Three `dayId` entries with start/end anchors and time windows matching the legs above.
-   - A `stores` array containing all 132 stores with unique `id` values and assigned `dayId`s. Stores should appear **only once** in the file.
+   - A `stores` array containing all 132 stores with unique `id` values. Optionally assign a `dayId` to restrict a store to a single day; stores without a `dayId` are candidates on every day. Stores should appear **only once** in the file.
 2. Optional: group stores roughly by geography to balance the daily workload (e.g., Detroit downtown vs. suburbs).
-3. Validate the JSON with `jq` or a schema check before solving.
+3. Validate the JSON with `jq` or the provided schema (`docs/trip-schema.json`) before solving.
 
 ```bash
 jq . trips/rust-belt.json >/dev/null
+# ajv validate -s docs/trip-schema.json -d trips/rust-belt.json
 ```
 
 ---
@@ -106,7 +107,7 @@ Verify that:
 ## 4. Avoiding Duplicate Visits
 
 1. **Unique IDs** – ensure every store has a unique `id` in the trip file. The parser rejects duplicates.
-2. **Day assignment** – assign each store to a single `dayId`. If a store can appear on multiple days, run a post‑solve check that aggregates `storeId`s from `plans/day*.json` and flags duplicates:
+2. **Day assignment** – If you use `dayId`s, assign each store to at most one day. For stores without a `dayId`, run a post‑solve check that aggregates `storeId`s from `plans/day*.json` and flags duplicates:
 
 ```bash
 jq -r '.itinerary[].id' plans/day{1,2,3}.json | sort | uniq -d
