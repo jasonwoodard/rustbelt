@@ -682,22 +682,17 @@ node dist/index.js \\
 **Language:** TypeScript (Node.js).
 
 /src
+  distance.ts        // Haversine & time conversions, matrix
 
-  /core
+  types.ts           // All shared types
 
-    cost.ts            // Haversine & time conversions, matrix
+  schedule.ts        // Build timeline; feasibility & slack
 
-    types.ts           // All shared types
+  heuristics.ts      // Seed, insertion, 2-opt, relocate
 
-    schedule.ts        // Build timeline; feasibility & slack
+  app/               // Solvers and CLI wiring
 
-    heuristics.ts      // Seed, insertion, 2-opt, relocate
-
-    daySolver.ts       // Orchestrates a single-day solve
-
-    reopt.ts           // Mid-day re-optimization (v0.2)
-
-    infeasibility.ts   // Minimal relaxations (v0.2)
+  io/                // Parsing and serialization helpers
 
     spatial.ts         // Corridor/Polygon prefilter (v0.3)
 
@@ -1016,7 +1011,7 @@ If metric is required later, gate it behind a single `units` flag and convert **
 
 1. `/src/distance.ts` — `haversineMiles`, `minutesAtMph`, `buildMatrix()`
 2. `/src/core/types.ts` — types in §6.2 (imperial-only)  
-3. `/src/core/schedule.ts` — `computeTimeline`, `isFeasible`, `slackMin`  
+3. `/src/schedule.ts` — `computeTimeline`, `isFeasible`, `slackMin`
 4. `/src/core/heuristics.ts` — seed → greedy insert (min feasible Δtime) → 2-opt/relocate; seeded tie-breaks  
 5. `/src/io/parse.ts` — `parseTrip`, `parseLocation` (lat/lon | Plus Code | URL `@lat,lon`), validation & dedupe  
 6. `/src/io/emit.ts` — JSON \+ optional Markdown summary with per-day metrics  
