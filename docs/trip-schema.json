@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/trip.schema.json",
+  "title": "Rust Belt Trip",
+  "type": "object",
+  "required": ["config", "days", "stores"],
+  "properties": {
+    "config": { "$ref": "#/definitions/TripConfig" },
+    "days": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/DayConfig" }
+    },
+    "stores": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/Store" }
+    }
+  },
+  "definitions": {
+    "Coord": {
+      "type": "array",
+      "items": { "type": "number" },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "Anchor": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "lat": { "type": "number" },
+        "lon": { "type": "number" },
+        "location": { "type": "string" }
+      },
+      "oneOf": [
+        { "required": ["lat", "lon"] },
+        { "required": ["location"] }
+      ]
+    },
+    "Store": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "lat": { "type": "number" },
+        "lon": { "type": "number" },
+        "location": { "type": "string" },
+        "dwellMin": { "type": "number" },
+        "score": { "type": "number" },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "dayId": { "type": "string" }
+      },
+      "oneOf": [
+        { "required": ["lat", "lon"] },
+        { "required": ["location"] }
+      ]
+    },
+    "LockSpec": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["storeId", "position"],
+          "properties": {
+            "storeId": { "type": "string" },
+            "position": { "enum": ["firstAfterStart", "lastBeforeEnd"] }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["storeId", "index"],
+          "properties": {
+            "storeId": { "type": "string" },
+            "index": { "type": "integer", "minimum": 0 }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["storeId", "afterStoreId"],
+          "properties": {
+            "storeId": { "type": "string" },
+            "afterStoreId": { "type": "string" }
+          }
+        }
+      ]
+    },
+    "DayConfig": {
+      "type": "object",
+      "required": ["dayId", "start", "end", "window"],
+      "properties": {
+        "dayId": { "type": "string" },
+        "start": { "$ref": "#/definitions/Anchor" },
+        "end": { "$ref": "#/definitions/Anchor" },
+        "window": {
+          "type": "object",
+          "required": ["start", "end"],
+          "properties": {
+            "start": { "type": "string" },
+            "end": { "type": "string" }
+          }
+        },
+        "mph": { "type": "number" },
+        "defaultDwellMin": { "type": "number" },
+        "mustVisitIds": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "locks": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/LockSpec" }
+        },
+        "maxDriveTime": { "type": "number" },
+        "maxStops": { "type": "number" },
+        "breakWindow": {
+          "type": "object",
+          "required": ["start", "end"],
+          "properties": {
+            "start": { "type": "string" },
+            "end": { "type": "string" }
+          }
+        },
+        "robustnessFactor": { "type": "number" },
+        "riskThresholdMin": { "type": "number" }
+      }
+    },
+    "TripConfig": {
+      "type": "object",
+      "properties": {
+        "mph": { "type": "number" },
+        "defaultDwellMin": { "type": "number" },
+        "seed": { "type": "number" },
+        "snapDuplicateToleranceMeters": { "type": "number" },
+        "robustnessFactor": { "type": "number" },
+        "riskThresholdMin": { "type": "number" }
+      }
+    }
+  }
+}

@@ -430,6 +430,8 @@ This section specifies the data model and practical input pathways for v0.1, plu
 
 ## 5.1 Minimal Inputs for v0.1 (MVP)
 
+The full JSON structure is described in `docs/trip-schema.json`.
+
 **Trip-level config**
 
 - `mph` *(default 38\)*: constant speed used with Haversine to estimate travel time.  
@@ -454,8 +456,9 @@ This section specifies the data model and practical input pathways for v0.1, plu
 - `name` *(string)*  
 - **Location** (see **5.3**): either `{lat,lon}` or one of the supported string forms that can be normalized to lat/lon.  
 - `dwellMin` *(optional)*: default to `defaultDwellMin` if absent.  
-- `score` *(reserved for v0.3; optional)*  
+- `score` *(reserved for v0.3; optional)*
 - `tags` *(optional)*
+- `dayId` *(optional)*: restricts the store to a specific day; stores without `dayId` are considered on every day.
 
 ## 5.2 Optional Inputs by Version
 
@@ -640,9 +643,13 @@ You can defer spatial filtering without impacting v0.1/v0.2. When enabled:
 
 **CLI (v0.1 / v0.2)**
 
+Pass `--day <id>` to choose which entry in the trip's `days` array to solve.
+
 node dist/index.js \\
 
   \--trip path/to/trip.json \\
+
+  \--day 2025-10-01 \\
 
   \--mph 38 \\
 
