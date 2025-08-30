@@ -27,7 +27,7 @@ jq . trips/rust-belt.json >/dev/null
 
 ## 2. Day-by-Day Runs
 
-Run the solver separately for each day. Use a fixed seed for reproducibility and the same average speed and dwell unless testing overrides.
+Run the solver separately for each day. Use a fixed seed for reproducibility and the same average speed and dwell unless testing overrides. Include `--csv` to capture a stop summary or `--kml` for a map view if desired.
 
 ### Day 1 – Detroit Loop
 
@@ -38,7 +38,8 @@ rustbelt solve-day \
   --mph 30 \
   --default-dwell 12 \
   --seed 1 \
-  --out plans/day1.json
+  --out plans/day1.json \
+  --csv plans/day1.csv
 ```
 
 **Expected checks**
@@ -72,7 +73,8 @@ rustbelt solve-day \
   --mph 30 \
   --default-dwell 12 \
   --seed 1 \
-  --out plans/day3.json
+  --out plans/day3.json \
+  --kml plans/day3.kml
 ```
 
 **Expected checks**
@@ -94,7 +96,8 @@ rustbelt solve-day \
   --at 41.6639,-83.5552 \
   --done s_021,s_045 \
   --seed 1 \
-  --out plans/day2-reopt.json
+  --out plans/day2-reopt.json \
+  --csv plans/day2-reopt.csv
 ```
 
 Verify that:

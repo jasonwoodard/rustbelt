@@ -283,8 +283,10 @@ FR-16 (save/compare scenarios), FR-20 (why excluded \+ next-best).
   /io
 
     parse.ts          \# JSON/CSV import (stores, anchors)
-
     emit.ts           \# JSON/Markdown export of itinerary & metrics
+    emitHtml.ts       \# HTML itinerary rendering
+    emitKml.ts        \# KML export
+    emitCsv.ts        \# Store stop CSV export
 
   /app
 
@@ -698,11 +700,12 @@ node dist/index.js \\
 
     explain.ts         // Exclusions & swap analysis (v0.4)
 
-  /io
-
     parse.ts           // Trip/stores parsing; parseLocation()
 
     emit.ts            // JSON/Markdown outputs
+    emitHtml.ts        // HTML itinerary rendering
+    emitKml.ts         // KML export
+    emitCsv.ts         // Store stop CSV export
 
   /app
 
@@ -1014,7 +1017,7 @@ If metric is required later, gate it behind a single `units` flag and convert **
 3. `/src/schedule.ts` — `computeTimeline`, `isFeasible`, `slackMin`
 4. `/src/core/heuristics.ts` — seed → greedy insert (min feasible Δtime) → 2-opt/relocate; seeded tie-breaks  
 5. `/src/io/parse.ts` — `parseTrip`, `parseLocation` (lat/lon | Plus Code | URL `@lat,lon`), validation & dedupe  
-6. `/src/io/emit.ts` — JSON \+ optional Markdown summary with per-day metrics  
+6. `/src/io/emit.ts` — JSON \+ optional Markdown summary with per-day metrics; `emitHtml.ts` for HTML, `emitKml.ts` for KML, `emitCsv.ts` for CSV
 7. `/src/app/solveDay.ts` — orchestrate a single day solve  
 8. `/src/index.ts` — CLI entry (Commander): flags below
 

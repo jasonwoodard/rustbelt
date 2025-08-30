@@ -2,6 +2,15 @@
 
 Utility for planning store visits.
 
+## Output Options
+
+The CLI prints itinerary JSON to stdout by default. Additional formats can
+be generated with flags:
+
+- `--out <file>` – write the JSON itinerary to a file.
+- `--csv <file>` – export store stops as CSV.
+- `--kml [file]` – emit a KML representation to a file or stdout.
+
 ## HTML Templates
 
 HTML itineraries are rendered with [Mustache](https://mustache.github.io/) templates.
