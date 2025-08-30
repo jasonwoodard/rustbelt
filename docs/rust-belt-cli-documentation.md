@@ -58,6 +58,13 @@ rustbelt solve-day --trip <file> --day <id> [options]
 - `--kml [file]` – Generates a KML representation. With a path argument, the KML is written to that file; otherwise, it is printed to stdout.
 - `--csv <file>` – Exports a CSV of store stops with arrival and departure times.
 
+## Trip file notes
+
+- Coordinates: For anchors and stores you can provide either numeric `lat`/`lon` or a `location` string. The `location` accepts `lat,lon`, a Plus Code, or a Google Maps URL containing `@lat,lon`.
+- Tags: Store `tags` may be an array of strings or a single string. When a string is provided, comma/semicolon/pipe separators are supported.
+- Day availability: If a store has a `dayId` field, it is only considered on that day.
+- Dedupe: When `config.snapDuplicateToleranceMeters` is set, stores within that distance are treated as duplicates and deduped on load.
+
 ### Travel time adjustments and risk
 
 - `--robustness <factor>` – Scales all computed drive times by the given factor. Values greater than `1` make the schedule more conservative; values below `1` make it more aggressive. This flag overrides day and trip configuration defaults.

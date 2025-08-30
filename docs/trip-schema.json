@@ -41,15 +41,24 @@
       "type": "object",
       "required": ["id"],
       "properties": {
-        "id": { "type": "string" },
-        "name": { "type": "string" },
-        "lat": { "type": "number" },
-        "lon": { "type": "number" },
-        "location": { "type": "string" },
-        "dwellMin": { "type": "number" },
-        "score": { "type": "number" },
-        "tags": { "type": "array", "items": { "type": "string" } },
-        "dayId": { "type": "string" }
+        "id": { "type": "string", "description": "Unique store identifier" },
+        "name": { "type": "string", "description": "Display name; defaults to id if omitted" },
+        "lat": { "type": "number", "description": "Latitude when providing coordinates directly" },
+        "lon": { "type": "number", "description": "Longitude when providing coordinates directly" },
+        "location": {
+          "type": "string",
+          "description": "Alternative to lat/lon; accepts 'lat,lon', Plus Codes, or a Google Maps URL containing @lat,lon"
+        },
+        "dwellMin": { "type": "number", "description": "Minutes spent at this stop (overrides defaults)" },
+        "score": { "type": "number", "description": "Optional utility score used when blending or maximizing score" },
+        "tags": {
+          "description": "Labels for the store; may be an array or a single string (supports comma/semicolon/pipe separated values)",
+          "oneOf": [
+            { "type": "array", "items": { "type": "string" } },
+            { "type": "string" }
+          ]
+        },
+        "dayId": { "type": "string", "description": "If present, store is only available on this day" }
       },
       "oneOf": [
         { "required": ["lat", "lon"] },
@@ -88,50 +97,52 @@
       "type": "object",
       "required": ["dayId", "start", "end", "window"],
       "properties": {
-        "dayId": { "type": "string" },
-        "start": { "$ref": "#/definitions/Anchor" },
-        "end": { "$ref": "#/definitions/Anchor" },
+        "dayId": { "type": "string", "description": "Identifier for the day (used by --day)" },
+        "start": { "$ref": "#/definitions/Anchor", "description": "Start location for the day" },
+        "end": { "$ref": "#/definitions/Anchor", "description": "End location for the day (e.g., hotel)" },
         "window": {
           "type": "object",
           "required": ["start", "end"],
           "properties": {
-            "start": { "type": "string" },
-            "end": { "type": "string" }
+            "start": { "type": "string", "description": "Day start time HH:mm" },
+            "end": { "type": "string", "description": "Day end time HH:mm" }
           }
         },
-        "mph": { "type": "number" },
-        "defaultDwellMin": { "type": "number" },
+        "mph": { "type": "number", "description": "Average speed for this day (overrides trip-level mph)" },
+        "defaultDwellMin": { "type": "number", "description": "Default minutes spent at each store (overrides trip-level default)" },
         "mustVisitIds": {
           "type": "array",
-          "items": { "type": "string" }
+          "items": { "type": "string" },
+          "description": "Store IDs that must be included; infeasible runs will error with suggestions"
         },
         "locks": {
           "type": "array",
-          "items": { "$ref": "#/definitions/LockSpec" }
+          "items": { "$ref": "#/definitions/LockSpec" },
+          "description": "Pin stores to positions or relative order"
         },
-        "maxDriveTime": { "type": "number" },
-        "maxStops": { "type": "number" },
+        "maxDriveTime": { "type": "number", "description": "Cap total drive minutes for the day" },
+        "maxStops": { "type": "number", "description": "Cap number of store visits for the day" },
         "breakWindow": {
           "type": "object",
           "required": ["start", "end"],
           "properties": {
-            "start": { "type": "string" },
-            "end": { "type": "string" }
+            "start": { "type": "string", "description": "Break start time HH:mm" },
+            "end": { "type": "string", "description": "Break end time HH:mm" }
           }
         },
-        "robustnessFactor": { "type": "number" },
-        "riskThresholdMin": { "type": "number" }
+        "robustnessFactor": { "type": "number", "description": "Multiply drive times to add buffer (e.g., 1.1 = +10%)" },
+        "riskThresholdMin": { "type": "number", "description": "Slack threshold minutes for on-time risk metric" }
       }
     },
     "TripConfig": {
       "type": "object",
       "properties": {
-        "mph": { "type": "number" },
-        "defaultDwellMin": { "type": "number" },
-        "seed": { "type": "number" },
-        "snapDuplicateToleranceMeters": { "type": "number" },
-        "robustnessFactor": { "type": "number" },
-        "riskThresholdMin": { "type": "number" }
+        "mph": { "type": "number", "description": "Default average speed in mph (fallback when day value omitted)" },
+        "defaultDwellMin": { "type": "number", "description": "Default minutes spent at each store (fallback when day value omitted)" },
+        "seed": { "type": "number", "description": "Random seed for deterministic runs" },
+        "snapDuplicateToleranceMeters": { "type": "number", "description": "When set, nearby stores within this distance are treated as duplicates and deduped" },
+        "robustnessFactor": { "type": "number", "description": "Global buffer multiplier on drive times (overridden by day/CLI)" },
+        "riskThresholdMin": { "type": "number", "description": "Default slack threshold minutes for risk (overridden by day/CLI)" }
       }
     }
   }
