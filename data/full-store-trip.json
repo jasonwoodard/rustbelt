@@ -2,20 +2,20 @@
     "config": {
         "mph": 35,
         "defaultDwellMin": 30,
-        "seed": 42
+        "seed": 22
 
     },
     "days": [
         {
             "dayId": "Day1",
             "start": {
-                 "id": "HCG",
+                 "id": "HCGs1",
                 "name": "Hollywood Casino Greektown",
                 "lat": 42.336873,
                 "lon": -83.0418499
             },
             "end": {
-                 "id": "HCG",
+                 "id": "HCGe1",
                 "name": "Hollywood Casino Greektown",
                 "lat": 42.336873,
                 "lon": -83.0418499
@@ -23,31 +23,33 @@
             "window": {
                 "start": "09:00",
                 "end": "17:00"
-            }
+            },
+            "mustVisitIds": ["TS"]
         },
         {
             "dayId": "Day2",
             "start": {
-                "id": "HCG",
+                "id": "HCGs2",
                 "name": "Hollywood Casino Greektown",
                 "lat": 42.336873,
                 "lon": -83.0418499
             },
             "end": {
-               "id": "HRCATA",
+               "id": "HRCATAe",
                 "name": "Hyatt Regency Cleveland at The Arcade",
                 "lat": 41.40945850,
                 "lon": -81.7993225
             },
             "window": {
                 "start": "09:00",
-                "end": "17:00"
-            }
+                "end": "18:00"
+            },
+            "mustVisitIds": ["GFIM", "TVAT", "MAM", "BSS"]
         },
         {
             "dayId": "Day3",
             "start": {
-                "id": "HRCATA",
+                "id": "HRCATAs",
                 "name": "Hyatt Regency Cleveland at The Arcade",
                 "lat": 41.40945850,
                 "lon": -81.7993225
@@ -56,12 +58,13 @@
                 "id": "TMODA",
                 "name": "The Mansion on Delaware Avenue",
                 "lat": 42.8956085,
-                "lon": 78.8780476
+                "lon": -78.8780476
             },
             "window": {
                 "start": "09:00",
                 "end": "17:00"
-            }
+            },
+            "mustVisitIds": ["IAM","TTAT"]
         }
     ],
     "stores": [
