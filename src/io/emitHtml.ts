@@ -26,6 +26,7 @@ interface ViewModel {
       name: string;
       type: string;
       score?: string;
+      tags?: string;
     }[];
   }[];
 }
@@ -43,6 +44,7 @@ export function emitHtml(
         name: s.name,
         type: s.type,
         score: s.score != null ? s.score.toFixed(1) : undefined,
+        tags: s.tags?.join(', '),
       })),
     })),
   };

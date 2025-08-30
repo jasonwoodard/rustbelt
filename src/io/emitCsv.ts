@@ -37,6 +37,7 @@ function stopToRow(
     leg?.driveMin != null ? String(leg.driveMin) : '',
     leg?.distanceMi != null ? String(leg.distanceMi) : '',
     stop.score != null ? String(stop.score) : '',
+    escapeCsv(stop.tags?.join(';') ?? ''),
   ];
   return cols.join(',');
 }
@@ -63,6 +64,7 @@ export function emitCsv(
     'drive_min',
     'distance_mi',
     'score',
+    'tags',
   ];
   const lines = [header.join(',')];
   for (const day of days) {

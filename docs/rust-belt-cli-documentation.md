@@ -27,7 +27,7 @@ rustbelt solve-day --trip <file> --day <id> [options]
 | `--done <ids>`           | Comma-separated list of completed store IDs   |
 | `--out <file>`           | Write itinerary JSON to this path (overwrite) |
 | `--kml [file]`           | Write KML to this path (or stdout)            |
-| `--csv <file>`           | Write store stops CSV to this path            |
+| `--csv <file>`           | Write store stops CSV to this path (includes tags column) |
 | `--html [file]`          | Write HTML itinerary to this path or stdout   |
 | `--robustness <factor>`  | Multiply travel times by this factor          |
 | `--risk-threshold <min>` | Slack threshold minutes for on-time risk      |
@@ -64,6 +64,7 @@ rustbelt solve-day --trip <file> --day <id> [options]
 
 - Coordinates: For anchors and stores you can provide either numeric `lat`/`lon` or a `location` string. The `location` accepts `lat,lon`, a Plus Code, or a Google Maps URL containing `@lat,lon`.
 - Tags: Store `tags` may be an array of strings or a single string. When a string is provided, comma/semicolon/pipe separators are supported.
+  Tags are preserved in JSON, CSV, HTML, and KML outputs. The CSV export includes a `tags` column containing semicolon-separated values.
 - Day availability: If a store has a `dayId` field, it is only considered on that day.
 - Dedupe: When `config.snapDuplicateToleranceMeters` is set, stores within that distance are treated as duplicates and deduped on load.
 

@@ -68,6 +68,7 @@ export interface StopPlan {
   dwellMin?: number;
   legIn?: Leg;
   score?: number;
+  tags?: string[];
 }
 
 export interface DayPlan {
