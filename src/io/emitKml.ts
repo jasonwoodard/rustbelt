@@ -15,8 +15,13 @@ export function emitKml(days: DayPlan[]): string {
   const routeCoords: string[] = [];
   for (const day of days) {
     for (const stop of day.stops) {
+      const tags = stop.tags?.join(';');
+      const extended =
+        tags != null
+          ? `<ExtendedData><Data name="tags"><value>${escapeXml(tags)}</value></Data></ExtendedData>`
+          : '';
       placemarks.push(
-        `<Placemark><name>${escapeXml(stop.name)}</name><Point><coordinates>${stop.lon},${stop.lat},0</coordinates></Point></Placemark>`,
+        `<Placemark><name>${escapeXml(stop.name)}</name>${extended}<Point><coordinates>${stop.lon},${stop.lat},0</coordinates></Point></Placemark>`,
       );
       routeCoords.push(`${stop.lon},${stop.lat},0`);
     }

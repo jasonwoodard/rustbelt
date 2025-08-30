@@ -180,6 +180,7 @@ export function computeTimeline(order: ID[], ctx: ScheduleCtx): TimelineResult {
         distanceMi: dist,
       },
       score: store.score,
+      tags: store.tags,
     });
 
     currentId = store.id;

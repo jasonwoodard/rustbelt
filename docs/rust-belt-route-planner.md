@@ -286,7 +286,7 @@ FR-16 (save/compare scenarios), FR-20 (why excluded \+ next-best).
     emit.ts           \# JSON/Markdown export of itinerary & metrics
     emitHtml.ts       \# HTML itinerary rendering
     emitKml.ts        \# KML export
-    emitCsv.ts        \# Store stop CSV export
+    emitCsv.ts        \# Store stop CSV export (includes `tags` column with semicolon-separated tags; tags flow through all emitters)
 
   /app
 
