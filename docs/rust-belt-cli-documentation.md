@@ -12,24 +12,25 @@ rustbelt solve-day --trip <file> --day <id> [options]
 
 ## Options
 
-| Flag | Description |
-| --- | --- |
-| `--trip <file>` | Path to trip JSON file |
-| `--day <id>` | Day id to solve (required) |
-| `--mph <mph>` | Average speed in mph |
-| `--default-dwell <min>` | Default dwell minutes |
-| `--seed <seed>` | Random seed |
-| `--lambda <lambda>` | Score weighting (0=count,1=score) |
-| `--verbose` | Print heuristic steps |
-| `--progress` | Print heuristic progress |
-| `--now <HH:mm>` | Reoptimize from this time |
-| `--at <lat,lon>` | Current location |
-| `--done <ids>` | Comma-separated list of completed store IDs |
-| `--out <file>` | Write itinerary JSON to this path (overwrite) |
-| `--kml [file]` | Write KML to this path (or stdout) |
-| `--csv <file>` | Write store stops CSV to this path |
-| `--robustness <factor>` | Multiply travel times by this factor |
-| `--risk-threshold <min>` | Slack threshold minutes for on-time risk |
+| Flag                     | Description                                   |
+| ------------------------ | --------------------------------------------- |
+| `--trip <file>`          | Path to trip JSON file                        |
+| `--day <id>`             | Day id to solve (required)                    |
+| `--mph <mph>`            | Average speed in mph                          |
+| `--default-dwell <min>`  | Default dwell minutes                         |
+| `--seed <seed>`          | Random seed                                   |
+| `--lambda <lambda>`      | Score weighting (0=count,1=score)             |
+| `--verbose`              | Print heuristic steps                         |
+| `--progress`             | Print heuristic progress                      |
+| `--now <HH:mm>`          | Reoptimize from this time                     |
+| `--at <lat,lon>`         | Current location                              |
+| `--done <ids>`           | Comma-separated list of completed store IDs   |
+| `--out <file>`           | Write itinerary JSON to this path (overwrite) |
+| `--kml [file]`           | Write KML to this path (or stdout)            |
+| `--csv <file>`           | Write store stops CSV to this path            |
+| `--html [file]`          | Write HTML itinerary to this path or stdout   |
+| `--robustness <factor>`  | Multiply travel times by this factor          |
+| `--risk-threshold <min>` | Slack threshold minutes for on-time risk      |
 
 ## Flag behavior
 
@@ -57,6 +58,7 @@ rustbelt solve-day --trip <file> --day <id> [options]
 - `--out <file>` – Writes the itinerary JSON to the specified path in addition to printing it to stdout, overwriting the file if it exists.
 - `--kml [file]` – Generates a KML representation. With a path argument, the KML is written to that file; otherwise, it is printed to stdout.
 - `--csv <file>` – Exports a CSV of store stops with arrival and departure times.
+- `--html [file]` – Emits an HTML itinerary to the given file or to stdout. Templates can be customized via `emitHtml`.
 
 ## Trip file notes
 
@@ -72,7 +74,7 @@ rustbelt solve-day --trip <file> --day <id> [options]
 
 ## Output
 
-The solver prints the resulting itinerary as JSON. If `--out` is specified, the JSON is also written to the provided path. Supplying `--kml` emits a KML representation to the given file or to stdout when no file is provided. Using `--csv` saves a CSV of all store stops.
+The solver prints the resulting itinerary as JSON. If `--out` is specified, the JSON is also written to the provided path. Supplying `--kml` emits a KML representation to the given file or to stdout when no file is provided. Using `--csv` saves a CSV of all store stops. Passing `--html` writes an HTML itinerary to the given file or stdout; templates can be customized via `emitHtml`.
 
 ## Examples
 

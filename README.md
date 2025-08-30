@@ -10,6 +10,7 @@ be generated with flags:
 - `--out <file>` – write the JSON itinerary to a file.
 - `--csv <file>` – export store stops as CSV.
 - `--kml [file]` – emit a KML representation to a file or stdout.
+- `--html [file]` – emit an HTML itinerary to a file or stdout. Templates can be customized via `emitHtml`.
 
 ## HTML Templates
 
