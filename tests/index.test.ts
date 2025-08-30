@@ -35,6 +35,15 @@ describe('CLI', () => {
     );
   });
 
+  it('registers html flag for solve-day', () => {
+    const cmd = program.commands.find((c) => c.name() === 'solve-day');
+    const opt = cmd?.options.find((o) => o.long === '--html');
+    expect(opt).toBeDefined();
+    expect(opt?.description).toBe(
+      'Write HTML itinerary to this path (or stdout)',
+    );
+  });
+
   it('prints solution JSON by default', () => {
     const __filename = fileURLToPath(import.meta.url);
     const __dirname = dirname(__filename);
@@ -53,6 +62,29 @@ describe('CLI', () => {
 
     expect(log).toHaveBeenCalledTimes(1);
     expect(() => JSON.parse(log.mock.calls[0][0])).not.toThrow();
+    log.mockRestore();
+  });
+
+  it('emits HTML when requested', () => {
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = dirname(__filename);
+    const tripPath = join(__dirname, '../fixtures/simple-trip.json');
+
+    const log = vi.spyOn(console, 'log').mockImplementation(() => {});
+    run([
+      'node',
+      'rustbelt',
+      'solve-day',
+      '--trip',
+      tripPath,
+      '--day',
+      'D1',
+      '--html',
+    ]);
+
+    expect(log).toHaveBeenCalledTimes(2);
+    expect(String(log.mock.calls[0][0])).toContain('<html>');
+    expect(() => JSON.parse(log.mock.calls[1][0])).not.toThrow();
     log.mockRestore();
   });
 

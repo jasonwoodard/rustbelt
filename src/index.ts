@@ -5,6 +5,7 @@ import { solveDay } from './app/solveDay';
 import { reoptimizeDay } from './app/reoptimizeDay';
 import { emitKml } from './io/emitKml';
 import { emitCsv } from './io/emitCsv';
+import { emitHtml } from './io/emitHtml';
 import { parseTrip } from './io/parse';
 import type { DayPlan, ID } from './types';
 import type { ProgressFn } from './heuristics';
@@ -47,6 +48,7 @@ program
   .option('--done <ids>', 'Comma-separated list of completed store IDs')
   .option('--out <file>', 'Write itinerary JSON to this path (overwrite)')
   .option('--kml [file]', 'Write KML to this path (or stdout)')
+  .option('--html [file]', 'Write HTML itinerary to this path (or stdout)')
   .option('--csv <file>', 'Write store stops CSV to this path')
   .option(
     '--robustness <factor>',
@@ -144,6 +146,17 @@ program
         console.log(`Wrote ${opts.kml}`);
       } else {
         console.log(kml);
+      }
+    }
+
+    if (opts.html !== undefined) {
+      const html = emitHtml(data.days);
+      if (typeof opts.html === 'string') {
+        mkdirSync(dirname(opts.html), { recursive: true });
+        writeFileSync(opts.html, html, 'utf8');
+        console.log(`Wrote ${opts.html}`);
+      } else {
+        console.log(html);
       }
     }
 
