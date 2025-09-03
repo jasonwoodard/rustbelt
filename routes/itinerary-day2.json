@@ -1,0 +1,177 @@
+{
+  "days": [
+    {
+      "dayId": "Day2",
+      "stops": [
+        {
+          "id": "HCGs2",
+          "name": "Hollywood Casino Greektown",
+          "type": "start",
+          "arrive": "09:00",
+          "depart": "09:00",
+          "lat": 42.336873,
+          "lon": -83.0418499
+        },
+        {
+          "id": "FF",
+          "name": "Fabuless Finds",
+          "type": "store",
+          "arrive": "09:26",
+          "depart": "09:56",
+          "lat": 42.155332880174,
+          "lon": -83.216486836687,
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "HCGs2",
+            "toId": "FF",
+            "driveMin": 26.397854821256946,
+            "distanceMi": 15.39874864573322
+          },
+          "score": 4.4
+        },
+        {
+          "id": "TVAT",
+          "name": "The Vault Antiques & Treasures",
+          "type": "store",
+          "arrive": "11:00",
+          "depart": "11:30",
+          "lat": 41.692281669916,
+          "lon": -83.582227128609,
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "FF",
+            "toId": "TVAT",
+            "driveMin": 63.616743079133734,
+            "distanceMi": 37.109766796161345
+          },
+          "score": 4.8
+        },
+        {
+          "id": "GFIM",
+          "name": "Great Finds in Maumee",
+          "type": "store",
+          "arrive": "11:43",
+          "depart": "12:13",
+          "lat": 41.60576416028,
+          "lon": -83.664543898393,
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "TVAT",
+            "toId": "GFIM",
+            "driveMin": 12.573640764163825,
+            "distanceMi": 7.334623779095565
+          },
+          "score": 4.4
+        },
+        {
+          "id": "MAM",
+          "name": "Maumee Antique Mall",
+          "type": "store",
+          "arrive": "12:14",
+          "depart": "12:44",
+          "lat": 41.590842984434,
+          "lon": -83.664615541868,
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "GFIM",
+            "toId": "MAM",
+            "driveMin": 1.7673801921290302,
+            "distanceMi": 1.0309717787419344
+          },
+          "score": 4.6
+        },
+        {
+          "id": "BSS",
+          "name": "Big Ship Salvage",
+          "type": "store",
+          "arrive": "14:22",
+          "depart": "14:52",
+          "lat": 41.327814088911,
+          "lon": -82.620663899344,
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "MAM",
+            "toId": "BSS",
+            "driveMin": 97.76488279559557,
+            "distanceMi": 57.029514964097416
+          },
+          "score": 4.7
+        },
+        {
+          "id": "NTYRS",
+          "name": "New To You Resale Shop",
+          "type": "store",
+          "arrive": "15:38",
+          "depart": "16:08",
+          "lat": 41.367846176278,
+          "lon": -82.112124710051,
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "BSS",
+            "toId": "NTYRS",
+            "driveMin": 45.46701444694471,
+            "distanceMi": 26.52242509405108
+          },
+          "score": 4.6
+        },
+        {
+          "id": "TBH",
+          "name": "The Bargain House",
+          "type": "store",
+          "arrive": "16:10",
+          "depart": "16:40",
+          "lat": 41.375145226291,
+          "lon": -82.085263050924,
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "NTYRS",
+            "toId": "TBH",
+            "driveMin": 2.5393660314500726,
+            "distanceMi": 1.4812968516792089
+          },
+          "score": 4.9
+        },
+        {
+          "id": "RUST",
+          "name": "Rusticisle",
+          "type": "store",
+          "arrive": "16:52",
+          "depart": "17:22",
+          "lat": 41.383757324972,
+          "lon": -81.947700522836,
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "TBH",
+            "toId": "RUST",
+            "driveMin": 12.268556737411021,
+            "distanceMi": 7.1566580968230955
+          },
+          "score": 4.8
+        },
+        {
+          "id": "HRCATAe",
+          "name": "Hyatt Regency Cleveland at The Arcade",
+          "type": "end",
+          "arrive": "17:36",
+          "depart": "17:36",
+          "lat": 41.4094585,
+          "lon": -81.7993225,
+          "legIn": {
+            "fromId": "RUST",
+            "toId": "HRCATAe",
+            "driveMin": 13.530740267909387,
+            "distanceMi": 7.892931822947142
+          }
+        }
+      ],
+      "metrics": {
+        "storesVisited": 8,
+        "totalScore": 37.199999999999996,
+        "totalDriveMin": 275.9261791359943,
+        "totalDwellMin": 240,
+        "slackMin": 24.07382086400571,
+        "onTimeRisk": 0
+      }
+    }
+  ]
+}
