@@ -3,11 +3,10 @@
         "mph": 35,
         "defaultDwellMin": 30,
         "seed": 22
-
     },
     "days": [
         {
-            "dayId": "Day1",
+            "dayId": "Det1",
             "start": {
                  "id": "HCGs1",
                 "name": "Hollywood Casino Greektown",
@@ -22,12 +21,13 @@
             },
             "window": {
                 "start": "09:00",
-                "end": "17:00"
+                "end": "18:00"
             },
-            "mustVisitIds": ["TS"]
+            "mustVisitIds": ["TS"],
+            "locks": [{"position": "firstAfterStart", "storeId": "TS"}]
         },
         {
-            "dayId": "Day2",
+            "dayId": "DetToClev",
             "start": {
                 "id": "HCGs2",
                 "name": "Hollywood Casino Greektown",
@@ -44,10 +44,10 @@
                 "start": "09:00",
                 "end": "18:00"
             },
-            "mustVisitIds": ["GFIM", "TVAT", "MAM", "BSS"]
+            "mustVisitIds": ["TVAT", "MAM", "BSS"]
         },
         {
-            "dayId": "Day3",
+            "dayId": "ClevToBuf",
             "start": {
                 "id": "HRCATAs",
                 "name": "Hyatt Regency Cleveland at The Arcade",
@@ -68,935 +68,131 @@
         }
     ],
     "stores": [
-        {
-            "id": "AJ",
-            "name": "Arcade Junction",
-            "lat": 42.533843395362,
-            "lon": -78.424489530318,
-            "score": 4.8
-        },
-        {
-            "id": "RRAC",
-            "name": "Rcs & Randys Antiques Co-Op",
-            "lat": 42.489967125549,
-            "lon": -79.323415719901,
-            "score": 4.6
-        },
-        {
-            "id": "SHTTA",
-            "name": "Solomon's Hidden Treasures Thrift, Antiques & Outlet",
-            "lat": 42.491847780846,
-            "lon": -78.693071558398,
-            "score": 3.9
-        },
-        {
-            "id": "SLTS",
-            "name": "St Luke's Thrift Shop",
-            "lat": 42.097518894618,
-            "lon": -79.240479514338,
-            "score": 4.3
-        },
-        {
-            "id": "RT",
-            "name": "Ron's Treasures",
-            "lat": 42.348123754568,
-            "lon": -79.310381497269,
-            "score": 4.5
-        },
-        {
-            "id": "TA",
-            "name": "Trolley Antiques",
-            "lat": 41.652890082142,
-            "lon": -80.153108623774,
-            "score": 4.7
-        },
-        {
-            "id": "WSAM",
-            "name": "Whistle Stop Antique Mall",
-            "lat": 41.9213584506,
-            "lon": -79.640673952454,
-            "score": 4.5
-        },
-        {
-            "id": "MSA2",
-            "name": "Main Street Antiques",
-            "lat": 42.032803817302,
-            "lon": -80.253949499435,
-            "score": 4.6
-        },
-        {
-            "id": "FNJ",
-            "name": "Funk N Junk",
-            "lat": 42.000356470277,
-            "lon": -80.317733995196,
-            "score": 5
-        },
-        {
-            "id": "FKTS",
-            "name": "Finders Keepers Thrift Shop",
-            "lat": 41.65636907466,
-            "lon": -80.426292954401,
-            "score": 4.7
-        },
-        {
-            "id": "IAM",
-            "name": "Interstate Antique Mall",
-            "lat": 42.191680758531,
-            "lon": -79.837438007144,
-            "score": 3.2
-        },
-        {
-            "id": "TTAT",
-            "name": "Treva's Trinkets and Treasures",
-            "lat": 42.211117333873,
-            "lon": -79.837341450818,
-            "score": 4.7
-        },
-        {
-            "id": "FKOE",
-            "name": "Finders Keepers Of Erie",
-            "lat": 42.10288163588,
-            "lon": -80.100783236134,
-            "score": 4.6
-        },
-        {
-            "id": "CSTAT",
-            "name": "Cobb's Second Time Around Thrift Shop",
-            "lat": 42.126531887305,
-            "lon": -80.07254972828,
-            "score": 4.2
-        },
-        {
-            "id": "GSTS",
-            "name": "Green Scene Thrift Store",
-            "lat": 42.106368486532,
-            "lon": -80.033370746773,
-            "score": 4.6
-        },
-        {
-            "id": "CMT",
-            "name": "City Mission Thrift",
-            "lat": 42.104626488681,
-            "lon": -80.121776930886,
-            "score": 3.9
-        },
-        {
-            "id": "OA",
-            "name": "Oregon Antiques",
-            "lat": 42.101021981577,
-            "lon": -80.163581969552,
-            "score": 4.8
-        },
-        {
-            "id": "TSP",
-            "name": "The Sassy Peacock",
-            "lat": 42.108627246398,
-            "lon": -80.133101104607,
-            "score": 4.3
-        },
-        {
-            "id": "PIMAA",
-            "name": "Presque Isle Militaria, Antiques and Collectibles",
-            "lat": 42.105540601858,
-            "lon": -80.090722986574,
-            "score": 4.8
-        },
-        {
-            "id": "SS2",
-            "name": "Secondhand shop",
-            "lat": 42.095483281621,
-            "lon": -80.101942854306,
-            "score": 3.7
-        },
-        {
-            "id": "MTS",
-            "name": "Mel & Tee's Secondhand & Estate Sales",
-            "lat": 42.082588445399,
-            "lon": -80.089215148754,
-            "score": 4.6
-        },
-        {
-            "id": "RCTS",
-            "name": "Rainbow Connection Thrift Store",
-            "lat": 42.129238096652,
-            "lon": -80.042458531383,
-            "score": 4.1
-        },
-        {
-            "id": "V",
-            "name": "Vintillage",
-            "lat": 41.386969488836,
-            "lon": -83.650559979749,
-            "score": 4.8
-        },
-        {
-            "id": "AIC",
-            "name": "Antiques In Clyde",
-            "lat": 41.305325806012,
-            "lon": -82.974998847854,
-            "score": 4.8
-        },
-        {
-            "id": "AVM",
-            "name": "Armory vintage Market",
-            "lat": 41.343487452168,
-            "lon": -83.09905933427
-        },
-        {
-            "id": "BUKB",
-            "name": "Bearly Used Kids Boutique",
-            "lat": 41.347478384673,
-            "lon": -83.11345641824,
-            "score": 4.1
-        },
-        {
-            "id": "MTA",
-            "name": "M & T Antiques",
-            "lat": 41.347672411392,
-            "lon": -83.114672111185,
-            "score": 3.4
-        },
-        {
-            "id": "NTYC",
-            "name": "New-To-You Consignments",
-            "lat": 41.360050512706,
-            "lon": -83.144098174735,
-            "score": 4.6
-        },
-        {
-            "id": "PAPE",
-            "name": "Past and present emporium",
-            "lat": 41.348653880344,
-            "lon": -83.116979645576,
-            "score": 4.6
-        },
-        {
-            "id": "CWUTS",
-            "name": "Church Women United Thrift Shop",
-            "lat": 41.635441761032,
-            "lon": -83.761580791087,
-            "score": 4.5
-        },
-        {
-            "id": "MAM",
-            "name": "Maumee Antique Mall",
-            "lat": 41.590842984434,
-            "lon": -83.664615541868,
-            "score": 4.6
-        },
-        {
-            "id": "AAI",
-            "name": "Architectural Artifacts Inc.",
-            "lat": 41.64909169551,
-            "lon": -83.542472855926,
-            "score": 4.4
-        },
-        {
-            "id": "HOD",
-            "name": "House of Dow",
-            "lat": 41.657294398356,
-            "lon": -83.543708655603,
-            "score": 4.6
-        },
-        {
-            "id": "TVAT",
-            "name": "The Vault Antiques & Treasures",
-            "lat": 41.692281669916,
-            "lon": -83.582227128609,
-            "score": 4.8
-        },
-        {
-            "id": "TSL",
-            "name": "That Store LLC",
-            "lat": 41.691764993694,
-            "lon": -83.622275071409,
-            "score": 5
-        },
-        {
-            "id": "GFIM",
-            "name": "Great Finds in Maumee",
-            "lat": 41.60576416028,
-            "lon": -83.664543898393,
-            "score": 4.4
-        },
-        {
-            "id": "NLRS",
-            "name": "Nine LIves Resale Shop",
-            "lat": 41.594192689079,
-            "lon": -83.644269327428,
-            "score": 4.3
-        },
-        {
-            "id": "TCKA",
-            "name": "The Copper Kettle Antiques",
-            "lat": 41.611610835276,
-            "lon": -83.625851872076,
-            "score": 4.8
-        },
-        {
-            "id": "CIHI",
-            "name": "Consign It! Home Interiors",
-            "lat": 41.674305548524,
-            "lon": -83.708647689865,
-            "score": 4.6
-        },
-        {
-            "id": "GCHFH",
-            "name": "Greater Cleveland Habitat for Humanity - Amherst ReStore",
-            "lat": 41.395525506208,
-            "lon": -82.209643093814,
-            "score": 3.5
-        },
-        {
-            "id": "ORBA",
-            "name": "Olde Red Barn Antiques & Collectibles",
-            "lat": 41.607193133509,
-            "lon": -80.575120353708,
-            "score": 3.8
-        },
-        {
-            "id": "AAM",
-            "name": "Ashtabula Antique Mall",
-            "lat": 41.8365744842,
-            "lon": -80.853763996725,
-            "score": 3.4
-        },
-        {
-            "id": "CFAN",
-            "name": "Classic Finds and Nautical",
-            "lat": 0,
-            "lon": 0,
-            "score": 5
-        },
-        {
-            "id": "FSW",
-            "name": "Fat Sally's Warehouse",
-            "lat": 41.893855805386,
-            "lon": -80.804068111485,
-            "score": 4.7
-        },
-        {
-            "id": "TCS",
-            "name": "The Curiosity Shoppe",
-            "lat": 41.879531637759,
-            "lon": -80.752066796881,
-            "score": 4.1
-        },
-        {
-            "id": "JHA",
-            "name": "Jameson Homestead Antiques",
-            "lat": 41.454173824105,
-            "lon": -82.031499065976,
-            "score": 4.4
-        },
-        {
-            "id": "CTSAB",
-            "name": "Columbia Thrift Store and boutique",
-            "lat": 41.350632649461,
-            "lon": -81.877647309574,
-            "score": 5
-        },
-        {
-            "id": "CTS",
-            "name": "Conneaut Thrift Shop",
-            "lat": 41.942841691849,
-            "lon": -80.555892279975,
-            "score": 4.7
-        },
-        {
-            "id": "BB",
-            "name": "Broadway Boutique",
-            "lat": 41.3675696,
-            "lon": -82.7162914,
-            "score": 4
-        },
-        {
-            "id": "NTYRS",
-            "name": "New To You Resale Shop",
-            "lat": 41.367846176278,
-            "lon": -82.112124710051,
-            "score": 4.6
-        },
-        {
-            "id": "RE",
-            "name": "Roxy's Emporium",
-            "lat": 0,
-            "lon": 0,
-            "score": 4.6
-        },
-        {
-            "id": "TBH",
-            "name": "The Bargain House",
-            "lat": 41.375145226291,
-            "lon": -82.085263050924,
-            "score": 4.9
-        },
-        {
-            "id": "BA",
-            "name": "Broadway Antiques",
-            "lat": 41.806049682886,
-            "lon": -80.947186950183,
-            "score": 4.3
-        },
-        {
-            "id": "CCC",
-            "name": "Classic Country Consignments",
-            "lat": 41.805058013017,
-            "lon": -80.913059023691,
-            "score": 4.4
-        },
-        {
-            "id": "GT",
-            "name": "Geneva Thrift",
-            "lat": 41.808778981594,
-            "lon": -80.936936154875,
-            "score": 5
-        },
-        {
-            "id": "TGD",
-            "name": "The Green Door",
-            "lat": 0,
-            "lon": 0,
-            "score": 4.4
-        },
-        {
-            "id": "TRVM",
-            "name": "The Refindary Vintage Market",
-            "lat": 41.737520062976,
-            "lon": -80.769540344631,
-            "score": 5
-        },
-        {
-            "id": "BBAAC",
-            "name": "Be Back Antiques and Collectibles",
-            "lat": 41.455896826049,
-            "lon": -82.202431871733,
-            "score": 4.5
-        },
-        {
-            "id": "SAF",
-            "name": "Simply Affordable Finds",
-            "lat": 41.419641314396,
-            "lon": -81.91751054513,
-            "score": 4.8
-        },
-        {
-            "id": "VWT-Olmstead",
-            "name": "Value World Thrift",
-            "lat": 41.42552860898,
-            "lon": -81.897199579145,
-            "score": 4.2
-        },
-        {
-            "id": "MSA",
-            "name": "Main Street Antiques",
-            "lat": 41.282454290143,
-            "lon": -82.217600403511,
-            "score": 4.6
-        },
-        {
-            "id": "RS",
-            "name": "Ratsy's Store",
-            "lat": 41.2909866309,
-            "lon": -82.217343351938,
-            "score": 4.9
-        },
-        {
-            "id": "SBTL",
-            "name": "Shops By The Lake",
-            "lat": 41.748994881171,
-            "lon": -81.208780911127,
-            "score": 4.5
-        },
-        {
-            "id": "PBB",
-            "name": "Perry Bargain Barn",
-            "lat": 41.787501661345,
-            "lon": -81.123108374508,
-            "score": 4.4
-        },
-        {
-            "id": "TATL",
-            "name": "Treasures at the Langshaw",
-            "lat": 41.758384928317,
-            "lon": -81.138204851177,
-            "score": 4.9
-        },
-        {
-            "id": "MCVC",
-            "name": "My Cuzin Vintage Cleveland",
-            "lat": 41.483972699532,
-            "lon": -81.73036120757,
-            "score": 4
-        },
-        {
-            "id": "SL",
-            "name": "Sweet Lorain",
-            "lat": 41.473321308529,
-            "lon": -81.733915357678,
-            "score": 3.7
-        },
-        {
-            "id": "NTVS",
-            "name": "Nifty Thrifty Variety Shop",
-            "lat": 41.458078091966,
-            "lon": -81.63868429608,
-            "score": 5
-        },
-        {
-            "id": "CC",
-            "name": "Cleveland Curiosities",
-            "lat": 41.476968028201,
-            "lon": -81.784520982721,
-            "score": 4.7
-        },
-        {
-            "id": "FNFVC",
-            "name": "Future No Future Vintage Clothing",
-            "lat": 41.485247891778,
-            "lon": -81.809291970509,
-            "score": 4.7
-        },
-        {
-            "id": "MF",
-            "name": "Magically Found",
-            "lat": 41.476965114804,
-            "lon": -81.783590154097,
-            "score": 5
-        },
-        {
-            "id": "MC",
-            "name": "Margie’s Closet",
-            "lat": 41.483981516909,
-            "lon": -81.768823435555,
-            "score": 4.6
-        },
-        {
-            "id": "VWT-Lakewood",
-            "name": "Value World Thrift",
-            "lat": 41.483958040635,
-            "lon": -81.771809570569,
-            "score": 4.2
-        },
-        {
-            "id": "ATFY",
-            "name": "All Things For You",
-            "lat": 41.468964215909,
-            "lon": -81.69126483474,
-            "score": 4.6
-        },
-        {
-            "id": "PG",
-            "name": "Paradise Galleria",
-            "lat": 41.480752749907,
-            "lon": -81.712500222034,
-            "score": 4.6
-        },
-        {
-            "id": "PGCCA",
-            "name": "PEARLS Girls' Community Closet at Malachi Center",
-            "lat": 41.492185192483,
-            "lon": -81.707439709432,
-            "score": 5
-        },
-        {
-            "id": "SS",
-            "name": "Spooky's Studio",
-            "lat": 41.48248656783,
-            "lon": -81.702076102983,
-            "score": 5
-        },
-        {
-            "id": "VNTG",
-            "name": "VNTG Home",
-            "lat": 41.523587040736,
-            "lon": -81.65402984348,
-            "score": 4.1
-        },
-        {
-            "id": "TSYRS",
-            "name": "The Salvage Yard Resale Shoppe",
-            "lat": 41.43740166658,
-            "lon": -81.874219768284,
-            "score": 4.7
-        },
-        {
-            "id": "RUST",
-            "name": "Rusticisle",
-            "lat": 41.383757324972,
-            "lon": -81.947700522836,
-            "score": 4.8
-        },
-        {
-            "id": "STA",
-            "name": "Second Thyme Around",
-            "lat": 41.373804872716,
-            "lon": -81.902811342611,
-            "score": 4.8
-        },
-        {
-            "id": "ASVC",
-            "name": "A Signature Vintage Clothing",
-            "lat": 41.136135084495,
-            "lon": -81.48294869207,
-            "score": 4.7
-        },
-        {
-            "id": "AVAT",
-            "name": "Amelia's Vintage and Thrift",
-            "lat": 0,
-            "lon": 0,
-            "score": 4.7
-        },
-        {
-            "id": "BSS",
-            "name": "Big Ship Salvage",
-            "lat": 41.327814088911,
-            "lon": -82.620663899344,
-            "score": 4.7
-        },
-        {
-            "id": "OSW",
-            "name": "Old School Warehouse",
-            "lat": 41.243728853697,
-            "lon": -82.692132998183,
-            "score": 4.9
-        },
-        {
-            "id": "WPF",
-            "name": "When Pigs Fly",
-            "lat": 41.24296529657,
-            "lon": -82.614400901245,
-            "score": 4.8
-        },
-        {
-            "id": "SGBL",
-            "name": "Something Good & Beyond LLC",
-            "lat": 41.446642263524,
-            "lon": -82.722574196294,
-            "score": 4.7
-        },
-        {
-            "id": "TES",
-            "name": "The Encore Shop",
-            "lat": 41.43689118972,
-            "lon": -82.669224966107,
-            "score": 4.6
-        },
-        {
-            "id": "OAAC",
-            "name": "Oscar's Antiques and Consignments",
-            "lat": 41.133386807689,
-            "lon": -83.172989270245,
-            "score": 4.6
-        },
-        {
-            "id": "RI1",
-            "name": "Reclaim It 127",
-            "lat": 41.113857745018,
-            "lon": -83.176378753354,
-            "score": 5
-        },
-        {
-            "id": "VWT-Eastpointe",
-            "name": "Value World Thrift",
-            "lat": 42.478985165724,
-            "lon": -82.926959459334,
-            "score": 3.9
-        },
-        {
-            "id": "VWT-Southfield",
-            "name": "Value World Thrift",
-            "lat": 42.442742196635,
-            "lon": -83.295836478484,
-            "score": 4
-        },
-        {
-            "id": "RWBT",
-            "name": "Red White & Blue Thrift Store",
-            "lat": 42.572945446062,
-            "lon": -82.890151473912,
-            "score": 3.8
-        },
-        {
-            "id": "CATTF",
-            "name": "Charlie and the Treasure Factory",
-            "lat": 42.595223300845,
-            "lon": -82.971890430696,
-            "score": 4.9
-        },
-        {
-            "id": "MA",
-            "name": "Mimi's Attic",
-            "lat": 42.604339147074,
-            "lon": -82.874189515667,
-            "score": 4.8
-        },
-        {
-            "id": "VGR",
-            "name": "Vintage Garden Resale",
-            "lat": 42.581257052749,
-            "lon": -82.885743585051,
-            "score": 4.7
-        },
-        {
-            "id": "LAFV",
-            "name": "Lost and Found Vintage",
-            "lat": 42.486255298557,
-            "lon": -83.146635128433,
-            "score": 4.7
-        },
-        {
-            "id": "EHUR",
-            "name": "Everything Home Upscale Resale",
-            "lat": 42.509739743461,
-            "lon": -83.178073567292,
-            "score": 4.1
-        },
-        {
-            "id": "TWL",
-            "name": "Time Warp LLC",
-            "lat": 42.526049813184,
-            "lon": -82.896065923419,
-            "score": 4.5
-        },
-        {
-            "id": "FUFA",
-            "name": "Fred's Unique Furniture & Antiques",
-            "lat": 42.449804120917,
-            "lon": -82.979162786558,
-            "score": 4.7
-        },
-        {
-            "id": "VWT-Warren",
-            "name": "Value World Thrift",
-            "lat": 42.490817636058,
-            "lon": -83.083943979949,
-            "score": 3.8
-        },
-        {
-            "id": "TS",
-            "name": "The ShareHouse",
-            "lat": 42.28746620984,
-            "lon": -83.830718044144,
-            "score": 3.5
-        },
-        {
-            "id": "VMDV",
-            "name": "V-Male Detroit Vintage",
-            "lat": 42.269215142856,
-            "lon": -83.268896777462,
-            "score": 4.6
-        },
-        {
-            "id": "RIAVA",
-            "name": "Retro Image Antiques, Vintage and Props",
-            "lat": 42.320780098694,
-            "lon": -83.180944539064,
-            "score": 4.7
-        },
-        {
-            "id": "FFL",
-            "name": "Fortunate Finds LLC",
-            "lat": 41.761874140694,
-            "lon": -83.628784984544,
-            "score": 4.5
-        },
-        {
-            "id": "GSADL",
-            "name": "Goodwill Store and Donations: Livonia",
-            "lat": 42.37688631625,
-            "lon": -83.333492634022,
-            "score": 3.7
-        },
-        {
-            "id": "FKVV",
-            "name": "Finders Keepers Vintage & Vinyl",
-            "lat": 42.380844433961,
-            "lon": -83.460746136215,
-            "score": 4.6
-        },
-        {
-            "id": "VWT-Taylor",
-            "name": "Value World Thrift",
-            "lat": 42.255786246719,
-            "lon": -83.256431414123,
-            "score": 3.7
-        },
-        {
-            "id": "VWT-Westland",
-            "name": "Value World Thrift",
-            "lat": 42.343181412273,
-            "lon": -83.388254959552,
-            "score": 4
-        },
-        {
-            "id": "FF",
-            "name": "Fabuless Finds",
-            "lat": 42.155332880174,
-            "lon": -83.216486836687,
-            "score": 4.4
-        },
-        {
-            "id": "VWT-Southgate",
-            "name": "Value World Thrift",
-            "lat": 42.219891152932,
-            "lon": -83.193964111776,
-            "score": 4
-        },
-        {
-            "id": "A",
-            "name": "a2vintage",
-            "lat": 42.241087220531,
-            "lon": -83.61355839955,
-            "score": 4.7
-        },
-        {
-            "id": "VEML",
-            "name": "Vintage Eastern Market, LLC",
-            "lat": 42.347937450459,
-            "lon": -83.039417146296,
-            "score": 4.6
-        },
-        {
-            "id": "GOGD",
-            "name": "Goodwill of Greater Detroit",
-            "lat": 42.340201348035,
-            "lon": -83.06843610323,
-            "score": 4.2
-        },
-        {
-            "id": "FV",
-            "name": "Flamingo Vintage",
-            "lat": 42.318117771122,
-            "lon": -83.100947517187,
-            "score": 4.8
-        },
-        {
-            "id": "ASWOD",
-            "name": "Architectural Salvage Warehouse of Detroit",
-            "lat": 42.372742111885,
-            "lon": -83.024277361066,
-            "score": 4.1
-        },
-        {
-            "id": "JT",
-            "name": "Joy Thrift",
-            "lat": 42.399217069634,
-            "lon": -83.059327561569,
-            "score": 4.7
-        },
-        {
-            "id": "VogueVint",
-            "name": "Vogue Vintage",
-            "lat": 42.465465383937,
-            "lon": -83.12332615312,
-            "score": 4.7
-        },
-        {
-            "id": "SG",
-            "name": "Salvage Garden",
-            "lat": 42.417227435423,
-            "lon": -83.131427176573,
-            "score": 5
-        },
-        {
-            "id": "VWT-OakPark",
-            "name": "Value World Thrift",
-            "lat": 42.457659382447,
-            "lon": -83.181801001668,
-            "score": 3.8
-        },
-        {
-            "id": "DC",
-            "name": "Detroit Closet",
-            "lat": 42.402509142301,
-            "lon": -83.162241704675,
-            "score": 4.3
-        },
-        {
-            "id": "OLSAA",
-            "name": "Our Little Shoppe Antiques and Vintage",
-            "lat": 42.636811892229,
-            "lon": -83.056796803127,
-            "score": 4.8
-        },
-        {
-            "id": "DFM",
-            "name": "Dixieland Flea Market",
-            "lat": 42.664912609917,
-            "lon": -83.327943385205,
-            "score": 4.1
-        },
-        {
-            "id": "WBIS",
-            "name": "We Buy It & Sell It All",
-            "lat": 42.455175675039,
-            "lon": -83.353448865411,
-            "score": 4.5
-        },
-        {
-            "id": "PVAAM",
-            "name": "Paradise Vintage, Antiques and More",
-            "lat": 43.177546998919,
-            "lon": -83.719615153665,
-            "score": 4.7
-        },
-        {
-            "id": "YT",
-            "name": "Yesterday's Treasures",
-            "lat": 42.793971787136,
-            "lon": -83.705253336483,
-            "score": 4.4
-        },
-        {
-            "id": "TVFH",
-            "name": "The Vintage Farm House",
-            "lat": 42.789861980076,
-            "lon": -83.626445301888,
-            "score": 4.8
-        },
-        {
-            "id": "TMM",
-            "name": "The Mega Mall",
-            "lat": 42.791729722999,
-            "lon": -84.542704007561,
-            "score": 4.5
-        },
-        {
-            "id": "LMLDV",
-            "name": "Like Mother Like Daughter Vintage Treasures",
-            "lat": 42.720978566379,
-            "lon": -84.552287999203,
-            "score": 4.8
-        },
-        {
-            "id": "T",
-            "name": "Thriftique",
-            "lat": 42.720856110232,
-            "lon": -84.552288330551,
-            "score": 4.8
-        },
-        {
-            "id": "BAM",
-            "name": "Blissfield Antiques Mall",
-            "lat": 41.832957268055,
-            "lon": -83.863720411647,
-            "score": 4.5
-        },
-        {
-            "id": "1VM",
-            "name": "12 Vintage Market",
-            "lat": 42.073127746436,
-            "lon": -84.038144423258,
-            "score": 4.5
-        },
-        {
-            "id": "1VM1",
-            "name": "12 Vintage Market",
-            "lat": 42.073127746436,
-            "lon": -84.038144423258,
-            "score": 4.5
-        }
+        {"id":"AJ","name":"Arcade Junction","lat":42.533843395362,"lon":-78.424489530318,"score":4,"dayId":"ClevToBuf","tags":["MUST-VISIT","Antique"]},
+        {"id":"JADA","name":"Junk and Disorderly Arts & Antiques","lat":42.534003281563,"lon":-78.423723023849,"score":3.8,"tags":["Antique"]},
+        {"id":"AWFM","name":"Antique World & Flea Market","lat":42.983831250138,"lon":-78.572300161758,"score":4.8,"tags":["Antique"]},
+        {"id":"RRAC","name":"Rcs & Randys Antiques Co-Op","lat":42.489967125549,"lon":-79.323415719901,"score":4,"dayId":"ClevToBuf","tags":["MUST-VISIT","Antique"]},
+        {"id":"SCBAC","name":"Shawnee Country Barns Antique Co-Op","lat":43.107830711829,"lon":-78.836945196505,"score":3.4,"tags":["Antique"]},
+        {"id":"SA","name":"Sloan's Antiques","lat":42.885118349062,"lon":-78.844716871256,"score":3.8,"tags":["Antique"]},
+        {"id":"COO","name":"COOCOOU","lat":42.918225446058,"lon":-78.898962410311,"score":3.7,"tags":["Antique"]},
+        {"id":"FTVA","name":"Funky Town Vintage Antiques","lat":42.949839355568,"lon":-78.738507789895,"score":3.8,"tags":["Antique"]},
+        {"id":"UVM","name":"Upstate Vintage Market","lat":43.229661140342,"lon":-77.911465144516,"score":3.4,"tags":["Antique"]},
+        {"id":"AFAC","name":"Aprils Finds Antiques & Collectibles","lat":42.98017074184,"lon":-77.959664954758,"score":3.4,"tags":["Antique"]},
+        {"id":"CAOL","name":"Crossroads Antiques of Lima","lat":42.905556490667,"lon":-77.609329463229,"score":3.6,"tags":["Antique"]},
+        {"id":"LH","name":"Liberty Hollow","lat":43.218154657783,"lon":-77.788267833492,"score":3.6,"tags":["Antique"]},
+        {"id":"SAT","name":"South Avenue Treasures","lat":43.117965785783,"lon":-77.616711385111,"score":3.5,"tags":["Antique"]},
+        {"id":"EA","name":"Eastridge Antiques","lat":43.201701331846,"lon":-77.56800080297,"score":3.5,"tags":["Antique"]},
+        {"id":"WSAM","name":"Whistle Stop Antique Mall","lat":41.9213584506,"lon":-79.640673952454,"score":4,"dayId":"ClevToBuf","tags":["Antique"]},
+        {"id":"IAM","name":"Interstate Antique Mall","lat":42.191680758531,"lon":-79.837438007144,"score":4,"dayId":"ClevToBuf","tags":["MUST-VISIT","Antique"]},
+        {"id":"OA","name":"Oregon Antiques","lat":42.101021981577,"lon":-80.163581969552,"score":3.5,"dayId":"ClevToBuf","tags":["Antique"]},
+        {"id":"V","name":"Vintillage","lat":41.386969488836,"lon":-83.650559979749,"score":4.1,"dayId":"DetToClev","tags":["Antique"]},
+        {"id":"AIC","name":"Antiques In Clyde","lat":41.305325806012,"lon":-82.974998847854,"score":3.6,"dayId":"DetToClev","tags":["Antique"]},
+        {"id":"MTA","name":"M & T Antiques","lat":41.347672411392,"lon":-83.114672111185,"score":3.9,"dayId":"DetToClev","tags":["Antique"]},
+        {"id":"MAM","name":"Maumee Antique Mall","lat":41.590842984434,"lon":-83.664615541868,"score":4.7,"dayId":"DetToClev","tags":["MUST-VISIT","Antique"]},
+        {"id":"TVAT","name":"The Vault Antiques & Treasures","lat":41.692281669916,"lon":-83.582227128609,"score":4.3,"dayId":"DetToClev","tags":["MUST-VISIT","Antique"]},
+        {"id":"TCKA","name":"The Copper Kettle Antiques","lat":41.611610835276,"lon":-83.625851872076,"score":4.6,"dayId":"DetToClev","tags":["Antique"]},
+        {"id":"AAM","name":"Ashtabula Antique Mall","lat":41.8365744842,"lon":-80.853763996725,"score":3.8,"dayId":"ClevToBuf","tags":["Antique"]},
+        {"id":"FSW","name":"Fat Sally's Warehouse","lat":41.893855805386,"lon":-80.804068111485,"score":4.1,"dayId":"ClevToBuf","tags":["MUST-VISIT","Antique"]},
+        {"id":"TCS","name":"The Curiosity Shoppe","lat":41.879531637759,"lon":-80.752066796881,"score":3.9,"dayId":"ClevToBuf","tags":["Antique"]},
+        {"id":"BA","name":"Broadway Antiques","lat":41.806049682886,"lon":-80.947186950183,"score":3.8,"dayId":"ClevToBuf","tags":["Antique"]},
+        {"id":"TGD","name":"The Green Door","lat":41.7802603,"lon":-81.0024707,"score":3.9,"tags":["MUST-VISIT","Antique"]},
+        {"id":"MSA","name":"Main Street Antiques","lat":41.282454290143,"lon":-82.217600403511,"score":4.1,"dayId":"DetToClev","tags":["MUST-VISIT","Antique"]},
+        {"id":"SL","name":"Sweet Lorain","lat":41.473321308529,"lon":-81.733915357678,"score":4.9,"dayId":"DetToClev","tags":["MUST-VISIT","Antique"]},
+        {"id":"STA","name":"Second Thyme Around","lat":41.373804872716,"lon":-81.902811342611,"score":3.4,"dayId":"DetToClev","tags":["Antique"]},
+        {"id":"CATTF","name":"Charlie and the Treasure Factory","lat":42.595223300845,"lon":-82.971890430696,"score":3.2,"tags":["Antique"]},
+        {"id":"TWL","name":"Time Warp LLC","lat":42.526049813184,"lon":-82.896065923419,"score":4,"tags":["Antique"]},
+        {"id":"RIAVA","name":"Retro Image Antiques, Vintage and Props","lat":42.320780098694,"lon":-83.180944539064,"score":3.8,"tags":["Antique"]},
+        {"id":"SCA","name":"Salt City Antiques","lat":42.240973944683,"lon":-83.613347261111,"score":4,"tags":["Antique"]},
+        {"id":"JMA","name":"Jim MacDonald's Antiques","lat":42.246015184298,"lon":-83.610298993102,"score":3.4,"tags":["Antique"]},
+        {"id":"LHAAR","name":"Lucky Haskins Antiques and Retro","lat":42.246015000802,"lon":-83.610324590991,"score":3.7,"tags":["Antique"]},
+        {"id":"YT","name":"Yesterday's Treasures","lat":42.793971787136,"lon":-83.705253336483,"score":3.4,"tags":["Antique"]},
+        {"id":"TVFH","name":"The Vintage Farm House","lat":42.789861980076,"lon":-83.626445301888,"score":3.6,"tags":["Antique"]},
+        {"id":"TMM","name":"The Mega Mall","lat":42.791729722999,"lon":-84.542704007561,"score":4.5,"tags":["Antique"]},
+        {"id":"BAM","name":"Blissfield Antiques Mall","lat":41.832957268055,"lon":-83.863720411647,"score":3.8,"dayId":"DetToClev","tags":["Antique"]},
+        {"id":"BR","name":"Buffalo ReUse","lat":42.907242818179,"lon":-78.831071631474,"score":3.3,"tags":["ArchSalvage"]},
+        {"id":"AAI","name":"Architectural Artifacts Inc.","lat":41.64909169551,"lon":-83.542472855926,"score":4.1,"dayId":"DetToClev","tags":["ArchSalvage"]},
+        {"id":"ASWOD","name":"Architectural Salvage Warehouse of Detroit","lat":42.372742111885,"lon":-83.024277361066,"score":4,"tags":["ArchSalvage"]},
+        {"id":"SG","name":"Salvage Garden","lat":42.417227435423,"lon":-83.131427176573,"score":3.6,"tags":["ArchSalvage"]},
+        {"id":"DFM","name":"Dixieland Flea Market","lat":42.664912609917,"lon":-83.327943385205,"score":3.8,"tags":["Flea"]},
+        {"id":"ATBR","name":"Attic To Basement Repeats","lat":43.018744411558,"lon":-78.877844705473,"score":3.8,"tags":["Junk"]},
+        {"id":"CGAE","name":"CM Gold Antique & Estate Buyer","lat":42.964194551949,"lon":-78.736165118486,"score":3.6,"tags":["Junk"]},
+        {"id":"HA","name":"Hello Again","lat":42.965197759976,"lon":-78.672004211382,"score":3.1,"tags":["Junk"]},
+        {"id":"2TAC","name":"2nd Time Around Consignment","lat":43.0047632,"lon":-78.8164291,"score":3.3,"tags":["Junk"]},
+        {"id":"RT","name":"Ron's Treasures","lat":42.348123754568,"lon":-79.310381497269,"score":3.5,"dayId":"ClevToBuf","tags":["Junk"]},
+        {"id":"NTYC","name":"New-To-You Consignments","lat":41.360050512706,"lon":-83.144098174735,"score":3.7,"dayId":"DetToClev","tags":["Junk"]},
+        {"id":"BSS","name":"Big Ship Salvage","lat":41.327814088911,"lon":-82.620663899344,"score":5,"dayId":"DetToClev","tags":["MUST-VISIT","Nautical"]},
+        {"id":"GSDC","name":"Goodwill Store & Donation Center","lat":43.005748379981,"lon":-78.206304514171,"score":3.9,"tags":["Thrift"]},
+        {"id":"SHTTA","name":"Solomon's Hidden Treasures Thrift, Antiques & Outlet","lat":42.491847780846,"lon":-78.693071558398,"score":3.3,"dayId":"ClevToBuf","tags":["Thrift"]},
+        {"id":"HFHRN","name":"Habitat for Humanity ReStore North","lat":42.9820050567,"lon":-78.822964007753,"score":3.5,"tags":["Thrift"]},
+        {"id":"SAVERST","name":"Savers","lat":42.981112399689,"lon":-78.825751077632,"score":5,"tags":["MUST-VISIT","Thrift"]},
+        {"id":"AB","name":"AMVETS Buffalo","lat":42.945290339859,"lon":-78.878246854094,"score":4.6,"tags":["MUST-VISIT","Thrift"]},
+        {"id":"HTSHFB","name":"Hearts Thrift Store - Hearts for the Homeless Thrift Store (Buffalo)","lat":42.952777142833,"lon":-78.905501188492,"score":4.3,"tags":["MUST-VISIT","Thrift"]},
+        {"id":"SDDS","name":"St.Vincent DePaul Discount Store","lat":42.908920948415,"lon":-78.866826557767,"score":3.4,"tags":["Thrift"]},
+        {"id":"SLADD","name":"Southtowns LADD Thrift Shop","lat":42.851200585555,"lon":-78.804782571052,"score":3.4,"tags":["Thrift"]},
+        {"id":"SAVERSB","name":"Savers","lat":42.8762988,"lon":-79.0028989,"score":4.8,"tags":["MUST-VISIT","Thrift"]},
+        {"id":"HFHRS","name":"Habitat for Humanity ReStore - South","lat":42.852866447608,"lon":-78.826179878173,"score":3.5,"tags":["Thrift"]},
+        {"id":"HTSHFT","name":"Hearts Thrift Store - Hearts for the Homeless Thrift Store (Tonawanda)","lat":42.980811214442,"lon":-78.850974884193,"score":4,"tags":["MUST-VISIT","Thrift"]},
+        {"id":"ATSWS","name":"AMVETS Thrift Store West Seneca","lat":42.828791050897,"lon":-78.784309435252,"score":4.1,"tags":["MUST-VISIT","Thrift"]},
+        {"id":"FLTT","name":"Finger Lakes Treasure Trove","lat":42.88440492148,"lon":-77.279098944448,"score":3.2,"tags":["Thrift"]},
+        {"id":"HFHR","name":"Habitat For Humanity Restore","lat":42.883930530766,"lon":-77.245744405984,"score":3.5,"tags":["Thrift"]},
+        {"id":"SAVERSR","name":"Savers","lat":43.208852107704,"lon":-77.460114345954,"score":5,"tags":["Thrift"]},
+        {"id":"FNJ","name":"Funk N Junk","lat":42.000356470277,"lon":-80.317733995196,"score":3.8,"dayId":"ClevToBuf","tags":["Thrift"]},
+        {"id":"FKTS","name":"Finders Keepers Thrift Shop","lat":41.65636907466,"lon":-80.426292954401,"score":4,"dayId":"ClevToBuf","tags":["Thrift"]},
+        {"id":"TTAT","name":"Treva's Trinkets and Treasures","lat":42.211117333873,"lon":-79.837341450818,"score":4,"dayId":"ClevToBuf","tags":["MUST-VISIT","Thrift"]},
+        {"id":"FKOE","name":"Finders Keepers Of Erie","lat":42.10288163588,"lon":-80.100783236134,"score":3.6,"dayId":"ClevToBuf","tags":["Thrift"]},
+        {"id":"CSTAT","name":"Cobb's Second Time Around Thrift Shop","lat":42.126531887305,"lon":-80.07254972828,"score":3.8,"dayId":"ClevToBuf","tags":["Thrift"]},
+        {"id":"GSTS","name":"Green Scene Thrift Store","lat":42.106368486532,"lon":-80.033370746773,"score":3.8,"dayId":"ClevToBuf","tags":["Thrift"]},
+        {"id":"CMT","name":"City Mission Thrift","lat":42.104626488681,"lon":-80.121776930886,"score":3.9,"dayId":"ClevToBuf","tags":["MUST-VISIT","Thrift"]},
+        {"id":"MTS","name":"Mel & Tee's Secondhand & Estate Sales","lat":42.082588445399,"lon":-80.089215148754,"score":3.8,"dayId":"ClevToBuf","tags":["Thrift"]},
+        {"id":"RCTS","name":"Rainbow Connection Thrift Store","lat":42.129238096652,"lon":-80.042458531383,"score":3.4,"dayId":"ClevToBuf","tags":["Thrift"]},
+        {"id":"PAPE","name":"Past and present emporium","lat":41.348653880344,"lon":-83.116979645576,"score":3.9,"dayId":"DetToClev","tags":["MUST-VISIT","Thrift"]},
+        {"id":"CWUTS","name":"Church Women United Thrift Shop","lat":41.635441761032,"lon":-83.761580791087,"score":3.3,"dayId":"DetToClev","tags":["Thrift"]},
+        {"id":"NLRS","name":"Nine LIves Resale Shop","lat":41.594192689079,"lon":-83.644269327428,"score":3.7,"dayId":"DetToClev","tags":["Thrift"]},
+        {"id":"GCHFH","name":"Greater Cleveland Habitat for Humanity - Amherst ReStore","lat":41.395525506208,"lon":-82.209643093814,"score":3.5,"dayId":"DetToClev","tags":["Thrift"]},
+        {"id":"CFAN","name":"Classic Finds and Nautical","lat":41.8996814,"lon":-80.7989624,"score":4,"dayId":"ClevToBuf","tags":["MUST-VISIT","Thrift"]},
+        {"id":"CTS","name":"Conneaut Thrift Shop","lat":41.942841691849,"lon":-80.555892279975,"score":3.7,"dayId":"ClevToBuf","tags":["Thrift"]},
+        {"id":"NTYRS","name":"New To You Resale Shop","lat":41.367846176278,"lon":-82.112124710051,"score":3.9,"dayId":"DetToClev","tags":["Thrift"]},
+        {"id":"VWT-Olmstead","name":"Value World Thrift","lat":41.42552860898,"lon":-81.897199579145,"score":4.5,"dayId":"DetToClev","tags":["Thrift"]},
+        {"id":"VWT-Lakewood","name":"Value World Thrift","lat":41.483958040635,"lon":-81.771809570569,"score":4.5,"dayId":"DetToClev","tags":["Thrift"]},
+        {"id":"TSYRS","name":"The Salvage Yard Resale Shoppe","lat":41.43740166658,"lon":-81.874219768284,"score":3.6,"dayId":"DetToClev","tags":["Thrift"]},
+        {"id":"TES","name":"The Encore Shop","lat":41.43689118972,"lon":-82.669224966107,"score":3.5,"dayId":"DetToClev","tags":["Thrift"]},
+        {"id":"VWT-Eastpointe","name":"Value World Thrift","lat":42.478985165724,"lon":-82.926959459334,"score":4.5,"tags":["Thrift"]},
+        {"id":"VWT-Southfield","name":"Value World Thrift","lat":42.442742196635,"lon":-83.295836478484,"score":4.5,"tags":["Thrift"]},
+        {"id":"RWBT","name":"Red White & Blue Thrift Store","lat":42.572945446062,"lon":-82.890151473912,"score":4,"tags":["Thrift"]},
+        {"id":"MA","name":"Mimi's Attic","lat":42.604339147074,"lon":-82.874189515667,"score":3.8,"tags":["Thrift"]},
+        {"id":"VWT-Warren","name":"Value World Thrift","lat":42.490817636058,"lon":-83.083943979949,"score":4.1,"tags":["Thrift"]},
+        {"id":"KTS","name":"Kiwanis Thrift Sale","lat":42.289484510504,"lon":-83.858205824553,"score":3.8,"tags":["Thrift"]},
+        {"id":"TS","name":"The ShareHouse","lat":42.28746620984,"lon":-83.830718044144,"score":5,"tags":["MUST-VISIT","Thrift"]},
+        {"id":"AAPTS","name":"Ann Arbor PTO Thrift Shop","lat":42.252973223837,"lon":-83.733888018403,"score":4.1,"tags":["Thrift"]},
+        {"id":"AATS","name":"Ann Arbor Thrift Shop","lat":42.255689991053,"lon":-83.690434090721,"score":3.5,"tags":["Thrift"]},
+        {"id":"TSAFS","name":"The Salvation Army Family Store & Donation Center","lat":42.261142020686,"lon":-83.740301350218,"score":3.7,"tags":["Thrift"]},
+        {"id":"GSADL","name":"Goodwill Store and Donations: Livonia","lat":42.37688631625,"lon":-83.333492634022,"score":3.8,"tags":["Thrift"]},
+        {"id":"VWT-Taylor","name":"Value World Thrift","lat":42.255786246719,"lon":-83.256431414123,"score":3.9,"tags":["Thrift"]},
+        {"id":"VWT-Westland","name":"Value World Thrift","lat":42.343181412273,"lon":-83.388254959552,"score":4,"tags":["Thrift"]},
+        {"id":"VWT-Southgate","name":"Value World Thrift","lat":42.219891152932,"lon":-83.193964111776,"score":3.8,"tags":["Thrift"]},
+        {"id":"GSADY","name":"Goodwill Store and Donations: Ypsilanti","lat":42.233882578103,"lon":-83.680223661747,"score":3.3,"tags":["Thrift"]},
+        {"id":"TTD","name":"The Thrift Depot","lat":42.246014266817,"lon":-83.610426982545,"score":3.7,"tags":["Thrift"]},
+        {"id":"VWT9","name":"Value World Thrift","lat":42.245572221237,"lon":-83.582547913813,"score":4,"tags":["Thrift"]},
+        {"id":"VogueVint","name":"Vogue Vintage","lat":42.465465383937,"lon":-83.12332615312,"score":4,"tags":["MUST-VISIT","Thrift"]},
+        {"id":"VWT-OakPark","name":"Value World Thrift","lat":42.457659382447,"lon":-83.181801001668,"score":4,"tags":["Thrift"]},
+        {"id":"T","name":"Thriftique","lat":42.720856110232,"lon":-84.552288330551,"score":3.3,"tags":["Thrift"]},
+        {"id":"BRV","name":"Backroomvintage","lat":42.899276428136,"lon":-78.872236361391,"score":3.7,"tags":["Vintage"]},
+        {"id":"OHVC","name":"October House Vintage & Consignment","lat":42.947658817111,"lon":-78.857757729167,"score":3.6,"tags":["Vintage"]},
+        {"id":"STR","name":"Save The Rags","lat":42.918829775054,"lon":-78.876939221264,"score":3.9,"tags":["Vintage"]},
+        {"id":"AVM","name":"Armory vintage Market","lat":41.343487452168,"lon":-83.09905933427,"score":4.1,"dayId":"DetToClev","tags":["MUST-VISIT","Vintage"]},
+        {"id":"HOD","name":"House of Dow","lat":41.657294398356,"lon":-83.543708655603,"score":3.9,"dayId":"DetToClev","tags":["Vintage"]},
+        {"id":"TRVM","name":"The Refindary Vintage Market","lat":41.737520062976,"lon":-80.769540344631,"score":3.6,"dayId":"ClevToBuf","tags":["Vintage"]},
+        {"id":"SBTL","name":"Shops By The Lake","lat":41.748994881171,"lon":-81.208780911127,"score":4,"dayId":"ClevToBuf","tags":["MUST-VISIT","Vintage"]},
+        {"id":"PG","name":"Paradise Galleria","lat":41.480752749907,"lon":-81.712500222034,"score":4.1,"dayId":"DetToClev","tags":["MUST-VISIT","Vintage"]},
+        {"id":"LAFV","name":"Lost and Found Vintage","lat":42.486255298557,"lon":-83.146635128433,"score":3.8,"tags":["Vintage"]},
+        {"id":"RAGS","name":"Ragstock","lat":42.279535758164,"lon":-83.7453166195,"score":4,"tags":["Vintage"]},
+        {"id":"TGV","name":"The Getup Vintage","lat":42.280318379617,"lon":-83.747361970544,"score":3.2,"tags":["Vintage"]},
+        {"id":"VMDV","name":"V-Male Detroit Vintage","lat":42.269215142856,"lon":-83.268896777462,"score":4.1,"tags":["Vintage"]},
+        {"id":"FKVV","name":"Finders Keepers Vintage & Vinyl","lat":42.380844433961,"lon":-83.460746136215,"score":3.5,"tags":["Vintage"]},
+        {"id":"FASV","name":"Find and Shine Vintage","lat":42.241136485064,"lon":-83.613010677507,"score":3.2,"tags":["Vintage"]},
+        {"id":"AAV","name":"Apple Annie’s Vintage","lat":42.246015184298,"lon":-83.610298993102,"score":3.5,"tags":["Vintage"]},
+        {"id":"VEML","name":"Vintage Eastern Market, LLC","lat":42.347937450459,"lon":-83.039417146296,"score":3.8,"tags":["MUST-VISIT","Vintage"]},
+        {"id":"FV","name":"Flamingo Vintage","lat":42.318117771122,"lon":-83.100947517187,"score":3.8,"tags":["MUST-VISIT","Vintage"]},
+        {"id":"LMLDV","name":"Like Mother Like Daughter Vintage Treasures","lat":42.720978566379,"lon":-84.552287999203,"score":3.3,"tags":["Vintage"]}
     ]
 }

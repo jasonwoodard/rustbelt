@@ -27,12 +27,19 @@
       "mustVisitIds": ["VogueVint", "VWT-Southfield"]
     }
   ],
+  "locks": [
+    {
+      "position": "firstAfterStart",
+      "storeId" : "VWT-Southgate"
+    }
+  ],
   "stores": [
     {
       "id": "VWT-Warren",
       "name": "Value World Thrift",
       "lat": 42.490817636058,
-      "lon": -83.083943979949
+      "lon": -83.083943979949,
+      "tags": ["Chain"]
     },
     {
       "id": "VWT-Southfield",
