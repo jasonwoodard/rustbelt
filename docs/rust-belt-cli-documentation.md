@@ -56,9 +56,28 @@ rustbelt solve-day --trip <file> --day <id> [options]
 ### Output format flags
 
 - `--out <file>` – Writes the itinerary JSON to the specified path in addition to printing it to stdout, overwriting the file if it exists.
-- `--kml [file]` – Generates a KML representation. With a path argument, the KML is written to that file; otherwise, it is printed to stdout.
+- `--kml [file]` – Generates a KML representation with stop data in `<ExtendedData>`. With a path argument, the KML is written to that file; otherwise, it is printed to stdout.
 - `--csv <file>` – Exports a CSV of store stops with arrival and departure times.
 - `--html [file]` – Emits an HTML itinerary to the given file or to stdout. Templates can be customized via `emitHtml`.
+
+Each KML placemark contains an `<ExtendedData>` block listing fields such as
+`id`, `type`, `arrive`, `depart`, `score`, `driveMin`, `distanceMi`,
+`dwellMin`, and `tags`:
+
+```xml
+<Placemark>
+  <name>Example Store</name>
+  <ExtendedData>
+    <Data name="id"><value>123</value></Data>
+    <Data name="depart"><value>2025-10-01T10:15:00Z</value></Data>
+    <Data name="tags"><value>priority;promo</value></Data>
+  </ExtendedData>
+</Placemark>
+```
+
+Consumers like Google Earth expose these values in the placemark's
+**Properties/Get Info** dialog and they can be read programmatically by parsing
+the `<ExtendedData>` entries.
 
 ## Trip file notes
 
