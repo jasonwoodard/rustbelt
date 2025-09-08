@@ -85,7 +85,20 @@ export function solveCommon(opts: SolveCommonOptions): DayPlan {
     candidateIds = candidateIds.filter((id) => !done.has(id));
   }
 
-  let mustVisitIds = day.mustVisitIds?.filter((id) => candidateIds.includes(id));
+  let mustVisitIds: ID[] | undefined = day.mustVisitIds?.filter((id) =>
+    candidateIds.includes(id),
+  );
+  const taggedMustVisitIds = candidateIds.filter((id) =>
+    (stores[id].tags ?? []).some((t) => /must[-_]?visit/i.test(t)),
+  );
+  if (taggedMustVisitIds.length > 0) {
+    mustVisitIds = [
+      ...new Set([...(mustVisitIds ?? []), ...taggedMustVisitIds]),
+    ];
+  }
+  if (mustVisitIds && mustVisitIds.length === 0) {
+    mustVisitIds = undefined;
+  }
   let locks = (opts.locks ?? day.locks)?.filter((l) => candidateIds.includes(l.storeId));
 
   if (day.breakWindow) {
