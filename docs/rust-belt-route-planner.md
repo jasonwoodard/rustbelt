@@ -1,5 +1,8 @@
 # Project: Multi-Day Thrift Route Planner (OPTW-lite)
 
+See [CLI usage](rust-belt-cli-documentation.md) for command details and the
+[trip schema](trip-schema.json) for input structure.
+
 ## Problem Frame & Goals
 
 - **Goal:** Build a planner that **maximizes number of stores visited per day** on a multi-day Detroit → Cleveland (overnight) → Buffalo (overnight) trip, with fixed daily start/end anchors and simple travel modeling.  
@@ -10,7 +13,7 @@
 
 FRs broken down by implementation milestone (v0.x)
 
-## v0.1 — Core Day-By-Day Planner (MVP)
+## v0.1 — Core Day-By-Day Planner (MVP) — Implemented
 
 - **FR-1** Multi-day segmentation by day (**backtracking allowed**)  
 - **FR-3** Auto partitioning into day subroutes  
@@ -28,7 +31,7 @@ FRs broken down by implementation milestone (v0.x)
 - **FR-30** Feasibility fixtures  
 - **FR-31** Regression baselines
 
-## v0.2 — Usability & Resilience
+## v0.2 — Usability & Resilience — In progress
 
 - **FR-14** Lock/Pin stops  
 - **FR-21** **Live mid-day re-optimization** (current time/location \+ hotel)  
@@ -36,14 +39,14 @@ FRs broken down by implementation milestone (v0.x)
 - **FR-18** Fuller diagnostics (bottlenecks)  
 - **FR-28** Expose **best-so-far** solution & progress
 
-## v0.3 — Power Controls & Robustness
+## v0.3 — Power Controls & Robustness — Planned
 
 - **FR-5** Objective: **score/utility** mode (or blend)  
 - **FR-12** Daily caps (max drive/stops) & optional break window  
  
 - **FR-22** Robustness buffers & **On-Time Risk**
 
-## v0.4 — Explainability & Scenarios (Stretch)
+## v0.4 — Explainability & Scenarios (Stretch) — Planned
 
 - **FR-16** Save/compare scenarios  
 - **FR-20** Why-excluded \+ next-best alternative
@@ -78,7 +81,7 @@ FRs broken down by implementation milestone (v0.x)
 
 ---
 
-## v0.1 — Core Day-By-Day Planner (MVP)
+## v0.1 — Core Day-By-Day Planner (MVP) (implemented)
 
 **FRs included:**  
 FR-1 (day segmentation; backtracking allowed), FR-3, FR-4, FR-6 (basic tie-breakers), FR-8, FR-9 (Haversine+mph), FR-11 (must-visit), FR-17, FR-18 (basic), FR-24, FR-25, FR-28 (size target), FR-29, FR-30, FR-31.
@@ -94,7 +97,7 @@ FR-1 (day segmentation; backtracking allowed), FR-3, FR-4, FR-6 (basic tie-break
 
 ---
 
-## v0.2 — Usability & Resilience
+## v0.2 — Usability & Resilience (in progress)
 
 **FRs included:**  
 FR-14 (lock/pin), FR-21 (mid-day re-opt), FR-13 (infeasibility & minimal relaxation), FR-18 (full diagnostics), FR-28 (best-so-far/progress).
@@ -108,7 +111,7 @@ FR-14 (lock/pin), FR-21 (mid-day re-opt), FR-13 (infeasibility & minimal relaxat
 
 ---
 
-## v0.3 — Power Controls & Robustness
+## v0.3 — Power Controls & Robustness (planned)
 
 **FRs included:**  
 FR-5 (score/utility objective mode), FR-12 (daily limits: max drive time/stops; optional break window; defaults off), FR-22 (robustness buffers \+ risk view).
@@ -123,7 +126,7 @@ FR-5 (score/utility objective mode), FR-12 (daily limits: max drive time/stops; 
 
 ---
 
-## v0.4 — Explainability & Scenario Mgmt (Stretch)
+## v0.4 — Explainability & Scenario Mgmt (planned)
 
 **FRs included:**  
 FR-16 (save/compare scenarios), FR-20 (why excluded \+ next-best).
@@ -1013,9 +1016,9 @@ If metric is required later, gate it behind a single `units` flag and convert **
 ## C. Implement First (file order)
 
 1. `/src/distance.ts` — `haversineMiles`, `minutesAtMph`, `buildMatrix()`
-2. `/src/core/types.ts` — types in §6.2 (imperial-only)  
+2. `/src/types.ts` — types in §6.2 (imperial-only)
 3. `/src/schedule.ts` — `computeTimeline`, `isFeasible`, `slackMin`
-4. `/src/core/heuristics.ts` — seed → greedy insert (min feasible Δtime) → 2-opt/relocate; seeded tie-breaks  
+4. `/src/heuristics.ts` — seed → greedy insert (min feasible Δtime) → 2-opt/relocate; seeded tie-breaks
 5. `/src/io/parse.ts` — `parseTrip`, `parseLocation` (lat/lon | Plus Code | URL `@lat,lon`), validation & dedupe  
 6. `/src/io/emit.ts` — JSON \+ optional Markdown summary with per-day metrics; `emitHtml.ts` for HTML, `emitKml.ts` for KML, `emitCsv.ts` for CSV
 7. `/src/app/solveDay.ts` — orchestrate a single day solve  

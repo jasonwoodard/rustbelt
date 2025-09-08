@@ -2,6 +2,19 @@
 
 This document describes how to use the `rustbelt` command-line interface.
 
+## Setup
+
+Install dependencies and run the CLI either directly from the TypeScript
+sources or from the compiled JavaScript.
+
+```sh
+npm install
+npx tsx src/index.ts --help    # run from source
+# or
+npm run build
+node dist/index.js --help      # run after build
+```
+
 ## Usage
 
 ```
@@ -109,3 +122,8 @@ Reoptimize from 1:30 PM at a specific location:
 ```
 rustbelt solve-day --trip trips/example.json --day 2025-10-01 --now 13:30 --at 41.5,-81.7
 ```
+
+## See also
+
+- [Trip schema](trip-schema.json) – structure of trip JSON files
+- [Test plan](rust-belt-test-plan.md) – walkthrough of typical commands
