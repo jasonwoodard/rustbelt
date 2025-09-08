@@ -10,6 +10,6 @@
     "outDir": "dist",
     "sourceMap": true
   },
-  "include": ["src", "tests"]
+  "include": ["src"]
 }
  

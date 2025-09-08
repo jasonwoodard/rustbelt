@@ -2,6 +2,33 @@
 
 Utility for planning store visits.
 
+## Getting Started
+
+1. **Install dependencies**
+   ```sh
+   npm install
+   ```
+2. **Build the CLI**
+   ```sh
+   npm run build
+   ```
+   This compiles TypeScript sources to `dist/`.
+3. **Run a solve**
+   ```sh
+   npx tsx src/index.ts solve-day --trip trips/example.json --day 2025-10-01
+   ```
+   After building you can also run:
+   ```sh
+   node dist/index.js solve-day --trip trips/example.json --day 2025-10-01
+   ```
+
+## Documentation
+
+- [CLI usage](docs/rust-belt-cli-documentation.md)
+- [Trip schema](docs/trip-schema.json)
+- [Test plan](docs/rust-belt-test-plan.md)
+- [Route planner roadmap](docs/rust-belt-route-planner.md)
+
 ## Output Options
 
 The CLI prints itinerary JSON to stdout by default. Additional formats can
