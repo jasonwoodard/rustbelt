@@ -7,6 +7,7 @@ export interface EmitOptions {
 
 export interface EmitResult {
   json: string;
+  runTimestamp: string;
   markdown?: string;
 }
 
@@ -32,10 +33,11 @@ function toMarkdown(days: DayPlan[]): string {
 /** Serialize per-day itineraries to JSON and optional Markdown summary. */
 export function emitItinerary(
   days: DayPlan[],
+  runTimestamp = new Date().toISOString(),
   opts: EmitOptions = {},
 ): EmitResult {
-  const json = JSON.stringify({ days }, null, 2);
-  const result: EmitResult = { json };
+  const json = JSON.stringify({ runTimestamp, days }, null, 2);
+  const result: EmitResult = { json, runTimestamp };
   if (opts.markdown) {
     result.markdown = toMarkdown(days);
   }
@@ -43,7 +45,10 @@ export function emitItinerary(
 }
 
 export { toMarkdown as emitMarkdown };
-export function emitJson(days: DayPlan[]): string {
-  return JSON.stringify({ days }, null, 2);
+export function emitJson(
+  days: DayPlan[],
+  runTimestamp = new Date().toISOString(),
+): string {
+  return JSON.stringify({ runTimestamp, days }, null, 2);
 }
 

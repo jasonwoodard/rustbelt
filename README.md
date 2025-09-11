@@ -72,7 +72,8 @@ to `emitHtml`:
 import { readFileSync } from 'fs';
 import { emitHtml } from './src/io/emitHtml';
 const template = readFileSync('myTemplate.mustache', 'utf8');
-const html = emitHtml(days, { template });
+const runTs = new Date().toISOString();
+const html = emitHtml(days, runTs, { template });
 ```
 
 Copy and modify the default templates as a starting point.

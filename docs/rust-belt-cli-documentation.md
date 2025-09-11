@@ -107,7 +107,7 @@ the `<ExtendedData>` entries.
 
 ## Output
 
-The solver prints the resulting itinerary as JSON. If `--out` is specified, the JSON is also written to the provided path. Supplying `--kml` emits a KML representation to the given file or to stdout when no file is provided. Using `--csv` saves a CSV of all store stops. Passing `--html` writes an HTML itinerary to the given file or stdout; templates can be customized via `emitHtml`.
+The solver prints the resulting itinerary as JSON, including a `runTimestamp` field for tracking when the plan was generated. If `--out` is specified, the JSON is also written to the provided path. Supplying `--kml` emits a KML representation to the given file or to stdout when no file is provided. Using `--csv` saves a CSV of all store stops. Passing `--html` writes an HTML itinerary to the given file or stdout; templates can be customized via `emitHtml`.
 
 ## Examples
 

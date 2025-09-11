@@ -10,7 +10,10 @@ function escapeXml(s: string): string {
 }
 
 /** Serialize itinerary stops to KML. */
-export function emitKml(days: DayPlan[]): string {
+export function emitKml(
+  days: DayPlan[],
+  runTimestamp = new Date().toISOString(),
+): string {
   const placemarks: string[] = [];
   const routeCoords: string[] = [];
   for (const day of days) {
@@ -45,6 +48,7 @@ export function emitKml(days: DayPlan[]): string {
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<kml xmlns="http://www.opengis.net/kml/2.2">',
     '<Document>',
+    `<ExtendedData><Data name="runTimestamp"><value>${escapeXml(runTimestamp)}</value></Data></ExtendedData>`,
     ...placemarks,
     route,
     '</Document>',

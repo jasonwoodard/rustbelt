@@ -29,9 +29,11 @@ describe('emitHtml', () => {
         onTimeRisk: 0,
       },
     };
-    const html = emitHtml([day]);
+    const runTs = '2024-01-01T00:00:00Z';
+    const html = emitHtml([day], runTs);
     expect(html).toContain('<h2>Day D1</h2>');
     expect(html).toContain('Store A');
+    expect(html).toContain(runTs);
     // one row per stop inside tbody
     const tbody = html.split('<tbody>')[1].split('</tbody>')[0];
     const rows = tbody.match(/<tr>/g) || [];

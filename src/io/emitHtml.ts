@@ -33,9 +33,11 @@ interface ViewModel {
 
 export function emitHtml(
   days: DayPlan[],
+  runTimestamp = new Date().toISOString(),
   opts: EmitHtmlOptions = {},
 ): string {
-  const view: ViewModel = {
+  const view: ViewModel & { runTimestamp: string } = {
+    runTimestamp,
     days: days.map((d) => ({
       dayId: d.dayId,
       stops: d.stops.map((s) => ({
