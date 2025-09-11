@@ -36,7 +36,8 @@ export function solveDay(opts: SolveDayOptions): SolveDayResult {
       robustnessFactor: opts.robustnessFactor,
       riskThresholdMin: opts.riskThresholdMin,
     });
-    const emit = emitItinerary([dayPlan]);
+    const runTimestamp = new Date().toISOString();
+    const emit = emitItinerary([dayPlan], runTimestamp);
     return { ...emit, metrics: dayPlan.metrics };
   } catch (err) {
     throw augmentErrorWithReasons(err);

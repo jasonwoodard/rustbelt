@@ -41,7 +41,8 @@ export function reoptimizeDay(
       riskThresholdMin: opts.riskThresholdMin,
     });
 
-    return emitItinerary([dayPlan]);
+    const runTimestamp = new Date().toISOString();
+    return emitItinerary([dayPlan], runTimestamp);
   } catch (err) {
     throw augmentErrorWithReasons(err);
   }

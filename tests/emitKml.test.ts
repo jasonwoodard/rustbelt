@@ -14,11 +14,18 @@ describe('emitKml', () => {
     const tripPath = join(__dirname, '../fixtures/simple-trip.json');
     const result = solveDay({ tripPath, dayId: 'D1' });
     const data = JSON.parse(result.json) as { days: DayPlan[] };
-    const kml = emitKml(data.days);
+    const runTs = result.runTimestamp;
+    const kml = emitKml(data.days, runTs);
     const doc = new DOMParser().parseFromString(kml, 'text/xml');
     const placemarks = doc.getElementsByTagName('Placemark');
     expect(placemarks.length).toBe(data.days[0].stops.length + 1);
     expect(doc.getElementsByTagName('LineString').length).toBe(1);
+    const docExt = doc
+      .getElementsByTagName('Document')[0]
+      .getElementsByTagName('ExtendedData')[0];
+    expect(
+      docExt.getElementsByTagName('value')[0].textContent,
+    ).toBe(runTs);
   });
 
   it('includes extended data for each stop', () => {
@@ -26,7 +33,8 @@ describe('emitKml', () => {
     const result = solveDay({ tripPath, dayId: 'D1' });
     const data = JSON.parse(result.json) as { days: DayPlan[] };
     const stop = data.days[0].stops[1]; // first real stop (after start)
-    const kml = emitKml(data.days);
+    const runTs = result.runTimestamp;
+    const kml = emitKml(data.days, runTs);
     const doc = new DOMParser().parseFromString(kml, 'text/xml');
     const placemark = doc.getElementsByTagName('Placemark')[1];
     const extended = placemark.getElementsByTagName('ExtendedData')[0];
@@ -73,7 +81,8 @@ describe('emitKml', () => {
       },
     ];
 
-    const kml = emitKml(days);
+    const runTs = '2024-01-01T00:00:00Z';
+    const kml = emitKml(days, runTs);
     const doc = new DOMParser().parseFromString(kml, 'text/xml');
     const extended = doc
       .getElementsByTagName('Placemark')[0]

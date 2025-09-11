@@ -106,7 +106,11 @@ program
       });
     }
 
-    const data = JSON.parse(result.json) as { days: DayPlan[] };
+    const data = JSON.parse(result.json) as {
+      runTimestamp: string;
+      days: DayPlan[];
+    };
+    const runTs = result.runTimestamp;
 
     if (opts.out) {
       mkdirSync(dirname(opts.out), { recursive: true });
@@ -115,7 +119,6 @@ program
     }
 
     if (opts.csv) {
-      const runTs = new Date().toISOString();
       const rawTrip = readFileSync(opts.trip, 'utf8');
       const trip = parseTrip(JSON.parse(rawTrip));
       const mustVisitByDay: Record<string, ReadonlySet<ID>> = {};
@@ -139,7 +142,7 @@ program
     }
 
     if (opts.kml !== undefined) {
-      const kml = emitKml(data.days);
+      const kml = emitKml(data.days, runTs);
       if (typeof opts.kml === 'string') {
         mkdirSync(dirname(opts.kml), { recursive: true });
         writeFileSync(opts.kml, kml, 'utf8');
@@ -150,7 +153,7 @@ program
     }
 
     if (opts.html !== undefined) {
-      const html = emitHtml(data.days);
+      const html = emitHtml(data.days, runTs);
       if (typeof opts.html === 'string') {
         mkdirSync(dirname(opts.html), { recursive: true });
         writeFileSync(opts.html, html, 'utf8');

@@ -16,6 +16,7 @@ describe('solveDay', () => {
     const tripPath = join(__dirname, '../fixtures/simple-trip.json');
     const result = solveDay({ tripPath, dayId: 'D1' });
     const data = JSON.parse(result.json);
+    expect(typeof data.runTimestamp).toBe('string');
     const ids = data.days[0].stops.map((s: { id: string }) => s.id);
     expect(ids).toEqual(['S', 'A', 'B', 'C', 'E']);
     expect(data.days[0].metrics.storesVisited).toBe(3);
@@ -25,7 +26,9 @@ describe('solveDay', () => {
   it('produces stable itinerary output (FR-31)', () => {
     const tripPath = join(__dirname, '../fixtures/simple-trip.json');
     const result = solveDay({ tripPath, dayId: 'D1' });
-    expect(JSON.parse(result.json)).toMatchSnapshot();
+    const data = JSON.parse(result.json);
+    delete data.runTimestamp;
+    expect(data).toMatchSnapshot();
   });
 
   it('respects store scores when lambda=1', () => {
