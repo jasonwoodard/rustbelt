@@ -96,3 +96,23 @@ Configuration settings and CLI flags let you refine the output:
 - **Short browsing windows:** Reduce `--default-dwell` when you plan quick visits, freeing more time for additional stops.
 
 By interpreting the `metrics` and experimenting with configuration options, you can iteratively refine trips to match real‑world constraints and preferences.
+
+## Understanding Schedule Risk
+
+Two pieces work together to describe how likely you are to fall behind schedule:
+
+- **`--risk-threshold`** – a CLI/config option in minutes. Each leg that arrives with less slack than this value is considered "at risk." The default is `0`, which effectively disables risk tracking because slack is almost always greater than zero.
+- **`onTimeRisk`** – fraction of legs marked at risk. It is *not* the probability of failure, but a share of the itinerary that has little buffer.
+
+### How `onTimeRisk` is computed
+
+For every leg, the solver looks at how many minutes remain before the day's end after you arrive at the next stop. If that remaining slack is below the threshold, the leg is counted as risky. `onTimeRisk` is simply `riskyLegs / totalLegs`.
+
+In the example itinerary above, there are eight legs. With a threshold of `15` minutes, one leg finishes with less than `15` minutes remaining, so `onTimeRisk` is `1/8 = 0.125` (12.5% of legs are tight). It does **not** mean a 12.5% chance of being late, only that one transition leaves almost no buffer.
+
+### Thought experiments
+
+- **Lower threshold, fewer risky legs:** Consider an itinerary with slack values `[40, 20, 5]` minutes and a threshold of `15`. Only the final leg has slack below `15`, so `onTimeRisk` is `1/3 ≈ 0.33`.
+- **Higher threshold, more conservative plan:** Using the same slack values but raising the threshold to `30`, both the second and third legs fall short, yielding `onTimeRisk = 2/3 ≈ 0.67`. The higher threshold forces you to treat more of the day as tight.
+
+Tactically, a high `onTimeRisk` means delays on multiple legs could push you past the day's end. Lower it by dropping distant stores, adding slack (e.g., a later end time), or increasing drive time estimates with `--robustness` or lower `--mph`.
