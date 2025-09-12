@@ -49,6 +49,7 @@
           "type": "string",
           "description": "Alternative to lat/lon; accepts 'lat,lon', Plus Codes, or a Google Maps URL containing @lat,lon"
         },
+        "address": { "type": "string", "description": "Street address for the store" },
         "dwellMin": { "type": "number", "description": "Minutes spent at this stop (overrides defaults)" },
         "score": { "type": "number", "description": "Optional utility score used when blending or maximizing score" },
         "tags": {
