@@ -172,6 +172,7 @@ export function computeTimeline(order: ID[], ctx: ScheduleCtx): TimelineResult {
       depart: minToHhmm(currentTime),
       lat,
       lon,
+      address: store.address,
       dwellMin: dwell,
       legIn: {
         fromId: currentId,

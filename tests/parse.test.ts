@@ -16,4 +16,10 @@ describe('parseTrip', () => {
     expect(stores).toHaveLength(1);
     expect(stores[0].id).toBe('a');
   });
+
+  it('parses store address', () => {
+    const input = { stores: [{ id: 'a', lat: 0, lon: 0, address: '123 Main St' }] };
+    const { stores } = parseTrip(input);
+    expect(stores[0].address).toBe('123 Main St');
+  });
 });

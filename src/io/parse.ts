@@ -116,6 +116,10 @@ function parseStore(obj: PlainObj): Store {
 
   const store: Store = { id, name, coord };
 
+  if (typeof obj.address === 'string') {
+    store.address = obj.address;
+  }
+
   if (obj.dwellMin !== undefined) {
     const dwell = Number(obj.dwellMin);
     if (!Number.isFinite(dwell) || dwell < 0) {

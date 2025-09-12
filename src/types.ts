@@ -14,6 +14,7 @@ export interface Store {
   id: ID;
   name: string;
   coord: Coord;
+  address?: string;
   dwellMin?: number;
   score?: number; // v0.3
   tags?: string[];
@@ -65,6 +66,7 @@ export interface StopPlan {
   depart: string;
   lat: number;
   lon: number;
+  address?: string;
   dwellMin?: number;
   legIn?: Leg;
   score?: number;

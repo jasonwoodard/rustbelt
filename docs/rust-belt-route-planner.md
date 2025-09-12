@@ -742,6 +742,8 @@ export interface Store {
 
   lat: number; lon: number;
 
+  address?: string;
+
   dwellMin?: number;
 
   score?: number;  // v0.3
@@ -804,6 +806,7 @@ export interface StopPlan {
   depart: string;
   lat: number;
   lon: number;
+  address?: string;
   dwellMin?: number;
   legIn?: Leg;
 }
