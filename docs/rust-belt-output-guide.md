@@ -23,6 +23,7 @@ Each element in the `stops` array represents a location in the itinerary. Fields
 - `id`, `name`, and `type` (`start`, `store`, or `end`).
 - `arrive` and `depart` times in local time.
 - Geographic coordinates `lat` and `lon`.
+- Optional `address` with the store's street address (store stops only).
 - Optional `dwellMin` showing minutes planned at the stop.
 - Optional `legIn` describing the leg from the previous stop: `fromId`, `toId`, `driveMin`, and `distanceMi`.
 - Store-specific values such as `score` and `tags`.
@@ -34,6 +35,7 @@ Each element in the `stops` array represents a location in the itinerary. Fields
   "id": "AU",
   "name": "Antiques & Uniques",
   "type": "store",
+  "address": "123 Main St",
   "arrive": "09:39",
   "depart": "10:09",
   "dwellMin": 30,
@@ -47,7 +49,7 @@ Each element in the `stops` array represents a location in the itinerary. Fields
   "tags": ["must-visit", "Antique"]
 }
 ```
-The solver expects a 38‑minute drive from the start location to the store and schedules a 30‑minute dwell. The `score` reflects store quality; higher values make a stop more desirable when optimizing.
+The solver expects a 38‑minute drive from the start location to the store and schedules a 30‑minute dwell. The `address` field is included because the store input provided one. The `score` reflects store quality; higher values make a stop more desirable when optimizing.
 
 ### Example: Savers (`SAVERSB`)
 
