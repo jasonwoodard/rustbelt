@@ -16,8 +16,8 @@ function buildCtx(): ScheduleCtx {
   };
 }
 
-describe('schedule utilities', () => {
-  it('computeTimeline yields monotonic stop times', () => {
+  describe('schedule utilities', () => {
+    it('computeTimeline yields monotonic stop times', () => {
     const ctx = buildCtx();
     const timeline = computeTimeline(['A'], ctx);
     let last = 0;
@@ -28,9 +28,9 @@ describe('schedule utilities', () => {
       expect(depart).toBeGreaterThanOrEqual(arrive);
       last = depart;
     }
-  });
+    });
 
-  it('slackMin is never negative', () => {
+    it('slackMin is never negative', () => {
     const ctx = buildCtx();
     // Tighten the window so arrival exceeds the end time
     const tightCtx: ScheduleCtx = {
@@ -39,5 +39,13 @@ describe('schedule utilities', () => {
     };
     const slack = slackMin(['A'], tightCtx);
     expect(slack).toBe(0);
+    });
+
+    it('propagates store address to stop plan', () => {
+      const ctx = buildCtx();
+      ctx.stores.A.address = '1 Main St';
+      const timeline = computeTimeline(['A'], ctx);
+      const stop = timeline.stops.find((s) => s.id === 'A');
+      expect(stop?.address).toBe('1 Main St');
+    });
   });
-});
