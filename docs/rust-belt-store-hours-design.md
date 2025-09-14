@@ -16,6 +16,7 @@ This document explores the required input changes, functional requirements, use 
 - **StoreTime‑6:** Treat all times as local to the store and expressed in 24‑hour `HH:MM` format.
 - **StoreTime‑7:** If a store omits `openHours` entirely, assume it is open all day with no time restrictions.
 
+
 ## 3. Use Cases
 
 1. **Early Arrival Deferred**
@@ -143,7 +144,6 @@ Stores rejected at one position may be reconsidered later if the solver reorders
 - Allow **soft** windows (visit allowed before/after with penalty).
 - Surface reasons for exclusion in output for user transparency.
 
----
 
 ### Appendix A. Considered Approaches
 
@@ -152,5 +152,3 @@ Stores rejected at one position may be reconsidered later if the solver reorders
 | **A. Pre‑filter + runtime checks** | **Selected** | Filter stores by day upfront, then apply arrival/dwell window checks during insertion and feasibility tests. | Minimal algorithm changes; deterministic; easy to reason about. | Requires additional checks in hot loops; does not consider open/close times during look‑ahead heuristics (may reduce optimality slightly). |
 | **B. Encode as time‑window constraints in solver core** | Rejected | Treat each store window as a constraint, adjusting travel times or using scheduling algorithms (e.g., time‑window VRP). | Produces more optimal solutions; naturally handles windows in heuristics. | Higher implementation complexity; may slow solver significantly; overkill for single‑day planning. |
 | **C. Post‑processing reroute** | Rejected | Plan ignoring hours, then re‑route or insert gaps after detecting violations. | Simplifies core solver. | Could yield infeasible or suboptimal itineraries; potentially expensive re‑solve steps. |
-
-
