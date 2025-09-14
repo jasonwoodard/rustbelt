@@ -171,7 +171,8 @@ function parseStore(obj: PlainObj): Store {
           );
           }
         const [open, close] = w.map(String);
-        if (!/^\d{2}:\d{2}$/.test(open) || !/^\d{2}:\d{2}$/.test(close)) {
+        // Accept times with or without a leading zero for the hour
+        if (!/^\d{1,2}:\d{2}$/.test(open) || !/^\d{1,2}:\d{2}$/.test(close)) {
           throw new Error(
             `Invalid time format in openHours for store ${id} day ${day}`,
           );
