@@ -13,7 +13,7 @@ This document explores the required input changes, functional requirements, use 
 - **StoreTime‑3:** Do not arrive if the store will close before the required dwell time completes.
 - **StoreTime‑4:** Do not include stores closed on the planned day of week.
 - **StoreTime‑5:** Support multiple open/close windows per day (e.g., 09:00‑12:00 and 13:00‑17:00).
-- **StoreTime‑6:** Treat all times as local to the store and expressed in 24‑hour `HH:MM` format.
+- **StoreTime‑6:** Treat all times as local to the store and expressed in 24‑hour `H:MM` or `HH:MM` format (leading zero optional).
 - **StoreTime‑7:** If a store omits `openHours` entirely, assume it is open all day with no time restrictions.
 
 

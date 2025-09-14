@@ -118,8 +118,8 @@
           "type": "object",
           "required": ["start", "end"],
           "properties": {
-            "start": { "type": "string", "description": "Day start time HH:mm" },
-            "end": { "type": "string", "description": "Day end time HH:mm" }
+            "start": { "type": "string", "description": "Day start time HH:mm (leading zero optional)" },
+            "end": { "type": "string", "description": "Day end time HH:mm (leading zero optional)" }
           }
         },
         "mph": { "type": "number", "description": "Average speed for this day (overrides trip-level mph)" },
@@ -140,8 +140,8 @@
           "type": "object",
           "required": ["start", "end"],
           "properties": {
-            "start": { "type": "string", "description": "Break start time HH:mm" },
-            "end": { "type": "string", "description": "Break end time HH:mm" }
+            "start": { "type": "string", "description": "Break start time HH:mm (leading zero optional)" },
+            "end": { "type": "string", "description": "Break end time HH:mm (leading zero optional)" }
           }
         },
         "robustnessFactor": { "type": "number", "description": "Multiply drive times to add buffer (e.g., 1.1 = +10%)" },

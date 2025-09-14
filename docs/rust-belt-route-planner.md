@@ -546,12 +546,12 @@ To avoid manual “completed IDs” while driving, support three modes; the solv
 
 **Mode 1 — Schedule-based inference (zero overhead)**
 
-- **Inputs:** `--now HH:mm`  
+- **Inputs:** `--now HH:mm` (leading zero optional)
 - **Logic:** Treat any stops with \*\*planned `depart ≤ now` as completed.
 
 **Mode 2 — Location snap (recommended)**
 
-- **Inputs:** `--now HH:mm --at "<lat>,<lon>"`  
+- **Inputs:** `--now HH:mm --at "<lat>,<lon>"` (leading zero optional)
 - **Logic:** Snap `--at` to the nearest planned stop within radius **R** (default 120 m). Inside a stop → mark it current/completed; otherwise treat as in-transit.
 
 **Mode 3 — Explicit completion (optional)**
@@ -760,7 +760,7 @@ export interface DayConfig {
 
   end: Anchor;
 
-  window: { start: string; end: string }; // "HH:mm"
+  window: { start: string; end: string }; // "HH:mm" (leading zero optional)
 
   mph?: number;
 
@@ -909,7 +909,7 @@ export function slackMin(order: ID\[\], ctx: ScheduleCtx): number
 
 - **Config:** Remove `config.units`. Keep `config.mph` (default **38**).  
 - **Engine:** `haversineMi()` returns miles; `minutesAtMph(distanceMi, mph)` returns minutes. No unit switches or conversions.  
-- **I/O & Output:** Distances reported in miles; durations in minutes; times as `HH:mm`.  
+- **I/O & Output:** Distances reported in miles; durations in minutes; times as `HH:mm` (leading zero optional).
 - **Docs & Examples:** Update JSON examples to drop the `units` field.  
 - **Tests:** Remove metric-specific cases.
 

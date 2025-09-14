@@ -35,7 +35,7 @@ rustbelt solve-day --trip <file> --day <id> [options]
 | `--lambda <lambda>`      | Score weighting (0=count,1=score)             |
 | `--verbose`              | Print heuristic steps                         |
 | `--progress`             | Print heuristic progress                      |
-| `--now <HH:mm>`          | Reoptimize from this time                     |
+| `--now <HH:mm>`          | Reoptimize from this time (leading zero optional) |
 | `--at <lat,lon>`         | Current location                              |
 | `--done <ids>`           | Comma-separated list of completed store IDs   |
 | `--out <file>`           | Write itinerary JSON to this path (overwrite) |
@@ -64,7 +64,7 @@ rustbelt solve-day --trip <file> --day <id> [options]
 
 ### Reoptimization flags
 
-- `--now <HH:mm>` and `--at <lat,lon>` – When both flags are supplied, the solver reoptimizes the remainder of the day starting from the given time and location. Any IDs passed with `--done <ids>` are excluded from further consideration. If only one of `--now` or `--at` is provided, the solver starts from the day's original start and ignores the reoptimization parameters.
+- `--now <HH:mm>` (leading zero optional) and `--at <lat,lon>` – When both flags are supplied, the solver reoptimizes the remainder of the day starting from the given time and location. Any IDs passed with `--done <ids>` are excluded from further consideration. If only one of `--now` or `--at` is provided, the solver starts from the day's original start and ignores the reoptimization parameters.
 
 ### Output format flags
 

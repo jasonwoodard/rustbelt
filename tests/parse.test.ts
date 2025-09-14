@@ -22,4 +22,19 @@ describe('parseTrip', () => {
     const { stores } = parseTrip(input);
     expect(stores[0].address).toBe('123 Main St');
   });
+
+  it('accepts single-digit hours in openHours', () => {
+    const input = {
+      stores: [
+        {
+          id: 'a',
+          lat: 0,
+          lon: 0,
+          openHours: { mon: [['9:00', '17:00']] },
+        },
+      ],
+    };
+    const { stores } = parseTrip(input);
+    expect(stores[0].openHours?.mon[0][0]).toBe('9:00');
+  });
 });
