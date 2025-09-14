@@ -11,7 +11,7 @@ import {
 import { adviseInfeasible } from '../infeasibility';
 import type { InfeasibilitySuggestion } from '../infeasibility';
 import { hhmmToMin } from '../time';
-import type { ID, Store, DayPlan, LockSpec, Coord } from '../types';
+import type { ID, Store, DayPlan, LockSpec, Coord, Weekday } from '../types';
 import { BREAK_ID } from '../types';
 
 export interface SolveCommonOptions {
@@ -73,10 +73,17 @@ export function solveCommon(opts: SolveCommonOptions): DayPlan {
 
   const stores: Record<ID, Store> = {};
   let candidateIds: ID[] = [];
+  function isOpenOnDay(store: Store, dow: Weekday): boolean {
+    if (!store.openHours) return true;
+    const windows = store.openHours[dow];
+    return !!(windows && windows.length > 0);
+  }
   for (const s of trip.stores) {
     if (!s.dayId || s.dayId === day.dayId) {
-      stores[s.id] = s;
-      candidateIds.push(s.id);
+      if (!day.dayOfWeek || isOpenOnDay(s, day.dayOfWeek)) {
+        stores[s.id] = s;
+        candidateIds.push(s.id);
+      }
     }
   }
 
@@ -119,6 +126,7 @@ export function solveCommon(opts: SolveCommonOptions): DayPlan {
     maxStops: day.maxStops,
     breakWindow: day.breakWindow,
     robustnessFactor,
+    dayOfWeek: day.dayOfWeek,
   };
 
   if (opts.completedIds || opts.startCoord || opts.windowStart) {

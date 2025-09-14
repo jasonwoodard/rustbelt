@@ -59,7 +59,11 @@
             { "type": "string" }
           ]
         },
-        "dayId": { "type": "string", "description": "If present, store is only available on this day" }
+        "dayId": { "type": "string", "description": "If present, store is only available on this day" },
+        "openHours": {
+          "type": "object",
+          "description": "Maps weekday codes (mon-sun) to arrays of [open, close] times"
+        }
       },
       "oneOf": [
         { "required": ["lat", "lon"] },
@@ -132,7 +136,8 @@
           }
         },
         "robustnessFactor": { "type": "number", "description": "Multiply drive times to add buffer (e.g., 1.1 = +10%)" },
-        "riskThresholdMin": { "type": "number", "description": "Slack threshold minutes for on-time risk metric" }
+        "riskThresholdMin": { "type": "number", "description": "Slack threshold minutes for on-time risk metric" },
+        "dayOfWeek": { "type": "string", "description": "Day of week for applying store open hours" }
       }
     },
     "TripConfig": {

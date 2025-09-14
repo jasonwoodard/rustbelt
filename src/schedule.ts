@@ -6,6 +6,7 @@ import type {
   Coord,
   StopPlan,
   LockSpec,
+  Weekday,
 } from './types';
 import { BREAK_ID } from './types';
 import { hhmmToMin, minToHhmm } from './time';
@@ -24,6 +25,7 @@ export interface ScheduleCtx {
   maxStops?: number;
   breakWindow?: { start: string; end: string };
   robustnessFactor?: number;
+  dayOfWeek?: Weekday;
 }
 
 export interface TimelineResult {
@@ -247,6 +249,31 @@ export function isFeasible(order: ID[], ctx: ScheduleCtx): boolean {
   }
 
   const t = computeTimeline(order, ctx);
+
+  if (ctx.dayOfWeek) {
+    for (const stop of t.stops) {
+      if (stop.type !== 'store') continue;
+      const store = ctx.stores[stop.id];
+      if (!store) continue;
+      const hours = store.openHours;
+      if (!hours) continue;
+      const windows = hours[ctx.dayOfWeek];
+      if (!windows || windows.length === 0) return false;
+      const arrive = hhmmToMin(stop.arrive);
+      const depart = hhmmToMin(stop.depart);
+      let ok = false;
+      for (const [open, close] of windows) {
+        const openMin = hhmmToMin(open);
+        const closeMin = hhmmToMin(close);
+        if (arrive >= openMin && depart <= closeMin) {
+          ok = true;
+          break;
+        }
+      }
+      if (!ok) return false;
+    }
+  }
+
   const endMin = hhmmToMin(ctx.window.end);
   if (t.hotelETAmin > endMin) return false;
   if (ctx.maxDriveTime != null && t.totalDriveMin > ctx.maxDriveTime) {
