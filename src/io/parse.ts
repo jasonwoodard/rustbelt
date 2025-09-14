@@ -6,9 +6,12 @@ import type {
   Store,
   TripConfig,
   LockSpec,
+  Weekday,
+  StoreOpenHours,
 } from '../types';
 import type { TripInput } from '../types';
 import { haversineMiles } from '../distance';
+import { hhmmToMin } from '../time';
 
 function ensureValidCoord(lat: number, lon: number): Coord {
   if (
@@ -150,6 +153,40 @@ function parseStore(obj: PlainObj): Store {
     store.dayId = String(obj.dayId);
   }
 
+  if (obj.openHours !== undefined) {
+    const oh = obj.openHours as PlainObj;
+    const parsed: StoreOpenHours = {};
+    for (const [day, windows] of Object.entries(oh)) {
+      const key = day.toLowerCase();
+      if (!['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'].includes(key)) {
+        throw new Error(`Invalid day in openHours for store ${id}: ${day}`);
+      }
+      if (!Array.isArray(windows)) {
+        throw new Error(`openHours for store ${id} day ${day} must be an array`);
+      }
+      parsed[key as Weekday] = windows.map((w) => {
+        if (!Array.isArray(w) || w.length !== 2) {
+          throw new Error(
+            `openHours window for store ${id} day ${day} must be [open, close]`,
+          );
+          }
+        const [open, close] = w.map(String);
+        if (!/^\d{2}:\d{2}$/.test(open) || !/^\d{2}:\d{2}$/.test(close)) {
+          throw new Error(
+            `Invalid time format in openHours for store ${id} day ${day}`,
+          );
+        }
+        if (hhmmToMin(close) <= hhmmToMin(open)) {
+          throw new Error(
+            `close must be later than open for store ${id} day ${day}`,
+          );
+        }
+        return [open, close] as [string, string];
+      });
+    }
+    store.openHours = parsed;
+  }
+
   return store;
 }
 
@@ -196,6 +233,31 @@ function parseDay(obj: PlainObj): DayConfig {
   }
   if (obj.riskThresholdMin !== undefined) {
     day.riskThresholdMin = Number(obj.riskThresholdMin);
+  }
+
+  if (obj.dayOfWeek !== undefined) {
+    const map: Record<string, Weekday> = {
+      mon: 'mon',
+      monday: 'mon',
+      tue: 'tue',
+      tuesday: 'tue',
+      wed: 'wed',
+      wednesday: 'wed',
+      thu: 'thu',
+      thursday: 'thu',
+      fri: 'fri',
+      friday: 'fri',
+      sat: 'sat',
+      saturday: 'sat',
+      sun: 'sun',
+      sunday: 'sun',
+    };
+    const key = String(obj.dayOfWeek).toLowerCase();
+    const code = map[key];
+    if (!code) {
+      throw new Error(`Invalid dayOfWeek: ${obj.dayOfWeek}`);
+    }
+    day.dayOfWeek = code;
   }
 
   return day;

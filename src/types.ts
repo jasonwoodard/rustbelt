@@ -4,6 +4,17 @@ export const BREAK_ID: ID = '__break__';
 
 export type Coord = readonly [number, number];
 
+export type Weekday =
+  | 'mon'
+  | 'tue'
+  | 'wed'
+  | 'thu'
+  | 'fri'
+  | 'sat'
+  | 'sun';
+
+export type StoreOpenHours = Partial<Record<Weekday, [string, string][]>>;
+
 export interface Anchor {
   id: ID;
   name: string;
@@ -19,6 +30,7 @@ export interface Store {
   score?: number; // v0.3
   tags?: string[];
   dayId?: string; // when using a global list
+  openHours?: StoreOpenHours;
 }
 
 export type LockSpec =
@@ -40,6 +52,7 @@ export interface DayConfig {
   breakWindow?: { start: string; end: string };
   robustnessFactor?: number;
   riskThresholdMin?: number;
+  dayOfWeek?: Weekday;
 }
 
 export interface TripConfig {
