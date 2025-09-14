@@ -63,6 +63,25 @@ describe('store open hours', () => {
     expect(isFeasible(['A'], ctx)).toBe(false);
   });
 
+  it('rejects store with no open hours on day', () => {
+    const store: Store = {
+      id: 'A',
+      name: 'A',
+      coord: [0, 0],
+      openHours: { mon: [] },
+    };
+    const ctx: ScheduleCtx = {
+      start,
+      end,
+      window: { start: '09:00', end: '18:00' },
+      mph: 60,
+      defaultDwellMin: 0,
+      stores: { A: store },
+      dayOfWeek: 'mon',
+    };
+    expect(isFeasible(['A'], ctx)).toBe(false);
+  });
+
   it('accepts when within open window', () => {
     const store: Store = {
       id: 'A',
