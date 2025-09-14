@@ -6,7 +6,7 @@ See [CLI usage](rust-belt-cli-documentation.md) for command details and the
 ## Problem Frame & Goals
 
 - **Goal:** Build a planner that **maximizes number of stores visited per day** on a multi-day Detroit → Cleveland (overnight) → Buffalo (overnight) trip, with fixed daily start/end anchors and simple travel modeling.  
-- **Model:** A practical variant of the **Orienteering Problem** (OPTW-lite since we’re ignoring store hours in v0.x). Per day: choose and order stops to maximize count under a daily time budget (drive \+ dwell) using **Haversine distance × constant mph**.  
+- **Model:** A practical variant of the **Orienteering Problem** that respects store open hours. Per day: choose and order stops to maximize count under a daily time budget (drive \+ dwell) using **Haversine distance × constant mph**.
 - **Key non-goal:** Shortest route. Efficiency is in service of **more stores while still reaching the hotel on time**.
 
 # Features at a Glance 
@@ -18,8 +18,9 @@ FRs broken down by implementation milestone (v0.x)
 - **FR-1** Multi-day segmentation by day (**backtracking allowed**)  
 - **FR-3** Auto partitioning into day subroutes  
 - **FR-4** Maximize **store count** under daily time window  
-- **FR-6** Tie-breakers: end-of-day slack → total drive  
-- **FR-8** Per-store **dwell/service** time  
+- **FR-6** Tie-breakers: end-of-day slack → total drive
+- **FR-7** Store open hours/time windows
+- **FR-8** Per-store **dwell/service** time
 - **FR-9** Travel time via **Haversine \+ mph** (no road graph)  
 - **FR-11** **Must-visit** stores (hard) only  
 - **FR-17** Per-day itinerary output (arrive/depart, leg times, dwell, slack, hotel ETA)  
@@ -53,7 +54,6 @@ FRs broken down by implementation milestone (v0.x)
 
 ## Out of Scope / De-scoped (for now)
 
-- **FR-7** Store hours/time windows (assume open)  
 - **FR-15** Spatial filter: corridor/polygon
 - **FR-19** Turn-by-turn export / deep links  
 - **FR-23** Special cluster handling (keep exact-coordinate dedupe only)  
@@ -67,7 +67,7 @@ FRs broken down by implementation milestone (v0.x)
 
 - Single traveler, single vehicle.  
 - **Backtracking permitted** if it increases total store count.  
-- All stores assumed open (no time windows).  
+- Stores may define open hours; missing hours imply the store is open all day.
 - Travel time \= **Haversine distance / mph\_constant** (mph configurable).  
 - All locations in Eastern Time; time zone handling is trivial but present.  
 - Must-visit stores are hard constraints; no “avoid” list.
@@ -77,22 +77,22 @@ FRs broken down by implementation milestone (v0.x)
 - Turn-by-turn exports (e.g., deep links to Maps).  
 - Real road network routing.  
 - Special cluster handling beyond exact-duplicate coordinate dedupe.  
-- Store opening/closing windows.
 
 ---
 
 ## v0.1 — Core Day-By-Day Planner (MVP) (implemented)
 
 **FRs included:**  
-FR-1 (day segmentation; backtracking allowed), FR-3, FR-4, FR-6 (basic tie-breakers), FR-8, FR-9 (Haversine+mph), FR-11 (must-visit), FR-17, FR-18 (basic), FR-24, FR-25, FR-28 (size target), FR-29, FR-30, FR-31.
+FR-1 (day segmentation; backtracking allowed), FR-3, FR-4, FR-6 (basic tie-breakers), FR-7 (store hours), FR-8, FR-9 (Haversine+mph), FR-11 (must-visit), FR-17, FR-18 (basic), FR-24, FR-25, FR-28 (size target), FR-29, FR-30, FR-31.
 
 **User story:** “Given my day start/end anchors, candidate stores (lat/lon \+ dwell), a daily driving window and mph, produce an ordered day itinerary that reaches the hotel and fits the clock while visiting as many stores as possible.”
 
 **Acceptance criteria:**
 
-- Returns a per-day ordered list with arrival/departure times, leg drive times, dwell, cumulative time, slack, and hotel ETA.  
-- Includes all **must-visit** or declares infeasible (with reason).  
-- Deterministic with a fixed random seed.  
+- Returns a per-day ordered list with arrival/departure times, leg drive times, dwell, cumulative time, slack, and hotel ETA.
+- Includes all **must-visit** or declares infeasible (with reason).
+- Visits occur only during each store's declared open hours; closed stores are skipped.
+- Deterministic with a fixed random seed.
 - Handles \~300 candidates/day on a laptop in reasonable time.
 
 ---
@@ -146,8 +146,8 @@ FR-16 (save/compare scenarios), FR-20 (why excluded \+ next-best).
 
 1. **Core Model**  
      
-   - `Location` (id, name, lat, lon, type={store, anchor}, mustVisit?: bool, score?: number)  
-   - `DayConfig` (startLocation, endLocation, startTime, endTime, mph, defaultDwell, maxDriveTime?, maxStops?, breakWindow?)  
+   - `Location` (id, name, lat, lon, type={store, anchor}, mustVisit?: bool, score?: number, openHours?)
+   - `DayConfig` (startLocation, endLocation, dayOfWeek, startTime, endTime, mph, defaultDwell, maxDriveTime?, maxStops?, breakWindow?)
    - `ProblemInstance` (days: DayConfig\[\], candidatesByDay: Location\[\])
 
    
@@ -623,11 +623,9 @@ You can defer spatial filtering without impacting v0.1/v0.2. When enabled:
     {
 
       "dayId": "2025-10-02",
-
+      "dayOfWeek": "Thursday",
       "start": {"id":"cle-hotel","name":"Cleveland Hotel","lat":41.4993,"lon":-81.6944},
-
       "end": {"id":"buf-hotel","name":"Buffalo Hotel","lat":42.8864,"lon":-78.8784},
-
       "window": {"start":"09:00","end":"18:00"}
 
     }
@@ -636,7 +634,7 @@ You can defer spatial filtering without impacting v0.1/v0.2. When enabled:
 
   "stores": \[
 
-    {"id":"s\_103","name":"Rusty Relics","location":"86JHGR6C+2Q","dwellMin":12,"dayId":"2025-10-01"},
+    {"id":"s\_103","name":"Rusty Relics","location":"86JHGR6C+2Q","dwellMin":12,"dayId":"2025-10-01","openHours":{"wed":[["09:00","17:00"]]}},
 
     {"id":"s\_212","name":"Lake Thrift","location":"41.5100,-81.6700","dayId":"2025-10-01"},
 
@@ -955,11 +953,9 @@ export function slackMin(order: ID\[\], ctx: ScheduleCtx): number
     {
 
       "dayId": "2025-10-02",
-
+      "dayOfWeek": "Thursday",
       "start": {"id":"cle-hotel","name":"Cleveland Hotel","lat":41.4993,"lon":-81.6944},
-
       "end": {"id":"buf-hotel","name":"Buffalo Hotel","lat":42.8864,"lon":-78.8784},
-
       "window": {"start":"09:00","end":"18:00"}
 
     }
@@ -968,7 +964,7 @@ export function slackMin(order: ID\[\], ctx: ScheduleCtx): number
 
   "stores": \[
 
-    {"id":"s\_103","name":"Rusty Relics","location":"86JHGR6C+2Q","dwellMin":12,"dayId":"2025-10-01"},
+    {"id":"s\_103","name":"Rusty Relics","location":"86JHGR6C+2Q","dwellMin":12,"dayId":"2025-10-01","openHours":{"wed":[["09:00","17:00"]]}},
 
     {"id":"s\_212","name":"Lake Thrift","location":"41.5100,-81.6700","dayId":"2025-10-01"},
 

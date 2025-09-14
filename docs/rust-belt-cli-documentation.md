@@ -1,6 +1,6 @@
 # Rust Belt CLI
 
-This document describes how to use the `rustbelt` command-line interface.
+This document describes how to use the `rustbelt` command-line interface. The solver honors per‑store open hours so that closed locations are never scheduled.
 
 ## Setup
 
@@ -98,6 +98,7 @@ the `<ExtendedData>` entries.
 - Tags: Store `tags` may be an array of strings or a single string. When a string is provided, comma/semicolon/pipe separators are supported.
   Tags are preserved in JSON, CSV, HTML, and KML outputs. The CSV export includes a `tags` column containing semicolon-separated values.
 - Day availability: If a store has a `dayId` field, it is only considered on that day.
+- Store hours: Each day must specify a `dayOfWeek` (e.g., "Monday"). Stores may include an `openHours` object mapping weekday codes to arrays of `[open, close]` windows. The solver only visits a store when the arrival and dwell fit within one of that day's windows. Missing entries mean the store is closed, while omitting `openHours` makes the store always available.
 - Dedupe: When `config.snapDuplicateToleranceMeters` is set, stores within that distance are treated as duplicates and deduped on load.
 
 ### Travel time adjustments and risk

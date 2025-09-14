@@ -1,6 +1,6 @@
 # Rust Belt Output Guide
 
-This page explains how to interpret the JSON produced by `rustbelt solve-day` and how configuration options influence the itinerary. The examples reference the sample output below.
+This page explains how to interpret the JSON produced by `rustbelt solve-day` and how configuration options influence the itinerary. When stores declare `openHours`, the solver only visits them within those windows and omits closed locations. The examples reference the sample output below.
 
 ```json
 {
@@ -21,7 +21,7 @@ This page explains how to interpret the JSON produced by `rustbelt solve-day` an
 Each element in the `stops` array represents a location in the itinerary. Fields include:
 
 - `id`, `name`, and `type` (`start`, `store`, or `end`).
-- `arrive` and `depart` times in local time.
+- `arrive` and `depart` times in local time. When a store defines `openHours`, these times always fall within one of its windows.
 - Geographic coordinates `lat` and `lon`.
 - Optional `address` with the store's street address (store stops only).
 - Optional `dwellMin` showing minutes planned at the stop.

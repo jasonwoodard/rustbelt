@@ -13,8 +13,8 @@ The steps below exercise the CLI, verify itinerary outputs, and ensure no store 
 ## 1. Prepare Data
 
 1. Build a trip JSON (`trips/rust-belt.json`) with:
-   - Three `dayId` entries with start/end anchors and time windows matching the legs above.
-   - A `stores` array containing all 132 stores with unique `id` values. Optionally assign a `dayId` to restrict a store to a single day; stores without a `dayId` are candidates on every day. Stores should appear **only once** in the file.
+   - Three `dayId` entries with start/end anchors, time windows, and `dayOfWeek` values matching the legs above.
+   - A `stores` array containing all 132 stores with unique `id` values. Optionally assign a `dayId` to restrict a store to a single day; stores without a `dayId` are candidates on every day. Include `openHours` for a few stores to test the hours logic; stores without this field are treated as open all day. Stores should appear **only once** in the file.
 2. Optional: group stores roughly by geography to balance the daily workload (e.g., Detroit downtown vs. suburbs).
 3. Validate the JSON with `jq` or the provided schema (`docs/trip-schema.json`) before solving.
 
@@ -81,6 +81,14 @@ rustbelt solve-day \
 - Itinerary covers stores from Cleveland through Buffalo only.
 - No duplicates from earlier days.
 - Final stop is the Buffalo hotel with feasible slack.
+
+---
+
+### Store hours
+
+Include at least one store whose `openHours` do not cover the predicted arrival time (e.g., closed for lunch). After solving each day, verify that:
+- The solver skips stores closed on the target day or outside their hours.
+- All visited stops have `arrive`/`depart` times within one of their open windows.
 
 ---
 
