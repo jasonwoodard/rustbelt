@@ -2,6 +2,9 @@ import { describe, it, expect, vi } from 'vitest';
 import { program, run } from '../src/index';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import { mkdtempSync, existsSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { formatTimestampToken } from '../src/time';
 
 describe('CLI', () => {
   it('configures the commander program', () => {
@@ -142,6 +145,41 @@ describe('CLI', () => {
       .filter((s) => s.type === 'store')
       .map((s) => s.id);
     expect(storeIds).not.toContain('A');
+    log.mockRestore();
+  });
+
+  it('expands runId and timestamp tokens in output paths', () => {
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = dirname(__filename);
+    const tripPath = join(__dirname, '../fixtures/run-id-note-trip.json');
+    const log = vi.spyOn(console, 'log').mockImplementation(() => {});
+    const tmp = mkdtempSync(join(tmpdir(), 'rb-'));
+    const base = join(tmp, 'itinerary-${runId}-${timestamp}');
+    run([
+      'node',
+      'rustbelt',
+      'solve-day',
+      '--trip',
+      tripPath,
+      '--day',
+      'D1',
+      '--out',
+      `${base}.json`,
+      '--kml',
+      `${base}.kml`,
+      '--csv',
+      `${base}.csv`,
+      '--html',
+      `${base}.html`,
+    ]);
+    const output = String(log.mock.calls.at(-1)?.[0]);
+    const data = JSON.parse(output) as { runTimestamp: string };
+    const ts = formatTimestampToken(data.runTimestamp);
+    const expectedBase = join(tmp, `itinerary-RID-${ts}`);
+    expect(existsSync(`${expectedBase}.json`)).toBe(true);
+    expect(existsSync(`${expectedBase}.kml`)).toBe(true);
+    expect(existsSync(`${expectedBase}.csv`)).toBe(true);
+    expect(existsSync(`${expectedBase}.html`)).toBe(true);
     log.mockRestore();
   });
 });

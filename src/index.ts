@@ -9,6 +9,7 @@ import { emitHtml } from './io/emitHtml';
 import { parseTrip } from './io/parse';
 import type { DayPlan, ID } from './types';
 import type { ProgressFn } from './heuristics';
+import { formatTimestampToken } from './time';
 
 function buildProgressLogger(verbose: boolean): ProgressFn {
   return (phase, order, metrics) => {
@@ -111,11 +112,18 @@ program
       days: DayPlan[];
     };
     const runTs = result.runTimestamp;
+    const runId = result.runId;
+    const tsToken = formatTimestampToken(runTs);
+    const tokenize = (s: string): string =>
+      s.replace(/\$\{(runId|timestamp)\}/g, (_, k) =>
+        k === 'runId' ? runId ?? '' : tsToken,
+      );
 
     if (opts.out) {
-      mkdirSync(dirname(opts.out), { recursive: true });
-      writeFileSync(opts.out, result.json, 'utf8');
-      console.log(`Wrote ${opts.out}`);
+      const outPath = tokenize(opts.out);
+      mkdirSync(dirname(outPath), { recursive: true });
+      writeFileSync(outPath, result.json, 'utf8');
+      console.log(`Wrote ${outPath}`);
     }
 
     if (opts.csv) {
@@ -136,17 +144,19 @@ program
         mustVisitByDay,
         storeMustVisitIds,
       });
-      mkdirSync(dirname(opts.csv), { recursive: true });
-      writeFileSync(opts.csv, csv, 'utf8');
-      console.log(`Wrote ${opts.csv}`);
+      const csvPath = tokenize(opts.csv);
+      mkdirSync(dirname(csvPath), { recursive: true });
+      writeFileSync(csvPath, csv, 'utf8');
+      console.log(`Wrote ${csvPath}`);
     }
 
     if (opts.kml !== undefined) {
       const kml = emitKml(data.days, runTs);
       if (typeof opts.kml === 'string') {
-        mkdirSync(dirname(opts.kml), { recursive: true });
-        writeFileSync(opts.kml, kml, 'utf8');
-        console.log(`Wrote ${opts.kml}`);
+        const kmlPath = tokenize(opts.kml);
+        mkdirSync(dirname(kmlPath), { recursive: true });
+        writeFileSync(kmlPath, kml, 'utf8');
+        console.log(`Wrote ${kmlPath}`);
       } else {
         console.log(kml);
       }
@@ -155,9 +165,10 @@ program
     if (opts.html !== undefined) {
       const html = emitHtml(data.days, runTs);
       if (typeof opts.html === 'string') {
-        mkdirSync(dirname(opts.html), { recursive: true });
-        writeFileSync(opts.html, html, 'utf8');
-        console.log(`Wrote ${opts.html}`);
+        const htmlPath = tokenize(opts.html);
+        mkdirSync(dirname(htmlPath), { recursive: true });
+        writeFileSync(htmlPath, html, 'utf8');
+        console.log(`Wrote ${htmlPath}`);
       } else {
         console.log(html);
       }
