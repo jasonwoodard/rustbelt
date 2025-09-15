@@ -92,11 +92,18 @@ export interface DayPlan {
   dayId: string;
   stops: StopPlan[];
   metrics: {
+    storeCount: number;
     storesVisited: number;
+    visitedIds: ID[];
     totalScore: number;
+    scorePerStore: number;
+    scorePerMin: number;
+    scorePerDriveMin: number;
+    scorePerMile: number;
     totalDriveMin: number;
     totalDwellMin: number;
     slackMin: number;
+    totalDistanceMiles: number;
     onTimeRisk: number;
     limitViolations?: string[];
     bindingConstraints?: string[];

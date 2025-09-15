@@ -44,11 +44,18 @@ describe('emitCsv', () => {
         },
       ],
       metrics: {
+        storeCount: 2,
         storesVisited: 2,
+        visitedIds: ['A', 'B'],
         totalScore: 0,
+        scorePerStore: 0,
+        scorePerMin: 0,
+        scorePerDriveMin: 0,
+        scorePerMile: 0,
         totalDriveMin: 20,
         totalDwellMin: 20,
         slackMin: 0,
+        totalDistanceMiles: 10,
         onTimeRisk: 0,
       },
     };

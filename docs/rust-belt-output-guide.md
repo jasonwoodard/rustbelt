@@ -65,20 +65,34 @@ The `metrics` block summarizes the solved day:
 
 ```json
 {
+  "storeCount": 10,
   "storesVisited": 7,
+  "visitedIds": ["A", "B", "C", "D", "E", "F", "G"],
   "totalScore": 29.7,
+  "scorePerStore": 4.24,
+  "scorePerMin": 0.05,
+  "scorePerDriveMin": 0.09,
+  "scorePerMile": 0.65,
   "totalDriveMin": 325.60,
   "totalDwellMin": 210,
   "slackMin": 4.40,
+  "totalDistanceMiles": 310.5,
   "onTimeRisk": 0.125
 }
 ```
 
+- **`storeCount`** – Total number of candidate stores considered for the day.
 - **`storesVisited`** – Number of store stops completed.
+- **`visitedIds`** – IDs of stores included in the itinerary.
 - **`totalScore`** – Sum of `score` values for all store stops.
+- **`scorePerStore`** – Average score per visited store.
+- **`scorePerMin`** – Score divided by total time (drive + dwell).
+- **`scorePerDriveMin`** – Score divided by minutes spent driving.
+- **`scorePerMile`** – Score divided by miles driven.
 - **`totalDriveMin`** – Minutes spent driving between stops.
 - **`totalDwellMin`** – Planned time inside stores.
 - **`slackMin`** – Unused minutes in the schedule. Low slack means the day is tightly packed.
+- **`totalDistanceMiles`** – Total miles driven between stops.
 - **`onTimeRisk`** – Fraction of legs with slack below the configured risk threshold. A higher value indicates more chance of falling behind schedule.
 
 Use these numbers to gauge itinerary efficiency and feasibility. For example, a high `totalDriveMin` with low `storesVisited` may suggest the stores are too far apart, while minimal `slackMin` combined with `onTimeRisk` above `0` signals a schedule that may be hard to keep.

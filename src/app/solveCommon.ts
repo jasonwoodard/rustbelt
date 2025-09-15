@@ -198,7 +198,19 @@ export function solveCommon(opts: SolveCommonOptions): SolveCommonResult {
   for (const id of order) {
     totalScore += ctx.stores[id]?.score ?? 0;
   }
-  const storeVisits = order.filter((id) => id !== BREAK_ID).length;
+  const visitedIds = order.filter((id) => id !== BREAK_ID);
+  const storeVisits = visitedIds.length;
+  const totalDistanceMiles = timeline.stops.reduce(
+    (sum, s) => sum + (s.legIn?.distanceMi ?? 0),
+    0,
+  );
+  const totalTimeMin = timeline.totalDriveMin + timeline.totalDwellMin;
+  const scorePerStore = storeVisits > 0 ? totalScore / storeVisits : 0;
+  const scorePerMin = totalTimeMin > 0 ? totalScore / totalTimeMin : 0;
+  const scorePerDriveMin =
+    timeline.totalDriveMin > 0 ? totalScore / timeline.totalDriveMin : 0;
+  const scorePerMile =
+    totalDistanceMiles > 0 ? totalScore / totalDistanceMiles : 0;
 
   const limitViolations: string[] = [];
   const bindingConstraints: string[] = [];
@@ -221,11 +233,18 @@ export function solveCommon(opts: SolveCommonOptions): SolveCommonResult {
     dayId: day.dayId,
     stops: timeline.stops,
     metrics: {
+      storeCount: candidateIds.length,
       storesVisited: storeVisits,
+      visitedIds,
       totalScore,
+      scorePerStore,
+      scorePerMin,
+      scorePerDriveMin,
+      scorePerMile,
       totalDriveMin: timeline.totalDriveMin,
       totalDwellMin: timeline.totalDwellMin,
       slackMin: slackMin(order, ctx),
+      totalDistanceMiles,
       onTimeRisk: onTimeRisk(timeline, ctx.window.end, riskThresholdMin),
       limitViolations: limitViolations.length ? limitViolations : undefined,
       bindingConstraints: bindingConstraints.length
