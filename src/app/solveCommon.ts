@@ -47,7 +47,7 @@ export function augmentErrorWithReasons(err: unknown): Error {
 export interface SolveCommonResult {
   dayPlan: DayPlan;
   runId?: string;
-  note?: string;
+  runNote?: string;
 }
 
 export function solveCommon(opts: SolveCommonOptions): SolveCommonResult {
@@ -234,6 +234,6 @@ export function solveCommon(opts: SolveCommonOptions): SolveCommonResult {
     },
   };
 
-  return { dayPlan, runId: trip.config.runId, note: trip.config.note };
+  return { dayPlan, runId: trip.config.runId, runNote: trip.config.runNote };
 }
 

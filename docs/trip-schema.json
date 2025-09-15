@@ -163,7 +163,7 @@
         "robustnessFactor": { "type": "number", "description": "Global buffer multiplier on drive times (overridden by day/CLI)" },
         "riskThresholdMin": { "type": "number", "description": "Default slack threshold minutes for risk (overridden by day/CLI)" },
         "runId": { "type": "string", "description": "Identifier for this run" },
-        "note": { "type": "string", "description": "Optional note for this run" }
+        "runNote": { "type": "string", "description": "Optional note for this run" }
       }
     }
   }
