@@ -349,7 +349,21 @@ FR-16 (save/compare scenarios), FR-20 (why excluded \+ next-best).
     
     \],  
     
-    "metrics":{"storesVisited": N, "totalDriveMin": X, "totalDwellMin": Y, "slackMin": Z}  
+    "metrics":{
+      "storeCount": C,
+      "storesVisited": N,
+      "visitedIds": [ ... ],
+      "totalScore": S,
+      "scorePerStore": S/N,
+      "scorePerMin": S/T,
+      "scorePerDriveMin": S/X,
+      "scorePerMile": S/D,
+      "totalDriveMin": X,
+      "totalDwellMin": Y,
+      "slackMin": Z,
+      "totalDistanceMiles": D,
+      "onTimeRisk": R
+    }
     
   }
 
@@ -385,7 +399,11 @@ FR-16 (save/compare scenarios), FR-20 (why excluded \+ next-best).
 
 **Per Day:**
 
-- `storesVisited`, `totalDriveMin`, `totalDwellMin`, `slackMin`, `onTimeLegs` (v0.3: `onTimeRisk`), `droppedMustVisits?` (should be none for feasible), `bindingConstraint` (if infeasible).
+- `storeCount`, `storesVisited`, `visitedIds`, `totalScore`, `scorePerStore`,
+  `scorePerMin`, `scorePerDriveMin`, `scorePerMile`, `totalDriveMin`,
+  `totalDwellMin`, `slackMin`, `totalDistanceMiles`, `onTimeRisk`,
+  `droppedMustVisits?` (should be none for feasible), `bindingConstraint`
+  (if infeasible).
 
 **Per Trip:**
 
@@ -823,7 +841,21 @@ export interface DayPlan {
 
   stops: StopPlan\[\];
 
-  metrics: { storesVisited: number; totalDriveMin: number; totalDwellMin: number; slackMin: number; };
+  metrics: {
+    storeCount: number;
+    storesVisited: number;
+    visitedIds: ID[];
+    totalScore: number;
+    scorePerStore: number;
+    scorePerMin: number;
+    scorePerDriveMin: number;
+    scorePerMile: number;
+    totalDriveMin: number;
+    totalDwellMin: number;
+    slackMin: number;
+    totalDistanceMiles: number;
+    onTimeRisk: number;
+  };
 
 }
 

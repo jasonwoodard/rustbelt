@@ -21,11 +21,18 @@ describe('emitHtml', () => {
         { id: 'E', name: 'End', type: 'end', arrive: '09:30', depart: '09:30', lat: 3, lon: 4 },
       ],
       metrics: {
+        storeCount: 1,
         storesVisited: 1,
+        visitedIds: ['A'],
         totalScore: 1,
+        scorePerStore: 1,
+        scorePerMin: 0,
+        scorePerDriveMin: 0,
+        scorePerMile: 0,
         totalDriveMin: 0,
         totalDwellMin: 0,
         slackMin: 0,
+        totalDistanceMiles: 0,
         onTimeRisk: 0,
       },
     };
