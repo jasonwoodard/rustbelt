@@ -2,11 +2,12 @@ import { describe, it, expect } from 'vitest';
 import { solveDay } from '../src/app/solveDay';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
-import { readFileSync } from 'node:fs';
+import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { parseTrip } from '../src/io/parse';
 import { computeTimeline } from '../src/schedule';
 import type { Store } from '../src/types';
 import { hhmmToMin } from '../src/time';
+import { tmpdir } from 'node:os';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -121,5 +122,41 @@ describe('solveDay', () => {
     const data = JSON.parse(result.json);
     const ids = data.days[0].stops.map((s: { id: string }) => s.id);
     expect(ids).toEqual(['S', 'E']);
+  });
+
+  it('reports constraint metadata when caps are binding', () => {
+    const tripPath = join(__dirname, '../fixtures/simple-trip.json');
+    const baseTrip = JSON.parse(readFileSync(tripPath, 'utf8'));
+    const tempDir = mkdtempSync(join(tmpdir(), 'solve-day-'));
+
+    const stopCapTrip = JSON.parse(JSON.stringify(baseTrip));
+    stopCapTrip.days[0].maxStops = 1;
+    const stopCapPath = join(tempDir, 'stop-cap.json');
+    writeFileSync(stopCapPath, JSON.stringify(stopCapTrip, null, 2));
+    const stopCapResult = solveDay({ tripPath: stopCapPath, dayId: 'D1' });
+
+    expect(stopCapResult.metrics.bindingConstraints).toEqual(['maxStops']);
+    expect(stopCapResult.metrics.limitViolations).toBeUndefined();
+
+    const driveCapTrip = JSON.parse(JSON.stringify(stopCapTrip));
+    driveCapTrip.days[0].maxDriveTime = stopCapResult.metrics.totalDriveMin;
+    const driveCapPath = join(tempDir, 'drive-cap.json');
+    writeFileSync(driveCapPath, JSON.stringify(driveCapTrip, null, 2));
+    const result = solveDay({ tripPath: driveCapPath, dayId: 'D1' });
+
+    expect(result.metrics.bindingConstraints).toEqual([
+      'maxDriveTime',
+      'maxStops',
+    ]);
+    expect(result.metrics.limitViolations).toBeUndefined();
+
+    const data = JSON.parse(result.json);
+    delete data.runTimestamp;
+    expect(data.days[0].metrics.bindingConstraints).toEqual([
+      'maxDriveTime',
+      'maxStops',
+    ]);
+    expect(data.days[0].metrics.limitViolations).toBeUndefined();
+    expect(data).toMatchSnapshot();
   });
 });
