@@ -2,6 +2,17 @@
 
 This document describes how to use the `rustbelt` command-line interface. The solver honors per‑store open hours so that closed locations are never scheduled.
 
+## Quick Start
+
+1. Review the minimal trip JSON in the [Getting Started guide](getting-started.md); the sample is saved at `fixtures/getting-started-trip.json`.
+2. Solve the demo day with:
+
+   ```sh
+   rustbelt solve-day --trip fixtures/getting-started-trip.json --day day-1
+   ```
+
+   The itinerary JSON prints to stdout; pass `--out <file>` if you also want to save it to disk.
+
 ## Setup
 
 Install dependencies and run the CLI either directly from the TypeScript
