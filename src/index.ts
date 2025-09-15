@@ -133,7 +133,7 @@ program
           .filter((s) => (s.tags ?? []).some((t) => /must[-_]?visit/i.test(t)))
           .map((s) => s.id),
       );
-      const csv = emitCsv(data.days, runTs, opts.seed ?? trip.config.seed, {
+      const csv = emitCsv(data.days, runTs, runId ?? trip.config.runId, {
         mustVisitByDay,
         storeMustVisitIds,
       });
