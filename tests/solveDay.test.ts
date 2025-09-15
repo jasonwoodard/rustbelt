@@ -23,16 +23,16 @@ describe('solveDay', () => {
     expect(data.days[0].metrics.totalScore).toBe(0);
   });
 
-  it('includes runId and note when provided', () => {
+  it('includes runId and runNote when provided', () => {
     const tripPath = join(__dirname, '../fixtures/run-id-note-trip.json');
     const raw = readFileSync(tripPath, 'utf8');
     const trip = parseTrip(JSON.parse(raw));
     expect(trip.config.runId).toBe('RID');
-    expect(trip.config.note).toBe('RN');
+    expect(trip.config.runNote).toBe('RN');
     const result = solveDay({ tripPath, dayId: 'D1' });
     const data = JSON.parse(result.json);
     expect(data.runId).toBe('RID');
-    expect(data.note).toBe('RN');
+    expect(data.runNote).toBe('RN');
   });
 
   it('produces stable itinerary output (FR-31)', () => {

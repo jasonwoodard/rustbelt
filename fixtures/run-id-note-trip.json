@@ -4,7 +4,7 @@
     "defaultDwellMin": 0,
     "seed": 1,
     "runId": "RID",
-    "note": "RN"
+    "runNote": "RN"
   },
   "days": [
     {
