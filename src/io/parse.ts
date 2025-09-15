@@ -280,7 +280,8 @@ function parseTripConfig(obj?: PlainObj): TripConfig {
   if (obj.riskThresholdMin !== undefined)
     cfg.riskThresholdMin = Number(obj.riskThresholdMin);
   if (obj.runId !== undefined) cfg.runId = String(obj.runId);
-  if (obj.runNote !== undefined) cfg.runNote = String(obj.runNote);
+  if (obj.note !== undefined) cfg.note = String(obj.note);
+  if (obj.runNote !== undefined) cfg.note = String(obj.runNote);
   return cfg;
 }
 

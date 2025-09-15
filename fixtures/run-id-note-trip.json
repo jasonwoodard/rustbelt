@@ -1,0 +1,18 @@
+{
+  "config": {
+    "mph": 60,
+    "defaultDwellMin": 0,
+    "seed": 1,
+    "runId": "RID",
+    "note": "RN"
+  },
+  "days": [
+    {
+      "dayId": "D1",
+      "start": { "id": "S", "name": "start", "lat": 0, "lon": 0 },
+      "end": { "id": "E", "name": "end", "lat": 0, "lon": 0 },
+      "window": { "start": "00:00", "end": "00:10" }
+    }
+  ],
+  "stores": []
+}

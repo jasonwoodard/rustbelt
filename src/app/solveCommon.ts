@@ -234,6 +234,6 @@ export function solveCommon(opts: SolveCommonOptions): SolveCommonResult {
     },
   };
 
-  return { dayPlan, runId: trip.config.runId, note: trip.config.runNote };
+  return { dayPlan, runId: trip.config.runId, note: trip.config.note };
 }
 
