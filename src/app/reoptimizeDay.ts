@@ -24,7 +24,7 @@ export function reoptimizeDay(
   opts: ReoptimizeDayOptions,
 ): EmitResult {
   try {
-    const dayPlan = solveCommon({
+    const { dayPlan, runId, note } = solveCommon({
       tripPath: opts.tripPath,
       dayId: opts.dayId,
       startCoord: atCoord,
@@ -42,7 +42,7 @@ export function reoptimizeDay(
     });
 
     const runTimestamp = new Date().toISOString();
-    return emitItinerary([dayPlan], runTimestamp);
+    return emitItinerary([dayPlan], runTimestamp, { runId, note });
   } catch (err) {
     throw augmentErrorWithReasons(err);
   }

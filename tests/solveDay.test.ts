@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { solveDay } from '../src/app/solveDay';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
-import { readFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { parseTrip } from '../src/io/parse';
 import { computeTimeline } from '../src/schedule';
 import type { Store } from '../src/types';
@@ -21,6 +21,27 @@ describe('solveDay', () => {
     expect(ids).toEqual(['S', 'A', 'B', 'C', 'E']);
     expect(data.days[0].metrics.storesVisited).toBe(3);
     expect(data.days[0].metrics.totalScore).toBe(0);
+  });
+
+  it('includes runId and note when provided', () => {
+    const trip = {
+      config: { mph: 60, defaultDwellMin: 0, seed: 1, runId: 'RID', runNote: 'RN' },
+      days: [
+        {
+          dayId: 'D1',
+          start: { id: 'S', name: 'start', lat: 0, lon: 0 },
+          end: { id: 'E', name: 'end', lat: 0, lon: 0 },
+          window: { start: '00:00', end: '00:10' },
+        },
+      ],
+      stores: [],
+    };
+    const tmpPath = join(__dirname, 'tmp-runid-trip.json');
+    writeFileSync(tmpPath, JSON.stringify(trip));
+    const result = solveDay({ tripPath: tmpPath, dayId: 'D1' });
+    const data = JSON.parse(result.json);
+    expect(data.runId).toBe('RID');
+    expect(data.note).toBe('RN');
   });
 
   it('produces stable itinerary output (FR-31)', () => {
