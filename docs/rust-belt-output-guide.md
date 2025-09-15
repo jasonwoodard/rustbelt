@@ -5,6 +5,8 @@ This page explains how to interpret the JSON produced by `rustbelt solve-day` an
 ```json
 {
   "runTimestamp": "2025-09-11T03:08:45.285Z",
+  "runId": "RID123",
+  "note": "Exploratory run",
   "days": [
     { "dayId": "Clev-Buff", "stops": [...], "metrics": { ... } }
   ]
@@ -14,6 +16,8 @@ This page explains how to interpret the JSON produced by `rustbelt solve-day` an
 ## Top-level fields
 
 - **`runTimestamp`** – The ISO timestamp for when the solver generated the plan. It helps track when the itinerary was last refreshed.
+- **`runId`** – Identifier carried through from the input `TripConfig` for correlating runs.
+- **`note`** – Optional note supplied in the input to label or describe the run.
 - **`days`** – An array of solved days. Each entry contains a `dayId`, an ordered list of `stops`, and a `metrics` summary.
 
 ## Stops
