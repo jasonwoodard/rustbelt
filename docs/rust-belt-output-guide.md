@@ -81,19 +81,35 @@ The `metrics` block summarizes the solved day:
 }
 ```
 
-- **`storeCount`** – Total number of candidate stores considered for the day.
-- **`storesVisited`** – Number of store stops completed.
-- **`visitedIds`** – IDs of stores included in the itinerary.
-- **`totalScore`** – Sum of `score` values for all store stops.
-- **`scorePerStore`** – Average score per visited store.
-- **`scorePerMin`** – Score divided by total time (drive + dwell).
-- **`scorePerDriveMin`** – Score divided by minutes spent driving.
-- **`scorePerMile`** – Score divided by miles driven.
-- **`totalDriveMin`** – Minutes spent driving between stops.
-- **`totalDwellMin`** – Planned time inside stores.
-- **`slackMin`** – Unused minutes in the schedule. Low slack means the day is tightly packed.
-- **`totalDistanceMiles`** – Total miles driven between stops.
-- **`onTimeRisk`** – Fraction of legs with slack below the configured risk threshold. A higher value indicates more chance of falling behind schedule.
+| Metric | Summary |
+| --- | --- |
+| [`storeCount`](#metric-storecount) | Count of candidate stores considered for the day. |
+| [`storesVisited`](#metric-storesvisited) | Number of store stops included in the itinerary. |
+| [`visitedIds`](#metric-visitedids) | IDs for the stores the solver selected. |
+| [`totalScore`](#metric-totalscore) | Sum of store scores accumulated across the day. |
+| [`scorePerStore`](#metric-scoreperstore) | Average score earned per visited store. |
+| [`scorePerMin`](#metric-scorepermin) | Total score divided by combined drive and dwell minutes. |
+| [`scorePerDriveMin`](#metric-scoreperdrivemin) | Total score divided by drive minutes only. |
+| [`scorePerMile`](#metric-scorepermile) | Total score divided by miles driven. |
+| [`totalDriveMin`](#metric-totaldrivemin) | Minutes spent driving from stop to stop. |
+| [`totalDwellMin`](#metric-totaldwellmin) | Minutes planned for time spent inside stores. |
+| [`slackMin`](#metric-slackmin) | Unused buffer minutes left in the schedule. |
+| [`totalDistanceMiles`](#metric-totaldistancemiles) | Miles driven between itinerary stops. |
+| [`onTimeRisk`](#metric-ontimerisk) | Share of legs that fall below the slack threshold. |
+
+- <a id="metric-storecount"></a>**`storeCount`** – Total number of candidate stores considered for the day.
+- <a id="metric-storesvisited"></a>**`storesVisited`** – Number of store stops completed.
+- <a id="metric-visitedids"></a>**`visitedIds`** – IDs of stores included in the itinerary.
+- <a id="metric-totalscore"></a>**`totalScore`** – Sum of `score` values for all store stops.
+- <a id="metric-scoreperstore"></a>**`scorePerStore`** – Average score per visited store.
+- <a id="metric-scorepermin"></a>**`scorePerMin`** – Score divided by total time (drive + dwell).
+- <a id="metric-scoreperdrivemin"></a>**`scorePerDriveMin`** – Score divided by minutes spent driving.
+- <a id="metric-scorepermile"></a>**`scorePerMile`** – Score divided by miles driven.
+- <a id="metric-totaldrivemin"></a>**`totalDriveMin`** – Minutes spent driving between stops.
+- <a id="metric-totaldwellmin"></a>**`totalDwellMin`** – Planned time inside stores.
+- <a id="metric-slackmin"></a>**`slackMin`** – Unused minutes in the schedule. Low slack means the day is tightly packed.
+- <a id="metric-totaldistancemiles"></a>**`totalDistanceMiles`** – Total miles driven between stops.
+- <a id="metric-ontimerisk"></a>**`onTimeRisk`** – Fraction of legs with slack below the configured risk threshold. A higher value indicates more chance of falling behind schedule.
 
 Use these numbers to gauge itinerary efficiency and feasibility. For example, a high `totalDriveMin` with low `storesVisited` may suggest the stores are too far apart, while minimal `slackMin` combined with `onTimeRisk` above `0` signals a schedule that may be hard to keep.
 
