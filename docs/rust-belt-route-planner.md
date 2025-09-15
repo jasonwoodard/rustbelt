@@ -796,7 +796,7 @@ export interface TripConfig {
 
   runId?: string;
 
-  runNote?: string;
+  note?: string;
 
 }
 
