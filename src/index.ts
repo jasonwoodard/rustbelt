@@ -31,15 +31,11 @@ program
   .showHelpAfterError();
 
 program
-  .command('solve-day',  { isDefault: true })
+  .command('solve-day', { isDefault: true })
   .requiredOption('--trip <file>', 'Path to trip JSON file')
   .requiredOption('--day <id>', 'Day id to solve')
   .option('--mph <mph>', 'Average speed in mph', parseFloat)
-  .option(
-    '--default-dwell <min>',
-    'Default dwell minutes',
-    parseFloat,
-  )
+  .option('--default-dwell <min>', 'Default dwell minutes', parseFloat)
   .option('--seed <seed>', 'Random seed', parseFloat)
   .option('--lambda <lambda>', 'Score weighting (0=count,1=score)', parseFloat)
   .option('--verbose', 'Print heuristic steps')
@@ -71,25 +67,21 @@ program
             .map((s) => s.trim())
             .filter(Boolean)
         : undefined;
-      result = reoptimizeDay(
-        opts.now,
-        [lat, lon],
-        {
-          tripPath: opts.trip,
-          dayId: opts.day,
-          mph: opts.mph,
-          defaultDwellMin: opts.defaultDwell,
-          seed: opts.seed,
-          lambda: opts.lambda,
-          verbose: opts.verbose,
-          completedIds,
-          progress: opts.progress
-            ? buildProgressLogger(Boolean(opts.verbose))
-            : undefined,
-          robustnessFactor: opts.robustness,
-          riskThresholdMin: opts['risk-threshold'],
-        },
-      );
+      result = reoptimizeDay(opts.now, [lat, lon], {
+        tripPath: opts.trip,
+        dayId: opts.day,
+        mph: opts.mph,
+        defaultDwellMin: opts.defaultDwell,
+        seed: opts.seed,
+        lambda: opts.lambda,
+        verbose: opts.verbose,
+        completedIds,
+        progress: opts.progress
+          ? buildProgressLogger(Boolean(opts.verbose))
+          : undefined,
+        robustnessFactor: opts.robustness,
+        riskThresholdMin: opts['risk-threshold'],
+      });
     } else {
       result = solveDay({
         tripPath: opts.trip,
@@ -113,10 +105,11 @@ program
     };
     const runTs = result.runTimestamp;
     const runId = result.runId;
+    const runNote = result.runNote;
     const tsToken = formatTimestampToken(runTs);
     const tokenize = (s: string): string =>
       s.replace(/\$\{(runId|timestamp)\}/g, (_, k) =>
-        k === 'runId' ? runId ?? '' : tsToken,
+        k === 'runId' ? (runId ?? '') : tsToken,
       );
 
     if (opts.out) {
@@ -163,7 +156,7 @@ program
     }
 
     if (opts.html !== undefined) {
-      const html = emitHtml(data.days, runTs);
+      const html = emitHtml(data.days, runTs, { runId, runNote });
       if (typeof opts.html === 'string') {
         const htmlPath = tokenize(opts.html);
         mkdirSync(dirname(htmlPath), { recursive: true });
@@ -176,7 +169,7 @@ program
 
     console.log(result.json);
   });
-  
+
 export function run(argv: readonly string[] = process.argv): Command {
   program.parse(argv as string[]);
   return program;

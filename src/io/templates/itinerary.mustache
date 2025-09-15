@@ -4,6 +4,12 @@
     <title>Itinerary</title>
   </head>
   <body>
+    {{#runId}}
+    <p>Run ID: {{runId}}</p>
+    {{/runId}}
+    {{#runNote}}
+    <p>Run note: {{runNote}}</p>
+    {{/runNote}}
     <p>Run timestamp: {{runTimestamp}}</p>
     {{#days}}
     <h2>Day {{dayId}}</h2>
