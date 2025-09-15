@@ -102,3 +102,76 @@ exports[`solveDay > produces stable itinerary output (FR-31) 1`] = `
   ],
 }
 `;
+
+exports[`solveDay > reports constraint metadata when caps are binding 1`] = `
+{
+  "days": [
+    {
+      "dayId": "D1",
+      "metrics": {
+        "bindingConstraints": [
+          "maxDriveTime",
+          "maxStops",
+        ],
+        "onTimeRisk": 0,
+        "scorePerDriveMin": 0,
+        "scorePerMile": 0,
+        "scorePerMin": 0,
+        "scorePerStore": 0,
+        "slackMin": 748.0590557204848,
+        "storeCount": 3,
+        "storesVisited": 1,
+        "totalDistanceMiles": 690.9409442795152,
+        "totalDriveMin": 690.9409442795152,
+        "totalDwellMin": 0,
+        "totalScore": 0,
+        "visitedIds": [
+          "B",
+        ],
+      },
+      "stops": [
+        {
+          "arrive": "00:00",
+          "depart": "00:00",
+          "id": "S",
+          "lat": 0,
+          "lon": 0,
+          "name": "start",
+          "type": "start",
+        },
+        {
+          "arrive": "05:45",
+          "depart": "05:45",
+          "dwellMin": 0,
+          "id": "B",
+          "lat": 5,
+          "legIn": {
+            "distanceMi": 345.4704721397576,
+            "driveMin": 345.4704721397576,
+            "fromId": "S",
+            "toId": "B",
+          },
+          "lon": 0,
+          "name": "B",
+          "type": "store",
+        },
+        {
+          "arrive": "11:31",
+          "depart": "11:31",
+          "id": "E",
+          "lat": 10,
+          "legIn": {
+            "distanceMi": 345.4704721397576,
+            "driveMin": 345.4704721397576,
+            "fromId": "B",
+            "toId": "E",
+          },
+          "lon": 0,
+          "name": "end",
+          "type": "end",
+        },
+      ],
+    },
+  ],
+}
+`;
