@@ -4,7 +4,7 @@ Utility for planning store visits.
 
 ## Getting Started
 
-Refer to the [Getting Started guide](docs/getting-started.md) for a full walkthrough, including validation tips powered by the [trip schema](docs/trip-schema.json).
+Refer to the [Getting Started guide](docs/getting-started.md) for a full walkthrough, including validation tips powered by the [trip schema](docs/trip-schema.json), and skim the [Trip Schema Guide](docs/trip-schema-guide.md) for a quick reference to the required fields.
 
 1. **Install dependencies**
    ```sh
@@ -54,6 +54,7 @@ Refer to the [Getting Started guide](docs/getting-started.md) for a full walkthr
 ## Documentation
 
 - [CLI usage](docs/rust-belt-cli-documentation.md)
+- [Trip schema guide](docs/trip-schema-guide.md)
 - [Trip schema](docs/trip-schema.json)
 - [Test plan](docs/rust-belt-test-plan.md)
 - [Route planner overview](docs/route-planner-overview.md)
