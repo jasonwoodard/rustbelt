@@ -4,6 +4,8 @@ Utility for planning store visits.
 
 ## Getting Started
 
+Refer to the [Getting Started guide](docs/getting-started.md) for a full walkthrough, including validation tips powered by the [trip schema](docs/trip-schema.json).
+
 1. **Install dependencies**
    ```sh
    npm install
@@ -13,13 +15,40 @@ Utility for planning store visits.
    npm run build
    ```
    This compiles TypeScript sources to `dist/`.
-3. **Run a solve**
+3. **Create a trip file**
+   Save the following minimal example as `fixtures/getting-started-trip.json`:
+   ```json
+   {
+     "config": {
+       "mph": 30,
+       "defaultDwellMin": 15
+     },
+     "days": [
+       {
+         "dayId": "day-1",
+         "start": { "id": "hotel", "lat": 41.5, "lon": -81.7 },
+         "end": { "id": "hotel", "lat": 41.5, "lon": -81.7 },
+         "window": { "start": "8:00", "end": "17:00" }
+       }
+     ],
+     "stores": [
+       {
+         "id": "store-1",
+         "name": "Coffee Stop",
+         "lat": 41.6,
+         "lon": -81.69,
+         "dwellMin": 15
+       }
+     ]
+   }
+   ```
+4. **Run a solve**
    ```sh
-   npx tsx src/index.ts solve-day --trip trips/example.json --day 2025-10-01
+   npx tsx src/index.ts solve-day --trip fixtures/getting-started-trip.json --day day-1
    ```
    After building you can also run:
    ```sh
-   node dist/index.js solve-day --trip trips/example.json --day 2025-10-01
+   node dist/index.js solve-day --trip fixtures/getting-started-trip.json --day day-1
    ```
 
 ## Documentation
