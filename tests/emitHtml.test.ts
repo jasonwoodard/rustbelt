@@ -7,7 +7,15 @@ describe('emitHtml', () => {
     const day: DayPlan = {
       dayId: 'D1',
       stops: [
-        { id: 'S', name: 'Start', type: 'start', arrive: '09:00', depart: '09:00', lat: 0, lon: 0 },
+        {
+          id: 'S',
+          name: 'Start',
+          type: 'start',
+          arrive: '09:00',
+          depart: '09:00',
+          lat: 0,
+          lon: 0,
+        },
         {
           id: 'A',
           name: 'Store A',
@@ -18,7 +26,15 @@ describe('emitHtml', () => {
           lon: 2,
           score: 1,
         },
-        { id: 'E', name: 'End', type: 'end', arrive: '09:30', depart: '09:30', lat: 3, lon: 4 },
+        {
+          id: 'E',
+          name: 'End',
+          type: 'end',
+          arrive: '09:30',
+          depart: '09:30',
+          lat: 3,
+          lon: 4,
+        },
       ],
       metrics: {
         storeCount: 1,
@@ -37,10 +53,14 @@ describe('emitHtml', () => {
       },
     };
     const runTs = '2024-01-01T00:00:00Z';
-    const html = emitHtml([day], runTs);
+    const runId = 'test-id';
+    const runNote = 'test note';
+    const html = emitHtml([day], runTs, { runId, runNote });
     expect(html).toContain('<h2>Day D1</h2>');
     expect(html).toContain('Store A');
     expect(html).toContain(runTs);
+    expect(html).toContain(runId);
+    expect(html).toContain(runNote);
     // one row per stop inside tbody
     const tbody = html.split('<tbody>')[1].split('</tbody>')[0];
     const rows = tbody.match(/<tr>/g) || [];

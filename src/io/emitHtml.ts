@@ -7,7 +7,10 @@ const defaultTemplate = readFileSync(
   'utf8',
 );
 const defaultPartials = {
-  stop: readFileSync(new URL('./templates/stop.mustache', import.meta.url), 'utf8'),
+  stop: readFileSync(
+    new URL('./templates/stop.mustache', import.meta.url),
+    'utf8',
+  ),
 };
 
 export interface EmitHtmlOptions {
@@ -15,9 +18,15 @@ export interface EmitHtmlOptions {
   template?: string;
   /** Override or add partials */
   partials?: Record<string, string>;
+  /** Optional run identifier */
+  runId?: string;
+  /** Optional run note */
+  runNote?: string;
 }
 
 interface ViewModel {
+  runId?: string;
+  runNote?: string;
   days: {
     dayId: string;
     stops: {
@@ -38,6 +47,8 @@ export function emitHtml(
 ): string {
   const view: ViewModel & { runTimestamp: string } = {
     runTimestamp,
+    runId: opts.runId,
+    runNote: opts.runNote,
     days: days.map((d) => ({
       dayId: d.dayId,
       stops: d.stops.map((s) => ({
