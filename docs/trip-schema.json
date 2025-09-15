@@ -1,4 +1,5 @@
 {
+  "$comment": "Human-readable summary: see docs/trip-schema-guide.md",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://example.com/trip.schema.json",
   "title": "Rust Belt Trip",
