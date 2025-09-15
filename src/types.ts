@@ -63,7 +63,7 @@ export interface TripConfig {
   robustnessFactor?: number;
   riskThresholdMin?: number;
   runId?: string;
-  runNote?: string;
+  note?: string;
 }
 
 export interface Leg {
