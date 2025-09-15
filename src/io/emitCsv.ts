@@ -16,7 +16,7 @@ function escapeCsv(value: string): string {
 
 function stopToRow(
   runTs: string,
-  seed: number | undefined,
+  runId: string | undefined,
   dayId: string,
   stop: StopPlan,
   must: boolean,
@@ -24,7 +24,7 @@ function stopToRow(
   const leg = stop.legIn;
   const cols = [
     runTs,
-    seed != null ? String(seed) : '',
+    runId ?? '',
     dayId,
     stop.id,
     escapeCsv(stop.name),
@@ -47,12 +47,12 @@ function stopToRow(
 export function emitCsv(
   days: DayPlan[],
   runTimestamp: string,
-  seed: number | undefined,
+  runId: string | undefined,
   opts: EmitCsvOptions = {},
 ): string {
   const header = [
     'run_timestamp',
-    'seed',
+    'run_id',
     'day_id',
     'store_id',
     'store_name',
@@ -77,7 +77,7 @@ export function emitCsv(
         (mustVisits && mustVisits.has(stop.id)) ||
         opts.storeMustVisitIds?.has(stop.id) ||
         false;
-      lines.push(stopToRow(runTimestamp, seed, day.dayId, stop, must));
+      lines.push(stopToRow(runTimestamp, runId, day.dayId, stop, must));
     }
   }
   return lines.join('\n');

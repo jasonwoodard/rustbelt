@@ -60,16 +60,19 @@ describe('emitCsv', () => {
       },
     };
     const runTs = '2024-01-01T00:00:00Z';
-      const csv = emitCsv([day], runTs, 42, {
-        mustVisitByDay: { D1: new Set(['B']) },
-      });
-      const lines = csv.trim().split('\n');
-      expect(lines).toHaveLength(3); // header + 2 store rows
-      expect(lines[1]).toContain(runTs);
-      expect(lines[0]).toContain('address');
-      const rowB = lines.find((l) => l.includes(',B,'))!;
-      expect(rowB.split(',')[5]).toBe('true'); // must_visit column
-      const rowA = lines.find((l) => l.includes(',A,'))!;
-      expect(rowA).toContain('1 A St');
+    const runId = 'RID';
+    const csv = emitCsv([day], runTs, runId, {
+      mustVisitByDay: { D1: new Set(['B']) },
     });
+    const lines = csv.trim().split('\n');
+    expect(lines).toHaveLength(3); // header + 2 store rows
+    expect(lines[1]).toContain(runTs);
+    expect(lines[1]).toContain(runId);
+    const header = lines[0].split(',');
+    expect(header[1]).toBe('run_id');
+    const rowB = lines.find((l) => l.includes(',B,'))!;
+    expect(rowB.split(',')[5]).toBe('true'); // must_visit column
+    const rowA = lines.find((l) => l.includes(',A,'))!;
+    expect(rowA).toContain('1 A St');
   });
+});
