@@ -161,7 +161,9 @@
         "seed": { "type": "number", "description": "Random seed for deterministic runs" },
         "snapDuplicateToleranceMeters": { "type": "number", "description": "When set, nearby stores within this distance are treated as duplicates and deduped" },
         "robustnessFactor": { "type": "number", "description": "Global buffer multiplier on drive times (overridden by day/CLI)" },
-        "riskThresholdMin": { "type": "number", "description": "Default slack threshold minutes for risk (overridden by day/CLI)" }
+        "riskThresholdMin": { "type": "number", "description": "Default slack threshold minutes for risk (overridden by day/CLI)" },
+        "runId": { "type": "string", "description": "Identifier for this run" },
+        "runNote": { "type": "string", "description": "Optional note for this run" }
       }
     }
   }

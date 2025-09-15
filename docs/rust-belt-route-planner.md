@@ -790,6 +790,14 @@ export interface TripConfig {
 
   snapDuplicateToleranceMeters?: number;
 
+  robustnessFactor?: number;
+
+  riskThresholdMin?: number;
+
+  runId?: string;
+
+  runNote?: string;
+
 }
 
 export interface TripInput { config: TripConfig; days: DayConfig\[\]; stores: Store\[\]; }
