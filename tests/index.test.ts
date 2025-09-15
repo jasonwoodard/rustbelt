@@ -63,8 +63,10 @@ describe('CLI', () => {
       'D1',
     ]);
 
-    expect(log).toHaveBeenCalledTimes(1);
-    expect(() => JSON.parse(log.mock.calls[0][0])).not.toThrow();
+    expect(log).toHaveBeenCalledTimes(2);
+    expect(String(log.mock.calls[0][0])).toContain('binding=');
+    expect(String(log.mock.calls[0][0])).toContain('violations=');
+    expect(() => JSON.parse(log.mock.calls[1][0])).not.toThrow();
     log.mockRestore();
   });
 
@@ -85,9 +87,11 @@ describe('CLI', () => {
       '--html',
     ]);
 
-    expect(log).toHaveBeenCalledTimes(2);
-    expect(String(log.mock.calls[0][0])).toContain('<html>');
-    expect(() => JSON.parse(log.mock.calls[1][0])).not.toThrow();
+    expect(log).toHaveBeenCalledTimes(3);
+    expect(String(log.mock.calls[0][0])).toContain('binding=');
+    expect(String(log.mock.calls[0][0])).toContain('violations=');
+    expect(String(log.mock.calls[1][0])).toContain('<html>');
+    expect(() => JSON.parse(log.mock.calls[2][0])).not.toThrow();
     log.mockRestore();
   });
 
