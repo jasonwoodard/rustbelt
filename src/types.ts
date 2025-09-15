@@ -62,6 +62,8 @@ export interface TripConfig {
   snapDuplicateToleranceMeters?: number;
   robustnessFactor?: number;
   riskThresholdMin?: number;
+  runId?: string;
+  runNote?: string;
 }
 
 export interface Leg {

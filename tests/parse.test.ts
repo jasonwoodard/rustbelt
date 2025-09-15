@@ -37,4 +37,11 @@ describe('parseTrip', () => {
     const { stores } = parseTrip(input);
     expect(stores[0].openHours?.mon[0][0]).toBe('9:00');
   });
+
+  it('parses runId and runNote as strings', () => {
+    const input = { config: { runId: 123, runNote: 456 } };
+    const { config } = parseTrip(input);
+    expect(config.runId).toBe('123');
+    expect(config.runNote).toBe('456');
+  });
 });
