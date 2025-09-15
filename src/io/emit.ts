@@ -31,6 +31,20 @@ function toMarkdown(days: DayPlan[]): string {
     );
   }
   lines.push('');
+
+  const formatList = (values?: readonly string[]): string =>
+    values && values.length ? values.map((v) => `\`${v}\``).join(', ') : '_None_';
+
+  lines.push('## Constraint Notes', '');
+  for (const d of days) {
+    const m = d.metrics;
+    lines.push(
+      `- **${d.dayId}** – Binding: ${formatList(m.bindingConstraints)}; Violations: ${formatList(
+        m.limitViolations,
+      )}`,
+    );
+  }
+  lines.push('');
   return lines.join('\n');
 }
 

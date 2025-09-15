@@ -21,6 +21,10 @@ export interface SolveDayResult extends EmitResult {
   metrics: DayPlan['metrics'];
 }
 
+function formatConstraintList(values?: readonly string[]): string {
+  return values && values.length ? values.join(', ') : 'none';
+}
+
 export function solveDay(opts: SolveDayOptions): SolveDayResult {
   try {
     const { dayPlan, runId, runNote } = solveCommon({
@@ -38,6 +42,18 @@ export function solveDay(opts: SolveDayOptions): SolveDayResult {
     });
     const runTimestamp = new Date().toISOString();
     const emit = emitItinerary([dayPlan], runTimestamp, { runId, runNote });
+    const m = dayPlan.metrics;
+    const summaryParts = [
+      `Day ${dayPlan.dayId}`,
+      `stores=${m.storesVisited}`,
+      `score=${m.totalScore.toFixed(1)}`,
+      `drive=${m.totalDriveMin.toFixed(1)} min`,
+      `dwell=${m.totalDwellMin.toFixed(1)} min`,
+      `slack=${m.slackMin.toFixed(1)} min`,
+      `binding=${formatConstraintList(m.bindingConstraints)}`,
+      `violations=${formatConstraintList(m.limitViolations)}`,
+    ];
+    console.log(summaryParts.join(' | '));
     return { ...emit, metrics: dayPlan.metrics };
   } catch (err) {
     throw augmentErrorWithReasons(err);
