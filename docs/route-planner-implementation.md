@@ -1,13 +1,8 @@
-# Project: Multi-Day Thrift Route Planner (OPTW-lite)
+# Route Planner Implementation Notes
 
 See [CLI usage](rust-belt-cli-documentation.md) for command details and the
-[trip schema](trip-schema.json) for input structure.
-
-## Problem Frame & Goals
-
-- **Goal:** Build a planner that **maximizes number of stores visited per day** on a multi-day Detroit → Cleveland (overnight) → Buffalo (overnight) trip, with fixed daily start/end anchors and simple travel modeling.  
-- **Model:** A practical variant of the **Orienteering Problem** that respects store open hours. Per day: choose and order stops to maximize count under a daily time budget (drive \+ dwell) using **Haversine distance × constant mph**.
-- **Key non-goal:** Shortest route. Efficiency is in service of **more stores while still reaching the hotel on time**.
+[trip schema](trip-schema.json) for input structure. For high-level goals and
+milestone context, refer to the [Route planner overview](route-planner-overview.md).
 
 # Features at a Glance 
 

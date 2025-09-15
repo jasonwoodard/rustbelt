@@ -56,7 +56,8 @@ Refer to the [Getting Started guide](docs/getting-started.md) for a full walkthr
 - [CLI usage](docs/rust-belt-cli-documentation.md)
 - [Trip schema](docs/trip-schema.json)
 - [Test plan](docs/rust-belt-test-plan.md)
-- [Route planner roadmap](docs/rust-belt-route-planner.md)
+- [Route planner overview](docs/route-planner-overview.md)
+- [Route planner implementation notes](docs/route-planner-implementation.md)
 
 ## Output Options
 
