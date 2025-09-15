@@ -39,6 +39,15 @@ be generated with flags:
 - `--kml [file]` – emit a KML representation to a file or stdout.
 - `--html [file]` – emit an HTML itinerary to a file or stdout. Templates can be customized via `emitHtml`.
 
+Output paths may include `${runId}` and `${timestamp}` tokens. These expand to
+the trip's `runId` (if provided) and the solver run timestamp formatted as
+`YYYYMMDD[T]HHmm` (UTC). For example:
+
+```
+rustbelt solve-day --trip trips/example.json --day 2025-10-01 \
+  --out "out/itinerary-${runId}-${timestamp}.json"
+```
+
 The KML output includes an `<ExtendedData>` block for each stop. Placemarks
 expose fields such as `id`, `type`, `arrive`, `depart`, `score`, `driveMin`,
 `distanceMi`, `dwellMin`, and `tags`:

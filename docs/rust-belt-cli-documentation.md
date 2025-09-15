@@ -73,6 +73,10 @@ rustbelt solve-day --trip <file> --day <id> [options]
 - `--csv <file>` – Exports a CSV of store stops with arrival and departure times.
 - `--html [file]` – Emits an HTML itinerary to the given file or to stdout. Templates can be customized via `emitHtml`.
 
+Output paths support `${runId}` and `${timestamp}` tokens. These expand to the
+trip's `runId` (if any) and the solver run timestamp in `YYYYMMDD[T]HHmm` UTC
+format.
+
 Each KML placemark contains an `<ExtendedData>` block listing fields such as
 `id`, `type`, `arrive`, `depart`, `score`, `driveMin`, `distanceMi`,
 `dwellMin`, and `tags`:
