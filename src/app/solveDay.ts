@@ -23,7 +23,7 @@ export interface SolveDayResult extends EmitResult {
 
 export function solveDay(opts: SolveDayOptions): SolveDayResult {
   try {
-    const dayPlan = solveCommon({
+    const { dayPlan, runId, note } = solveCommon({
       tripPath: opts.tripPath,
       dayId: opts.dayId,
       mph: opts.mph,
@@ -37,7 +37,7 @@ export function solveDay(opts: SolveDayOptions): SolveDayResult {
       riskThresholdMin: opts.riskThresholdMin,
     });
     const runTimestamp = new Date().toISOString();
-    const emit = emitItinerary([dayPlan], runTimestamp);
+    const emit = emitItinerary([dayPlan], runTimestamp, { runId, note });
     return { ...emit, metrics: dayPlan.metrics };
   } catch (err) {
     throw augmentErrorWithReasons(err);

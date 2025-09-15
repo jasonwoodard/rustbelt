@@ -3,11 +3,15 @@ import type { DayPlan } from '../types';
 export interface EmitOptions {
   /** include Markdown summary */
   markdown?: boolean;
+  runId?: string;
+  note?: string;
 }
 
 export interface EmitResult {
   json: string;
   runTimestamp: string;
+  runId?: string;
+  note?: string;
   markdown?: string;
 }
 
@@ -36,8 +40,14 @@ export function emitItinerary(
   runTimestamp = new Date().toISOString(),
   opts: EmitOptions = {},
 ): EmitResult {
-  const json = JSON.stringify({ runTimestamp, days }, null, 2);
+  const json = JSON.stringify(
+    { runTimestamp, runId: opts.runId, note: opts.note, days },
+    null,
+    2,
+  );
   const result: EmitResult = { json, runTimestamp };
+  if (opts.runId) result.runId = opts.runId;
+  if (opts.note) result.note = opts.note;
   if (opts.markdown) {
     result.markdown = toMarkdown(days);
   }
@@ -48,7 +58,9 @@ export { toMarkdown as emitMarkdown };
 export function emitJson(
   days: DayPlan[],
   runTimestamp = new Date().toISOString(),
+  runId?: string,
+  note?: string,
 ): string {
-  return JSON.stringify({ runTimestamp, days }, null, 2);
+  return JSON.stringify({ runTimestamp, runId, note, days }, null, 2);
 }
 

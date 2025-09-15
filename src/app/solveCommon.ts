@@ -44,7 +44,13 @@ export function augmentErrorWithReasons(err: unknown): Error {
   return e;
 }
 
-export function solveCommon(opts: SolveCommonOptions): DayPlan {
+export interface SolveCommonResult {
+  dayPlan: DayPlan;
+  runId?: string;
+  note?: string;
+}
+
+export function solveCommon(opts: SolveCommonOptions): SolveCommonResult {
   const raw = readFileSync(opts.tripPath, 'utf8');
   const json = JSON.parse(raw);
   const trip = parseTrip(json);
@@ -228,6 +234,6 @@ export function solveCommon(opts: SolveCommonOptions): DayPlan {
     },
   };
 
-  return dayPlan;
+  return { dayPlan, runId: trip.config.runId, note: trip.config.runNote };
 }
 
