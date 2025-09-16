@@ -12,7 +12,7 @@ export function minToHhmm(min: number): string {
 export function formatTimestampToken(ts: string): string {
   const d = new Date(ts);
   const pad = (n: number, width = 2) => String(n).padStart(width, '0');
-  return `${d.getUTCFullYear()}${pad(d.getUTCMonth() + 1)}${pad(
-    d.getUTCDate(),
-  )}T${pad(d.getUTCHours())}${pad(d.getUTCMinutes())}`;
+  return `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}T${pad(
+    d.getHours(),
+  )}${pad(d.getMinutes())}`;
 }
