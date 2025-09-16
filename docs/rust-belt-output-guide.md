@@ -176,6 +176,18 @@ In the example itinerary above, there are eight legs. With a threshold of `15` m
 
 Tactically, a high `onTimeRisk` means delays on multiple legs could push you past the day's end. Lower it by dropping distant stores, adding slack (e.g., a later end time), or increasing drive time estimates with `--robustness` or lower `--mph`.
 
+### Worked example: adjusting robustness and risk threshold
+
+Consider a four-leg day that must end by 18:00. The baseline run uses `--robustness 1.0` and `--risk-threshold 15`. The solver reports the slack remaining after each leg as `[38, 26, 19, 11]` minutes. Because only the final leg drops below 15 minutes of buffer, `onTimeRisk = 1/4 = 0.25`.
+
+| Scenario | Settings | Slack after each leg (min) | Risky legs (`slack < threshold`) | `onTimeRisk` |
+| --- | --- | --- | --- | --- |
+| Baseline | `--robustness 1.0`, `--risk-threshold 15` | `[38, 26, 19, 11]` | 1 (leg 4) | `0.25` |
+| Increase risk threshold | `--robustness 1.0`, `--risk-threshold 25` | `[38, 26, 19, 11]` | 2 (legs 3-4) | `0.50` |
+| Increase robustness | `--robustness 1.25`, `--risk-threshold 15` | `[31, 18, 10, 2]` | 2 (legs 3-4) | `0.50` |
+
+Raising the risk threshold to 25 minutes does not change the itinerary, but it reclassifies legs 3 and 4 as risky, doubling `onTimeRisk` to `0.50`. In the final row the risk threshold stays at 15 minutes, yet multiplying drive times by a 1.25 robustness factor shortens the slack on each leg by several minutes. Legs 3 and 4 now fall beneath the threshold, producing the same `0.50` risk share even though the settings changed for a different reason. In real runs the solver may also drop a store when robustness is increased; if that happens, both the slack values and `onTimeRisk` can shift in either direction, so always compare the metrics after each solve.
+
 ## Constraint diagnostics
 
 The solver reports whether hard limits influenced or blocked the itinerary through two optional arrays inside `metrics`:
