@@ -187,3 +187,47 @@ describe('CLI', () => {
     log.mockRestore();
   });
 });
+
+describe('timestamp token formatting', () => {
+  const iso = '2024-05-01T01:54:00.000Z';
+
+  const pad = (value: number, width = 2) => String(value).padStart(width, '0');
+
+  it('formats the timestamp token using the local time zone', () => {
+    const date = new Date(iso);
+    const expected = `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(
+      date.getDate(),
+    )}T${pad(date.getHours())}${pad(date.getMinutes())}`;
+    expect(formatTimestampToken(iso)).toBe(expected);
+  });
+
+  it('uses local getters rather than UTC getters when formatting', () => {
+    const getFullYear = vi.spyOn(Date.prototype, 'getFullYear');
+    const getMonth = vi.spyOn(Date.prototype, 'getMonth');
+    const getDate = vi.spyOn(Date.prototype, 'getDate');
+    const getHours = vi.spyOn(Date.prototype, 'getHours');
+    const getMinutes = vi.spyOn(Date.prototype, 'getMinutes');
+
+    const getUTCFullYear = vi.spyOn(Date.prototype, 'getUTCFullYear');
+    const getUTCMonth = vi.spyOn(Date.prototype, 'getUTCMonth');
+    const getUTCDate = vi.spyOn(Date.prototype, 'getUTCDate');
+    const getUTCHours = vi.spyOn(Date.prototype, 'getUTCHours');
+    const getUTCMinutes = vi.spyOn(Date.prototype, 'getUTCMinutes');
+
+    formatTimestampToken(iso);
+
+    expect(getFullYear).toHaveBeenCalled();
+    expect(getMonth).toHaveBeenCalled();
+    expect(getDate).toHaveBeenCalled();
+    expect(getHours).toHaveBeenCalled();
+    expect(getMinutes).toHaveBeenCalled();
+
+    expect(getUTCFullYear).not.toHaveBeenCalled();
+    expect(getUTCMonth).not.toHaveBeenCalled();
+    expect(getUTCDate).not.toHaveBeenCalled();
+    expect(getUTCHours).not.toHaveBeenCalled();
+    expect(getUTCMinutes).not.toHaveBeenCalled();
+
+    vi.restoreAllMocks();
+  });
+});

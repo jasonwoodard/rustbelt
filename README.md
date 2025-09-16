@@ -72,7 +72,7 @@ be generated with flags:
 
 Output paths may include `${runId}` and `${timestamp}` tokens. These expand to
 the trip's `runId` (if provided) and the solver run timestamp formatted as
-`YYYYMMDD[T]HHmm` (UTC). For example:
+`YYYYMMDD[T]HHmm` in the local time zone. For example:
 
 ```
 rustbelt solve-day --trip trips/example.json --day 2025-10-01 \
