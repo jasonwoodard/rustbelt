@@ -7,12 +7,15 @@ import {
   isFeasible,
   type ScheduleCtx,
   onTimeRisk,
+  assessFeasibility,
+  type FeasibilityReason,
 } from '../schedule';
 import { adviseInfeasible } from '../infeasibility';
 import type { InfeasibilitySuggestion } from '../infeasibility';
 import { hhmmToMin } from '../time';
 import type { ID, Store, DayPlan, LockSpec, Coord, Weekday } from '../types';
 import { BREAK_ID } from '../types';
+import { haversineMiles } from '../distance';
 
 export interface SolveCommonOptions {
   tripPath: string;
@@ -42,6 +45,54 @@ export function augmentErrorWithReasons(err: unknown): Error {
     return newErr;
   }
   return e;
+}
+
+type ExclusionReasonCode =
+  | 'timeWindow'
+  | 'distance'
+  | 'breakWindow'
+  | 'maxStops'
+  | 'completed'
+  | 'unknown';
+
+function mapFeasibilityReason(reason?: FeasibilityReason): ExclusionReasonCode {
+  switch (reason?.type) {
+    case 'dayWindow':
+    case 'storeClosed':
+    case 'missingMustVisit':
+      return 'timeWindow';
+    case 'maxDriveTime':
+      return 'distance';
+    case 'breakWindow':
+    case 'missingBreak':
+      return 'breakWindow';
+    case 'maxStops':
+      return 'maxStops';
+    default:
+      return 'unknown';
+  }
+}
+
+function nearestAlternate(
+  id: ID,
+  visited: readonly ID[],
+  storeLookup: Record<ID, Store>,
+): ID | undefined {
+  const store = storeLookup[id];
+  if (!store) return undefined;
+  let bestId: ID | undefined;
+  let bestDist = Infinity;
+  for (const visitId of visited) {
+    if (visitId === id) continue;
+    const alt = storeLookup[visitId];
+    if (!alt) continue;
+    const dist = haversineMiles(store.coord, alt.coord);
+    if (dist < bestDist - 1e-9) {
+      bestDist = dist;
+      bestId = visitId;
+    }
+  }
+  return bestId;
 }
 
 export interface SolveCommonResult {
@@ -78,6 +129,9 @@ export function solveCommon(opts: SolveCommonOptions): SolveCommonResult {
     0;
 
   const stores: Record<ID, Store> = {};
+  const storeLookup: Record<ID, Store> = {};
+  const dayStoreIds: ID[] = [];
+  const exclusionReasons = new Map<ID, ExclusionReasonCode>();
   let candidateIds: ID[] = [];
   function isOpenOnDay(store: Store, dow: Weekday): boolean {
     if (!store.openHours) return true;
@@ -86,16 +140,26 @@ export function solveCommon(opts: SolveCommonOptions): SolveCommonResult {
   }
   for (const s of trip.stores) {
     if (!s.dayId || s.dayId === day.dayId) {
+      storeLookup[s.id] = s;
+      dayStoreIds.push(s.id);
       if (!day.dayOfWeek || isOpenOnDay(s, day.dayOfWeek)) {
         stores[s.id] = s;
         candidateIds.push(s.id);
+      } else {
+        exclusionReasons.set(s.id, 'timeWindow');
       }
     }
   }
 
   if (opts.completedIds) {
     const done = new Set(opts.completedIds);
-    candidateIds = candidateIds.filter((id) => !done.has(id));
+    candidateIds = candidateIds.filter((id) => {
+      if (done.has(id)) {
+        exclusionReasons.set(id, 'completed');
+        return false;
+      }
+      return true;
+    });
   }
 
   let mustVisitIds: ID[] | undefined = day.mustVisitIds?.filter((id) =>
@@ -136,13 +200,25 @@ export function solveCommon(opts: SolveCommonOptions): SolveCommonResult {
   };
 
   if (opts.completedIds || opts.startCoord || opts.windowStart) {
-    candidateIds = candidateIds.filter((id) =>
-      isFeasible(day.breakWindow ? [id, BREAK_ID] : [id], baseCtx),
-    );
-    mustVisitIds = mustVisitIds?.filter((id) => candidateIds.includes(id));
-    locks = locks?.filter((l) => candidateIds.includes(l.storeId));
+    const filtered: ID[] = [];
+    for (const id of candidateIds) {
+      const orderForCheck = day.breakWindow ? [id, BREAK_ID] : [id];
+      const feas = assessFeasibility(orderForCheck, baseCtx);
+      if (!feas.feasible) {
+        if (!exclusionReasons.has(id)) {
+          exclusionReasons.set(id, mapFeasibilityReason(feas.reason));
+        }
+        continue;
+      }
+      filtered.push(id);
+    }
+    candidateIds = filtered;
+    const filteredSet = new Set(filtered);
+    mustVisitIds = mustVisitIds?.filter((id) => filteredSet.has(id));
+    locks = locks?.filter((l) => filteredSet.has(l.storeId));
   }
 
+  const heuristicsExclusionLog = new Map<ID, FeasibilityReason>();
   const ctx = {
     ...baseCtx,
     mustVisitIds,
@@ -152,7 +228,9 @@ export function solveCommon(opts: SolveCommonOptions): SolveCommonResult {
     verbose: opts.verbose,
     progress: opts.progress,
     lambda: opts.lambda,
+    exclusionLog: heuristicsExclusionLog,
   };
+  const candidateSet = new Set(candidateIds);
 
   let order: ID[];
   try {
@@ -200,6 +278,27 @@ export function solveCommon(opts: SolveCommonOptions): SolveCommonResult {
   }
   const visitedIds = order.filter((id) => id !== BREAK_ID);
   const storeVisits = visitedIds.length;
+  for (const [id, reason] of heuristicsExclusionLog) {
+    if (!exclusionReasons.has(id)) {
+      exclusionReasons.set(id, mapFeasibilityReason(reason));
+    }
+  }
+  const visitedSet = new Set(visitedIds);
+  const allExcludedIds = new Set<ID>([
+    ...dayStoreIds,
+    ...exclusionReasons.keys(),
+  ]);
+  const excluded: DayPlan['excluded'] = [];
+  for (const id of Array.from(allExcludedIds).sort((a, b) =>
+    a.localeCompare(b),
+  )) {
+    if (visitedSet.has(id)) continue;
+    const reason =
+      exclusionReasons.get(id) ?? (candidateSet.has(id) ? 'unknown' : undefined);
+    if (!reason) continue;
+    const alt = nearestAlternate(id, visitedIds, storeLookup);
+    excluded.push({ id, reason, nearestAlternateId: alt ?? undefined });
+  }
   const totalDistanceMiles = timeline.stops.reduce(
     (sum, s) => sum + (s.legIn?.distanceMi ?? 0),
     0,
@@ -232,6 +331,7 @@ export function solveCommon(opts: SolveCommonOptions): SolveCommonResult {
   const dayPlan: DayPlan = {
     dayId: day.dayId,
     stops: timeline.stops,
+    excluded,
     metrics: {
       storeCount: candidateIds.length,
       storesVisited: storeVisits,

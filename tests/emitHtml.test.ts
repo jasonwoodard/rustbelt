@@ -36,6 +36,7 @@ describe('emitHtml', () => {
           lon: 4,
         },
       ],
+      excluded: [],
       metrics: {
         storeCount: 1,
         storesVisited: 1,

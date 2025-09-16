@@ -159,4 +159,34 @@ describe('solveDay', () => {
     expect(data.days[0].metrics.limitViolations).toBeUndefined();
     expect(data).toMatchSnapshot();
   });
+
+  it('reports exclusion reasons and nearest alternatives', () => {
+    const tempDir = mkdtempSync(join(tmpdir(), 'solve-day-'));
+    const tripPath = join(tempDir, 'exclusions.json');
+    const trip = {
+      config: { mph: 60, defaultDwellMin: 0, seed: 1 },
+      days: [
+        {
+          dayId: 'D1',
+          start: { id: 'S', name: 'start', lat: 0, lon: 0 },
+          end: { id: 'E', name: 'end', lat: 0, lon: 0 },
+          window: { start: '00:00', end: '01:00' },
+        },
+      ],
+      stores: [
+        { id: 'A', name: 'A', lat: 0.2, lon: 0 },
+        { id: 'B', name: 'B', lat: 2, lon: 0 },
+      ],
+    };
+    writeFileSync(tripPath, JSON.stringify(trip, null, 2));
+    const result = solveDay({ tripPath, dayId: 'D1' });
+    const data = JSON.parse(result.json);
+    const day = data.days[0];
+    expect(day.excluded.length).toBe(1);
+    const exclusion = day.excluded[0];
+    expect(exclusion.id).toBe('B');
+    expect(exclusion.reason).toBe('timeWindow');
+    expect(typeof exclusion.nearestAlternateId).toBe('string');
+    expect(day.metrics.visitedIds).toContain(exclusion.nearestAlternateId);
+  });
 });

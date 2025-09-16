@@ -6,11 +6,11 @@ describe('emitCsv', () => {
   it('includes run timestamp and must_visit metadata', () => {
     const day: DayPlan = {
       dayId: 'D1',
-        stops: [
-          { id: 'S', name: 'Start', type: 'start', arrive: '09:00', depart: '09:00', lat: 0, lon: 0 },
-          {
-            id: 'A',
-            name: 'Store A',
+      stops: [
+        { id: 'S', name: 'Start', type: 'start', arrive: '09:00', depart: '09:00', lat: 0, lon: 0 },
+        {
+          id: 'A',
+          name: 'Store A',
             type: 'store',
             arrive: '09:10',
             depart: '09:20',
@@ -43,6 +43,7 @@ describe('emitCsv', () => {
           legIn: { fromId: 'B', toId: 'E', driveMin: 10, distanceMi: 5 },
         },
       ],
+      excluded: [],
       metrics: {
         storeCount: 2,
         storesVisited: 2,

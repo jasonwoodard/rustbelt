@@ -88,9 +88,16 @@ export interface StopPlan {
   tags?: string[];
 }
 
+export interface ExcludedStorePlan {
+  id: ID;
+  reason: string;
+  nearestAlternateId?: ID;
+}
+
 export interface DayPlan {
   dayId: string;
   stops: StopPlan[];
+  excluded: ExcludedStorePlan[];
   metrics: {
     storeCount: number;
     storesVisited: number;

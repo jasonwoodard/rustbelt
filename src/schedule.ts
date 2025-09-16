@@ -36,6 +36,21 @@ export interface TimelineResult {
   break?: { arriveMin: number; departMin: number };
 }
 
+export type FeasibilityReason =
+  | { type: 'missingMustVisit'; id: ID }
+  | { type: 'maxStops'; limit: number }
+  | { type: 'missingBreak' }
+  | { type: 'storeClosed'; storeId: ID }
+  | { type: 'dayWindow'; deficitMin: number }
+  | { type: 'maxDriveTime'; limit: number; actual: number }
+  | { type: 'breakWindow'; arriveMin: number; departMin: number };
+
+export interface FeasibilityResult {
+  feasible: boolean;
+  reason?: FeasibilityReason;
+  timeline?: TimelineResult;
+}
+
 export interface DistanceMatrix {
   ids: ID[];
   matrix: number[][];
@@ -232,25 +247,37 @@ export function computeTimeline(order: ID[], ctx: ScheduleCtx): TimelineResult {
   return result;
 }
 
-export function isFeasible(order: ID[], ctx: ScheduleCtx): boolean {
+export function assessFeasibility(
+  order: ID[],
+  ctx: ScheduleCtx,
+): FeasibilityResult {
   if (ctx.mustVisitIds) {
     for (const id of ctx.mustVisitIds) {
       if (!order.includes(id)) {
-        return false;
+        return { feasible: false, reason: { type: 'missingMustVisit', id } };
       }
     }
   }
   if (ctx.maxStops != null) {
     const count = order.filter((id) => id !== BREAK_ID).length;
-    if (count > ctx.maxStops) return false;
+    if (count > ctx.maxStops) {
+      return { feasible: false, reason: { type: 'maxStops', limit: ctx.maxStops } };
+    }
   }
   if (ctx.breakWindow && !order.includes(BREAK_ID)) {
-    return false;
+    return { feasible: false, reason: { type: 'missingBreak' } };
   }
 
-  const t = computeTimeline(order, ctx);
+  let timeline: TimelineResult | undefined;
+  const ensureTimeline = (): TimelineResult => {
+    if (!timeline) {
+      timeline = computeTimeline(order, ctx);
+    }
+    return timeline;
+  };
 
   if (ctx.dayOfWeek) {
+    const t = ensureTimeline();
     for (const stop of t.stops) {
       if (stop.type !== 'store') continue;
       const store = ctx.stores[stop.id];
@@ -258,7 +285,9 @@ export function isFeasible(order: ID[], ctx: ScheduleCtx): boolean {
       const hours = store.openHours;
       if (!hours) continue;
       const windows = hours[ctx.dayOfWeek];
-      if (!windows || windows.length === 0) return false;
+      if (!windows || windows.length === 0) {
+        return { feasible: false, reason: { type: 'storeClosed', storeId: stop.id } };
+      }
       const arrive = hhmmToMin(stop.arrive);
       const depart = hhmmToMin(stop.depart);
       let ok = false;
@@ -270,25 +299,56 @@ export function isFeasible(order: ID[], ctx: ScheduleCtx): boolean {
           break;
         }
       }
-      if (!ok) return false;
+      if (!ok) {
+        return { feasible: false, reason: { type: 'storeClosed', storeId: stop.id } };
+      }
     }
   }
 
+  const t = ensureTimeline();
   const endMin = hhmmToMin(ctx.window.end);
-  if (t.hotelETAmin > endMin) return false;
+  if (t.hotelETAmin > endMin) {
+    return {
+      feasible: false,
+      reason: { type: 'dayWindow', deficitMin: t.hotelETAmin - endMin },
+      timeline: t,
+    };
+  }
   if (ctx.maxDriveTime != null && t.totalDriveMin > ctx.maxDriveTime) {
-    return false;
+    return {
+      feasible: false,
+      reason: {
+        type: 'maxDriveTime',
+        limit: ctx.maxDriveTime,
+        actual: t.totalDriveMin,
+      },
+      timeline: t,
+    };
   }
   if (ctx.breakWindow) {
     const bwStart = hhmmToMin(ctx.breakWindow.start);
     const bwEnd = hhmmToMin(ctx.breakWindow.end);
     const b = t.break;
-    if (!b) return false;
+    if (!b) {
+      return { feasible: false, reason: { type: 'breakWindow', arriveMin: 0, departMin: 0 } };
+    }
     if (b.arriveMin < bwStart || b.departMin > bwEnd) {
-      return false;
+      return {
+        feasible: false,
+        reason: {
+          type: 'breakWindow',
+          arriveMin: b.arriveMin,
+          departMin: b.departMin,
+        },
+        timeline: t,
+      };
     }
   }
-  return true;
+  return { feasible: true, timeline: t };
+}
+
+export function isFeasible(order: ID[], ctx: ScheduleCtx): boolean {
+  return assessFeasibility(order, ctx).feasible;
 }
 
 export function slackMin(order: ID[], ctx: ScheduleCtx): number {

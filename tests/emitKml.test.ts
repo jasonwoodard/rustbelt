@@ -70,6 +70,7 @@ describe('emitKml', () => {
             lon: 2,
           },
         ],
+        excluded: [],
         metrics: {
           storeCount: 1,
           storesVisited: 1,

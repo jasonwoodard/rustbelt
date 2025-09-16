@@ -5,6 +5,7 @@ exports[`solveDay > produces stable itinerary output (FR-31) 1`] = `
   "days": [
     {
       "dayId": "D1",
+      "excluded": [],
       "metrics": {
         "onTimeRisk": 0,
         "scorePerDriveMin": 0,
@@ -108,6 +109,18 @@ exports[`solveDay > reports constraint metadata when caps are binding 1`] = `
   "days": [
     {
       "dayId": "D1",
+      "excluded": [
+        {
+          "id": "A",
+          "nearestAlternateId": "B",
+          "reason": "maxStops",
+        },
+        {
+          "id": "C",
+          "nearestAlternateId": "B",
+          "reason": "maxStops",
+        },
+      ],
       "metrics": {
         "bindingConstraints": [
           "maxDriveTime",
