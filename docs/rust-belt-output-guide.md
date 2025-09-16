@@ -59,6 +59,23 @@ The solver expects a 38‑minute drive from the start location to the store and 
 
 This later stop arrives at 17:11 after a 56‑minute drive. The high `score` of 4.8 and `Thrift` tag indicate a priority thrift store. Comparing stops helps identify where long drives occur or which stores contribute most to the total score.
 
+### Example: Break stop (`BREAK_ID`)
+
+When a break window is requested, the itinerary includes a pseudo-stop with
+the special ID `__break__`. The entry records the local arrival and departure
+times just like a store, making it clear when the downtime occurs:
+
+```json
+{
+  "id": "__break__",
+  "name": "Break",
+  "type": "break",
+  "arrive": "12:15",
+  "depart": "12:45",
+  "dwellMin": 30
+}
+```
+
 ## Metrics
 
 The `metrics` block summarizes the solved day:

@@ -141,6 +141,30 @@ Reoptimize from 1:30 PM at a specific location:
 rustbelt solve-day --trip trips/example.json --day 2025-10-01 --now 13:30 --at 41.5,-81.7
 ```
 
+### Reserve a midday break
+
+The solver can schedule downtime inside a target window. Passing
+`--break-window 12:00-13:00` inserts a special stop with the `BREAK_ID`
+(`__break__`) during that hour:
+
+```
+rustbelt solve-day --trip trips/example.json --day 2025-10-01 --break-window 12:00-13:00
+```
+
+The resulting itinerary JSON includes a `type: "break"` entry that
+highlights when the pause occurs:
+
+```json
+{
+  "id": "__break__",
+  "name": "Break",
+  "type": "break",
+  "arrive": "12:15",
+  "depart": "12:45",
+  "dwellMin": 30
+}
+```
+
 ## See also
 
 - [Trip schema](trip-schema.json) – structure of trip JSON files
