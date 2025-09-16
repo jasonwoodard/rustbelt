@@ -35,6 +35,17 @@ function toMarkdown(days: DayPlan[]): string {
   const formatList = (values?: readonly string[]): string =>
     values && values.length ? values.map((v) => `\`${v}\``).join(', ') : '_None_';
 
+  const formatExcluded = (values: DayPlan['excluded']): string =>
+    values.length
+      ? values
+          .map((e) =>
+            `\`${e.id}\` (${e.reason}${
+              e.nearestAlternateId ? ` → \`${e.nearestAlternateId}\`` : ''
+            })`,
+          )
+          .join(', ')
+      : '_None_';
+
   lines.push('## Constraint Notes', '');
   for (const d of days) {
     const m = d.metrics;
@@ -43,6 +54,12 @@ function toMarkdown(days: DayPlan[]): string {
         m.limitViolations,
       )}`,
     );
+  }
+  lines.push('');
+
+  lines.push('## Exclusions', '');
+  for (const d of days) {
+    lines.push(`- **${d.dayId}** – ${formatExcluded(d.excluded)}`);
   }
   lines.push('');
   return lines.join('\n');

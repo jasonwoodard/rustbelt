@@ -5,6 +5,8 @@ import {
   slackMin,
   ScheduleCtx,
   buildDistanceMatrix,
+  assessFeasibility,
+  type FeasibilityReason,
 } from './schedule';
 import type { ID, LockSpec } from './types';
 import { hhmmToMin } from './time';
@@ -17,6 +19,7 @@ export interface HeuristicCtx extends ScheduleCtx {
   locks?: LockSpec[];
   progress?: ProgressFn;
   lambda?: number;
+  exclusionLog?: Map<ID, FeasibilityReason>;
 }
 
 export interface ProgressMetrics {
@@ -160,6 +163,11 @@ function greedyInsert(
 ): void {
   while (remaining.length > 0) {
     if (ctx.maxStops != null && storeCount(order) >= ctx.maxStops) {
+      if (ctx.exclusionLog) {
+        for (const id of remaining) {
+          ctx.exclusionLog.set(id, { type: 'maxStops', limit: ctx.maxStops });
+        }
+      }
       break;
     }
     const base = computeTimeline(order, ctx);
@@ -171,16 +179,25 @@ function greedyInsert(
     let bestSlack = -Infinity;
     let bestDrive = Infinity;
     const lambda = ctx.lambda ?? 0;
+    const iterationReasons = new Map<ID, FeasibilityReason>();
     for (const id of remaining) {
       const storeVal =
         lambda * (ctx.stores[id]?.score ?? 0) + (1 - lambda);
+      let idReason: FeasibilityReason | undefined;
+      let feasibleForId = false;
       for (let pos = prefix; pos <= order.length - suffix; pos++) {
         const candidate = order.slice();
         candidate.splice(pos, 0, id);
         if (ctx.maxStops != null && storeCount(candidate) > ctx.maxStops)
           continue;
-        if (!isFeasible(candidate, ctx)) continue;
-        const t = computeTimeline(candidate, ctx);
+        const feas = assessFeasibility(candidate, ctx);
+        if (!feas.feasible) {
+          if (feas.reason) {
+            idReason = feas.reason;
+          }
+          continue;
+        }
+        const t = feas.timeline ?? computeTimeline(candidate, ctx);
         const delta = t.hotelETAmin - baseEta;
         const slack = slackMin(candidate, ctx);
         if (
@@ -201,9 +218,23 @@ function greedyInsert(
           bestSlack = slack;
           bestDrive = t.totalDriveMin;
         }
+        feasibleForId = true;
+      }
+      if (!feasibleForId && idReason) {
+        iterationReasons.set(id, idReason);
       }
     }
-    if (bestId == null) break;
+    if (bestId == null) {
+      if (ctx.exclusionLog) {
+        for (const id of remaining) {
+          const reason = iterationReasons.get(id);
+          if (reason) {
+            ctx.exclusionLog.set(id, reason);
+          }
+        }
+      }
+      break;
+    }
     order.splice(bestPos, 0, bestId);
     remaining.splice(remaining.indexOf(bestId), 1);
     if (ctx.verbose) {

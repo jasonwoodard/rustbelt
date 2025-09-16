@@ -54,6 +54,18 @@ export function solveDay(opts: SolveDayOptions): SolveDayResult {
       `violations=${formatConstraintList(m.limitViolations)}`,
     ];
     console.log(summaryParts.join(' | '));
+    if (dayPlan.excluded.length > 0) {
+      const details = dayPlan.excluded
+        .map((e) =>
+          `${e.id} (${e.reason}${
+            e.nearestAlternateId ? ` → ${e.nearestAlternateId}` : ''
+          })`,
+        )
+        .join('; ');
+      console.log(`  Excluded: ${details}`);
+    } else {
+      console.log('  Excluded: none');
+    }
     return { ...emit, metrics: dayPlan.metrics };
   } catch (err) {
     throw augmentErrorWithReasons(err);
