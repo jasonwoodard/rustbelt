@@ -1,0 +1,196 @@
+{
+  "runInfo": {
+    "runTimestamp": "2025-09-16T12:20:45.494Z",
+    "runId": "CL-v1",
+    "runNote": "Wednesday, Detroit to Cleveland",
+    "days": [
+      {
+        "dayId": "Wed",
+        "stops": [
+          {
+            "id": "HCGs1",
+            "name": "Hollywood Casino Greektown",
+            "type": "start",
+            "arrive": "09:00",
+            "depart": "09:00"
+          },
+          {
+            "id": "TVAT",
+            "name": "The Vault Antiques & Treasures",
+            "type": "store",
+            "arrive": "10:30",
+            "depart": "11:00",
+            "score": 4.3
+          },
+          {
+            "id": "TCKA",
+            "name": "The Copper Kettle Antiques",
+            "type": "store",
+            "arrive": "11:10",
+            "depart": "11:40",
+            "score": 4.6
+          },
+          {
+            "id": "AVM",
+            "name": "Armory vintage Market",
+            "type": "store",
+            "arrive": "12:37",
+            "depart": "13:07",
+            "score": 4.1
+          },
+          {
+            "id": "BSS",
+            "name": "Big Ship Salvage",
+            "type": "store",
+            "arrive": "13:49",
+            "depart": "14:19",
+            "score": 5
+          },
+          {
+            "id": "VWT-Olmstead",
+            "name": "Value World Thrift (Olmstead)",
+            "type": "store",
+            "arrive": "15:25",
+            "depart": "15:55",
+            "score": 4.5
+          },
+          {
+            "id": "VWT-Lakewood",
+            "name": "Value World Thrift (Lakewood)",
+            "type": "store",
+            "arrive": "16:08",
+            "depart": "16:38",
+            "score": 4.5
+          },
+          {
+            "id": "SL",
+            "name": "Sweet Lorain",
+            "type": "store",
+            "arrive": "16:41",
+            "depart": "17:11",
+            "score": 4.9
+          },
+          {
+            "id": "PG",
+            "name": "Paradise Galleria",
+            "type": "store",
+            "arrive": "17:13",
+            "depart": "17:43",
+            "score": 4.1
+          },
+          {
+            "id": "DPHCDe",
+            "name": "Drury Plaza Hotel Cleveland Downtown",
+            "type": "end",
+            "arrive": "17:47",
+            "depart": "17:47"
+          }
+        ]
+      }
+    ]
+  },
+  "finalStopsState": [
+    {
+      "id": "TVAT",
+      "name": "The Vault Antiques & Treasures",
+      "type": "store",
+      "arrive": "10:30",
+      "depart": "11:00",
+      "score": 4.3,
+      "status": "visited",
+      "mqa": "Good",
+      "decision": "Leave"
+    },
+    {
+      "id": "TCKA",
+      "name": "The Copper Kettle Antiques",
+      "type": "store",
+      "arrive": "11:10",
+      "depart": "11:40",
+      "score": 4.6,
+      "status": "visited",
+      "mqa": "Exceptional",
+      "decision": "Stay"
+    },
+    {
+      "id": "AVM",
+      "name": "Armory vintage Market",
+      "type": "store",
+      "arrive": "12:37",
+      "depart": "13:07",
+      "score": 4.1,
+      "status": "visited",
+      "mqa": "Exceptional",
+      "decision": "Stay"
+    },
+    {
+      "id": "BSS",
+      "name": "Big Ship Salvage",
+      "type": "store",
+      "arrive": "13:49",
+      "depart": "14:19",
+      "score": 5,
+      "status": "visited",
+      "mqa": "Bust",
+      "decision": "Leave"
+    },
+    {
+      "id": "VWT-Olmstead",
+      "name": "Value World Thrift (Olmstead)",
+      "type": "store",
+      "arrive": "15:25",
+      "depart": "15:55",
+      "score": 4.5,
+      "status": "tovisit"
+    },
+    {
+      "id": "VWT-Lakewood",
+      "name": "Value World Thrift (Lakewood)",
+      "type": "store",
+      "arrive": "16:08",
+      "depart": "16:38",
+      "score": 4.5,
+      "status": "tovisit"
+    },
+    {
+      "id": "SL",
+      "name": "Sweet Lorain",
+      "type": "store",
+      "arrive": "16:41",
+      "depart": "17:11",
+      "score": 4.9,
+      "status": "tovisit"
+    },
+    {
+      "id": "PG",
+      "name": "Paradise Galleria",
+      "type": "store",
+      "arrive": "17:13",
+      "depart": "17:43",
+      "score": 4.1,
+      "status": "tovisit"
+    }
+  ],
+  "tripLog": [
+    {
+      "name": "The Vault Antiques & Treasures",
+      "mqa": "Good",
+      "decision": "Leave"
+    },
+    {
+      "name": "The Copper Kettle Antiques",
+      "mqa": "Exceptional",
+      "decision": "Stay"
+    },
+    {
+      "name": "Armory vintage Market",
+      "mqa": "Exceptional",
+      "decision": "Stay"
+    },
+    {
+      "name": "Big Ship Salvage",
+      "mqa": "Bust",
+      "decision": "Leave"
+    }
+  ]
+}
