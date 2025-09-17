@@ -131,7 +131,27 @@
                         </div>
                         <div class="bg-teal-50 p-3 rounded-md">
                             <p class="text-2xl font-bold text-teal-800" id="dashboard-expected-quality">0.0</p>
-                            <p class="text-sm text-teal-700">Expected Rem. Quality</p>
+                            <p class="text-sm text-teal-700">Remaining Posterior μ</p>
+                        </div>
+                        <div class="bg-teal-50 p-3 rounded-md">
+                            <p class="text-2xl font-bold text-teal-800" id="dashboard-pool-uncertainty">±0.0</p>
+                            <p class="text-sm text-teal-700">Remaining Uncertainty σ</p>
+                        </div>
+                        <div class="bg-blue-50 p-3 rounded-md">
+                            <p class="text-2xl font-bold text-blue-800" id="dashboard-current-mean">0.0</p>
+                            <p class="text-sm text-blue-700">Current Posterior μ</p>
+                        </div>
+                        <div class="bg-blue-50 p-3 rounded-md">
+                            <p class="text-2xl font-bold text-blue-800" id="dashboard-current-uncertainty">±0.0</p>
+                            <p class="text-sm text-blue-700">Current Uncertainty σ</p>
+                        </div>
+                        <div class="bg-emerald-50 p-3 rounded-md col-span-2">
+                            <p class="text-2xl font-bold text-emerald-800" id="dashboard-current-thompson">0.0</p>
+                            <p class="text-sm text-emerald-700">Current Thompson Draw</p>
+                        </div>
+                        <div class="bg-teal-100 p-3 rounded-md col-span-2">
+                            <p class="text-2xl font-bold text-teal-900" id="dashboard-pool-thompson">0.0</p>
+                            <p class="text-sm text-teal-900">Remaining Thompson Draw</p>
                         </div>
                     </div>
                 </div>
@@ -148,264 +168,7 @@
         </main>
     </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    const appState = {
-        itinerary: null,
-        stops: [],
-        currentIndex: 0,
-        log: [],
-        mqaMap: {
-            'Bust': 0.0,
-            'Average': 3.5,
-            'Good': 4.2,
-            'Exceptional': 5.0
-        },
-    };
-
-    function init() {
-        const dataElement = document.getElementById('itinerary-data');
-        if (!dataElement) {
-            console.error('Itinerary data script tag not found!');
-            return;
-        }
-        appState.itinerary = JSON.parse(dataElement.textContent);
-        
-        // Flatten stops and add initial status
-        appState.stops = appState.itinerary.days[0].stops
-            .filter(stop => stop.type === 'store')
-            .map(stop => ({ ...stop, status: 'tovisit' }));
-        
-        document.getElementById('run-info').textContent = `Run ID: ${appState.itinerary.runId} - ${appState.itinerary.runNote}`;
-        
-        setupMQAOptions();
-        renderAll();
-        addEventListeners();
-    }
-
-    function setupMQAOptions() {
-        const container = document.getElementById('mqa-select');
-        container.innerHTML = '';
-        Object.keys(appState.mqaMap).forEach(key => {
-            const value = appState.mqaMap[key];
-            const div = document.createElement('div');
-            div.className = 'flex items-center p-3 rounded-lg border border-stone-200 hover:bg-stone-50';
-            div.innerHTML = `
-                <input id="mqa-${key.toLowerCase()}" type="radio" name="mqa" value="${key}" class="h-4 w-4 text-teal-600 border-stone-300 focus:ring-teal-500">
-                <label for="mqa-${key.toLowerCase()}" class="ml-3 block text-sm font-medium text-stone-700">
-                    ${key} <span class="text-xs text-stone-500">(${value.toFixed(1)})</span>
-                </label>
-            `;
-            container.appendChild(div);
-        });
-    }
-
-    function renderAll() {
-        renderDashboard();
-        renderItineraryList();
-        renderCurrentStore();
-        renderTripLog();
-    }
-    
-    function calculateMetrics() {
-        const totalStores = appState.stops.length;
-        const visitedStores = appState.stops.filter(s => s.status === 'visited').length;
-        const remainingStops = appState.stops.filter(s => s.status === 'tovisit');
-        
-        const overallAvgScore = totalStores > 0 ?
-            (appState.stops.reduce((sum, s) => sum + (s.score || 0), 0) / totalStores).toFixed(1) : '0.0';
-            
-        const expectedRemQuality = remainingStops.length > 0 ?
-            (remainingStops.reduce((sum, s) => sum + (s.score || 0), 0) / remainingStops.length).toFixed(1) : '0.0';
-            
-        return { totalStores, visitedStores, overallAvgScore, expectedRemQuality };
-    }
-
-    function renderDashboard() {
-        const metrics = calculateMetrics();
-        document.getElementById('dashboard-total-stores').textContent = metrics.totalStores;
-        document.getElementById('dashboard-stores-visited').textContent = metrics.visitedStores;
-        document.getElementById('dashboard-avg-jscore').textContent = metrics.overallAvgScore;
-        document.getElementById('dashboard-expected-quality').textContent = metrics.expectedRemQuality;
-    }
-
-    function renderItineraryList() {
-        const container = document.getElementById('itinerary-list');
-        container.innerHTML = '';
-        appState.stops.forEach((stop, index) => {
-            const isCurrent = index === appState.currentIndex;
-            const div = document.createElement('div');
-            div.id = `row-${stop.id}`;
-            div.className = `p-3 rounded-md transition-all duration-300 ease-in-out status-${stop.status} ${isCurrent ? 'ring-2 ring-teal-500 shadow-md' : 'shadow-sm'}`;
-            div.innerHTML = `
-                <div class="flex justify-between items-center">
-                    <p class="font-semibold">${stop.name}</p>
-                    <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">${(stop.score || 0).toFixed(1)}</p>
-                </div>
-            `;
-            container.appendChild(div);
-        });
-    }
-
-    function renderCurrentStore() {
-        const currentStop = appState.stops[appState.currentIndex];
-        const nameEl = document.getElementById('current-store-name');
-        
-        if (!currentStop) {
-            nameEl.textContent = "Trip Complete!";
-            document.getElementById('mqa-form').style.display = 'none';
-            document.getElementById('recommendation-display').innerHTML = '';
-            document.getElementById('timeline-arrive-time').textContent = '--:--';
-            document.getElementById('timeline-mqa-time').textContent = '--:--';
-            return;
-        }
-        
-        document.getElementById('mqa-form').style.display = 'block';
-        nameEl.textContent = currentStop.name;
-        
-        const [arriveH, arriveM] = currentStop.arrive.split(':').map(Number);
-        const mqaTime = new Date();
-        mqaTime.setHours(arriveH, arriveM + 30, 0, 0);
-        const mqaH = String(mqaTime.getHours()).padStart(2, '0');
-        const mqaM = String(mqaTime.getMinutes()).padStart(2, '0');
-
-        document.getElementById('timeline-arrive-time').textContent = currentStop.arrive;
-        document.getElementById('timeline-mqa-time').textContent = `${mqaH}:${mqaM}`;
-    }
-
-    function renderTripLog() {
-        const container = document.getElementById('trip-log');
-        if (appState.log.length === 0) {
-            container.innerHTML = `<p class="text-stone-500">Your decisions will appear here.</p>`;
-            return;
-        }
-        container.innerHTML = '';
-        appState.log.forEach(entry => {
-            const div = document.createElement('div');
-            div.className = 'p-2 border-b border-stone-100';
-            div.innerHTML = `
-                <p class="font-medium">${entry.name}</p>
-                <p class="text-stone-600">MQA: <span class="font-semibold">${entry.mqa}</span> -> Decision: <span class="font-semibold">${entry.decision}</span></p>
-            `;
-            container.appendChild(div);
-        });
-        container.scrollTop = container.scrollHeight;
-    }
-    
-    function getRecommendation(mqaKey, eRem) {
-        const mqaValue = appState.mqaMap[mqaKey];
-        eRem = parseFloat(eRem);
-
-        if (mqaKey === 'Bust') return 'Leave';
-        if (mqaKey === 'Exceptional') return 'Stay';
-        if (mqaKey === 'Good' && mqaValue >= eRem) return 'Stay';
-        if (mqaKey === 'Good' && mqaValue < eRem) return 'Leave';
-        if (mqaKey === 'Average' && mqaValue >= eRem) return 'Stay';
-        if (mqaKey === 'Average' && mqaValue < eRem) return 'Leave';
-        
-        return 'Leave'; // Default
-    }
-    
-    function processDecision(mqaKey) {
-        const currentStop = appState.stops[appState.currentIndex];
-        if (!currentStop) return;
-
-        const eRem = calculateMetrics().expectedRemQuality;
-        const recommendation = getRecommendation(mqaKey, eRem);
-        
-        const display = document.getElementById('recommendation-display');
-        display.innerHTML = `
-            <p class="text-lg font-medium">Recommendation:</p>
-            <p class="text-3xl font-bold recommendation-${recommendation.toLowerCase()}">${recommendation.toUpperCase()}</p>
-        `;
-        
-        currentStop.mqa = mqaKey;
-        currentStop.decision = recommendation;
-        currentStop.status = 'visited';
-        
-        appState.log.push({ name: currentStop.name, mqa: mqaKey, decision: recommendation });
-        
-        if (recommendation === 'Stay' && mqaKey === 'Exceptional') {
-            handleOverrun();
-        } else {
-            advanceToNextStore();
-        }
-    }
-
-    function handleOverrun() {
-        const remainingStops = appState.stops.filter(s => s.status === 'tovisit');
-        if (remainingStops.length === 0) {
-            advanceToNextStore();
-            return;
-        }
-
-        const lowestScoringStop = remainingStops.reduce((min, stop) => (stop.score < min.score ? stop : min), remainingStops[0]);
-        
-        setTimeout(() => { // Timeout to allow user to see recommendation
-            const confirmed = confirm(`To extend your stay, you should drop the lowest-rated remaining store: \n\n${lowestScoringStop.name} (Score: ${lowestScoringStop.score})\n\nDo you want to drop this store?`);
-            
-            if (confirmed) {
-                const stopToDrop = appState.stops.find(s => s.id === lowestScoringStop.id);
-                if (stopToDrop) {
-                    stopToDrop.status = 'dropped';
-                    appState.log.push({ name: stopToDrop.name, mqa: 'N/A', decision: 'Dropped' });
-                }
-            }
-            advanceToNextStore();
-        }, 500);
-    }
-    
-    function advanceToNextStore() {
-        let nextIndex = appState.currentIndex + 1;
-        while(nextIndex < appState.stops.length && appState.stops[nextIndex].status !== 'tovisit') {
-            nextIndex++;
-        }
-        appState.currentIndex = nextIndex;
-        
-        // Clear selection and recommendation for next turn
-        const selectedRadio = document.querySelector('input[name="mqa"]:checked');
-        if(selectedRadio) selectedRadio.checked = false;
-        document.getElementById('recommendation-display').innerHTML = '';
-        
-        renderAll();
-    }
-
-    function addEventListeners() {
-        document.getElementById('decision-button').addEventListener('click', () => {
-            const selectedMQA = document.querySelector('input[name="mqa"]:checked');
-            if (!selectedMQA) {
-                alert('Please select a Measured Quality Assessment (MQA).');
-                return;
-            }
-            processDecision(selectedMQA.value);
-        });
-
-        document.getElementById('bust-button').addEventListener('click', () => {
-             processDecision('Bust');
-        });
-
-        document.getElementById('export-button').addEventListener('click', () => {
-            const dataToExport = {
-                runInfo: appState.itinerary,
-                finalStopsState: appState.stops,
-                tripLog: appState.log
-            };
-            const dataStr = JSON.stringify(dataToExport, null, 2);
-            const dataBlob = new Blob([dataStr], {type: 'application/json'});
-            const url = URL.createObjectURL(dataBlob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `rust-belt-trip-${appState.itinerary.runId}-results.json`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        });
-    }
-
-    init();
-});
-</script>
+<script src="day-of-support-app.js"></script>
 
 </body>
 </html>
