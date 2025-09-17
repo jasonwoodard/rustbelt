@@ -7,6 +7,10 @@ const dayOfTemplate = readFileSync(
   'utf8',
 );
 const dayOfPartials = {
+  dayOfStyle: readFileSync(
+    new URL('./templates/day-of-style.mustache', import.meta.url),
+    'utf8',
+  ),
   dayOfScript: readFileSync(
     new URL('./templates/day-of-script.mustache', import.meta.url),
     'utf8',

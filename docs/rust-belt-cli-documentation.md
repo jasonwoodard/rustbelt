@@ -52,7 +52,7 @@ rustbelt solve-day --trip <file> --day <id> [options]
 | `--out <file>`           | Write itinerary JSON to this path (overwrite) |
 | `--kml [file]`           | Write KML to this path (or stdout)            |
 | `--csv <file>`           | Write store stops CSV to this path (includes tags column) |
-| `--html [file]`          | Write HTML itinerary to this path or stdout   |
+| `--html [file]`          | Write an offline-ready HTML itinerary with inline CSS/JS to this path or stdout |
 | `--robustness <factor>`  | Multiply travel times by this factor          |
 | `--risk-threshold <min>` | Slack threshold minutes for on-time risk      |
 
@@ -124,6 +124,8 @@ the `<ExtendedData>` entries.
 ## Output
 
 The solver prints the resulting itinerary as JSON, including a `runTimestamp` field for tracking when the plan was generated. If `--out` is specified, the JSON is also written to the provided path. Supplying `--kml` emits a KML representation to the given file or to stdout when no file is provided. Using `--csv` saves a CSV of all store stops. Passing `--html` writes an HTML itinerary to the given file or stdout; templates can be customized via `emitHtml`.
+
+The HTML renderer embeds the required stylesheet and decision-support script directly in the document. Opening the file in a browser works without network access because no external fonts, CDNs, or runtime fetches are required.
 
 After emitting the JSON, the CLI prints a one-line summary that includes any binding or violated limits (e.g., `binding=maxStops | violations=none`). See the [constraint diagnostics](rust-belt-output-guide.md#constraint-diagnostics) section of the output guide for definitions and examples of these diagnostics.
 
