@@ -76,6 +76,17 @@ describe('emitHtml', () => {
     expect(itinerary.days[0].dayId).toBe(day.dayId);
   });
 
+  it('embeds inline assets without remote dependencies', () => {
+    const html = emitHtml([day], '2024-01-01T00:00:00Z');
+
+    expect(html).toContain('--stone-100');
+    expect(html).toContain('class="container');
+    expect(html).not.toMatch(/<script\s+src="https?:/);
+    expect(html).not.toMatch(/<link[^>]+https?:/);
+    expect(html).not.toContain('cdn.tailwindcss.com');
+    expect(html).not.toContain('fonts.googleapis.com');
+  });
+
   it('can render the legacy itinerary table when requested', () => {
     const runTs = '2024-01-01T00:00:00Z';
     const html = emitHtml([day], runTs, { legacyTable: true });

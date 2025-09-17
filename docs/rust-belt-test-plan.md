@@ -140,6 +140,7 @@ jq -r '.stores[] | "\(.lat),\(.lon)"' trips/rust-belt.json | sort | uniq -d
 - **Objective blending** – experiment with `--lambda` to favor higher-score stores once scores are populated.
 - **Robustness factor** – `--robustness` > 1 inflates drive times and reduces slack.
 - **Risk view** – use `--risk-threshold` to highlight legs with slack below a chosen buffer.
+- **Offline itinerary review** – Generate an HTML report with `--html`, then disable the browser's network stack (e.g., DevTools offline mode) and reload the file. Confirm the styling, interactive MQA form, and trip log updates still function without internet access.
 
 ---
 
