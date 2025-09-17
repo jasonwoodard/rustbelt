@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rust Belt Bandit Planner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Stone & Teal -->
+    <!-- Application Structure Plan: A responsive single-page application with a three-column layout on desktops/tablets and a single-column layout on mobile. The structure is task-oriented: (1) an itinerary overview on the left, (2) a central decision-support panel for the current store, and (3) a dynamic dashboard and log on the right. This design was chosen to present all relevant information for the core user task—making a "Stay" or "Leave" decision—without scrolling or navigation, maximizing usability in the field. -->
+    <!-- Visualization & Content Choices: The core information (itinerary, stats) is presented using structured HTML/CSS tables and cards. The key interaction is the MQA selection, which updates the state and provides a recommendation. Goal: Inform -> Method: Dynamic stat cards. Goal: Decision Support -> Method: Interactive panel with radio buttons and a clear recommendation display. Goal: Track Progress -> Method: Dynamic trip log and visual status updates on the itinerary list. This approach avoids complex charts, focusing on clear, actionable information display using vanilla JS and Tailwind CSS. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f4; /* stone-100 */
+        }
+        .status-tovisit { background-color: white; }
+        .status-visited { background-color: #dcfce7; color: #166534; }
+        .status-dropped { background-color: #fee2e2; color: #991b1b; text-decoration: line-through; }
+        .recommendation-stay { color: #0f766e; } /* teal-700 */
+        .recommendation-leave { color: #be123c; } /* rose-700 */
+    </style>
+</head>
+<body class="text-stone-800">
+
+    <!-- Embedded Itinerary Data -->
+    <script id="itinerary-data" type="application/json">
+    {
+      "runTimestamp": "2025-09-16T12:20:45.494Z",
+      "runId": "CL-v1",
+      "runNote": "Wednesday, Detroit to Cleveland",
+      "days": [
+        {
+          "dayId": "Wed",
+          "stops": [
+            { "id": "HCGs1", "name": "Hollywood Casino Greektown", "type": "start", "arrive": "09:00", "depart": "09:00" },
+            { "id": "TVAT", "name": "The Vault Antiques & Treasures", "type": "store", "arrive": "10:30", "depart": "11:00", "score": 4.3 },
+            { "id": "TCKA", "name": "The Copper Kettle Antiques", "type": "store", "arrive": "11:10", "depart": "11:40", "score": 4.6 },
+            { "id": "AVM", "name": "Armory vintage Market", "type": "store", "arrive": "12:37", "depart": "13:07", "score": 4.1 },
+            { "id": "BSS", "name": "Big Ship Salvage", "type": "store", "arrive": "13:49", "depart": "14:19", "score": 5.0 },
+            { "id": "VWT-Olmstead", "name": "Value World Thrift (Olmstead)", "type": "store", "arrive": "15:25", "depart": "15:55", "score": 4.5 },
+            { "id": "VWT-Lakewood", "name": "Value World Thrift (Lakewood)", "type": "store", "arrive": "16:08", "depart": "16:38", "score": 4.5 },
+            { "id": "SL", "name": "Sweet Lorain", "type": "store", "arrive": "16:41", "depart": "17:11", "score": 4.9 },
+            { "id": "PG", "name": "Paradise Galleria", "type": "store", "arrive": "17:13", "depart": "17:43", "score": 4.1 },
+            { "id": "DPHCDe", "name": "Drury Plaza Hotel Cleveland Downtown", "type": "end", "arrive": "17:47", "depart": "17:47" }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <div class="container mx-auto p-4 md:p-6 lg:p-8">
+        <header class="mb-6">
+            <h1 class="text-3xl font-bold text-stone-900">Rust Belt Bandit Planner</h1>
+            <p id="run-info" class="text-stone-600 mt-1"></p>
+        </header>
+
+        <main class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Left Column: Itinerary -->
+            <section class="lg:col-span-1 bg-white p-4 rounded-lg shadow-sm">
+                <h2 class="text-xl font-semibold mb-3">Itinerary</h2>
+                <div id="itinerary-list" class="space-y-2">
+                    <!-- Itinerary rows will be injected here -->
+                </div>
+            </section>
+
+            <!-- Middle Column: Decision Panel -->
+            <section class="lg:col-span-1 flex flex-col gap-6">
+                <div class="bg-white p-4 rounded-lg shadow-sm">
+                    <h2 class="text-xl font-semibold mb-1">Current Stop</h2>
+                    <p id="current-store-name" class="text-2xl font-bold text-teal-700">Loading...</p>
+                    
+                    <div id="store-timeline" class="mt-4">
+                        <h3 class="text-sm font-medium text-stone-600 mb-2">Visit Timeline</h3>
+                        <div class="flex items-center justify-between text-xs text-center">
+                            <div class="flex-1">
+                                <p id="timeline-arrive-time" class="font-semibold">--:--</p>
+                                <p class="text-stone-500">Arrive</p>
+                            </div>
+                            <div class="flex-1 border-t-2 border-dashed border-stone-300 mx-2"></div>
+                             <div class="flex-1">
+                                <p id="timeline-mqa-time" class="font-semibold">--:--</p>
+                                <p class="text-stone-500">MQA Check-in</p>
+                            </div>
+                            <div class="flex-1 border-t-2 border-dashed border-stone-300 mx-2"></div>
+                            <div class="flex-1">
+                                <p class="font-semibold">Now</p>
+                                <p class="text-stone-500">Decision</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-4 rounded-lg shadow-sm flex-grow">
+                    <h2 class="text-xl font-semibold mb-3">Measured Quality Assessment (MQA)</h2>
+                    <div id="mqa-form" class="space-y-3">
+                        <p class="text-sm text-stone-600">After 30 minutes, assess the store's quality:</p>
+                        <div id="mqa-select" class="grid grid-cols-2 gap-3">
+                            <!-- Radio buttons will be injected here -->
+                        </div>
+                        <div class="flex gap-3 pt-3">
+                            <button id="decision-button" class="w-full bg-teal-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-teal-700 transition-colors">Process MQA</button>
+                            <button id="bust-button" class="w-1/2 bg-rose-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-rose-700 transition-colors">Bust!</button>
+                        </div>
+                    </div>
+                     <div id="recommendation-display" class="mt-4 text-center">
+                        <!-- Recommendation will be shown here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Column: Dashboard & Log -->
+            <section class="lg:col-span-1 flex flex-col gap-6">
+                <div class="bg-white p-4 rounded-lg shadow-sm">
+                    <h2 class="text-xl font-semibold mb-3">Dashboard</h2>
+                    <div class="grid grid-cols-2 gap-4 text-center">
+                        <div class="bg-stone-50 p-3 rounded-md">
+                            <p class="text-2xl font-bold" id="dashboard-total-stores">0</p>
+                            <p class="text-sm text-stone-600">Total Stores</p>
+                        </div>
+                        <div class="bg-stone-50 p-3 rounded-md">
+                            <p class="text-2xl font-bold" id="dashboard-stores-visited">0</p>
+                            <p class="text-sm text-stone-600">Stores Visited</p>
+                        </div>
+                        <div class="bg-stone-50 p-3 rounded-md">
+                            <p class="text-2xl font-bold" id="dashboard-avg-jscore">0.0</p>
+                            <p class="text-sm text-stone-600">Avg. J-Score</p>
+                        </div>
+                        <div class="bg-teal-50 p-3 rounded-md">
+                            <p class="text-2xl font-bold text-teal-800" id="dashboard-expected-quality">0.0</p>
+                            <p class="text-sm text-teal-700">Expected Rem. Quality</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-sm flex-grow">
+                     <h2 class="text-xl font-semibold mb-3">Trip Log</h2>
+                     <div id="trip-log" class="text-sm space-y-2 overflow-y-auto h-48">
+                        <p class="text-stone-500">Your decisions will appear here.</p>
+                     </div>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow-sm">
+                     <button id="export-button" class="w-full bg-stone-700 text-white font-bold py-2 px-4 rounded-lg hover:bg-stone-800 transition-colors">Export Trip Data</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const appState = {
+        itinerary: null,
+        stops: [],
+        currentIndex: 0,
+        log: [],
+        mqaMap: {
+            'Bust': 0.0,
+            'Average': 3.5,
+            'Good': 4.2,
+            'Exceptional': 5.0
+        },
+    };
+
+    function init() {
+        const dataElement = document.getElementById('itinerary-data');
+        if (!dataElement) {
+            console.error('Itinerary data script tag not found!');
+            return;
+        }
+        appState.itinerary = JSON.parse(dataElement.textContent);
+        
+        // Flatten stops and add initial status
+        appState.stops = appState.itinerary.days[0].stops
+            .filter(stop => stop.type === 'store')
+            .map(stop => ({ ...stop, status: 'tovisit' }));
+        
+        document.getElementById('run-info').textContent = `Run ID: ${appState.itinerary.runId} - ${appState.itinerary.runNote}`;
+        
+        setupMQAOptions();
+        renderAll();
+        addEventListeners();
+    }
+
+    function setupMQAOptions() {
+        const container = document.getElementById('mqa-select');
+        container.innerHTML = '';
+        Object.keys(appState.mqaMap).forEach(key => {
+            const value = appState.mqaMap[key];
+            const div = document.createElement('div');
+            div.className = 'flex items-center p-3 rounded-lg border border-stone-200 hover:bg-stone-50';
+            div.innerHTML = `
+                <input id="mqa-${key.toLowerCase()}" type="radio" name="mqa" value="${key}" class="h-4 w-4 text-teal-600 border-stone-300 focus:ring-teal-500">
+                <label for="mqa-${key.toLowerCase()}" class="ml-3 block text-sm font-medium text-stone-700">
+                    ${key} <span class="text-xs text-stone-500">(${value.toFixed(1)})</span>
+                </label>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function renderAll() {
+        renderDashboard();
+        renderItineraryList();
+        renderCurrentStore();
+        renderTripLog();
+    }
+    
+    function calculateMetrics() {
+        const totalStores = appState.stops.length;
+        const visitedStores = appState.stops.filter(s => s.status === 'visited').length;
+        const remainingStops = appState.stops.filter(s => s.status === 'tovisit');
+        
+        const overallAvgScore = totalStores > 0 ?
+            (appState.stops.reduce((sum, s) => sum + (s.score || 0), 0) / totalStores).toFixed(1) : '0.0';
+            
+        const expectedRemQuality = remainingStops.length > 0 ?
+            (remainingStops.reduce((sum, s) => sum + (s.score || 0), 0) / remainingStops.length).toFixed(1) : '0.0';
+            
+        return { totalStores, visitedStores, overallAvgScore, expectedRemQuality };
+    }
+
+    function renderDashboard() {
+        const metrics = calculateMetrics();
+        document.getElementById('dashboard-total-stores').textContent = metrics.totalStores;
+        document.getElementById('dashboard-stores-visited').textContent = metrics.visitedStores;
+        document.getElementById('dashboard-avg-jscore').textContent = metrics.overallAvgScore;
+        document.getElementById('dashboard-expected-quality').textContent = metrics.expectedRemQuality;
+    }
+
+    function renderItineraryList() {
+        const container = document.getElementById('itinerary-list');
+        container.innerHTML = '';
+        appState.stops.forEach((stop, index) => {
+            const isCurrent = index === appState.currentIndex;
+            const div = document.createElement('div');
+            div.id = `row-${stop.id}`;
+            div.className = `p-3 rounded-md transition-all duration-300 ease-in-out status-${stop.status} ${isCurrent ? 'ring-2 ring-teal-500 shadow-md' : 'shadow-sm'}`;
+            div.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <p class="font-semibold">${stop.name}</p>
+                    <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">${(stop.score || 0).toFixed(1)}</p>
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function renderCurrentStore() {
+        const currentStop = appState.stops[appState.currentIndex];
+        const nameEl = document.getElementById('current-store-name');
+        
+        if (!currentStop) {
+            nameEl.textContent = "Trip Complete!";
+            document.getElementById('mqa-form').style.display = 'none';
+            document.getElementById('recommendation-display').innerHTML = '';
+            document.getElementById('timeline-arrive-time').textContent = '--:--';
+            document.getElementById('timeline-mqa-time').textContent = '--:--';
+            return;
+        }
+        
+        document.getElementById('mqa-form').style.display = 'block';
+        nameEl.textContent = currentStop.name;
+        
+        const [arriveH, arriveM] = currentStop.arrive.split(':').map(Number);
+        const mqaTime = new Date();
+        mqaTime.setHours(arriveH, arriveM + 30, 0, 0);
+        const mqaH = String(mqaTime.getHours()).padStart(2, '0');
+        const mqaM = String(mqaTime.getMinutes()).padStart(2, '0');
+
+        document.getElementById('timeline-arrive-time').textContent = currentStop.arrive;
+        document.getElementById('timeline-mqa-time').textContent = `${mqaH}:${mqaM}`;
+    }
+
+    function renderTripLog() {
+        const container = document.getElementById('trip-log');
+        if (appState.log.length === 0) {
+            container.innerHTML = `<p class="text-stone-500">Your decisions will appear here.</p>`;
+            return;
+        }
+        container.innerHTML = '';
+        appState.log.forEach(entry => {
+            const div = document.createElement('div');
+            div.className = 'p-2 border-b border-stone-100';
+            div.innerHTML = `
+                <p class="font-medium">${entry.name}</p>
+                <p class="text-stone-600">MQA: <span class="font-semibold">${entry.mqa}</span> -> Decision: <span class="font-semibold">${entry.decision}</span></p>
+            `;
+            container.appendChild(div);
+        });
+        container.scrollTop = container.scrollHeight;
+    }
+    
+    function getRecommendation(mqaKey, eRem) {
+        const mqaValue = appState.mqaMap[mqaKey];
+        eRem = parseFloat(eRem);
+
+        if (mqaKey === 'Bust') return 'Leave';
+        if (mqaKey === 'Exceptional') return 'Stay';
+        if (mqaKey === 'Good' && mqaValue >= eRem) return 'Stay';
+        if (mqaKey === 'Good' && mqaValue < eRem) return 'Leave';
+        if (mqaKey === 'Average' && mqaValue >= eRem) return 'Stay';
+        if (mqaKey === 'Average' && mqaValue < eRem) return 'Leave';
+        
+        return 'Leave'; // Default
+    }
+    
+    function processDecision(mqaKey) {
+        const currentStop = appState.stops[appState.currentIndex];
+        if (!currentStop) return;
+
+        const eRem = calculateMetrics().expectedRemQuality;
+        const recommendation = getRecommendation(mqaKey, eRem);
+        
+        const display = document.getElementById('recommendation-display');
+        display.innerHTML = `
+            <p class="text-lg font-medium">Recommendation:</p>
+            <p class="text-3xl font-bold recommendation-${recommendation.toLowerCase()}">${recommendation.toUpperCase()}</p>
+        `;
+        
+        currentStop.mqa = mqaKey;
+        currentStop.decision = recommendation;
+        currentStop.status = 'visited';
+        
+        appState.log.push({ name: currentStop.name, mqa: mqaKey, decision: recommendation });
+        
+        if (recommendation === 'Stay' && mqaKey === 'Exceptional') {
+            handleOverrun();
+        } else {
+            advanceToNextStore();
+        }
+    }
+
+    function handleOverrun() {
+        const remainingStops = appState.stops.filter(s => s.status === 'tovisit');
+        if (remainingStops.length === 0) {
+            advanceToNextStore();
+            return;
+        }
+
+        const lowestScoringStop = remainingStops.reduce((min, stop) => (stop.score < min.score ? stop : min), remainingStops[0]);
+        
+        setTimeout(() => { // Timeout to allow user to see recommendation
+            const confirmed = confirm(`To extend your stay, you should drop the lowest-rated remaining store: \n\n${lowestScoringStop.name} (Score: ${lowestScoringStop.score})\n\nDo you want to drop this store?`);
+            
+            if (confirmed) {
+                const stopToDrop = appState.stops.find(s => s.id === lowestScoringStop.id);
+                if (stopToDrop) {
+                    stopToDrop.status = 'dropped';
+                    appState.log.push({ name: stopToDrop.name, mqa: 'N/A', decision: 'Dropped' });
+                }
+            }
+            advanceToNextStore();
+        }, 500);
+    }
+    
+    function advanceToNextStore() {
+        let nextIndex = appState.currentIndex + 1;
+        while(nextIndex < appState.stops.length && appState.stops[nextIndex].status !== 'tovisit') {
+            nextIndex++;
+        }
+        appState.currentIndex = nextIndex;
+        
+        // Clear selection and recommendation for next turn
+        const selectedRadio = document.querySelector('input[name="mqa"]:checked');
+        if(selectedRadio) selectedRadio.checked = false;
+        document.getElementById('recommendation-display').innerHTML = '';
+        
+        renderAll();
+    }
+
+    function addEventListeners() {
+        document.getElementById('decision-button').addEventListener('click', () => {
+            const selectedMQA = document.querySelector('input[name="mqa"]:checked');
+            if (!selectedMQA) {
+                alert('Please select a Measured Quality Assessment (MQA).');
+                return;
+            }
+            processDecision(selectedMQA.value);
+        });
+
+        document.getElementById('bust-button').addEventListener('click', () => {
+             processDecision('Bust');
+        });
+
+        document.getElementById('export-button').addEventListener('click', () => {
+            const dataToExport = {
+                runInfo: appState.itinerary,
+                finalStopsState: appState.stops,
+                tripLog: appState.log
+            };
+            const dataStr = JSON.stringify(dataToExport, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `rust-belt-trip-${appState.itinerary.runId}-results.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+    }
+
+    init();
+});
+</script>
+
+</body>
+</html>
