@@ -1,0 +1,3480 @@
+{
+  "$schema": "../docs/trip-schema.json",
+  "criteria": {
+    "jscoreMin": "3",
+    "storeTypes": [
+      "Antique",
+      "Thrift",
+      "Surplus",
+      "Vintage",
+      "Nautical",
+      "Flea",
+      "Junk"
+    ],
+    "query": "SELECT U WHERE H > 3 AND (B='Antique' OR B='Thrift' OR B='Surplus' OR B='Vintage' OR B='Nautical' OR B='Flea' OR B='Junk')  AND (P='Cleveland' OR P='Buffalo' OR P='Cleveland-Buffalo')   ORDER BY A",
+    "storeCount": "count  : 74"
+  },
+  "config": {
+    "runId": "BU-v1",
+    "runNote": "Thursday, Cleveland to Buffalo (ALL THINGS)",
+    "mph": 35,
+    "defaultDwellMin": 30,
+    "riskThresholdMin": 0,
+    "seed": 7
+  },
+  "days": [
+    {
+      "dayId": "Thu",
+      "start": {
+        "id": "DPHCDs",
+        "name": "Drury Plaza Hotel Cleveland Downtown",
+        "lat": 41.50262133812,
+        "lon": -81.691522330395
+      },
+      "end": {
+        "id": "TMODAe",
+        "name": "The Mansion on Delaware Avenue",
+        "lat": 42.8956085,
+        "lon": -78.8780476
+      },
+      "window": {
+        "start": "09:00",
+        "end": "18:00"
+      },
+      "dayOfWeek": "Thursday"
+    }
+  ],
+  "stores": [
+    {
+      "id": "2TAC",
+      "name": "2nd Time Around Consignment",
+      "lat": 43.0047632,
+      "lon": -78.8164291,
+      "address": "123 US-20A, Leicester, NY 14481",
+      "score": 3.3,
+      "tags": [
+        "Junk"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "17:30"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "17:30"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "17:30"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "17:30"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "AAM",
+      "name": "Ashtabula Antique Mall",
+      "lat": 41.8365744842,
+      "lon": -80.853763996725,
+      "address": "4876 N Ridge Rd W, Ashtabula, OH 44004",
+      "score": 3.8,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [
+          [
+            "13:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "13:00",
+            "17:00"
+          ]
+        ],
+        "fri": [],
+        "sat": [
+          [
+            "13:00",
+            "17:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "AB",
+      "name": "AMVETS Buffalo",
+      "lat": 42.945290339859,
+      "lon": -78.878246854094,
+      "address": "1833 Elmwood Ave, Buffalo, NY 14207",
+      "score": 4.6,
+      "tags": [
+        "must-visit",
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "tue": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "wed": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "AFAC",
+      "name": "Aprils Finds Antiques & Collectibles",
+      "lat": 42.98017074184,
+      "lon": -77.959664954758,
+      "address": "7895 E Main Rd, Le Roy, NY 14482",
+      "score": 3.4,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [],
+        "thu": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "AJ",
+      "name": "Arcade Junction",
+      "lat": 42.533843395362,
+      "lon": -78.424489530318,
+      "address": "320 Main St, Arcade, NY 14009",
+      "score": 4,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "11:00",
+            "15:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "ATBR",
+      "name": "Attic To Basement Repeats",
+      "lat": 43.018744411558,
+      "lon": -78.877844705473,
+      "address": "83 Broad St, Tonawanda, NY 14150",
+      "score": 3.8,
+      "tags": [
+        "Junk"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "ATSWS",
+      "name": "AMVETS Thrift Store West Seneca",
+      "lat": 42.828791050897,
+      "lon": -78.784309435252,
+      "address": "1900 Ridge Rd, West Seneca, NY 14224",
+      "score": 4.1,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "tue": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "wed": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "AU",
+      "name": "Antiques & Uniques",
+      "lat": 41.616224227171,
+      "lon": -81.460742434228,
+      "address": "30200 Euclid Ave, Wickliffe, OH 44092",
+      "score": 4.8,
+      "tags": [
+        "must-visit",
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [],
+        "thu": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "AU2",
+      "name": "Antique Underground",
+      "lat": 43.046970087362,
+      "lon": -76.151254906512,
+      "address": "124 E Jefferson St, Syracuse, NY 13202",
+      "score": 3.3,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [],
+        "thu": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "AWFM",
+      "name": "Antique World & Flea Market",
+      "lat": 42.983831250138,
+      "lon": -78.572300161758,
+      "address": "11111 Main St, Clarence, NY 14031",
+      "score": 4.8,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "tue": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "wed": [],
+        "thu": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "9:00",
+            "16:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "BA",
+      "name": "Broadway Antiques",
+      "lat": 41.806049682886,
+      "lon": -80.947186950183,
+      "address": "71 N Broadway, Geneva, OH 44041",
+      "score": 3.8,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "BRV",
+      "name": "Backroomvintage",
+      "lat": 42.899276428136,
+      "lon": -78.872236361391,
+      "address": "497 Franklin St, Buffalo, NY 14202",
+      "score": 3.7,
+      "tags": [
+        "Vintage"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [
+          [
+            "14:00",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "14:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "14:00",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "1:30",
+            "21:00"
+          ]
+        ],
+        "sun": [
+          [
+            "1:30",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "CAOL",
+      "name": "Crossroads Antiques of Lima",
+      "lat": 42.905556490667,
+      "lon": -77.609329463229,
+      "address": "7348 E Main St, Lima, NY 14485",
+      "score": 3.6,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "CFAN",
+      "name": "Classic Finds and Nautical",
+      "lat": 41.8996814,
+      "lon": -80.7989624,
+      "address": "Bridge St, Ashtabula, OH 44004",
+      "score": 4,
+      "tags": [
+        "must-visit",
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [],
+        "thu": [],
+        "fri": [],
+        "sat": [],
+        "sun": []
+      }
+    },
+    {
+      "id": "CGAE",
+      "name": "CM Gold Antique & Estate Buyer",
+      "lat": 42.964194551949,
+      "lon": -78.736165118486,
+      "address": "5823 Main St, Williamsville, NY 14221",
+      "score": 3.6,
+      "tags": [
+        "Junk"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [],
+        "thu": [],
+        "fri": [],
+        "sat": [],
+        "sun": []
+      }
+    },
+    {
+      "id": "CMT",
+      "name": "City Mission Thrift",
+      "lat": 42.104626488681,
+      "lon": -80.121776930886,
+      "address": "2064 W 16th St, Erie, PA 16505",
+      "score": 3.9,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "COO",
+      "name": "COOCOOU",
+      "lat": 42.918225446058,
+      "lon": -78.898962410311,
+      "address": "1261 Niagara St, Buffalo, NY 14213",
+      "score": 3.7,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "9:00",
+            "17:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "sun": [
+          [
+            "9:00",
+            "16:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "CSTAT",
+      "name": "Cobb's Second Time Around Thrift Shop",
+      "lat": 42.126531887305,
+      "lon": -80.07254972828,
+      "address": "1215 Parade St, Erie, PA 16503",
+      "score": 3.8,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "CTS",
+      "name": "Conneaut Thrift Shop",
+      "lat": 41.942841691849,
+      "lon": -80.555892279975,
+      "address": "255 Main St, Conneaut, OH 44030",
+      "score": 3.7,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "15:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "EA",
+      "name": "Eastridge Antiques",
+      "lat": 43.201701331846,
+      "lon": -77.56800080297,
+      "address": "1850 East Ridge Road, Rochester, NY 14622",
+      "score": 3.5,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "FKOE",
+      "name": "Finders Keepers Of Erie",
+      "lat": 42.10288163588,
+      "lon": -80.100783236134,
+      "address": "1250 Brown Ave, Erie, PA 16502",
+      "score": 3.6,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "FKTS",
+      "name": "Finders Keepers Thrift Shop",
+      "lat": 41.65636907466,
+      "lon": -80.426292954401,
+      "address": "325 W Erie St, Linesville, PA 16424",
+      "score": 4,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "tue": [],
+        "wed": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "9:00",
+            "18:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "FLTT",
+      "name": "Finger Lakes Treasure Trove",
+      "lat": 42.88440492148,
+      "lon": -77.279098944448,
+      "address": "222 S Main St, Canandaigua, NY 14424",
+      "score": 3.2,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "15:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "FNJ",
+      "name": "Funk N Junk",
+      "lat": 42.000356470277,
+      "lon": -80.317733995196,
+      "address": "65 Main St W, Girard, PA 16417",
+      "score": 3.8,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "FSW",
+      "name": "Fat Sally's Warehouse",
+      "lat": 41.893855805386,
+      "lon": -80.804068111485,
+      "address": "1569 Laird Dr, Ashtabula, OH 44004",
+      "score": 4.1,
+      "tags": [
+        "must-visit",
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "16:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "FTVA",
+      "name": "Funky Town Vintage Antiques",
+      "lat": 42.949839355568,
+      "lon": -78.738507789895,
+      "address": "1165 Wehrle Dr, Buffalo, NY 14221",
+      "score": 3.8,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [],
+        "thu": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "GJE",
+      "name": "Grandma Jaree's Emporium",
+      "lat": 42.932716334904,
+      "lon": -76.572979661258,
+      "address": "25 McMaster St, Auburn, NY 13021",
+      "score": 4.9,
+      "tags": [
+        "must-visit",
+        "Junk"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "wed": [],
+        "thu": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "GSDC",
+      "name": "Goodwill Store & Donation Center",
+      "lat": 43.005748379981,
+      "lon": -78.206304514171,
+      "address": "4152 W Main Street Rd, Batavia, NY 14020",
+      "score": 3.9,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "GSTS",
+      "name": "Green Scene Thrift Store",
+      "lat": 42.106368486532,
+      "lon": -80.033370746773,
+      "address": "1301 E Grandview Blvd, Erie, PA 16504",
+      "score": 3.8,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "wed": [],
+        "thu": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "fri": [],
+        "sat": [
+          [
+            "9:00",
+            "15:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "HA",
+      "name": "Hello Again",
+      "lat": 42.965197759976,
+      "lon": -78.672004211382,
+      "address": "8619 Main St, Williamsville, NY 14221",
+      "score": 3.1,
+      "tags": [
+        "Junk"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "15:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "HFHR",
+      "name": "Habitat For Humanity Restore",
+      "lat": 42.883930530766,
+      "lon": -77.245744405984,
+      "address": "3040 Co Rd 10, Canandaigua, NY 14424",
+      "score": 3.5,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "HFHRN",
+      "name": "Habitat for Humanity ReStore North",
+      "lat": 42.9820050567,
+      "lon": -78.822964007753,
+      "address": "1030 Niagara Fls Blvd, Tonawanda Town, NY 14150",
+      "score": 3.5,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "HFHRS",
+      "name": "Habitat for Humanity ReStore - South",
+      "lat": 42.852866447608,
+      "lon": -78.826179878173,
+      "address": "1675 South Park Ave, Buffalo, NY 14220",
+      "score": 3.5,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "HTSHFB",
+      "name": "Hearts Thrift Store - Hearts for the Homeless Thrift Store (Buffalo)",
+      "lat": 42.952777142833,
+      "lon": -78.905501188492,
+      "address": "890 Tonawanda St, Buffalo, NY 14207",
+      "score": 4.3,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "HTSHFT",
+      "name": "Hearts Thrift Store - Hearts for the Homeless Thrift Store (Tonawanda)",
+      "lat": 42.980811214442,
+      "lon": -78.850974884193,
+      "address": "2217 Sheridan Dr, Buffalo, NY 14223",
+      "score": 4,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "9:00",
+            "20:00"
+          ]
+        ],
+        "tue": [
+          [
+            "9:00",
+            "20:00"
+          ]
+        ],
+        "wed": [
+          [
+            "9:00",
+            "20:00"
+          ]
+        ],
+        "thu": [
+          [
+            "9:00",
+            "20:00"
+          ]
+        ],
+        "fri": [
+          [
+            "9:00",
+            "20:00"
+          ]
+        ],
+        "sat": [
+          [
+            "9:00",
+            "20:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "IAM",
+      "name": "Interstate Antique Mall",
+      "lat": 42.191680758531,
+      "lon": -79.837438007144,
+      "address": "5446 PA-89, North East, PA 16428",
+      "score": 3.8,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:30",
+            "16:00"
+          ]
+        ],
+        "tue": [],
+        "wed": [
+          [
+            "10:30",
+            "16:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:30",
+            "16:00"
+          ]
+        ],
+        "fri": [
+          [
+            "12:00",
+            "16:00"
+          ]
+        ],
+        "sat": [
+          [
+            "12:00",
+            "16:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "16:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "JADA",
+      "name": "Junk and Disorderly Arts & Antiques",
+      "lat": 42.534003281563,
+      "lon": -78.423723023849,
+      "address": "265 Main St, Arcade, NY 14009",
+      "score": 3.8,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "JPAAC",
+      "name": "Julies Place Antiques and Collectibles",
+      "lat": 42.106555847625,
+      "lon": -76.021092356937,
+      "address": "3300 E Main St, Endwell, NY 13760",
+      "score": 4,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "9:00",
+            "14:00"
+          ]
+        ],
+        "wed": [
+          [
+            "9:00",
+            "14:00"
+          ]
+        ],
+        "thu": [
+          [
+            "9:00",
+            "14:00"
+          ]
+        ],
+        "fri": [
+          [
+            "9:00",
+            "14:00"
+          ]
+        ],
+        "sat": [
+          [
+            "9:00",
+            "14:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "LH",
+      "name": "Liberty Hollow",
+      "lat": 43.218154657783,
+      "lon": -77.788267833492,
+      "address": "4975 W Ridge Rd, Spencerport, NY 14559",
+      "score": 3.6,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "MB",
+      "name": "Miscellaneous Barn",
+      "lat": 41.744325555112,
+      "lon": -81.227431295843,
+      "address": "190 Mantle Rd, Painesville, OH 44077",
+      "score": 3.9,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [
+          [
+            "11:00",
+            "17:30"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "17:30"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "17:30"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "17:30"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "MTS",
+      "name": "Mel & Tee's Secondhand & Estate Sales",
+      "lat": 42.082588445399,
+      "lon": -80.089215148754,
+      "address": "4915 Hillsdale Ave, Erie, PA 16509",
+      "score": 3.8,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "OA",
+      "name": "Oregon Antiques",
+      "lat": 42.101021981577,
+      "lon": -80.163581969552,
+      "address": "3436 W Lake Rd, Erie, PA 16505",
+      "score": 3.5,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "11:00",
+            "16:30"
+          ]
+        ],
+        "tue": [
+          [
+            "11:00",
+            "16:30"
+          ]
+        ],
+        "wed": [
+          [
+            "11:00",
+            "16:30"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "16:30"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "16:30"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "16:30"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "16:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "OHVC",
+      "name": "October House Vintage & Consignment",
+      "lat": 42.947658817111,
+      "lon": -78.857757729167,
+      "address": "1361 Hertel Ave, Buffalo, NY 14216",
+      "score": 3.6,
+      "tags": [
+        "Vintage"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:30",
+            "16:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "OOAU",
+      "name": "Old, Odd, and Unique",
+      "lat": 42.105110810207,
+      "lon": -75.922147000806,
+      "address": "93, 91 Clinton St, Binghamton, NY 13905",
+      "score": 4,
+      "tags": [
+        "Junk"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [],
+        "thu": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "PG",
+      "name": "Paradise Galleria",
+      "lat": 41.480752749907,
+      "lon": -81.712500222034,
+      "address": "3910 Lorain Ave, Cleveland, OH 44113",
+      "score": 4.1,
+      "tags": [
+        "must-visit",
+        "Vintage"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "12:00",
+            "19:00"
+          ]
+        ],
+        "sat": [
+          [
+            "12:00",
+            "19:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "PLAM",
+      "name": "Penny Lane Antique Mall",
+      "lat": 42.9329197,
+      "lon": -77.1831197,
+      "address": "319 Waterloo Geneva Rd, Geneva, NY 14456",
+      "score": 3.5,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "16:30"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "PLTS",
+      "name": "Pot Luck Thrift Shop",
+      "lat": 43.0676612,
+      "lon": -76.9711279,
+      "address": "7843 Oxbow Rd, Canastota, NY 13032",
+      "score": 3.3,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "RCTS",
+      "name": "Rainbow Connection Thrift Store",
+      "lat": 42.129238096652,
+      "lon": -80.042458531383,
+      "address": "1516 Buffalo Rd, Erie, PA 16510",
+      "score": 3.4,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "11:00",
+            "15:00"
+          ]
+        ],
+        "tue": [
+          [
+            "11:00",
+            "15:00"
+          ]
+        ],
+        "wed": [
+          [
+            "11:00",
+            "15:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "15:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "15:00"
+          ]
+        ],
+        "sat": [],
+        "sun": []
+      }
+    },
+    {
+      "id": "RRAC",
+      "name": "Rcs & Randys Antiques Co-Op",
+      "lat": 42.489967125549,
+      "lon": -79.323415719901,
+      "address": "212 Lake Shore Dr E, Dunkirk, NY 14048",
+      "score": 4,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "RT",
+      "name": "Ron's Treasures",
+      "lat": 42.348123754568,
+      "lon": -79.310381497269,
+      "address": "88 N Main St, Cassadaga, NY 14718",
+      "score": 3.5,
+      "tags": [
+        "Junk"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [],
+        "thu": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "15:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "SA",
+      "name": "Sloan's Antiques",
+      "lat": 42.885118349062,
+      "lon": -78.844716871256,
+      "address": "730 William St, Buffalo, NY 14206",
+      "score": 3.8,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "11:30",
+            "14:30"
+          ]
+        ],
+        "wed": [
+          [
+            "11:30",
+            "14:30"
+          ]
+        ],
+        "thu": [
+          [
+            "11:30",
+            "14:30"
+          ]
+        ],
+        "fri": [
+          [
+            "11:30",
+            "14:30"
+          ]
+        ],
+        "sat": [
+          [
+            "11:30",
+            "14:30"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "SAT",
+      "name": "South Avenue Treasures",
+      "lat": 43.117965785783,
+      "lon": -77.616711385111,
+      "address": "1992 South Ave, Rochester, NY 14620",
+      "score": 3.5,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [],
+        "thu": [],
+        "fri": [],
+        "sat": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "SAVERSB",
+      "name": "Savers",
+      "lat": 42.7853963,
+      "lon": -78.8107985,
+      "address": "3701 McKinley Pkwy, Buffalo, NY 14219",
+      "score": 4.8,
+      "tags": [
+        "must-visit",
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "SAVERSR",
+      "name": "Savers",
+      "lat": 43.208852107704,
+      "lon": -77.460114345954,
+      "address": "980 Ridge Rd, Webster, NY 14580",
+      "score": 5,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "SAVERST",
+      "name": "Savers",
+      "lat": 42.981112399689,
+      "lon": -78.825751077632,
+      "address": "2309 Eggert Rd, Tonawanda Town, NY 14150",
+      "score": 5,
+      "tags": [
+        "must-visit",
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "SBTL",
+      "name": "Shops By The Lake",
+      "lat": 41.748994881171,
+      "lon": -81.208780911127,
+      "address": "1871 N Ridge Rd, Painesville, OH 44077",
+      "score": 4,
+      "tags": [
+        "must-visit",
+        "Vintage"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [],
+        "thu": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "SCBAC",
+      "name": "Shawnee Country Barns Antique Co-Op",
+      "lat": 43.107830711829,
+      "lon": -78.836945196505,
+      "address": "6608 Shawnee Rd, North Tonawanda, NY 14120",
+      "score": 3.4,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "wed": [],
+        "thu": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "SDDS",
+      "name": "St.Vincent DePaul Discount Store",
+      "lat": 42.908920948415,
+      "lon": -78.866826557767,
+      "address": "1298 Main St, Buffalo, NY 14209",
+      "score": 3.4,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "15:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "15:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "15:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "15:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "15:00"
+          ]
+        ],
+        "sat": [],
+        "sun": []
+      }
+    },
+    {
+      "id": "SHTTA",
+      "name": "Solomon's Hidden Treasures Thrift, Antiques & Outlet",
+      "lat": 42.491847780846,
+      "lon": -78.693071558398,
+      "address": "14218 US-219 GPS, 14218 S Cascade Dr, Springville, NY 14141",
+      "score": 3.3,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "SL",
+      "name": "Sweet Lorain",
+      "lat": 41.473321308529,
+      "lon": -81.733915357678,
+      "address": "7105 Lorain Ave, Cleveland, OH 44102",
+      "score": 4.9,
+      "tags": [
+        "must-visit",
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ],
+        "tue": [],
+        "wed": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "SLADD",
+      "name": "Southtowns LADD Thrift Shop",
+      "lat": 42.851200585555,
+      "lon": -78.804782571052,
+      "address": "2280 Seneca St, Buffalo, NY 14210",
+      "score": 3.4,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "15:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "15:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "15:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "15:00"
+          ]
+        ],
+        "fri": [],
+        "sat": [
+          [
+            "10:00",
+            "15:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "STA",
+      "name": "Second Thyme Around",
+      "lat": 41.373804872716,
+      "lon": -81.902811342611,
+      "address": "8153 Orchard St, Olmsted Falls, OH 44138",
+      "score": 3.4,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sun": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "STR",
+      "name": "Save The Rags",
+      "lat": 42.918829775054,
+      "lon": -78.876939221264,
+      "address": "795 Elmwood Ave, Buffalo, NY 14222",
+      "score": 3.9,
+      "tags": [
+        "Vintage"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [
+          [
+            "12:00",
+            "19:00"
+          ]
+        ],
+        "thu": [
+          [
+            "12:00",
+            "19:00"
+          ]
+        ],
+        "fri": [
+          [
+            "12:00",
+            "19:00"
+          ]
+        ],
+        "sat": [
+          [
+            "12:00",
+            "19:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "19:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "TCS",
+      "name": "The Curiosity Shoppe",
+      "lat": 41.879531637759,
+      "lon": -80.752066796881,
+      "address": "3315 N Ridge Rd E, Ashtabula, OH 44004",
+      "score": 3.9,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "TFJM",
+      "name": "The Funky Junk Market",
+      "lat": 42.104509789229,
+      "lon": -76.26296452614,
+      "address": "62 North Ave Suite 1B, Owego, NY 13827",
+      "score": 3.3,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "15:00"
+          ]
+        ],
+        "tue": [],
+        "wed": [],
+        "thu": [],
+        "fri": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "16:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "TGD",
+      "name": "The Green Door",
+      "lat": 41.7802603,
+      "lon": -81.0024707,
+      "address": "OH-84, Geneva, OH 44041",
+      "score": 3.9,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "TJD",
+      "name": "The Junkyard's Daughter",
+      "lat": 42.001068882011,
+      "lon": -76.540534717701,
+      "address": "325 Broad St, Waverly, NY 14892",
+      "score": 3.7,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "TRVM",
+      "name": "The Refindary Vintage Market",
+      "lat": 41.737520062976,
+      "lon": -80.769540344631,
+      "address": "39 S Chestnut St, Jefferson, OH 44047",
+      "score": 3.6,
+      "tags": [
+        "Vintage"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "15:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "15:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "TSYRS",
+      "name": "The Salvage Yard Resale Shoppe",
+      "lat": 41.43740166658,
+      "lon": -81.874219768284,
+      "address": "22935 Lorain Rd, Fairview Park, OH 44126",
+      "score": 3.6,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "TTAT",
+      "name": "Treva's Trinkets and Treasures",
+      "lat": 42.211117333873,
+      "lon": -79.837341450818,
+      "address": "77 S Pearl St, North East, PA 16428",
+      "score": 4,
+      "dayId": "NODAY",
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "UVM",
+      "name": "Upstate Vintage Market",
+      "lat": 43.229661140342,
+      "lon": -77.911465144516,
+      "address": "8100 W Ridge Rd, Brockport, NY 14420",
+      "score": 3.4,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "VWT-Lakewood",
+      "name": "Value World Thrift",
+      "lat": 41.483958040635,
+      "lon": -81.771809570569,
+      "address": "11900 Detroit Ave, Lakewood, OH 44107",
+      "score": 4.5,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "VWT-Olmstead",
+      "name": "Value World Thrift",
+      "lat": 41.42552860898,
+      "lon": -81.897199579145,
+      "address": "24869 Lorain Rd, North Olmsted, OH 44070",
+      "score": 4.5,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "WSAM",
+      "name": "Whistle Stop Antique Mall",
+      "lat": 41.9213584506,
+      "lon": -79.640673952454,
+      "address": "50 N Center St, Corry, PA 16407",
+      "score": 4,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "11:00",
+            "16:00"
+          ]
+        ]
+      }
+    }
+  ]
+}

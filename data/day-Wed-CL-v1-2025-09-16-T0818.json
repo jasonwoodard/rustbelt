@@ -1,0 +1,1165 @@
+{
+  "$schema": "../docs/trip-schema.json",
+  "criteria": {
+    "jscoreMin": "3",
+    "storeTypes": [
+      "Antique",
+      "Thrift",
+      "Surplus",
+      "Vintage",
+      "Nautical",
+      "Flea",
+      "Junk"
+    ],
+    "query": "SELECT U WHERE H > 3 AND (B='Antique' OR B='Thrift' OR B='Surplus' OR B='Vintage' OR B='Nautical' OR B='Flea' OR B='Junk')  AND (P='Detroit-Toledo' OR P='Toledo-Cleveland' OR P='Cleveland' OR P='Toledo')   ORDER BY A",
+    "storeCount": "count  : 24"
+  },
+  "config": {
+    "runId": "CL-v1",
+    "runNote": "Wednesday, Detroit to Cleveland",
+    "mph": 35,
+    "defaultDwellMin": 30,
+    "riskThresholdMin": 0,
+    "seed": 7
+  },
+  "days": [
+    {
+      "dayId": "Wed",
+      "start": {
+        "id": "HCGs1",
+        "name": "Hollywood Casino Greektown",
+        "lat": 42.336873,
+        "lon": -83.0418499
+      },
+      "end": {
+        "id": "DPHCDe",
+        "name": "Drury Plaza Hotel Cleveland Downtown",
+        "lat": 41.50262133812,
+        "lon": -81.691522330395
+      },
+      "window": {
+        "start": "09:00",
+        "end": "18:00"
+      },
+      "dayOfWeek": "Wednesday"
+    }
+  ],
+  "stores": [
+    {
+      "id": "AIC",
+      "name": "Antiques In Clyde",
+      "lat": 41.305325806012,
+      "lon": -82.974998847854,
+      "address": "109 W Buckeye St, Clyde, OH 43410",
+      "score": 3.6,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "10:00",
+            "15:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "15:00"
+          ]
+        ],
+        "thu": [
+          [
+            "13:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "13:00",
+            "17:00"
+          ]
+        ],
+        "sat": [],
+        "sun": []
+      }
+    },
+    {
+      "id": "AU",
+      "name": "Antiques & Uniques",
+      "lat": 41.616224227171,
+      "lon": -81.460742434228,
+      "address": "30200 Euclid Ave, Wickliffe, OH 44092",
+      "score": 4.8,
+      "tags": [
+        "must-visit",
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [],
+        "thu": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "AVM",
+      "name": "Armory vintage Market",
+      "lat": 41.343487452168,
+      "lon": -83.09905933427,
+      "address": "1005 E State St, Fremont, OH 43420",
+      "score": 4.1,
+      "tags": [
+        "must-visit",
+        "Vintage"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "16:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "BSS",
+      "name": "Big Ship Salvage",
+      "lat": 41.327814088911,
+      "lon": -82.620663899344,
+      "address": "11001 US Hwy 250 N unit d-1, Milan, OH 44846",
+      "score": 5,
+      "tags": [
+        "must-visit",
+        "Nautical"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "8:00",
+            "16:00"
+          ]
+        ],
+        "tue": [
+          [
+            "8:00",
+            "16:00"
+          ]
+        ],
+        "wed": [
+          [
+            "8:00",
+            "16:00"
+          ]
+        ],
+        "thu": [
+          [
+            "8:00",
+            "16:00"
+          ]
+        ],
+        "fri": [
+          [
+            "8:00",
+            "16:00"
+          ]
+        ],
+        "sat": [],
+        "sun": []
+      }
+    },
+    {
+      "id": "CWUTS",
+      "name": "Church Women United Thrift Shop",
+      "lat": 41.635441761032,
+      "lon": -83.761580791087,
+      "address": "631 S Crissey Rd, Holland, OH 43528",
+      "score": 3.3,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "12:00",
+            "18:30"
+          ]
+        ],
+        "wed": [
+          [
+            "9:30",
+            "16:30"
+          ]
+        ],
+        "thu": [
+          [
+            "9:30",
+            "16:30"
+          ]
+        ],
+        "fri": [
+          [
+            "9:30",
+            "16:30"
+          ]
+        ],
+        "sat": [
+          [
+            "9:30",
+            "15:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "GCHFH",
+      "name": "Greater Cleveland Habitat for Humanity - Amherst ReStore",
+      "lat": 41.395525506208,
+      "lon": -82.209643093814,
+      "address": "300 Rice Industrial Pkwy, Amherst, OH 44001",
+      "score": 3.5,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "HOD",
+      "name": "House of Dow",
+      "lat": 41.657294398356,
+      "lon": -83.543708655603,
+      "address": "1501 Adams St, Toledo, OH 43604",
+      "score": 3.9,
+      "tags": [
+        "Vintage"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "12:00",
+            "19:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "19:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "19:00"
+          ]
+        ],
+        "sun": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "MAM",
+      "name": "Maumee Antique Mall",
+      "lat": 41.590842984434,
+      "lon": -83.664615541868,
+      "address": "1552 S Reynolds Rd, Maumee, OH 43537",
+      "score": 3.8,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "sun": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "MSA",
+      "name": "Main Street Antiques",
+      "lat": 41.282454290143,
+      "lon": -82.217600403511,
+      "address": "335 S Main St, Oberlin, OH 44074",
+      "score": 3.8,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "MTA",
+      "name": "M & T Antiques",
+      "lat": 41.347672411392,
+      "lon": -83.114672111185,
+      "address": "427 W State St, Fremont, OH 43420",
+      "score": 3.9,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [],
+        "thu": [],
+        "fri": [],
+        "sat": [],
+        "sun": []
+      }
+    },
+    {
+      "id": "NLRS",
+      "name": "Nine LIves Resale Shop",
+      "lat": 41.594192689079,
+      "lon": -83.644269327428,
+      "address": "4317 Heatherdowns Blvd, Toledo, OH 43614",
+      "score": 3.7,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "NTYC",
+      "name": "New-To-You Consignments",
+      "lat": 41.360050512706,
+      "lon": -83.144098174735,
+      "address": "2306 W State St, Fremont, OH 43420",
+      "score": 3.7,
+      "tags": [
+        "Junk"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "wed": [],
+        "thu": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "fri": [],
+        "sat": [
+          [
+            "10:00",
+            "15:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "NTYRS",
+      "name": "New To You Resale Shop",
+      "lat": 41.367846176278,
+      "lon": -82.112124710051,
+      "address": "625 Broad St, Elyria, OH 44035",
+      "score": 3.9,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "PAPE",
+      "name": "Past and present emporium",
+      "lat": 41.348653880344,
+      "lon": -83.116979645576,
+      "address": "611 W State St, Fremont, OH 43420",
+      "score": 3.9,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "14:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "PG",
+      "name": "Paradise Galleria",
+      "lat": 41.480752749907,
+      "lon": -81.712500222034,
+      "address": "3910 Lorain Ave, Cleveland, OH 44113",
+      "score": 4.1,
+      "tags": [
+        "must-visit",
+        "Vintage"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "12:00",
+            "19:00"
+          ]
+        ],
+        "sat": [
+          [
+            "12:00",
+            "19:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "SL",
+      "name": "Sweet Lorain",
+      "lat": 41.473321308529,
+      "lon": -81.733915357678,
+      "address": "7105 Lorain Ave, Cleveland, OH 44102",
+      "score": 4.9,
+      "tags": [
+        "must-visit",
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ],
+        "tue": [],
+        "wed": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "STA",
+      "name": "Second Thyme Around",
+      "lat": 41.373804872716,
+      "lon": -81.902811342611,
+      "address": "8153 Orchard St, Olmsted Falls, OH 44138",
+      "score": 3.4,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sun": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "TCKA",
+      "name": "The Copper Kettle Antiques",
+      "lat": 41.611610835276,
+      "lon": -83.625851872076,
+      "address": "1544 S Byrne Rd, Toledo, OH 43614",
+      "score": 4.6,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "TES",
+      "name": "The Encore Shop",
+      "lat": 41.43689118972,
+      "lon": -82.669224966107,
+      "address": "2215 Cleveland Rd W, Sandusky, OH 44870",
+      "score": 3.5,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "14:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "TSYRS",
+      "name": "The Salvage Yard Resale Shoppe",
+      "lat": 41.43740166658,
+      "lon": -81.874219768284,
+      "address": "22935 Lorain Rd, Fairview Park, OH 44126",
+      "score": 3.6,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "TVAT",
+      "name": "The Vault Antiques & Treasures",
+      "lat": 41.692281669916,
+      "lon": -83.582227128609,
+      "address": "1583 W Sylvania Ave, Toledo, OH 43612",
+      "score": 4.3,
+      "tags": [
+        "must-visit",
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "V",
+      "name": "Vintillage",
+      "lat": 41.386969488836,
+      "lon": -83.650559979749,
+      "address": "1019 N Main St, Bowling Green, OH 43402",
+      "score": 4.1,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "VWT-Lakewood",
+      "name": "Value World Thrift",
+      "lat": 41.483958040635,
+      "lon": -81.771809570569,
+      "address": "11900 Detroit Ave, Lakewood, OH 44107",
+      "score": 4.5,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "VWT-Olmstead",
+      "name": "Value World Thrift",
+      "lat": 41.42552860898,
+      "lon": -81.897199579145,
+      "address": "24869 Lorain Rd, North Olmsted, OH 44070",
+      "score": 4.5,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ]
+      }
+    }
+  ]
+}
