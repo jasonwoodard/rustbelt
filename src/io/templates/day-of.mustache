@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rust Belt Bandit Planner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: #f5f5f4;
+      }
+      .status-tovisit {
+        background-color: white;
+      }
+      .status-visited {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+      .status-dropped {
+        background-color: #fee2e2;
+        color: #991b1b;
+        text-decoration: line-through;
+      }
+      .recommendation-stay {
+        color: #0f766e;
+      }
+      .recommendation-leave {
+        color: #be123c;
+      }
+    </style>
+  </head>
+  <body class="text-stone-800" {{#activeDayId}}data-active-day-id="{{activeDayId}}"{{/activeDayId}}>
+    <script id="itinerary-data" type="application/json">{{{itineraryJson}}}</script>
+    <div class="container mx-auto p-4 md:p-6 lg:p-8">
+      <header class="mb-6">
+        <h1 class="text-3xl font-bold text-stone-900">Rust Belt Bandit Planner</h1>
+        <div id="run-info" class="text-stone-600 mt-1 text-sm space-x-0">
+          {{#runId}}
+          <span class="font-semibold">Run ID:</span>
+          <span class="ml-1">{{runId}}</span>
+          {{/runId}}
+          {{#runNote}}
+          <span class="{{#runId}}ml-2{{/runId}}{{^runId}}block mt-1{{/runId}} text-stone-500">{{runNote}}</span>
+          {{/runNote}}
+        </div>
+        <p class="text-xs text-stone-500 mt-1">Generated {{runTimestamp}}</p>
+        {{#activeDayId}}
+        <p id="active-day-label" class="text-sm text-stone-600 mt-2">Day {{activeDayId}}</p>
+        {{/activeDayId}}
+        {{#hasMultipleDays}}
+        <div class="mt-2 flex flex-wrap gap-2 text-xs text-stone-500" aria-label="Available days">
+          {{#days}}
+          <span class="px-2 py-1 rounded-full bg-stone-200 text-stone-700" data-day-id="{{dayId}}">{{dayId}}</span>
+          {{/days}}
+        </div>
+        {{/hasMultipleDays}}
+      </header>
+      <main class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <section class="lg:col-span-1 bg-white p-4 rounded-lg shadow-sm">
+          <h2 class="text-xl font-semibold mb-3">Itinerary</h2>
+          <div id="itinerary-list" class="space-y-2">
+            {{#activeDay}}
+            {{#storeStops}}
+            <div
+              class="p-3 rounded-md shadow-sm status-tovisit"
+              data-stop-id="{{id}}"
+              data-stop-type="{{type}}"
+            >
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="font-semibold">{{name}}</p>
+                  <p class="text-xs text-stone-500">{{arrive}} – {{depart}}</p>
+                </div>
+                {{#score}}
+                <div class="text-right">
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">{{score}}</p>
+                </div>
+                {{/score}}
+              </div>
+            </div>
+            {{/storeStops}}
+            {{^storeStops}}
+            <p class="text-sm text-stone-500">No stores scheduled for this day.</p>
+            {{/storeStops}}
+            {{/activeDay}}
+            {{^activeDay}}
+            <p class="text-sm text-stone-500">No itinerary data available.</p>
+            {{/activeDay}}
+          </div>
+          <noscript>
+            <div class="mt-4 space-y-3 text-sm text-stone-600">
+              {{#days}}
+              <div>
+                <p class="font-semibold">Day {{dayId}}</p>
+                <ul class="list-disc list-inside text-xs text-stone-500">
+                  {{#stops}}
+                  <li>{{arrive}} – {{depart}} · {{name}} ({{type}})</li>
+                  {{/stops}}
+                </ul>
+              </div>
+              {{/days}}
+            </div>
+          </noscript>
+        </section>
+        <section class="lg:col-span-1 flex flex-col gap-6">
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <h2 class="text-xl font-semibold mb-1">Current Stop</h2>
+            <p id="current-store-name" class="text-2xl font-bold text-teal-700">Loading...</p>
+            <div id="store-timeline" class="mt-4">
+              <h3 class="text-sm font-medium text-stone-600 mb-2">Visit Timeline</h3>
+              <div class="flex items-center justify-between text-xs text-center">
+                <div class="flex-1">
+                  <p id="timeline-arrive-time" class="font-semibold">--:--</p>
+                  <p class="text-stone-500">Arrive</p>
+                </div>
+                <div class="flex-1 border-t-2 border-dashed border-stone-300 mx-2"></div>
+                <div class="flex-1">
+                  <p id="timeline-mqa-time" class="font-semibold">--:--</p>
+                  <p class="text-stone-500">MQA Check-in</p>
+                </div>
+                <div class="flex-1 border-t-2 border-dashed border-stone-300 mx-2"></div>
+                <div class="flex-1">
+                  <p class="font-semibold">Now</p>
+                  <p class="text-stone-500">Decision</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-sm flex-grow">
+            <h2 class="text-xl font-semibold mb-3">Measured Quality Assessment (MQA)</h2>
+            <div id="mqa-form" class="space-y-3">
+              <p class="text-sm text-stone-600">
+                After 30 minutes, assess the store's quality:
+              </p>
+              <div id="mqa-select" class="grid grid-cols-2 gap-3"></div>
+              <div class="flex gap-3 pt-3">
+                <button
+                  id="decision-button"
+                  class="w-full bg-teal-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-teal-700 transition-colors"
+                >
+                  Process MQA
+                </button>
+                <button
+                  id="bust-button"
+                  class="w-1/2 bg-rose-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-rose-700 transition-colors"
+                >
+                  Bust!
+                </button>
+              </div>
+            </div>
+            <div id="recommendation-display" class="mt-4 text-center"></div>
+          </div>
+        </section>
+        <section class="lg:col-span-1 flex flex-col gap-6">
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <h2 class="text-xl font-semibold mb-3">Dashboard</h2>
+            <div class="grid grid-cols-2 gap-4 text-center">
+              <div class="bg-stone-50 p-3 rounded-md">
+                <p class="text-2xl font-bold" id="dashboard-total-stores">0</p>
+                <p class="text-sm text-stone-600">Total Stores</p>
+              </div>
+              <div class="bg-stone-50 p-3 rounded-md">
+                <p class="text-2xl font-bold" id="dashboard-stores-visited">0</p>
+                <p class="text-sm text-stone-600">Stores Visited</p>
+              </div>
+              <div class="bg-stone-50 p-3 rounded-md">
+                <p class="text-2xl font-bold" id="dashboard-avg-jscore">0.0</p>
+                <p class="text-sm text-stone-600">Avg. J-Score</p>
+              </div>
+              <div class="bg-teal-50 p-3 rounded-md">
+                <p class="text-2xl font-bold text-teal-800" id="dashboard-expected-quality">0.0</p>
+                <p class="text-sm text-teal-700">Remaining Posterior μ</p>
+              </div>
+              <div class="bg-teal-50 p-3 rounded-md">
+                <p class="text-2xl font-bold text-teal-800" id="dashboard-pool-uncertainty">±0.0</p>
+                <p class="text-sm text-teal-700">Remaining Uncertainty σ</p>
+              </div>
+              <div class="bg-blue-50 p-3 rounded-md">
+                <p class="text-2xl font-bold text-blue-800" id="dashboard-current-mean">0.0</p>
+                <p class="text-sm text-blue-700">Current Posterior μ</p>
+              </div>
+              <div class="bg-blue-50 p-3 rounded-md">
+                <p class="text-2xl font-bold text-blue-800" id="dashboard-current-uncertainty">±0.0</p>
+                <p class="text-sm text-blue-700">Current Uncertainty σ</p>
+              </div>
+              <div class="bg-emerald-50 p-3 rounded-md col-span-2">
+                <p class="text-2xl font-bold text-emerald-800" id="dashboard-current-thompson">0.0</p>
+                <p class="text-sm text-emerald-700">Current Thompson Draw</p>
+              </div>
+              <div class="bg-teal-100 p-3 rounded-md col-span-2">
+                <p class="text-2xl font-bold text-teal-900" id="dashboard-pool-thompson">0.0</p>
+                <p class="text-sm text-teal-900">Remaining Thompson Draw</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-sm flex-grow">
+            <h2 class="text-xl font-semibold mb-3">Trip Log</h2>
+            <div id="trip-log" class="text-sm space-y-2 overflow-y-auto h-48">
+              <p class="text-stone-500">Your decisions will appear here.</p>
+            </div>
+          </div>
+          <div class="bg-white p-4 rounded-lg shadow-sm">
+            <button
+              id="export-button"
+              class="w-full bg-stone-700 text-white font-bold py-2 px-4 rounded-lg hover:bg-stone-800 transition-colors"
+            >
+              Export Trip Data
+            </button>
+          </div>
+        </section>
+      </main>
+    </div>
+    {{> dayOfScript}}
+  </body>
+</html>

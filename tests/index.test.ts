@@ -92,7 +92,7 @@ describe('CLI', () => {
     expect(String(log.mock.calls[0][0])).toContain('binding=');
     expect(String(log.mock.calls[0][0])).toContain('violations=');
     expect(String(log.mock.calls[1][0])).toContain('Excluded:');
-    expect(String(log.mock.calls[2][0])).toContain('<html>');
+    expect(String(log.mock.calls[2][0])).toContain('<html');
     expect(() => JSON.parse(log.mock.calls[3][0])).not.toThrow();
     log.mockRestore();
   });
