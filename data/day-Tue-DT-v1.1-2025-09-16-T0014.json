@@ -1,0 +1,1801 @@
+{
+  "$schema": "../docs/trip-schema.json",
+  "criteria": {
+    "jscoreMin": "3",
+    "storeTypes": [
+      "Antique",
+      "Thrift",
+      "Surplus",
+      "Vintage",
+      "Nautical",
+      "Flea",
+      "Junk"
+    ],
+    "excludeStoreIds": [
+      "TS",
+      "RAGS",
+      "TSAFS",
+      "AATS",
+      "SCR",
+      "VWT9",
+      "TSAFSCT",
+      "TBIN",
+      "TPCAA",
+      "VWT-Westland"
+    ],
+    "query": "SELECT U WHERE H > 3 AND (B='Antique' OR B='Thrift' OR B='Surplus' OR B='Vintage' OR B='Nautical' OR B='Flea' OR B='Junk')  AND A <> 'TS' AND A <> 'RAGS' AND A <> 'TSAFS' AND A <> 'AATS' AND A <> 'SCR' AND A <> 'VWT9' AND A <> 'TSAFSCT' AND A <> 'TBIN' AND A <> 'TPCAA' AND A <> 'VWT-Westland\r' AND (P='Detroit')   ORDER BY A",
+    "storeCount": "count  : 36"
+  },
+  "config": {
+    "runId": "DT-v1.1",
+    "runNote": "Tuesday, Detroit Core",
+    "mph": 35,
+    "defaultDwellMin": 30,
+    "riskThresholdMin": 0,
+    "seed": 7
+  },
+  "days": [
+    {
+      "dayId": "Tue",
+      "start": {
+        "id": "HCGs1",
+        "name": "Hollywood Casino Greektown",
+        "lat": 42.336873,
+        "lon": -83.0418499
+      },
+      "end": {
+        "id": "HCGe1",
+        "name": "Hollywood Casino Greektown",
+        "lat": 42.336873,
+        "lon": -83.0418499
+      },
+      "window": {
+        "start": "09:00",
+        "end": "18:00"
+      },
+      "dayOfWeek": "Tuesday",
+      "locks": [
+        {"storeId": "RWBT", "position": "firstAfterStart"}
+      ]
+    }
+  ],
+  "stores": [
+    {
+      "id": "CAE",
+      "name": "Clawson Antiques Etc",
+      "lat": 42.532522979036,
+      "lon": -83.146231042434,
+      "address": "118 S Main St, Clawson, MI 48017",
+      "score": 3.4,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [
+          [
+            "12:00",
+            "16:00"
+          ]
+        ],
+        "thu": [
+          [
+            "12:00",
+            "16:00"
+          ]
+        ],
+        "fri": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "16:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "16:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "CATTF",
+      "name": "Charlie and the Treasure Factory",
+      "lat": 42.595223300845,
+      "lon": -82.971890430696,
+      "address": "40716 Hayes Rd, Clinton Township, MI 48038",
+      "score": 3.2,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [],
+        "thu": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "sun": [
+          [
+            "11:00",
+            "15:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "CR",
+      "name": "Council Resale",
+      "lat": 42.502987878223,
+      "lon": -83.191678632857,
+      "address": "3297 12 Mile Rd, Berkley, MI 48072",
+      "score": 3.4,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "DFM",
+      "name": "Dixieland Flea Market",
+      "lat": 42.664912609917,
+      "lon": -83.327943385205,
+      "address": "2045 Dixie Hwy, Waterford Township, MI 48328",
+      "score": 3.8,
+      "tags": [
+        "Flea"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [],
+        "thu": [],
+        "fri": [
+          [
+            "12:00",
+            "19:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "EUR",
+      "name": "Encore Upscale Resale",
+      "lat": 42.5031816,
+      "lon": -83.3743423,
+      "address": "29080 Southfield Rd, Southfield, MI 48076",
+      "score": 3.4,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "FCFIA",
+      "name": "Full Circle Foundation, Inc. and Upscale Resale Shop",
+      "lat": 42.394424448012,
+      "lon": -82.923305647129,
+      "address": "17006 Mack Ave, Grosse Pointe Park, MI 48230",
+      "score": 3.4,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "11:00",
+            "16:00"
+          ]
+        ],
+        "wed": [
+          [
+            "11:00",
+            "16:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "16:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "16:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "14:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "FTRS",
+      "name": "Freedom Treasures Resale Store",
+      "lat": 42.615104272497,
+      "lon": -83.439891281164,
+      "address": "7570 Cooley Lake Rd, Waterford Township, MI 48327",
+      "score": 3.5,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "9:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "9:00",
+            "16:00"
+          ]
+        ],
+        "wed": [
+          [
+            "9:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "9:00",
+            "16:00"
+          ]
+        ],
+        "fri": [
+          [
+            "9:00",
+            "18:00"
+          ]
+        ],
+        "sat": [],
+        "sun": []
+      }
+    },
+    {
+      "id": "FV",
+      "name": "Flamingo Vintage",
+      "lat": 42.318117771122,
+      "lon": -83.100947517187,
+      "address": "5449 Vernor W, Detroit, MI 48209",
+      "score": 3.8,
+      "tags": [
+        "Vintage"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "11:00",
+            "19:00"
+          ]
+        ],
+        "wed": [
+          [
+            "11:00",
+            "19:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "19:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "19:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "19:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "19:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "GCOHT",
+      "name": "Grace Centers of Hope Thrift Store & Donation Center- Oak Park",
+      "lat": 42.460492460131,
+      "lon": -83.182088667996,
+      "address": "FR68+8P, 23105 Coolidge Hwy, Oak Park, MI 48237",
+      "score": 3.5,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "GSADL",
+      "name": "Goodwill Store and Donations: Livonia",
+      "lat": 42.37688631625,
+      "lon": -83.333492634022,
+      "address": "12651 Middlebelt Rd, Livonia, MI 48150",
+      "score": 3.8,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "LAFV",
+      "name": "Lost and Found Vintage",
+      "lat": 42.486255298557,
+      "lon": -83.146635128433,
+      "address": "510 S Washington Ave, Royal Oak, MI 48067",
+      "score": 3.8,
+      "tags": [
+        "Vintage"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "12:00",
+            "19:00"
+          ]
+        ],
+        "wed": [
+          [
+            "12:00",
+            "19:00"
+          ]
+        ],
+        "thu": [
+          [
+            "12:00",
+            "19:00"
+          ]
+        ],
+        "fri": [
+          [
+            "12:00",
+            "19:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "19:00"
+          ]
+        ],
+        "sun": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "MA",
+      "name": "Mimi's Attic",
+      "lat": 42.604339147074,
+      "lon": -82.874189515667,
+      "address": "221 Northbound Gratiot Ave, Mt Clemens, MI 48043",
+      "score": 3.8,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [],
+        "thu": [],
+        "fri": [
+          [
+            "11:00",
+            "16:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "16:00"
+          ]
+        ],
+        "sun": [
+          [
+            "11:00",
+            "16:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "MCAG",
+      "name": "Motor City Antique Gallery",
+      "lat": 42.073186243077,
+      "lon": -83.309260852639,
+      "address": "13431 Telegraph Rd, Flat Rock, MI 48134",
+      "score": 4,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "sun": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "ODTS",
+      "name": "Open Door Thrift Store",
+      "lat": 42.615585863894,
+      "lon": -83.424291236389,
+      "address": "7140 Cooley Lake Rd, Waterford Township, MI 48327",
+      "score": 3.2,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "10:00",
+            "16:30"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "16:30"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "16:30"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "16:30"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "OFA",
+      "name": "Odd Fellows Antiques",
+      "lat": 42.503092747942,
+      "lon": -83.191987481283,
+      "address": "3248 12 Mile Rd, Berkley, MI 48072",
+      "score": 3.7,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "tue": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "PACM",
+      "name": "Plaza Antiques & Collectables Mall",
+      "lat": 42.246626245284,
+      "lon": -83.19524840092,
+      "address": "2621 Dix Hwy, Lincoln Park, MI 48146",
+      "score": 3.7,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "RIAVA",
+      "name": "Retro Image Antiques, Vintage and Props",
+      "lat": 42.320780098694,
+      "lon": -83.180944539064,
+      "address": "14246 Michigan Ave, Dearborn, MI 48126",
+      "score": 3.8,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [],
+        "thu": [],
+        "fri": [
+          [
+            "11:00",
+            "16:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "16:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "RR",
+      "name": "Retro Rescuers",
+      "lat": 42.454615686044,
+      "lon": -83.137336032055,
+      "address": "477 W Marshall St, Ferndale, MI 48220",
+      "score": 3.1,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [
+          [
+            "17:00",
+            "20:00"
+          ]
+        ],
+        "thu": [],
+        "fri": [],
+        "sat": [
+          [
+            "12:00",
+            "16:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "16:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "RWBT",
+      "name": "Red White & Blue Thrift Store",
+      "lat": 42.572945446062,
+      "lon": -82.890151473912,
+      "address": "37545 Southbound Gratiot Ave, Clinton Township, MI 48036",
+      "score": 4,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "tue": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "wed": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "sun": [
+          [
+            "9:00",
+            "19:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "SAL",
+      "name": "Sinclair Antiques Llc",
+      "lat": 42.529674948663,
+      "lon": -83.136988298206,
+      "address": "550 S Rochester Rd, Clawson, MI 48017",
+      "score": 3.5,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [
+          [
+            "10:30",
+            "17:30"
+          ]
+        ],
+        "thu": [
+          [
+            "10:30",
+            "19:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:30",
+            "17:30"
+          ]
+        ],
+        "sat": [
+          [
+            "10:30",
+            "17:30"
+          ]
+        ],
+        "sun": [
+          [
+            "10:30",
+            "17:30"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "SVDPT",
+      "name": "St. Vincent de Paul Thrift Store",
+      "lat": 42.489825,
+      "lon": -83.3044789,
+      "address": "28720 N Stephenson Hwy, Madison Heights, MI 48071",
+      "score": 3.2,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "sun": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "TSAFSAH",
+      "name": "The Salvation Army Family Store & Donation Center",
+      "lat": 42.630579597305,
+      "lon": -83.249302131376,
+      "address": "605 S Opdyke Rd, Auburn Hills, MI 48326",
+      "score": 3.5,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "tue": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "wed": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "TSAFSRO",
+      "name": "The Salvation Army Family Store & Donation Center",
+      "lat": 42.48722963695,
+      "lon": -83.143962061469,
+      "address": "114 E 4th St, Royal Oak, MI 48067",
+      "score": 3.5,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "tue": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "wed": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "TSAFSWB",
+      "name": "The Salvation Army Family Store & Donation Center",
+      "lat": 42.60343091747,
+      "lon": -83.348784921158,
+      "address": "3232 Orchard Lake Rd, West Bloomfield Township, MI 48324",
+      "score": 3.6,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "tue": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "wed": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "TWL",
+      "name": "Time Warp LLC",
+      "lat": 42.526049813184,
+      "lon": -82.896065923419,
+      "address": "31336 Harper Ave, St Clair Shores, MI 48082",
+      "score": 4,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "sun": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "VA",
+      "name": "Village Antiques",
+      "lat": 42.303933498526,
+      "lon": -83.254144452596,
+      "address": "22630 Michigan Ave, Dearborn, MI 48124",
+      "score": 3.3,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "VEML",
+      "name": "Vintage Eastern Market, LLC",
+      "lat": 42.347937450459,
+      "lon": -83.039417146296,
+      "address": "1515 Division St Suite B, Detroit, MI 48207",
+      "score": 3.8,
+      "tags": [
+        "must-visit",
+        "Vintage"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "8:00",
+            "18:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "VMDV",
+      "name": "V-Male Detroit Vintage",
+      "lat": 42.269215142856,
+      "lon": -83.268896777462,
+      "address": "23902 Van Born Rd, Dearborn Heights, MI 48125",
+      "score": 4.1,
+      "tags": [
+        "Vintage"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "12:00",
+            "19:00"
+          ]
+        ],
+        "tue": [
+          [
+            "12:00",
+            "19:00"
+          ]
+        ],
+        "wed": [],
+        "thu": [],
+        "fri": [
+          [
+            "12:00",
+            "19:00"
+          ]
+        ],
+        "sat": [
+          [
+            "12:00",
+            "19:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "VogueVint",
+      "name": "Vogue Vintage",
+      "lat": 42.465465383937,
+      "lon": -83.12332615312,
+      "address": "2141 Hilton Rd, Ferndale, MI 48220",
+      "score": 4,
+      "tags": [
+        "must-visit",
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "tue": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "16:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "VVACV",
+      "name": "Vintage Vibes Antiques Collectibles Vinyl",
+      "lat": 42.406850826728,
+      "lon": -83.334864576011,
+      "address": "16320 Middlebelt Rd, Livonia, MI 48154",
+      "score": 3.4,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "VWT-Eastpointe",
+      "name": "Value World Thrift",
+      "lat": 42.478985165724,
+      "lon": -82.926959459334,
+      "address": "24900 Kelly Rd, Eastpointe, MI 48021",
+      "score": 4.5,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "VWT-OakPark",
+      "name": "Value World Thrift",
+      "lat": 42.457659382447,
+      "lon": -83.181801001668,
+      "address": "22130 Coolidge Hwy, Oak Park, MI 48237",
+      "score": 4,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "VWT-Southfield",
+      "name": "Value World Thrift",
+      "lat": 42.442742196635,
+      "lon": -83.295836478484,
+      "address": "25646 Eight Mile W, Southfield, MI 48033",
+      "score": 4.5,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "VWT-Southgate",
+      "name": "Value World Thrift",
+      "lat": 42.219891152932,
+      "lon": -83.193964111776,
+      "address": "12125 Dix Toledo Rd, Southgate, MI 48195",
+      "score": 3.8,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "VWT-Taylor",
+      "name": "Value World Thrift",
+      "lat": 42.255786246719,
+      "lon": -83.256431414123,
+      "address": "22615 Ecorse Rd, Taylor, MI 48180",
+      "score": 3.9,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "VWT-Warren",
+      "name": "Value World Thrift",
+      "lat": 42.490817636058,
+      "lon": -83.083943979949,
+      "address": "2001 E 11 Mile Rd, Warren, MI 48092",
+      "score": 4.1,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ]
+      }
+    }
+  ]
+}

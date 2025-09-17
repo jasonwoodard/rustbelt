@@ -1,0 +1,1376 @@
+{
+  "$schema": "../docs/trip-schema.json",
+  "criteria": {
+    "jscoreMin": "3",
+    "storeTypes": [
+      "Antique",
+      "Thrift",
+      "Surplus",
+      "Vintage",
+      "Nautical",
+      "Flea",
+      "Junk"
+    ],
+    "query": "SELECT U WHERE H > 3 AND (B='Antique' OR B='Thrift' OR B='Surplus' OR B='Vintage' OR B='Nautical' OR B='Flea' OR B='Junk')  AND (P='Ann Arbor')   ORDER BY A",
+    "storeCount": "count  : 27"
+  },
+  "config": {
+    "runId": "AA-v2",
+    "runNote": "Ann Arbor TS far point",
+    "mph": 35,
+    "defaultDwellMin": 30,
+    "riskThresholdMin": 0,
+    "seed": 7
+  },
+  "days": [
+    {
+      "dayId": "Mon",
+      "start": {
+        "id": "HCGs1",
+        "name": "Hollywood Casino Greektown",
+        "lat": 42.336873,
+        "lon": -83.0418499
+      },
+      "end": {
+        "id": "HCGe1",
+        "name": "Hollywood Casino Greektown",
+        "lat": 42.336873,
+        "lon": -83.0418499
+      },
+      "window": {
+        "start": "09:00",
+        "end": "17:00"
+      },
+      "dayOfWeek": "Monday"
+    }
+  ],
+  "stores": [
+    {
+      "id": "AAPTS",
+      "name": "Ann Arbor PTO Thrift Shop",
+      "lat": 42.252973223837,
+      "lon": -83.733888018403,
+      "address": "2280 S Industrial Hwy, Ann Arbor, MI 48104",
+      "score": 4.1,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [],
+        "thu": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "AATS",
+      "name": "Ann Arbor Thrift Shop",
+      "lat": 42.255689991053,
+      "lon": -83.690434090721,
+      "address": "3500 Washtenaw Ave K, Ann Arbor, MI 48104",
+      "score": 3.5,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "wed": [],
+        "thu": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "16:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "13:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "AAV",
+      "name": "Apple Annie’s Vintage",
+      "lat": 42.246015184298,
+      "lon": -83.610298993102,
+      "address": "29 E Cross St, Ypsilanti, MI 48198",
+      "score": 3.5,
+      "tags": [
+        "Vintage"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "CAM",
+      "name": "Chelsea Antique Mall",
+      "lat": 42.305745120265,
+      "lon": -84.021250355506,
+      "address": "1178 S Main St, Chelsea, MI 48118",
+      "score": 3.6,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "11:00",
+            "16:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "CCA",
+      "name": "Craftique Craft & antique",
+      "lat": 42.3275606,
+      "lon": -83.6342806,
+      "address": "5846 Middlebelt Rd, Garden City, MI 48135",
+      "score": 3.3,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "FASV",
+      "name": "Find and Shine Vintage",
+      "lat": 42.241136485064,
+      "lon": -83.613010677507,
+      "address": "6 N Huron St, Ypsilanti, MI 48197",
+      "score": 3.2,
+      "tags": [
+        "Vintage"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [],
+        "thu": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "sun": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "FKVV",
+      "name": "Finders Keepers Vintage & Vinyl",
+      "lat": 42.380844433961,
+      "lon": -83.460746136215,
+      "address": "900 N Mill St, Plymouth, MI 48170",
+      "score": 3.5,
+      "tags": [
+        "Vintage"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "12:00",
+            "20:00"
+          ]
+        ],
+        "wed": [
+          [
+            "12:00",
+            "20:00"
+          ]
+        ],
+        "thu": [
+          [
+            "12:00",
+            "20:00"
+          ]
+        ],
+        "fri": [
+          [
+            "12:00",
+            "20:00"
+          ]
+        ],
+        "sat": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "GIOSM",
+      "name": "Goodwill Industries of Southeastern Michigan - Saline Store",
+      "lat": 42.170262504784,
+      "lon": -83.773845780069,
+      "address": "423 E Michigan Ave, Saline, MI 48176",
+      "score": 3.7,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "9:00",
+            "20:00"
+          ]
+        ],
+        "tue": [
+          [
+            "9:00",
+            "20:00"
+          ]
+        ],
+        "wed": [
+          [
+            "9:00",
+            "20:00"
+          ]
+        ],
+        "thu": [
+          [
+            "9:00",
+            "20:00"
+          ]
+        ],
+        "fri": [
+          [
+            "9:00",
+            "20:00"
+          ]
+        ],
+        "sat": [
+          [
+            "9:00",
+            "20:00"
+          ]
+        ],
+        "sun": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "GSADC",
+      "name": "Goodwill Store and Donations: Canton",
+      "lat": 42.322702182407,
+      "lon": -83.454325685238,
+      "address": "41937 Ford Rd, Canton Township, MI 48187",
+      "score": 3.5,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "GSADY",
+      "name": "Goodwill Store and Donations: Ypsilanti",
+      "lat": 42.233882578103,
+      "lon": -83.680223661747,
+      "address": "3782 Carpenter Rd, Ypsilanti, MI 48197",
+      "score": 3.3,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "JMA",
+      "name": "Jim MacDonald's Antiques",
+      "lat": 42.246015184298,
+      "lon": -83.610298993102,
+      "address": "29 E Cross St, Ypsilanti, MI 48198",
+      "score": 3.4,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "KTS",
+      "name": "Kiwanis Thrift Sale",
+      "lat": 42.289484510504,
+      "lon": -83.858205824553,
+      "address": "100 N Staebler Rd Suite C, Ann Arbor, MI 48103",
+      "score": 3.8,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [],
+        "thu": [],
+        "fri": [
+          [
+            "9:00",
+            "13:00"
+          ]
+        ],
+        "sat": [
+          [
+            "9:00",
+            "15:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "LHAAR",
+      "name": "Lucky Haskins Antiques and Retro",
+      "lat": 42.246015000802,
+      "lon": -83.610324590991,
+      "address": "27 E Cross St, Ypsilanti, MI 48198",
+      "score": 3.7,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "12:00",
+            "19:00"
+          ]
+        ],
+        "sat": [
+          [
+            "12:00",
+            "19:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "NARS",
+      "name": "Nu2U Again Resale Shop",
+      "lat": 42.174214106889,
+      "lon": -83.76440784876,
+      "address": "1311 E Michigan Ave, Saline, MI 48176",
+      "score": 3.6,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "PTS",
+      "name": "Presbyterian Thrift Shop",
+      "lat": 42.37502453029,
+      "lon": -83.463743780877,
+      "address": "331 N Main St, Plymouth, MI 48170",
+      "score": 3.6,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "10:00",
+            "14:00"
+          ]
+        ],
+        "wed": [
+          [
+            "18:00",
+            "20:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "14:00"
+          ]
+        ],
+        "fri": [],
+        "sat": [
+          [
+            "10:00",
+            "15:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "RAGS",
+      "name": "Ragstock",
+      "lat": 42.279535758164,
+      "lon": -83.7453166195,
+      "address": "337 E Liberty St, Ann Arbor, MI 48104",
+      "score": 4,
+      "tags": [
+        "Vintage"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "20:00"
+          ]
+        ],
+        "sun": [
+          [
+            "11:00",
+            "19:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "SCA",
+      "name": "Salt City Antiques",
+      "lat": 42.240973944683,
+      "lon": -83.613347261111,
+      "address": "115 W Michigan Ave, Ypsilanti, MI 48197",
+      "score": 4,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [],
+        "wed": [],
+        "thu": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "SCR",
+      "name": "SCRAP Creative Reuse",
+      "lat": 42.252675241419,
+      "lon": -83.673510381064,
+      "address": "4567 Washtenaw Ave, Ann Arbor, MI 48108",
+      "score": 3.8,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "TBIN",
+      "name": "The Barn in Northville",
+      "lat": 42.436301752318,
+      "lon": -83.519719175565,
+      "address": "48120 Eight Mile W, Northville, MI 48167",
+      "score": 3.8,
+      "tags": [
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "sun": [
+          [
+            "11:00",
+            "17:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "TGV",
+      "name": "The Getup Vintage",
+      "lat": 42.280318379617,
+      "lon": -83.747361970544,
+      "address": "210 S 4th Ave, Ann Arbor, MI 48104",
+      "score": 3.2,
+      "tags": [
+        "Vintage"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "12:00",
+            "20:00"
+          ]
+        ],
+        "tue": [
+          [
+            "12:00",
+            "20:00"
+          ]
+        ],
+        "wed": [
+          [
+            "12:00",
+            "20:00"
+          ]
+        ],
+        "thu": [
+          [
+            "12:00",
+            "20:00"
+          ]
+        ],
+        "fri": [
+          [
+            "12:00",
+            "20:00"
+          ]
+        ],
+        "sat": [
+          [
+            "12:00",
+            "20:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "TPCAA",
+      "name": "Town Peddler Craft and Antique Mall",
+      "lat": 42.367865594867,
+      "lon": -83.391025127892,
+      "address": "35323 Plymouth Rd, Livonia, MI 48150",
+      "score": 4,
+      "tags": [
+        "must-visit",
+        "Antique"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "sun": [
+          [
+            "11:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "TS",
+      "name": "The ShareHouse",
+      "lat": 42.28746620984,
+      "lon": -83.830718044144,
+      "address": "5161 Jackson Rd, Ann Arbor, MI 48103",
+      "score": 5,
+      "tags": [
+        "must-visit",
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "18:00"
+          ]
+        ],
+        "sat": [
+          [
+            "9:00",
+            "17:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "TSAFS",
+      "name": "The Salvation Army Family Store & Donation Center",
+      "lat": 42.261142020686,
+      "lon": -83.740301350218,
+      "address": "1621 S State St, Ann Arbor, MI 48104",
+      "score": 3.7,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "tue": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "wed": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "TSAFSCT",
+      "name": "The Salvation Army Family Store & Donation Center",
+      "lat": 42.351439786378,
+      "lon": -83.469170034323,
+      "address": "43403 Joy Rd, Canton Township, MI 48187",
+      "score": 3.7,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "tue": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "wed": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "9:00",
+            "21:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "TTD",
+      "name": "The Thrift Depot",
+      "lat": 42.246014266817,
+      "lon": -83.610426982545,
+      "address": "19 E Cross St, Ypsilanti, MI 48198",
+      "score": 3.7,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [],
+        "tue": [
+          [
+            "12:00",
+            "19:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "17:00"
+          ]
+        ],
+        "thu": [],
+        "fri": [
+          [
+            "10:00",
+            "19:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "13:00"
+          ]
+        ],
+        "sun": []
+      }
+    },
+    {
+      "id": "VWT-Westland",
+      "name": "Value World Thrift",
+      "lat": 42.343181412273,
+      "lon": -83.388254959552,
+      "address": "35300 Central City Pkwy, Westland, MI 48185",
+      "score": 4,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ]
+      }
+    },
+    {
+      "id": "VWT9",
+      "name": "Value World Thrift",
+      "lat": 42.245572221237,
+      "lon": -83.582547913813,
+      "address": "1410 E Michigan Ave, Ypsilanti, MI 48198",
+      "score": 4,
+      "tags": [
+        "Thrift"
+      ],
+      "openHours": {
+        "mon": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "tue": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "wed": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "thu": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "fri": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sat": [
+          [
+            "10:00",
+            "21:00"
+          ]
+        ],
+        "sun": [
+          [
+            "12:00",
+            "18:00"
+          ]
+        ]
+      }
+    }
+  ]
+}
