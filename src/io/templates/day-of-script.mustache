@@ -211,10 +211,13 @@
       currentPosterior ? `±${currentPosterior.std.toFixed(2)}` : '±--',
     );
     const currentUcbText =
-      currentPosterior?.lastObservation != null
-        ? currentPosterior.lastObservation.toFixed(2)
+      currentPosterior && typeof currentPosterior.upper === 'number'
+        ? currentPosterior.upper.toFixed(2)
         : '--';
-    const remainingUcbText = poolPosterior ? poolPosterior.mean.toFixed(2) : '--';
+    const remainingUcbText =
+      poolPosterior && typeof poolPosterior.upper === 'number'
+        ? poolPosterior.upper.toFixed(2)
+        : '--';
     setText('dashboard-current-ucb', currentUcbText);
     setText('dashboard-remaining-ucb', remainingUcbText);
   }
@@ -324,7 +327,7 @@
       div.innerHTML = `
         <p class="font-medium">${nameHtml}</p>
         <p class="text-stone-600">MQA: <span class="font-semibold">${entry.mqa}</span>${mqaValueText} → Decision: <span class="font-semibold">${entry.decision}</span></p>
-        <p class="text-xs text-stone-500">Posterior μ=${posterior.mean.toFixed(2)} σ=${posterior.std.toFixed(2)} | UCB=${currentUcbText} | Pool μ=${pool.mean.toFixed(2)} σ=${pool.std.toFixed(2)} | Pool UCB=${remainingUcbText}${
+        <p class="text-xs text-stone-500">Posterior μ=${posterior.mean.toFixed(2)} σ=${posterior.std.toFixed(2)} | Upper Confidence Bound (UCB)=${currentUcbText} | Pool μ=${pool.mean.toFixed(2)} σ=${pool.std.toFixed(2)} | Pool Upper Confidence Bound (UCB)=${remainingUcbText}${
         zScoreText ? ` ${zScoreText}` : ''
       }</p>
       `;
@@ -397,7 +400,10 @@
   function updateRecommendationDisplay(recommendation, meta, currentPosterior, poolPosterior) {
     const display = document.getElementById('recommendation-display');
     if (!display) return;
-    const diffText = meta.diff != null ? `ΔUCB=${meta.diff.toFixed(2)}` : '';
+    const diffText =
+      meta.diff != null
+        ? `ΔUpper Confidence Bound (UCB)=${meta.diff.toFixed(2)}`
+        : '';
     const zText = meta.zScore != null && Number.isFinite(meta.zScore) ? `z=${meta.zScore.toFixed(2)}` : '';
     const reason = humanizeReason(meta.reason);
     const currentUcbText =
@@ -405,14 +411,14 @@
         ? meta.currentUcb.toFixed(2)
         : '--';
     const currentSummary = currentPosterior
-      ? `Current μ=${currentPosterior.mean.toFixed(2)} σ=${currentPosterior.std.toFixed(2)} UCB=${currentUcbText}`
+      ? `Current μ=${currentPosterior.mean.toFixed(2)} σ=${currentPosterior.std.toFixed(2)} Upper Confidence Bound (UCB)=${currentUcbText}`
       : '';
     const poolUcbText =
       meta.remainingUcb != null && Number.isFinite(meta.remainingUcb)
         ? meta.remainingUcb.toFixed(2)
         : '--';
     const poolSummary = poolPosterior
-      ? `Pool μ=${poolPosterior.mean.toFixed(2)} σ=${poolPosterior.std.toFixed(2)} UCB=${poolUcbText}`
+      ? `Pool μ=${poolPosterior.mean.toFixed(2)} σ=${poolPosterior.std.toFixed(2)} Upper Confidence Bound (UCB)=${poolUcbText}`
       : '';
 
     const metaLine = [reason, diffText, zText].filter(Boolean).join(' · ');
@@ -616,8 +622,21 @@
   }
 
   function getRecommendation(currentPosterior, poolPosterior, mqaKey, mqaValue) {
-    const currentUcb = typeof mqaValue === 'number' ? mqaValue : null;
-    const remainingUcb = poolPosterior ? poolPosterior.mean : null;
+    const fallbackCurrentUcb = typeof mqaValue === 'number' ? mqaValue : null;
+    const derivedCurrentUcb =
+      currentPosterior && typeof currentPosterior.upper === 'number'
+        ? currentPosterior.upper
+        : null;
+    const currentUcb = derivedCurrentUcb ?? fallbackCurrentUcb;
+    const derivedRemainingUcb =
+      poolPosterior && typeof poolPosterior.upper === 'number'
+        ? poolPosterior.upper
+        : null;
+    const fallbackRemainingUcb =
+      poolPosterior && typeof poolPosterior.mean === 'number'
+        ? poolPosterior.mean
+        : null;
+    const remainingUcb = derivedRemainingUcb ?? fallbackRemainingUcb;
     const observationCount = currentPosterior?.observationCount ?? 0;
 
     if (mqaKey === 'Bust') {
@@ -872,7 +891,9 @@
     const text = reason
       .replace(/[-_]/g, ' ')
       .replace(/\b([a-z])/g, (m) => m.toUpperCase());
-    return text.replace(/\bMqa\b/g, 'MQA').replace(/\bUcb\b/g, 'UCB');
+    return text
+      .replace(/\bMqa\b/g, 'MQA')
+      .replace(/\bUcb\b/g, 'Upper Confidence Bound (UCB)');
   }
 })();
 </script>
