@@ -30,11 +30,8 @@
       observationCount: 0,
       totalObservedQuality: 0,
       lastObservation: null,
-      lastThompson: null,
     },
   };
-
-  let spareNormal = null;
 
   document.addEventListener('DOMContentLoaded', init);
 
@@ -163,16 +160,13 @@
       'dashboard-current-uncertainty',
       currentPosterior ? `±${currentPosterior.std.toFixed(2)}` : '±--',
     );
-    setText(
-      'dashboard-current-thompson',
-      currentPosterior?.lastThompson != null
-        ? currentPosterior.lastThompson.toFixed(2)
-        : '--',
-    );
-    setText(
-      'dashboard-pool-thompson',
-      poolPosterior?.lastThompson != null ? poolPosterior.lastThompson.toFixed(2) : '--',
-    );
+    const currentUcbText =
+      currentPosterior?.lastObservation != null
+        ? currentPosterior.lastObservation.toFixed(2)
+        : '--';
+    const remainingUcbText = poolPosterior ? poolPosterior.mean.toFixed(2) : '--';
+    setText('dashboard-current-ucb', currentUcbText);
+    setText('dashboard-remaining-ucb', remainingUcbText);
   }
 
   function renderItineraryList(currentStop) {
@@ -253,14 +247,20 @@
       const pool = entry.pool;
       const mqaValueText = entry.mqaValue != null ? ` (${entry.mqaValue.toFixed(1)})` : '';
       const zScoreText = entry.zScore != null ? ` | z=${entry.zScore.toFixed(2)}` : '';
+      const currentUcbText =
+        entry.currentUcb != null && Number.isFinite(entry.currentUcb)
+          ? entry.currentUcb.toFixed(2)
+          : '--';
+      const remainingUcbText =
+        entry.remainingUcb != null && Number.isFinite(entry.remainingUcb)
+          ? entry.remainingUcb.toFixed(2)
+          : '--';
       div.innerHTML = `
         <p class="font-medium">${entry.name}</p>
         <p class="text-stone-600">MQA: <span class="font-semibold">${entry.mqa}</span>${mqaValueText} → Decision: <span class="font-semibold">${entry.decision}</span></p>
-        <p class="text-xs text-stone-500">Posterior μ=${posterior.mean.toFixed(2)} σ=${posterior.std.toFixed(2)} | Thompson=${
-          posterior.lastThompson != null ? posterior.lastThompson.toFixed(2) : '--'
-        } | Pool μ=${pool.mean.toFixed(2)} σ=${pool.std.toFixed(2)}${
-        pool.lastThompson != null ? ` | Pool Thompson=${pool.lastThompson.toFixed(2)}` : ''
-      }${zScoreText ? zScoreText : ''}</p>
+        <p class="text-xs text-stone-500">Posterior μ=${posterior.mean.toFixed(2)} σ=${posterior.std.toFixed(2)} | UCB=${currentUcbText} | Pool μ=${pool.mean.toFixed(2)} σ=${pool.std.toFixed(2)} | Pool UCB=${remainingUcbText}${
+        zScoreText ? ` ${zScoreText}` : ''
+      }</p>
       `;
       container.appendChild(div);
     });
@@ -281,20 +281,13 @@
     updatePoolObservation(mqaValue);
 
     const poolPosterior = computeRemainingPoolPosterior(currentStop.id);
-    const currentSample = drawThompsonSample(currentStop.posterior.alpha, currentStop.posterior.beta);
-    const poolSample = drawThompsonSample(poolPosterior.alpha, poolPosterior.beta);
-    const decisionMeta = getBayesianRecommendation(
+    const decisionMeta = getRecommendation(
       currentStop.posterior,
       poolPosterior,
       mqaKey,
-      currentSample,
-      poolSample,
+      mqaValue,
     );
     const recommendation = decisionMeta.decision;
-
-    currentStop.posterior.lastThompson = currentSample;
-    appState.posteriorPool.lastThompson = poolSample;
-    poolPosterior.lastThompson = poolSample;
 
     updateRecommendationDisplay(recommendation, decisionMeta, currentStop.posterior, poolPosterior);
 
@@ -306,6 +299,8 @@
     currentStop.posteriorSummary = serializePosterior(currentStop.posterior);
     currentStop.posteriorSummary.diff = decisionMeta.diff;
     currentStop.posteriorSummary.zScore = decisionMeta.zScore;
+    currentStop.posteriorSummary.currentUcb = decisionMeta.currentUcb ?? null;
+    currentStop.posteriorSummary.remainingUcb = decisionMeta.remainingUcb ?? null;
 
     appState.log.push({
       name: currentStop.name,
@@ -315,6 +310,9 @@
       decisionReason: decisionMeta.reason,
       diff: decisionMeta.diff,
       zScore: decisionMeta.zScore,
+      currentUcb: decisionMeta.currentUcb ?? null,
+      remainingUcb: decisionMeta.remainingUcb ?? null,
+      observationCount: decisionMeta.observationCount ?? null,
       posterior: serializePosterior(currentStop.posterior),
       pool: serializePool(poolPosterior),
       timestamp: new Date().toISOString(),
@@ -332,18 +330,22 @@
   function updateRecommendationDisplay(recommendation, meta, currentPosterior, poolPosterior) {
     const display = document.getElementById('recommendation-display');
     if (!display) return;
-    const diffText = meta.diff != null ? `Δμ=${meta.diff.toFixed(2)}` : '';
+    const diffText = meta.diff != null ? `ΔUCB=${meta.diff.toFixed(2)}` : '';
     const zText = meta.zScore != null && Number.isFinite(meta.zScore) ? `z=${meta.zScore.toFixed(2)}` : '';
     const reason = humanizeReason(meta.reason);
+    const currentUcbText =
+      meta.currentUcb != null && Number.isFinite(meta.currentUcb)
+        ? meta.currentUcb.toFixed(2)
+        : '--';
     const currentSummary = currentPosterior
-      ? `Current μ=${currentPosterior.mean.toFixed(2)} σ=${currentPosterior.std.toFixed(2)} Thompson=${
-          currentPosterior.lastThompson != null ? currentPosterior.lastThompson.toFixed(2) : '--'
-        }`
+      ? `Current μ=${currentPosterior.mean.toFixed(2)} σ=${currentPosterior.std.toFixed(2)} UCB=${currentUcbText}`
       : '';
+    const poolUcbText =
+      meta.remainingUcb != null && Number.isFinite(meta.remainingUcb)
+        ? meta.remainingUcb.toFixed(2)
+        : '--';
     const poolSummary = poolPosterior
-      ? `Pool μ=${poolPosterior.mean.toFixed(2)} σ=${poolPosterior.std.toFixed(2)} Thompson=${
-          poolPosterior.lastThompson != null ? poolPosterior.lastThompson.toFixed(2) : '--'
-        }`
+      ? `Pool μ=${poolPosterior.mean.toFixed(2)} σ=${poolPosterior.std.toFixed(2)} UCB=${poolUcbText}`
       : '';
 
     const metaLine = [reason, diffText, zText].filter(Boolean).join(' · ');
@@ -477,36 +479,81 @@
     }
   }
 
-  function getBayesianRecommendation(currentPosterior, poolPosterior, mqaKey, currentSample, poolSample) {
+  function getRecommendation(currentPosterior, poolPosterior, mqaKey, mqaValue) {
+    const currentUcb = typeof mqaValue === 'number' ? mqaValue : null;
+    const remainingUcb = poolPosterior ? poolPosterior.mean : null;
+    const observationCount = currentPosterior?.observationCount ?? 0;
+
     if (mqaKey === 'Bust') {
-      return { decision: 'Leave', reason: 'mqa-bust', diff: -Infinity, zScore: null, currentSample, poolSample };
-    }
-    if (!currentPosterior) {
-      return { decision: 'Leave', reason: 'no-current-posterior', diff: null, zScore: null, currentSample, poolSample };
-    }
-    if (!poolPosterior || poolPosterior.count === 0) {
-      return { decision: 'Stay', reason: 'no-remaining-stops', diff: currentPosterior.mean, zScore: null, currentSample, poolSample };
+      const diff =
+        currentUcb != null && remainingUcb != null ? currentUcb - remainingUcb : currentUcb ?? null;
+      return {
+        decision: 'Leave',
+        reason: 'mqa-bust',
+        diff,
+        zScore: null,
+        currentUcb,
+        remainingUcb,
+        observationCount,
+      };
     }
 
-    const diff = currentPosterior.mean - poolPosterior.mean;
+    if (!currentPosterior || currentUcb == null) {
+      return {
+        decision: 'Leave',
+        reason: 'no-current-posterior',
+        diff: null,
+        zScore: null,
+        currentUcb,
+        remainingUcb,
+        observationCount,
+      };
+    }
+
+    if (!poolPosterior || poolPosterior.count === 0 || remainingUcb == null) {
+      return {
+        decision: 'Stay',
+        reason: 'no-remaining-stops',
+        diff: currentUcb,
+        zScore: null,
+        currentUcb,
+        remainingUcb,
+        observationCount,
+      };
+    }
+
+    const diff = currentUcb - remainingUcb;
     const combinedStd = Math.sqrt(
       currentPosterior.std * currentPosterior.std + poolPosterior.std * poolPosterior.std,
     );
-    const zScore = combinedStd > 0 ? diff / combinedStd : diff >= 0 ? Number.POSITIVE_INFINITY : Number.NEGATIVE_INFINITY;
+    const zScore =
+      combinedStd > 0
+        ? diff / combinedStd
+        : diff >= 0
+        ? Number.POSITIVE_INFINITY
+        : Number.NEGATIVE_INFINITY;
 
-    if (currentPosterior.lower >= poolPosterior.upper) {
-      return { decision: 'Stay', reason: 'posterior-dominates', diff, zScore, currentSample, poolSample };
+    if (diff > 0) {
+      return {
+        decision: 'Stay',
+        reason: 'ucb-favors-current',
+        diff,
+        zScore,
+        currentUcb,
+        remainingUcb,
+        observationCount,
+      };
     }
-    if (poolPosterior.lower >= currentPosterior.upper) {
-      return { decision: 'Leave', reason: 'pool-dominates', diff, zScore, currentSample, poolSample };
-    }
-    if (currentSample >= poolSample) {
-      return { decision: 'Stay', reason: 'thompson-preference', diff, zScore, currentSample, poolSample };
-    }
-    if (diff >= 0 && zScore >= -0.25) {
-      return { decision: 'Stay', reason: 'expected-value-edge', diff, zScore, currentSample, poolSample };
-    }
-    return { decision: 'Leave', reason: 'expected-value-deficit', diff, zScore, currentSample, poolSample };
+
+    return {
+      decision: 'Leave',
+      reason: diff === 0 ? 'ucb-tie' : 'ucb-favors-remaining',
+      diff,
+      zScore,
+      currentUcb,
+      remainingUcb,
+      observationCount,
+    };
   }
 
   function computeRemainingPoolPosterior(excludeId) {
@@ -533,7 +580,6 @@
       pseudoBeta,
       observationCount: appState.posteriorPool.observationCount,
       totalObservedQuality: appState.posteriorPool.totalObservedQuality,
-      lastThompson: appState.posteriorPool.lastThompson,
     };
   }
 
@@ -548,7 +594,6 @@
       observationCount: 0,
       totalQuality: 0,
       lastObservation: null,
-      lastThompson: null,
     };
     return recomputePosteriorStats(posterior);
   }
@@ -639,7 +684,6 @@
       observationCount: posterior.observationCount ?? 0,
       totalQuality: posterior.totalQuality ?? 0,
       lastObservation: posterior.lastObservation ?? null,
-      lastThompson: posterior.lastThompson ?? null,
       priorNormalized: posterior.priorNormalized ?? null,
       pseudo: posterior.pseudo ?? appState.posteriorConfig.priorStrength,
     };
@@ -660,7 +704,6 @@
       pseudoBeta: poolPosterior.pseudoBeta,
       observationCount: poolPosterior.observationCount,
       totalObservedQuality: poolPosterior.totalObservedQuality,
-      lastThompson: poolPosterior.lastThompson ?? null,
     };
   }
 
@@ -688,62 +731,11 @@
     return Math.min(Math.max(value, min), max);
   }
 
-  function drawThompsonSample(alpha, beta) {
-    const sample = sampleBeta(alpha, beta);
-    return denormalizeScore(sample);
-  }
-
-  function sampleBeta(alpha, beta) {
-    const x = sampleGamma(alpha);
-    const y = sampleGamma(beta);
-    if (x + y === 0) return 0.5;
-    return x / (x + y);
-  }
-
-  function sampleGamma(shape) {
-    const safeShape = Math.max(shape, EPSILON);
-    if (safeShape < 1) {
-      const u = Math.random();
-      return sampleGamma(safeShape + 1) * Math.pow(u, 1 / safeShape);
-    }
-    const d = safeShape - 1 / 3;
-    const c = 1 / Math.sqrt(9 * d);
-    while (true) {
-      let x;
-      let v;
-      do {
-        x = sampleStandardNormal();
-        v = 1 + c * x;
-      } while (v <= 0);
-      v = v * v * v;
-      const u = Math.random();
-      if (u < 1 - 0.0331 * x * x * x * x) return d * v;
-      if (Math.log(u) < 0.5 * x * x + d * (1 - v + Math.log(v))) return d * v;
-    }
-  }
-
-  function sampleStandardNormal() {
-    if (spareNormal != null) {
-      const value = spareNormal;
-      spareNormal = null;
-      return value;
-    }
-    let u = 0;
-    let v = 0;
-    while (u === 0) u = Math.random();
-    while (v === 0) v = Math.random();
-    const mag = Math.sqrt(-2.0 * Math.log(u));
-    const z0 = mag * Math.cos(2 * Math.PI * v);
-    const z1 = mag * Math.sin(2 * Math.PI * v);
-    spareNormal = z1;
-    return z0;
-  }
-
   function humanizeReason(reason) {
     if (!reason) return '';
     const text = reason
       .replace(/[-_]/g, ' ')
       .replace(/\b([a-z])/g, (m) => m.toUpperCase());
-    return text.replace(/\bMqa\b/g, 'MQA');
+    return text.replace(/\bMqa\b/g, 'MQA').replace(/\bUcb\b/g, 'UCB');
   }
 })();
