@@ -241,15 +241,22 @@
       const nameMarkup = stop.mapsUrl
         ? `<a class="store-link" href="${stop.mapsUrl}" target="_blank" rel="noopener noreferrer">${stop.name}</a>`
         : stop.name;
+      const dropButtonHtml =
+        stop.status === 'tovisit'
+          ? `<button type="button" class="drop-store-button mt-1 transition-colors" data-drop-stop-id="${stop.id}">Drop store</button>`
+          : '';
       div.innerHTML = `
-        <div class="flex justify-between items-start">
+        <div class="flex justify-between items-start gap-3">
           <div>
             <p class="font-semibold">${nameMarkup}</p>
             <p class="text-xs text-stone-500">${statusLabel}</p>
           </div>
-          <div class="text-right">
-            <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">${posteriorMean}</p>
-            <p class="text-xs text-stone-500">±${posteriorStd}</p>
+          <div class="flex flex-col items-end text-right gap-1">
+            <div>
+              <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">${posteriorMean}</p>
+              <p class="text-xs text-stone-500">±${posteriorStd}</p>
+            </div>
+            ${dropButtonHtml}
           </div>
         </div>
       `;
@@ -419,6 +426,51 @@
     `;
   }
 
+  function dropStopById(stopId, reason) {
+    const normalizedId = String(stopId);
+    const stopIndex = appState.stops.findIndex((s) => String(s.id) === normalizedId);
+    if (stopIndex === -1) return null;
+
+    const stop = appState.stops[stopIndex];
+    if (stop.status !== 'tovisit') {
+      return null;
+    }
+
+    stop.status = 'dropped';
+    stop.decision = 'Dropped';
+    stop.decisionReason = reason;
+
+    const posteriorSummary = serializePosterior(stop.posterior);
+    stop.posteriorSummary = {
+      ...posteriorSummary,
+      diff: null,
+      zScore: null,
+      currentUcb: null,
+      remainingUcb: null,
+    };
+
+    const poolSnapshot = serializePool(computeRemainingPoolPosterior());
+
+    appState.log.push({
+      name: stop.name,
+      mapsUrl: stop.mapsUrl,
+      mqa: 'N/A',
+      mqaValue: null,
+      decision: 'Dropped',
+      decisionReason: reason,
+      diff: null,
+      zScore: null,
+      currentUcb: null,
+      remainingUcb: null,
+      observationCount: null,
+      posterior: posteriorSummary,
+      pool: poolSnapshot,
+      timestamp: new Date().toISOString(),
+    });
+
+    return { stop, index: stopIndex };
+  }
+
   function handleOverrun() {
     const remainingStops = appState.stops.filter((s) => s.status === 'tovisit');
     if (remainingStops.length === 0) {
@@ -438,23 +490,7 @@
       );
 
       if (confirmed) {
-        const stopToDrop = appState.stops.find((s) => s.id === lowestScoringStop.id);
-        if (stopToDrop) {
-          stopToDrop.status = 'dropped';
-          appState.log.push({
-            name: stopToDrop.name,
-            mapsUrl: stopToDrop.mapsUrl,
-            mqa: 'N/A',
-            mqaValue: null,
-            decision: 'Dropped',
-            decisionReason: 'overrun-drop-lowest',
-            diff: null,
-            zScore: null,
-            posterior: serializePosterior(stopToDrop.posterior),
-            pool: serializePool(computeRemainingPoolPosterior()),
-            timestamp: new Date().toISOString(),
-          });
-        }
+        dropStopById(lowestScoringStop.id, 'overrun-drop-lowest');
       }
       advanceToNextStore();
     }, 500);
@@ -492,6 +528,44 @@
     if (bustButton) {
       bustButton.addEventListener('click', () => {
         processDecision('Bust');
+      });
+    }
+
+    const itineraryList = document.getElementById('itinerary-list');
+    if (itineraryList) {
+      itineraryList.addEventListener('click', (event) => {
+        const target = event.target;
+        if (!(target instanceof Element)) {
+          return;
+        }
+        const button = target.closest('button[data-drop-stop-id]');
+        if (!button) {
+          return;
+        }
+        event.preventDefault();
+        const stopId = button.getAttribute('data-drop-stop-id');
+        if (!stopId) {
+          return;
+        }
+        const stop = appState.stops.find((s) => String(s.id) === stopId);
+        if (!stop || stop.status !== 'tovisit') {
+          return;
+        }
+        const confirmed = window.confirm(
+          `Drop ${stop.name}?\n\nThis will mark the store as dropped.`,
+        );
+        if (!confirmed) {
+          return;
+        }
+        const dropResult = dropStopById(stopId, 'manual-drop');
+        if (!dropResult) {
+          return;
+        }
+        if (dropResult.index === appState.currentIndex) {
+          advanceToNextStore();
+        } else {
+          renderAll();
+        }
       });
     }
 
