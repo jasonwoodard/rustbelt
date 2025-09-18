@@ -1,0 +1,253 @@
+{
+  "runTimestamp": "2025-09-18T04:05:01.817Z",
+  "runId": "BU-v1",
+  "runNote": "Thursday, Cleveland to South of Buffalo AFTER USS Cod",
+  "days": [
+    {
+      "dayId": "Thu",
+      "stops": [
+        {
+          "id": "DPHCDs",
+          "name": "Drury Plaza Hotel Cleveland Downtown",
+          "type": "start",
+          "arrive": "11:00",
+          "depart": "11:00",
+          "lat": 41.50262133812,
+          "lon": -81.691522330395
+        },
+        {
+          "id": "AU",
+          "name": "Antiques & Uniques",
+          "type": "store",
+          "arrive": "11:24",
+          "depart": "11:54",
+          "lat": 41.616224227171,
+          "lon": -81.460742434228,
+          "address": "30200 Euclid Ave, Wickliffe, OH 44092",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "DPHCDs",
+            "toId": "AU",
+            "driveMin": 24.48324695525579,
+            "distanceMi": 14.281894057232543
+          },
+          "score": 4.8,
+          "tags": [
+            "must-visit",
+            "Antique"
+          ]
+        },
+        {
+          "id": "SBTL",
+          "name": "Shops By The Lake",
+          "type": "store",
+          "arrive": "12:22",
+          "depart": "12:52",
+          "lat": 41.748994881171,
+          "lon": -81.208780911127,
+          "address": "1871 N Ridge Rd, Painesville, OH 44077",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "AU",
+            "toId": "SBTL",
+            "driveMin": 27.278269507189513,
+            "distanceMi": 15.912323879193883
+          },
+          "score": 4,
+          "tags": [
+            "must-visit",
+            "Vintage"
+          ]
+        },
+        {
+          "id": "SAVERSB",
+          "name": "Savers",
+          "type": "store",
+          "arrive": "16:55",
+          "depart": "17:25",
+          "lat": 42.7853963,
+          "lon": -78.8107985,
+          "address": "3701 McKinley Pkwy, Buffalo, NY 14219",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "SBTL",
+            "toId": "SAVERSB",
+            "driveMin": 243.39738672186883,
+            "distanceMi": 141.98180892109013
+          },
+          "score": 4.8,
+          "tags": [
+            "must-visit",
+            "Thrift"
+          ]
+        },
+        {
+          "id": "HRBe",
+          "name": "Hyatt Regency Buffalo / Hotel and Conference Center",
+          "type": "end",
+          "arrive": "17:39",
+          "depart": "17:39",
+          "lat": 42.8879852,
+          "lon": -78.8768433,
+          "legIn": {
+            "fromId": "SAVERSB",
+            "toId": "HRBe",
+            "driveMin": 13.437329414739823,
+            "distanceMi": 7.83844215859823
+          }
+        }
+      ],
+      "excluded": [
+        {
+          "id": "AAM",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SBTL"
+        },
+        {
+          "id": "ATSWS",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SAVERSB"
+        },
+        {
+          "id": "BA",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SBTL"
+        },
+        {
+          "id": "CFAN",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SBTL"
+        },
+        {
+          "id": "CMT",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SBTL"
+        },
+        {
+          "id": "CSTAT",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SBTL"
+        },
+        {
+          "id": "CTS",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SBTL"
+        },
+        {
+          "id": "FKOE",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SBTL"
+        },
+        {
+          "id": "FKTS",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SBTL"
+        },
+        {
+          "id": "FNJ",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SBTL"
+        },
+        {
+          "id": "FSW",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SBTL"
+        },
+        {
+          "id": "GSTS",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SBTL"
+        },
+        {
+          "id": "IAM",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SAVERSB"
+        },
+        {
+          "id": "MB",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SBTL"
+        },
+        {
+          "id": "MSA",
+          "reason": "timeWindow",
+          "nearestAlternateId": "AU"
+        },
+        {
+          "id": "MTS",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SBTL"
+        },
+        {
+          "id": "OA",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SBTL"
+        },
+        {
+          "id": "RCTS",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SBTL"
+        },
+        {
+          "id": "RRAC",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SAVERSB"
+        },
+        {
+          "id": "RT",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SAVERSB"
+        },
+        {
+          "id": "STA",
+          "reason": "timeWindow",
+          "nearestAlternateId": "AU"
+        },
+        {
+          "id": "TCS",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SBTL"
+        },
+        {
+          "id": "TGD",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SBTL"
+        },
+        {
+          "id": "TRVM",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SBTL"
+        },
+        {
+          "id": "TSYRS",
+          "reason": "timeWindow",
+          "nearestAlternateId": "AU"
+        },
+        {
+          "id": "WSAM",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SAVERSB"
+        }
+      ],
+      "metrics": {
+        "storeCount": 28,
+        "storesVisited": 3,
+        "visitedIds": [
+          "AU",
+          "SBTL",
+          "SAVERSB"
+        ],
+        "totalScore": 13.600000000000001,
+        "scorePerStore": 4.533333333333334,
+        "scorePerMin": 0.034119740448425605,
+        "scorePerDriveMin": 0.04407053153390212,
+        "scorePerMile": 0.0755494826295465,
+        "totalDriveMin": 308.59623259905396,
+        "totalDwellMin": 90,
+        "slackMin": 21.40376740094598,
+        "totalDistanceMiles": 180.0144690161148,
+        "onTimeRisk": 0
+      }
+    }
+  ]
+}
