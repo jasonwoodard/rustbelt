@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rust Belt Itineraries</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* gray-100 */
+        }
+    </style>
+</head>
+<body class="p-6 md:p-10 lg:p-16 text-gray-800">
+
+    <header class="mb-8 md:mb-12">
+        <h1 class="text-3xl md:text-4xl font-bold text-center text-gray-900">Rust Belt Itineraries</h1>
+        <p class="mt-2 text-center text-gray-600">Select a trip to view the available outputs for each day.</p>
+    </header>
+
+    <div id="content" class="grid gap-8">Loading itineraries...</div>
+
+    <!-- Load manifest -->
+    <script src="manifest.js"></script>
+    <script>
+        async function renderTrips(data) {
+            const container = document.getElementById("content");
+            container.innerHTML = "";
+
+            data.trips.forEach(trip => {
+                const tripDiv = document.createElement("div");
+                tripDiv.className = "bg-white rounded-lg shadow-md p-6 transform transition-all hover:shadow-xl hover:scale-[1.01] duration-300 ease-in-out";
+
+                const title = document.createElement("h2");
+                title.textContent = trip.name;
+                title.className = "text-xl font-semibold mb-4 text-gray-900";
+                tripDiv.appendChild(title);
+
+                const daysList = document.createElement("ul");
+                daysList.className = "space-y-4";
+
+                trip.days.forEach(day => {
+                    const dayLi = document.createElement("li");
+                    dayLi.className = "p-4 bg-gray-50 rounded-md transition-colors hover:bg-gray-100 duration-200 ease-in-out";
+                    
+                    const dayHeader = document.createElement("div");
+                    dayHeader.className = "flex items-center justify-between mb-2";
+
+                    const dayLink = document.createElement("a");
+                    dayLink.href = day.outputs.HTML;
+                    dayLink.textContent = day.day;
+                    dayLink.className = "text-lg font-bold text-blue-600 hover:text-blue-800 transition-colors duration-200";
+                    dayHeader.appendChild(dayLink);
+
+                    // Placeholder for JSON metrics
+                    const summaryDiv = document.createElement("div");
+                    summaryDiv.className = "text-xs text-gray-500 font-medium tracking-wide";
+                    summaryDiv.textContent = "Loading...";
+                    dayHeader.appendChild(summaryDiv);
+
+                    dayLi.appendChild(dayHeader);
+
+                    const ul = document.createElement("ul");
+                    ul.className = "flex flex-wrap gap-2 text-sm text-gray-500";
+                    Object.entries(day.outputs).forEach(([label, path]) => {
+                        const li = document.createElement("li");
+                        const link = document.createElement("a");
+                        link.href = path;
+                        link.textContent = label;
+                        link.className = "px-2 py-1 bg-gray-200 rounded-full hover:bg-gray-300 transition-colors duration-200";
+                        li.appendChild(link);
+                        ul.appendChild(li);
+                    });
+
+                    dayLi.appendChild(ul);
+                    daysList.appendChild(dayLi);
+
+                    // Fetch and display JSON data
+                    if (day.outputs.JSON) {
+                        fetch(day.outputs.JSON)
+                            .then(response => response.json())
+                            .then(data => {
+                                const metrics = data.days[0].metrics;
+                                const storeCount = metrics.storeCount;
+                                const storesVisited = metrics.storesVisited;
+                                summaryDiv.textContent = `${storesVisited} / ${storeCount} Stores Visited`;
+                            })
+                            .catch(error => {
+                                console.error(`Error fetching JSON for ${day.day}:`, error);
+                                summaryDiv.textContent = "Error loading data";
+                            });
+                    }
+                });
+
+                tripDiv.appendChild(daysList);
+                container.appendChild(tripDiv);
+            });
+        }
+
+        // Render immediately from global manifest
+        if (window.TRIP_MANIFEST) {
+            renderTrips(window.TRIP_MANIFEST);
+        } else {
+            document.getElementById("content").textContent = "Error: Trip manifest data not found.";
+        }
+    </script>
+</body>
+</html>
