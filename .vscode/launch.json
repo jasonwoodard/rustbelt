@@ -1,0 +1,142 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Ann Arbor: SolveDay (tsx)",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/tsx",
+      "program": "${workspaceFolder}/src/index.ts",
+      "args": [
+        "--trip", "${workspaceFolder}/data/day-Mon-AA-v1-2025-09-15-T2136.json", 
+        "--day", "Mon",
+        "--mph", "35",
+        "--default-dwell", "30",
+        "--lambda", "0.10",
+        "--seed", "7",
+        "--verbose",
+        "--out", "${workspaceFolder}/out/day-Fri-RX-v2-2025-09-18-T0215.json",
+        "--kml", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.kml",
+        "--csv", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.csv",
+        "--html", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.html"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "openOnFirstSessionStart",
+      "skipFiles": ["<node_internals>/**", "${workspaceFolder}/node_modules/**"],
+      "sourceMaps": true,
+      "smartStep": true,
+      "stopOnEntry": false,
+      "autoAttachChildProcesses": true
+    },
+    {
+      // Run the day solver with args (breakpoints work in TS)
+      "name": "Detroit: SolveDay (tsx)",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/tsx",
+      "program": "${workspaceFolder}/src/index.ts",
+      "args": [
+        "--trip", "${workspaceFolder}/data/day-Tue-DT-v2-2025-09-16-T0031.json",
+        "--day", "Tue",
+        "--lambda", "0.10",
+        "--seed", "7",
+        "--verbose",
+        "--out", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.json",
+        "--kml", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.kml",
+        "--csv", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.csv",
+        "--html", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.html"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "openOnFirstSessionStart",
+      "skipFiles": ["<node_internals>/**", "${workspaceFolder}/node_modules/**"],
+      "sourceMaps": true,
+      "smartStep": true,
+      "stopOnEntry": false,
+      "autoAttachChildProcesses": true
+    },
+    {
+      // Run the day solver with args (breakpoints work in TS)
+      "name": "Det-Clev: SolveDay (tsx)",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/tsx",
+      "program": "${workspaceFolder}/src/index.ts",
+      "args": [
+        "--trip", "${workspaceFolder}/data/day-Wed-CL-v1-2025-09-16-T0818.json",
+        "--day", "Wed",
+        "--lambda", "0.1",
+        "--seed", "7",
+        "--verbose",
+        "--out", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.json",
+        "--kml", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.kml",
+        "--csv", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.csv",
+        "--html", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.html"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "openOnFirstSessionStart",
+      "skipFiles": ["<node_internals>/**", "${workspaceFolder}/node_modules/**"],
+      "sourceMaps": true,
+      "smartStep": true,
+      "stopOnEntry": false,
+      "autoAttachChildProcesses": true
+    },
+   {
+      // Run the day solver with args (breakpoints work in TS)
+      "name": "Clev-Buff: SolveDay (tsx)",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/tsx",
+      "program": "${workspaceFolder}/src/index.ts",
+      "args": [
+        "--trip", "${workspaceFolder}/data/day-Thu-BU-v3-2025-09-18-T0147.json",
+        "--day", "Thu",
+        "--lambda", "0.1",
+        "--seed", "7",
+        "--verbose",
+        "--out", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.json",
+        "--kml", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.kml",
+        "--csv", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.csv",
+        "--html", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.html"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "openOnFirstSessionStart",
+      "skipFiles": ["<node_internals>/**", "${workspaceFolder}/node_modules/**"],
+      "sourceMaps": true,
+      "smartStep": true,
+      "stopOnEntry": false,
+      "autoAttachChildProcesses": true
+    }, 
+     {
+      // Run the day solver with args (breakpoints work in TS)
+      "name": "Buff-Rox: SolveDay (tsx)",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/tsx",
+      "program": "${workspaceFolder}/src/index.ts",
+      "args": [
+        "--trip", "${workspaceFolder}/data/day-Fri-RX-v2-2025-09-18-T0215.json",
+        "--day", "Fri",
+        "--lambda", "0.1",
+        "--seed", "7",
+        "--verbose",
+         "--out", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.json",
+        "--kml", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.kml",
+        "--csv", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.csv",
+        "--html", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.html"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "openOnFirstSessionStart",
+      "skipFiles": ["<node_internals>/**", "${workspaceFolder}/node_modules/**"],
+      "sourceMaps": true,
+      "smartStep": true,
+      "stopOnEntry": false,
+      "autoAttachChildProcesses": true
+    }, 
+  ]
+}
+

@@ -10,5 +10,11 @@ coverage/
 .env.*
 .DS_Store
 Thumbs.db
-.vscode/
+
+# IDE/editor files
 .idea/
+
+# VSCode: ignore all by default, allow shared files
+.vscode/*
+!.vscode/launch.json
+.vscode/launch.local.json
