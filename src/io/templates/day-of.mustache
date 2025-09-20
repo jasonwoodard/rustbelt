@@ -186,6 +186,83 @@
           </div>
         </section>
       </main>
+      <section class="mt-10 bg-white p-6 rounded-lg shadow-sm">
+        <h2 class="text-2xl font-semibold text-stone-900 mb-4">Dashboard Glossary</h2>
+        <div class="space-y-6 text-sm text-stone-700">
+          <div>
+            <h3 class="text-lg font-semibold text-stone-800">Total Stores</h3>
+            <ul class="list-disc list-inside space-y-1">
+              <li>Shows how many store stops are on the agenda so you can gauge the full workload and pacing for the day.</li>
+              <li>Higher values indicate a heavy route that may stretch the crew thin and are bad if you are already resource constrained.</li>
+              <li>Lower values indicate a lighter schedule that is easier to cover well and are good for maintaining focus.</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-stone-800">Stores Visited</h3>
+            <ul class="list-disc list-inside space-y-1">
+              <li>Tracks how many stores have been worked so you can judge progress against the plan and momentum of the run.</li>
+              <li>Higher values indicate you are keeping pace with the itinerary and are good for staying on track.</li>
+              <li>Lower values indicate the crew is falling behind schedule and are bad if there are many targets left.</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-stone-800">Avg. J-Score</h3>
+            <ul class="list-disc list-inside space-y-1">
+              <li>Summarizes the average expected juice from all scheduled stores so you know the overall quality of the day's lineup.</li>
+              <li>Higher values indicate a slate of promising locations worth investing time in and are good for morale.</li>
+              <li>Lower values indicate the route is filled with long-shot prospects and are bad when deciding where to focus.</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-stone-800">Remaining Posterior μ</h3>
+            <ul class="list-disc list-inside space-y-1">
+              <li>Estimates the expected payout of the stores you have not hit yet, guiding whether to push forward or start wrapping.</li>
+              <li>Higher values indicate the remaining pipeline still looks lucrative and are good reasons to keep pressing.</li>
+              <li>Lower values indicate the rest of the day is unlikely to deliver much and are bad for continued investment.</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-stone-800">Remaining Uncertainty σ</h3>
+            <ul class="list-disc list-inside space-y-1">
+              <li>Shows how unknown the untouched stores still are so you know if surprises—good or bad—are likely.</li>
+              <li>Higher values indicate the remaining stops are still a wild card and are uncertain for planning confidence.</li>
+              <li>Lower values indicate you have a reliable read on what's left and are good for making firm commitments.</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-stone-800">Current Posterior μ</h3>
+            <ul class="list-disc list-inside space-y-1">
+              <li>Captures the best estimate of the current store's quality, telling you if sticking around is likely to pay off.</li>
+              <li>Higher values indicate the store is delivering and are good signals to stay engaged.</li>
+              <li>Lower values indicate the location is probably a dud and are bad signs that favor moving on.</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-stone-800">Current Uncertainty σ</h3>
+            <ul class="list-disc list-inside space-y-1">
+              <li>Measures how confident you are about the current store's read so you know whether to trust the estimate.</li>
+              <li>Higher values indicate the intel is still fuzzy and are uncertain for making a strong call.</li>
+              <li>Lower values indicate you have solid evidence on the store and are good for decisive action.</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-stone-800">Current Upper Confidence Bound (UCB) Score</h3>
+            <ul class="list-disc list-inside space-y-1">
+              <li>Blends the current store's quality and risk so you know the upside if you keep working it right now.</li>
+              <li>Higher values indicate strong upside potential worth pursuing and are good for doubling down.</li>
+              <li>Lower values indicate limited headroom on this stop and are bad when deciding whether to commit more time.</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-stone-800">Remaining Upper Confidence Bound (UCB) Score</h3>
+            <ul class="list-disc list-inside space-y-1">
+              <li>Combines the expected quality and risk of the untouched stores to show the upside left in the route.</li>
+              <li>Higher values indicate the back half of the itinerary could still hit big and are good motivation to keep pushing.</li>
+              <li>Lower values indicate the remaining stops have limited upside and are bad when weighing an early exit.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
     </div>
     {{> dayOfScript}}
   </body>
