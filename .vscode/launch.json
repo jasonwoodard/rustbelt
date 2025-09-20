@@ -15,7 +15,7 @@
         "--lambda", "0.10",
         "--seed", "7",
         "--verbose",
-        "--out", "${workspaceFolder}/out/day-Fri-RX-v2-2025-09-18-T0215.json",
+        "--out", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.json",
         "--kml", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.kml",
         "--csv", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.csv",
         "--html", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.html"

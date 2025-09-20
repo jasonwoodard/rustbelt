@@ -117,3 +117,6 @@ const html = emitHtml(days, runTs, { template });
 ```
 
 Copy and modify the default templates as a starting point.
+
+** Real Itineraries
+[Check out some real trips](itineraries/index.html)
