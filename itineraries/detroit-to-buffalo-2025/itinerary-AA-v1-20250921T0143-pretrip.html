@@ -222,6 +222,9 @@
     .gap-6 {
       gap: 1.5rem;
     }
+    .space-y-1 > * + * {
+      margin-top: 0.25rem;
+    }
     .space-y-2 > * + * {
       margin-top: 0.5rem;
     }
@@ -296,6 +299,15 @@
     .text-3xl {
       font-size: 1.875rem;
       line-height: 2.25rem;
+    }
+    .leading-tight {
+      line-height: 1.25;
+    }
+    .uppercase {
+      text-transform: uppercase;
+    }
+    .tracking-wide {
+      letter-spacing: 0.08em;
     }
     .font-medium {
       font-weight: 500;
@@ -495,6 +507,86 @@
       color: #991b1b;
       text-decoration: line-through;
     }
+    .pending-drop-panel {
+      border: 1px solid rgba(225, 29, 72, 0.25);
+      background: #fef2f2;
+      color: var(--stone-900);
+      box-shadow: 0 12px 24px rgba(190, 18, 60, 0.12);
+    }
+    .pending-drop-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--stone-900);
+    }
+    .pending-drop-subtitle {
+      margin-top: 0.25rem;
+      font-size: 0.875rem;
+      color: var(--stone-600);
+    }
+    .pending-drop-store {
+      margin-top: 1rem;
+      background: #ffffff;
+      border: 1px solid var(--stone-200);
+      border-radius: 0.5rem;
+    }
+    .pending-drop-store .pending-drop-store-name {
+      color: var(--stone-900);
+    }
+    .pending-drop-store .pending-drop-store-status {
+      margin-top: 0.125rem;
+    }
+    .pending-drop-store .pending-drop-store-mean {
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
+    .pending-drop-store .pending-drop-store-metrics {
+      color: var(--stone-600);
+    }
+    .pending-drop-store-schedule {
+      margin-top: 0.75rem;
+      font-size: 0.75rem;
+      color: var(--stone-500);
+    }
+    .pending-drop-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+    }
+    .pending-drop-action {
+      border: none;
+      border-radius: 0.5rem;
+      padding: 0.625rem 1rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 150ms ease, color 150ms ease, box-shadow 150ms ease;
+    }
+    .pending-drop-action:focus-visible {
+      outline-offset: 3px;
+    }
+    .pending-drop-action--danger {
+      background: var(--rose-600);
+      color: #ffffff;
+      box-shadow: 0 12px 24px rgba(190, 18, 60, 0.2);
+    }
+    .pending-drop-action--danger:hover {
+      background: var(--rose-700);
+    }
+    .pending-drop-action--danger:focus-visible {
+      outline: 3px solid rgba(225, 29, 72, 0.45);
+    }
+    .pending-drop-action--secondary {
+      background: #ffffff;
+      border: 1px solid var(--stone-300);
+      color: var(--stone-700);
+      box-shadow: 0 4px 12px rgba(28, 25, 23, 0.08);
+    }
+    .pending-drop-action--secondary:hover {
+      background: var(--stone-100);
+    }
+    .pending-drop-action--secondary:focus-visible {
+      outline: 3px solid rgba(120, 113, 108, 0.45);
+    }
     .recommendation-stay {
       color: #0f766e;
     }
@@ -632,18 +724,18 @@
     }
     </style>
   </head>
-  <body class="text-stone-800" data-active-day-id="Tue">
-    <script id="itinerary-data" type="application/json">{"runTimestamp":"2025-09-21T04:13:22.446Z","runId":"DT-v2","runNote":"Tuesday, Detroit Core (pull ALL must visit)","days":[{"dayId":"Tue","stops":[{"id":"HCGs1","name":"Hollywood Casino Greektown","type":"start","arrive":"09:00","depart":"09:00","lat":42.336873,"lon":-83.0418499},{"id":"RWBT","name":"Red White & Blue Thrift Store","type":"store","arrive":"09:31","depart":"10:01","lat":42.572945446062,"lon":-82.890151473912,"address":"37545 Southbound Gratiot Ave, Clinton Township, MI 48036","dwellMin":30,"legIn":{"fromId":"HCGs1","toId":"RWBT","driveMin":30.945564534961786,"distanceMi":18.051579312061044},"score":4,"tags":["Thrift"]},{"id":"TWL","name":"Time Warp LLC","type":"store","arrive":"10:07","depart":"10:37","lat":42.526049813184,"lon":-82.896065923419,"address":"31336 Harper Ave, St Clair Shores, MI 48082","dwellMin":30,"legIn":{"fromId":"RWBT","toId":"TWL","driveMin":5.578571691126345,"distanceMi":3.254166819823701},"score":4,"tags":["Antique"]},{"id":"VWT-Eastpointe","name":"Value World Thrift","type":"store","arrive":"10:43","depart":"11:13","lat":42.478985165724,"lon":-82.926959459334,"address":"24900 Kelly Rd, Eastpointe, MI 48021","dwellMin":30,"legIn":{"fromId":"TWL","toId":"VWT-Eastpointe","driveMin":6.193131961147832,"distanceMi":3.6126603106695683},"score":4.5,"tags":["Thrift"]},{"id":"VWT-Warren","name":"Value World Thrift","type":"store","arrive":"11:27","depart":"11:57","lat":42.490817636058,"lon":-83.083943979949,"address":"2001 E 11 Mile Rd, Warren, MI 48092","dwellMin":30,"legIn":{"fromId":"VWT-Eastpointe","toId":"VWT-Warren","driveMin":13.783936524793697,"distanceMi":8.04062963946299},"score":4.1,"tags":["Thrift"]},{"id":"VogueVint","name":"Vogue Vintage","type":"store","arrive":"12:01","depart":"12:31","lat":42.465465383937,"lon":-83.12332615312,"address":"2141 Hilton Rd, Ferndale, MI 48220","dwellMin":30,"legIn":{"fromId":"VWT-Warren","toId":"VogueVint","driveMin":4.566576039401998,"distanceMi":2.6638360229844986},"score":4,"tags":["Thrift"]},{"id":"VWT-OakPark","name":"Value World Thrift","type":"store","arrive":"12:36","depart":"13:06","lat":42.457659382447,"lon":-83.181801001668,"address":"22130 Coolidge Hwy, Oak Park, MI 48237","dwellMin":30,"legIn":{"fromId":"VogueVint","toId":"VWT-OakPark","driveMin":5.192626958830507,"distanceMi":3.0290323926511293},"score":4,"tags":["Thrift"]},{"id":"VWT-Southfield","name":"Value World Thrift","type":"store","arrive":"13:16","depart":"13:46","lat":42.442742196635,"lon":-83.295836478484,"address":"25646 Eight Mile W, Southfield, MI 48033","dwellMin":30,"legIn":{"fromId":"VWT-OakPark","toId":"VWT-Southfield","driveMin":10.121861259193796,"distanceMi":5.9044190678630475},"score":4.5,"tags":["Thrift"]},{"id":"VMDV","name":"V-Male Detroit Vintage","type":"store","arrive":"14:07","depart":"14:37","lat":42.269215142856,"lon":-83.268896777462,"address":"23902 Van Born Rd, Dearborn Heights, MI 48125","dwellMin":30,"legIn":{"fromId":"VWT-Southfield","toId":"VMDV","driveMin":20.688579875204223,"distanceMi":12.068338260535796},"score":4.1,"tags":["Vintage"]},{"id":"VWT-Taylor","name":"Value World Thrift","type":"store","arrive":"14:39","depart":"15:09","lat":42.255786246719,"lon":-83.256431414123,"address":"22615 Ecorse Rd, Taylor, MI 48180","dwellMin":30,"legIn":{"fromId":"VMDV","toId":"VWT-Taylor","driveMin":1.9297802408419824,"distanceMi":1.1257051404911564},"score":3.9,"tags":["Thrift"]},{"id":"MCAG","name":"Motor City Antique Gallery","type":"store","arrive":"15:31","depart":"16:01","lat":42.073186243077,"lon":-83.309260852639,"address":"13431 Telegraph Rd, Flat Rock, MI 48134","dwellMin":30,"legIn":{"fromId":"VWT-Taylor","toId":"MCAG","driveMin":22.12016001343562,"distanceMi":12.903426674504113},"score":4,"tags":["Antique"]},{"id":"VWT-Southgate","name":"Value World Thrift","type":"store","arrive":"16:21","depart":"16:51","lat":42.219891152932,"lon":-83.193964111776,"address":"12125 Dix Toledo Rd, Southgate, MI 48195","dwellMin":30,"legIn":{"fromId":"MCAG","toId":"VWT-Southgate","driveMin":20.11156770858995,"distanceMi":11.731747830010804},"score":3.8,"tags":["Thrift"]},{"id":"FV","name":"Flamingo Vintage","type":"store","arrive":"17:05","depart":"17:35","lat":42.318117771122,"lon":-83.100947517187,"address":"5449 Vernor W, Detroit, MI 48209","dwellMin":30,"legIn":{"fromId":"VWT-Southgate","toId":"FV","driveMin":14.20687124632982,"distanceMi":8.287341560359062},"score":3.8,"tags":["Vintage"]},{"id":"HCGe1","name":"Hollywood Casino Greektown","type":"end","arrive":"17:41","depart":"17:41","lat":42.336873,"lon":-83.0418499,"legIn":{"fromId":"FV","toId":"HCGe1","driveMin":5.631768988378376,"distanceMi":3.2851985765540523}}],"excluded":[{"id":"CAE","reason":"timeWindow","nearestAlternateId":"VWT-Warren"},{"id":"CATTF","reason":"timeWindow","nearestAlternateId":"RWBT"},{"id":"CR","reason":"timeWindow","nearestAlternateId":"VWT-OakPark"},{"id":"DFM","reason":"timeWindow","nearestAlternateId":"VWT-Southfield"},{"id":"EUR","reason":"timeWindow","nearestAlternateId":"VWT-Southfield"},{"id":"FCFIA","reason":"timeWindow","nearestAlternateId":"VWT-Eastpointe"},{"id":"FTRS","reason":"timeWindow","nearestAlternateId":"VWT-Southfield"},{"id":"GCOHT","reason":"timeWindow","nearestAlternateId":"VWT-OakPark"},{"id":"GSADL","reason":"timeWindow","nearestAlternateId":"VWT-Southfield"},{"id":"LAFV","reason":"timeWindow","nearestAlternateId":"VogueVint"},{"id":"MA","reason":"timeWindow","nearestAlternateId":"RWBT"},{"id":"ODTS","reason":"timeWindow","nearestAlternateId":"VWT-Southfield"},{"id":"OFA","reason":"timeWindow","nearestAlternateId":"VWT-OakPark"},{"id":"PACM","reason":"timeWindow","nearestAlternateId":"VWT-Southgate"},{"id":"RIAVA","reason":"timeWindow","nearestAlternateId":"FV"},{"id":"RR","reason":"timeWindow","nearestAlternateId":"VogueVint"},{"id":"SAL","reason":"timeWindow","nearestAlternateId":"VWT-Warren"},{"id":"SVDPT","reason":"timeWindow","nearestAlternateId":"VWT-Southfield"},{"id":"TSAFSAH","reason":"timeWindow","nearestAlternateId":"VWT-OakPark"},{"id":"TSAFSRO","reason":"timeWindow","nearestAlternateId":"VogueVint"},{"id":"TSAFSWB","reason":"timeWindow","nearestAlternateId":"VWT-Southfield"},{"id":"VA","reason":"timeWindow","nearestAlternateId":"VMDV"},{"id":"VEML","reason":"timeWindow","nearestAlternateId":"FV"},{"id":"VVACV","reason":"timeWindow","nearestAlternateId":"VWT-Southfield"}],"metrics":{"storeCount":28,"storesVisited":12,"visitedIds":["RWBT","TWL","VWT-Eastpointe","VWT-Warren","VogueVint","VWT-OakPark","VWT-Southfield","VMDV","VWT-Taylor","MCAG","VWT-Southgate","FV"],"totalScore":48.699999999999996,"scorePerStore":4.058333333333333,"scorePerMin":0.09346135224650119,"scorePerDriveMin":0.30235114262830265,"scorePerMile":0.5183162445056617,"totalDriveMin":161.07099704223594,"totalDwellMin":360,"slackMin":18.92900295776394,"totalDistanceMiles":93.95808160797097,"onTimeRisk":0}}]}</script>
+  <body class="text-stone-800" data-active-day-id="Mon">
+    <script id="itinerary-data" type="application/json">{"runTimestamp":"2025-09-21T05:43:54.854Z","runId":"AA-v1","runNote":"Ann Arbor TS go long (manual TS firstStopLock)","days":[{"dayId":"Mon","stops":[{"id":"HCGs1","name":"Hollywood Casino Greektown","type":"start","arrive":"09:00","depart":"09:00","lat":42.336873,"lon":-83.0418499},{"id":"TS","name":"The ShareHouse","type":"store","arrive":"10:09","depart":"10:39","lat":42.28746620984,"lon":-83.830718044144,"address":"5161 Jackson Rd, Ann Arbor, MI 48103","dwellMin":30,"legIn":{"fromId":"HCGs1","toId":"TS","driveMin":69.3442113611251,"distanceMi":40.45078996065631},"score":5,"tags":["must-visit","Thrift"]},{"id":"RAGS","name":"Ragstock","type":"store","arrive":"10:47","depart":"11:17","lat":42.279535758164,"lon":-83.7453166195,"address":"337 E Liberty St, Ann Arbor, MI 48104","dwellMin":30,"legIn":{"fromId":"TS","toId":"RAGS","driveMin":7.542452050594691,"distanceMi":4.399763696180236},"score":4,"tags":["Vintage"]},{"id":"TSAFS","name":"The Salvation Army Family Store & Donation Center","type":"store","arrive":"11:19","depart":"11:49","lat":42.261142020686,"lon":-83.740301350218,"address":"1621 S State St, Ann Arbor, MI 48104","dwellMin":30,"legIn":{"fromId":"RAGS","toId":"TSAFS","driveMin":2.2225867582091015,"distanceMi":1.2965089422886424},"score":3.7,"tags":["Thrift"]},{"id":"AATS","name":"Ann Arbor Thrift Shop","type":"store","arrive":"11:54","depart":"12:24","lat":42.255689991053,"lon":-83.690434090721,"address":"3500 Washtenaw Ave K, Ann Arbor, MI 48104","dwellMin":30,"legIn":{"fromId":"TSAFS","toId":"AATS","driveMin":4.419049667099438,"distanceMi":2.5777789724746722},"score":3.5,"tags":["Thrift"]},{"id":"SCR","name":"SCRAP Creative Reuse","type":"store","arrive":"12:25","depart":"12:55","lat":42.252675241419,"lon":-83.673510381064,"address":"4567 Washtenaw Ave, Ann Arbor, MI 48108","dwellMin":30,"legIn":{"fromId":"AATS","toId":"SCR","driveMin":1.5260810702852947,"distanceMi":0.8902139576664219},"score":3.8,"tags":["Thrift"]},{"id":"VWT9","name":"Value World Thrift","type":"store","arrive":"13:03","depart":"13:33","lat":42.245572221237,"lon":-83.582547913813,"address":"1410 E Michigan Ave, Ypsilanti, MI 48198","dwellMin":30,"legIn":{"fromId":"SCR","toId":"VWT9","driveMin":8.019646681019639,"distanceMi":4.678127230594789},"score":4,"tags":["Thrift"]},{"id":"TSAFSCT","name":"The Salvation Army Family Store & Donation Center","type":"store","arrive":"13:49","depart":"14:19","lat":42.351439786378,"lon":-83.469170034323,"address":"43403 Joy Rd, Canton Township, MI 48187","dwellMin":30,"legIn":{"fromId":"VWT9","toId":"TSAFSCT","driveMin":15.997101359225267,"distanceMi":9.331642459548073},"score":3.7,"tags":["Thrift"]},{"id":"TBIN","name":"The Barn in Northville","type":"store","arrive":"14:30","depart":"15:00","lat":42.436301752318,"lon":-83.519719175565,"address":"48120 Eight Mile W, Northville, MI 48167","dwellMin":30,"legIn":{"fromId":"TSAFSCT","toId":"TBIN","driveMin":10.981274992994765,"distanceMi":6.405743745913613},"score":3.8,"tags":["Antique"]},{"id":"TPCAA","name":"Town Peddler Craft and Antique Mall","type":"store","arrive":"15:14","depart":"15:44","lat":42.367865594867,"lon":-83.391025127892,"address":"35323 Plymouth Rd, Livonia, MI 48150","dwellMin":30,"legIn":{"fromId":"TBIN","toId":"TPCAA","driveMin":13.871211417514735,"distanceMi":8.091539993550262},"score":4,"tags":["must-visit","Antique"]},{"id":"VWT-Westland","name":"Value World Thrift","type":"store","arrive":"15:47","depart":"16:17","lat":42.343181412273,"lon":-83.388254959552,"address":"35300 Central City Pkwy, Westland, MI 48185","dwellMin":30,"legIn":{"fromId":"TPCAA","toId":"VWT-Westland","driveMin":2.9338049058073223,"distanceMi":1.7113861950542713},"score":4,"tags":["Thrift"]},{"id":"HCGe1","name":"Hollywood Casino Greektown","type":"end","arrive":"16:47","depart":"16:47","lat":42.336873,"lon":-83.0418499,"legIn":{"fromId":"VWT-Westland","toId":"HCGe1","driveMin":30.33742564206288,"distanceMi":17.696831624536678}}],"excluded":[{"id":"AAPTS","reason":"timeWindow","nearestAlternateId":"TSAFS"},{"id":"AAV","reason":"timeWindow","nearestAlternateId":"VWT9"},{"id":"CAM","reason":"timeWindow","nearestAlternateId":"TS"},{"id":"CCA","reason":"timeWindow","nearestAlternateId":"SCR"},{"id":"FASV","reason":"timeWindow","nearestAlternateId":"VWT9"},{"id":"FKVV","reason":"timeWindow","nearestAlternateId":"TSAFSCT"},{"id":"GIOSM","reason":"timeWindow","nearestAlternateId":"TSAFS"},{"id":"GSADC","reason":"timeWindow","nearestAlternateId":"TSAFSCT"},{"id":"GSADY","reason":"timeWindow","nearestAlternateId":"SCR"},{"id":"JMA","reason":"timeWindow","nearestAlternateId":"VWT9"},{"id":"KTS","reason":"timeWindow","nearestAlternateId":"TS"},{"id":"LHAAR","reason":"timeWindow","nearestAlternateId":"VWT9"},{"id":"NARS","reason":"timeWindow","nearestAlternateId":"TSAFS"},{"id":"PTS","reason":"timeWindow","nearestAlternateId":"TSAFSCT"},{"id":"SCA","reason":"timeWindow","nearestAlternateId":"VWT9"},{"id":"TGV","reason":"timeWindow","nearestAlternateId":"RAGS"},{"id":"TTD","reason":"timeWindow","nearestAlternateId":"VWT9"}],"metrics":{"storeCount":16,"storesVisited":10,"visitedIds":["TS","RAGS","TSAFS","AATS","SCR","VWT9","TSAFSCT","TBIN","TPCAA","VWT-Westland"],"totalScore":39.5,"scorePerStore":3.95,"scorePerMin":0.08454716559084784,"scorePerDriveMin":0.2362513018028212,"scorePerMile":0.4050022316619792,"totalDriveMin":167.19484590593825,"totalDwellMin":300,"slackMin":12.805154094062118,"totalDistanceMiles":97.53032677846397,"onTimeRisk":0}}]}</script>
     <div class="container mx-auto p-4 md:p-6 lg:p-8">
       <header class="mb-6">
         <h1 class="text-3xl font-bold text-stone-900">Rust Belt Bandit Planner</h1>
         <div id="run-info" class="text-stone-600 mt-1 text-sm space-x-0">
           <span class="font-semibold">Run ID:</span>
-          <span class="ml-1">DT-v2</span>
-          <span class="ml-2 text-stone-500">Tuesday, Detroit Core (pull ALL must visit)</span>
+          <span class="ml-1">AA-v1</span>
+          <span class="ml-2 text-stone-500">Ann Arbor TS go long (manual TS firstStopLock)</span>
         </div>
-        <p class="text-xs text-stone-500 mt-1">Generated 2025-09-21T04:13:22.446Z</p>
-        <p id="active-day-label" class="text-sm text-stone-600 mt-2">Day Tue</p>
+        <p class="text-xs text-stone-500 mt-1">Generated 2025-09-21T05:43:54.854Z</p>
+        <p id="active-day-label" class="text-sm text-stone-600 mt-2">Day Mon</p>
       </header>
       <main class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <section class="lg:col-span-1 bg-white p-4 rounded-lg shadow-sm">
@@ -651,13 +743,28 @@
           <div id="itinerary-list" class="space-y-2">
             <div
               class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="RWBT"
+              data-stop-id="TS"
               data-stop-type="store"
             >
               <div class="flex justify-between items-start">
                 <div>
-                  <p class="font-semibold">Red White &amp; Blue Thrift Store</p>
-                  <p class="text-xs text-stone-500">09:31 – 10:01</p>
+                  <p class="font-semibold">The ShareHouse</p>
+                  <p class="text-xs text-stone-500">10:09 – 10:39</p>
+                </div>
+                <div class="text-right">
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">5.0</p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="p-3 rounded-md shadow-sm status-tovisit"
+              data-stop-id="RAGS"
+              data-stop-type="store"
+            >
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="font-semibold">Ragstock</p>
+                  <p class="text-xs text-stone-500">10:47 – 11:17</p>
                 </div>
                 <div class="text-right">
                   <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.0</p>
@@ -666,148 +773,43 @@
             </div>
             <div
               class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="TWL"
+              data-stop-id="TSAFS"
               data-stop-type="store"
             >
               <div class="flex justify-between items-start">
                 <div>
-                  <p class="font-semibold">Time Warp LLC</p>
-                  <p class="text-xs text-stone-500">10:07 – 10:37</p>
+                  <p class="font-semibold">The Salvation Army Family Store &amp; Donation Center</p>
+                  <p class="text-xs text-stone-500">11:19 – 11:49</p>
                 </div>
                 <div class="text-right">
-                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.0</p>
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">3.7</p>
                 </div>
               </div>
             </div>
             <div
               class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="VWT-Eastpointe"
+              data-stop-id="AATS"
               data-stop-type="store"
             >
               <div class="flex justify-between items-start">
                 <div>
-                  <p class="font-semibold">Value World Thrift</p>
-                  <p class="text-xs text-stone-500">10:43 – 11:13</p>
+                  <p class="font-semibold">Ann Arbor Thrift Shop</p>
+                  <p class="text-xs text-stone-500">11:54 – 12:24</p>
                 </div>
                 <div class="text-right">
-                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.5</p>
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">3.5</p>
                 </div>
               </div>
             </div>
             <div
               class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="VWT-Warren"
+              data-stop-id="SCR"
               data-stop-type="store"
             >
               <div class="flex justify-between items-start">
                 <div>
-                  <p class="font-semibold">Value World Thrift</p>
-                  <p class="text-xs text-stone-500">11:27 – 11:57</p>
-                </div>
-                <div class="text-right">
-                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.1</p>
-                </div>
-              </div>
-            </div>
-            <div
-              class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="VogueVint"
-              data-stop-type="store"
-            >
-              <div class="flex justify-between items-start">
-                <div>
-                  <p class="font-semibold">Vogue Vintage</p>
-                  <p class="text-xs text-stone-500">12:01 – 12:31</p>
-                </div>
-                <div class="text-right">
-                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.0</p>
-                </div>
-              </div>
-            </div>
-            <div
-              class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="VWT-OakPark"
-              data-stop-type="store"
-            >
-              <div class="flex justify-between items-start">
-                <div>
-                  <p class="font-semibold">Value World Thrift</p>
-                  <p class="text-xs text-stone-500">12:36 – 13:06</p>
-                </div>
-                <div class="text-right">
-                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.0</p>
-                </div>
-              </div>
-            </div>
-            <div
-              class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="VWT-Southfield"
-              data-stop-type="store"
-            >
-              <div class="flex justify-between items-start">
-                <div>
-                  <p class="font-semibold">Value World Thrift</p>
-                  <p class="text-xs text-stone-500">13:16 – 13:46</p>
-                </div>
-                <div class="text-right">
-                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.5</p>
-                </div>
-              </div>
-            </div>
-            <div
-              class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="VMDV"
-              data-stop-type="store"
-            >
-              <div class="flex justify-between items-start">
-                <div>
-                  <p class="font-semibold">V-Male Detroit Vintage</p>
-                  <p class="text-xs text-stone-500">14:07 – 14:37</p>
-                </div>
-                <div class="text-right">
-                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.1</p>
-                </div>
-              </div>
-            </div>
-            <div
-              class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="VWT-Taylor"
-              data-stop-type="store"
-            >
-              <div class="flex justify-between items-start">
-                <div>
-                  <p class="font-semibold">Value World Thrift</p>
-                  <p class="text-xs text-stone-500">14:39 – 15:09</p>
-                </div>
-                <div class="text-right">
-                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">3.9</p>
-                </div>
-              </div>
-            </div>
-            <div
-              class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="MCAG"
-              data-stop-type="store"
-            >
-              <div class="flex justify-between items-start">
-                <div>
-                  <p class="font-semibold">Motor City Antique Gallery</p>
-                  <p class="text-xs text-stone-500">15:31 – 16:01</p>
-                </div>
-                <div class="text-right">
-                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.0</p>
-                </div>
-              </div>
-            </div>
-            <div
-              class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="VWT-Southgate"
-              data-stop-type="store"
-            >
-              <div class="flex justify-between items-start">
-                <div>
-                  <p class="font-semibold">Value World Thrift</p>
-                  <p class="text-xs text-stone-500">16:21 – 16:51</p>
+                  <p class="font-semibold">SCRAP Creative Reuse</p>
+                  <p class="text-xs text-stone-500">12:25 – 12:55</p>
                 </div>
                 <div class="text-right">
                   <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">3.8</p>
@@ -816,16 +818,76 @@
             </div>
             <div
               class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="FV"
+              data-stop-id="VWT9"
               data-stop-type="store"
             >
               <div class="flex justify-between items-start">
                 <div>
-                  <p class="font-semibold">Flamingo Vintage</p>
-                  <p class="text-xs text-stone-500">17:05 – 17:35</p>
+                  <p class="font-semibold">Value World Thrift</p>
+                  <p class="text-xs text-stone-500">13:03 – 13:33</p>
+                </div>
+                <div class="text-right">
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.0</p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="p-3 rounded-md shadow-sm status-tovisit"
+              data-stop-id="TSAFSCT"
+              data-stop-type="store"
+            >
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="font-semibold">The Salvation Army Family Store &amp; Donation Center</p>
+                  <p class="text-xs text-stone-500">13:49 – 14:19</p>
+                </div>
+                <div class="text-right">
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">3.7</p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="p-3 rounded-md shadow-sm status-tovisit"
+              data-stop-id="TBIN"
+              data-stop-type="store"
+            >
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="font-semibold">The Barn in Northville</p>
+                  <p class="text-xs text-stone-500">14:30 – 15:00</p>
                 </div>
                 <div class="text-right">
                   <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">3.8</p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="p-3 rounded-md shadow-sm status-tovisit"
+              data-stop-id="TPCAA"
+              data-stop-type="store"
+            >
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="font-semibold">Town Peddler Craft and Antique Mall</p>
+                  <p class="text-xs text-stone-500">15:14 – 15:44</p>
+                </div>
+                <div class="text-right">
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.0</p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="p-3 rounded-md shadow-sm status-tovisit"
+              data-stop-id="VWT-Westland"
+              data-stop-type="store"
+            >
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="font-semibold">Value World Thrift</p>
+                  <p class="text-xs text-stone-500">15:47 – 16:17</p>
+                </div>
+                <div class="text-right">
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.0</p>
                 </div>
               </div>
             </div>
@@ -833,22 +895,20 @@
           <noscript>
             <div class="mt-4 space-y-3 text-sm text-stone-600">
               <div>
-                <p class="font-semibold">Day Tue</p>
+                <p class="font-semibold">Day Mon</p>
                 <ul class="list-disc list-inside text-xs text-stone-500">
                   <li>09:00 – 09:00 · Hollywood Casino Greektown (start)</li>
-                  <li>09:31 – 10:01 · Red White &amp; Blue Thrift Store (store)</li>
-                  <li>10:07 – 10:37 · Time Warp LLC (store)</li>
-                  <li>10:43 – 11:13 · Value World Thrift (store)</li>
-                  <li>11:27 – 11:57 · Value World Thrift (store)</li>
-                  <li>12:01 – 12:31 · Vogue Vintage (store)</li>
-                  <li>12:36 – 13:06 · Value World Thrift (store)</li>
-                  <li>13:16 – 13:46 · Value World Thrift (store)</li>
-                  <li>14:07 – 14:37 · V-Male Detroit Vintage (store)</li>
-                  <li>14:39 – 15:09 · Value World Thrift (store)</li>
-                  <li>15:31 – 16:01 · Motor City Antique Gallery (store)</li>
-                  <li>16:21 – 16:51 · Value World Thrift (store)</li>
-                  <li>17:05 – 17:35 · Flamingo Vintage (store)</li>
-                  <li>17:41 – 17:41 · Hollywood Casino Greektown (end)</li>
+                  <li>10:09 – 10:39 · The ShareHouse (store)</li>
+                  <li>10:47 – 11:17 · Ragstock (store)</li>
+                  <li>11:19 – 11:49 · The Salvation Army Family Store &amp; Donation Center (store)</li>
+                  <li>11:54 – 12:24 · Ann Arbor Thrift Shop (store)</li>
+                  <li>12:25 – 12:55 · SCRAP Creative Reuse (store)</li>
+                  <li>13:03 – 13:33 · Value World Thrift (store)</li>
+                  <li>13:49 – 14:19 · The Salvation Army Family Store &amp; Donation Center (store)</li>
+                  <li>14:30 – 15:00 · The Barn in Northville (store)</li>
+                  <li>15:14 – 15:44 · Town Peddler Craft and Antique Mall (store)</li>
+                  <li>15:47 – 16:17 · Value World Thrift (store)</li>
+                  <li>16:47 – 16:47 · Hollywood Casino Greektown (end)</li>
                 </ul>
               </div>
             </div>
@@ -1171,6 +1231,9 @@
         log: [],
         dayId: null,
         pendingDrop: null,
+        awaitingAdvance: false,
+        activeDecisionStopId: null,
+        lastRecommendation: null,
         mqaMap: {
           Bust: 0.0,
           Average: 3.5,
@@ -1312,6 +1375,7 @@
         renderItineraryList(currentStop);
         renderCurrentStore(currentStop);
         renderTripLog();
+        refreshRecommendationDisplay();
       }
     
       function calculateMetrics(excludeId) {
@@ -1385,7 +1449,11 @@
         if (!container) return;
         container.innerHTML = '';
         appState.stops.forEach((stop, index) => {
-          const isCurrent = currentStop && stop.id === currentStop.id && stop.status === 'tovisit';
+          const awaitingStopId = appState.awaitingAdvance ? appState.activeDecisionStopId : null;
+          const isAwaitingCurrent =
+            awaitingStopId != null && String(stop.id) === String(awaitingStopId);
+          const isCurrent =
+            (currentStop && stop.id === currentStop.id && stop.status === 'tovisit') || isAwaitingCurrent;
           const div = document.createElement('div');
           div.id = `row-${stop.id}`;
           div.className = `p-3 rounded-md transition-all duration-300 ease-in-out status-${stop.status} ${
@@ -1440,7 +1508,12 @@
         const form = document.getElementById('mqa-form');
         if (!nameEl || !form) return;
     
-        if (!currentStop || currentStop.status !== 'tovisit') {
+        const awaitingCurrent =
+          appState.awaitingAdvance &&
+          currentStop &&
+          String(currentStop.id) === String(appState.activeDecisionStopId);
+    
+        if (!currentStop || (currentStop.status !== 'tovisit' && !awaitingCurrent)) {
           nameEl.textContent = 'Trip Complete!';
           form.style.display = 'none';
           setText('timeline-arrive-time', '--:--');
@@ -1448,11 +1521,12 @@
           return;
         }
     
-        form.style.display = 'block';
-        nameEl.textContent = currentStop.name;
-        if (currentStop.mapsUrl) {
-          nameEl.innerHTML = `<a class="store-link" href="${currentStop.mapsUrl}" target="_blank" rel="noopener noreferrer">${currentStop.name}</a>`;
-        }
+        form.style.display = awaitingCurrent ? 'none' : 'block';
+    
+        const nameMarkup = currentStop.mapsUrl
+          ? `<a class="store-link" href="${currentStop.mapsUrl}" target="_blank" rel="noopener noreferrer">${currentStop.name}</a>`
+          : currentStop.name;
+        nameEl.innerHTML = nameMarkup;
     
         const [arriveH, arriveM] = currentStop.arrive.split(':').map(Number);
         const mqaTime = new Date();
@@ -1504,6 +1578,15 @@
         container.scrollTop = container.scrollHeight;
       }
     
+      function refreshRecommendationDisplay() {
+        if (!appState.lastRecommendation) {
+          return;
+        }
+    
+        const { recommendation, meta, currentPosterior, poolPosterior } = appState.lastRecommendation;
+        updateRecommendationDisplay(recommendation, meta, currentPosterior, poolPosterior);
+      }
+    
       function processDecision(mqaKey) {
         const currentStop = appState.stops[appState.currentIndex];
         if (!currentStop) return;
@@ -1525,19 +1608,35 @@
           mqaValue,
         );
         const recommendation = decisionMeta.decision;
+        const posteriorSummary = serializePosterior(currentStop.posterior);
+        const poolSummary = poolPosterior ? serializePool(poolPosterior) : null;
+        const recommendationMeta = { ...decisionMeta };
     
-        updateRecommendationDisplay(recommendation, decisionMeta, currentStop.posterior, poolPosterior);
+        appState.lastRecommendation = {
+          recommendation,
+          meta: recommendationMeta,
+          currentPosterior: posteriorSummary,
+          poolPosterior: poolSummary,
+        };
+    
+        updateRecommendationDisplay(recommendation, recommendationMeta, posteriorSummary, poolSummary);
     
         currentStop.mqa = mqaKey;
         currentStop.mqaValue = mqaValue;
         currentStop.decision = recommendation;
         currentStop.decisionReason = decisionMeta.reason;
         currentStop.status = 'visited';
-        currentStop.posteriorSummary = serializePosterior(currentStop.posterior);
-        currentStop.posteriorSummary.diff = decisionMeta.diff;
-        currentStop.posteriorSummary.zScore = decisionMeta.zScore;
-        currentStop.posteriorSummary.currentUcb = decisionMeta.currentUcb ?? null;
-        currentStop.posteriorSummary.remainingUcb = decisionMeta.remainingUcb ?? null;
+        currentStop.posteriorSummary = {
+          ...posteriorSummary,
+          diff: decisionMeta.diff,
+          zScore: decisionMeta.zScore,
+          currentUcb: decisionMeta.currentUcb ?? null,
+          remainingUcb: decisionMeta.remainingUcb ?? null,
+        };
+    
+        const shouldPauseBeforeAdvancing = recommendation === 'Stay' && mqaKey === 'Exceptional';
+        appState.awaitingAdvance = shouldPauseBeforeAdvancing;
+        appState.activeDecisionStopId = shouldPauseBeforeAdvancing ? currentStop.id : null;
     
         appState.log.push({
           name: currentStop.name,
@@ -1551,8 +1650,8 @@
           currentUcb: decisionMeta.currentUcb ?? null,
           remainingUcb: decisionMeta.remainingUcb ?? null,
           observationCount: decisionMeta.observationCount ?? null,
-          posterior: serializePosterior(currentStop.posterior),
-          pool: serializePool(poolPosterior),
+          posterior: posteriorSummary,
+          pool: poolSummary ?? serializePool(poolPosterior),
           timestamp: new Date().toISOString(),
         });
     
@@ -1608,6 +1707,13 @@
             const posteriorStd = pendingStop.posterior
               ? pendingStop.posterior.std.toFixed(2)
               : '0.00';
+            const initialScore = formatScore(pendingStop.score);
+            const statusLabel =
+              pendingStop.status === 'visited'
+                ? `Visited – ${pendingStop.mqa ?? 'n/a'}`
+                : pendingStop.status === 'dropped'
+                ? 'Dropped'
+                : 'To Visit';
             const scheduleParts = [];
             if (pendingStop.arrive) {
               scheduleParts.push(`Arrive ${pendingStop.arrive}`);
@@ -1615,35 +1721,51 @@
             if (pendingStop.depart) {
               scheduleParts.push(`Depart ${pendingStop.depart}`);
             }
-            const scheduleLine =
+            const scheduleMarkup =
               scheduleParts.length > 0
-                ? `<p class="text-xs text-amber-800 mt-1">${scheduleParts.join(' · ')}</p>`
+                ? `<p class="pending-drop-store-schedule">${scheduleParts.join(' · ')}</p>`
                 : '';
+            const storeSummaryMarkup = `
+              <div class="pending-drop-store p-3 rounded-md shadow-sm">
+                <div class="flex justify-between items-start gap-3">
+                  <div>
+                    <p class="font-semibold pending-drop-store-name">${nameMarkup}</p>
+                    <p class="text-xs text-stone-500 pending-drop-store-status">${statusLabel}</p>
+                  </div>
+                  <div class="flex flex-col items-end text-right gap-2">
+                    <div class="text-right">
+                      <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded pending-drop-store-mean">${posteriorMean}</p>
+                      <div class="mt-2 space-y-1 leading-tight pending-drop-store-metrics">
+                        <p class="text-xs uppercase tracking-wide text-stone-600">Uncertainty&nbsp;:&nbsp;±${posteriorStd}</p>
+                        <p class="text-xs uppercase tracking-wide text-stone-600">Initial Score&nbsp;:&nbsp;${initialScore}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                ${scheduleMarkup}
+              </div>
+            `;
     
             pendingDropMarkup = `
-          <div class="pending-drop-panel mt-4 rounded-lg border border-amber-200 bg-amber-50 p-4 text-amber-900">
-            <p class="font-semibold">Extend your stay?</p>
-            <p class="mt-1 text-sm">Drop the lowest-rated remaining store to stay longer.</p>
-            <div class="mt-2 text-sm">
-              <p class="font-medium">${nameMarkup}</p>
-              <p class="text-xs text-amber-800">Posterior μ=${posteriorMean} σ=${posteriorStd}</p>
-              ${scheduleLine}
-            </div>
-            <div class="mt-3 flex flex-wrap gap-2">
+          <div class="pending-drop-panel mt-4 rounded-lg p-4">
+            <p class="pending-drop-title">Extend your stay?</p>
+            <p class="pending-drop-subtitle">Drop the lowest-rated remaining store to stay longer.</p>
+            ${storeSummaryMarkup}
+            <div class="pending-drop-actions">
               <button
                 type="button"
-                class="pending-drop-confirm rounded-md bg-amber-600 px-3 py-2 text-sm font-semibold text-white shadow hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-1"
+                class="pending-drop-action pending-drop-action--danger"
                 data-action="confirm-pending-drop"
                 data-stop-id="${pendingStop.id}"
               >
-                Drop this store
+                Drop store?
               </button>
               <button
                 type="button"
-                class="pending-drop-cancel rounded-md border border-amber-400 px-3 py-2 text-sm font-semibold text-amber-900 hover:bg-amber-100 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-1"
+                class="pending-drop-action pending-drop-action--secondary"
                 data-action="cancel-pending-drop"
               >
-                Keep all future stores
+                Do NOT Drop
               </button>
             </div>
           </div>
@@ -1653,6 +1775,29 @@
           }
         }
     
+        let advanceControlsMarkup = '';
+        const awaitingAdvance = appState.awaitingAdvance && appState.activeDecisionStopId != null;
+        if (awaitingAdvance) {
+          const nextDisabled = !!appState.pendingDrop;
+          const disabledAttr = nextDisabled ? 'disabled aria-disabled="true"' : '';
+          const baseButtonClass =
+            'next-store-button rounded-md px-3 py-2 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-offset-1';
+          const buttonClass = nextDisabled
+            ? `${baseButtonClass} bg-stone-300 text-stone-500 cursor-not-allowed focus:ring-stone-300`
+            : `${baseButtonClass} bg-teal-600 text-white shadow hover:bg-teal-700 focus:ring-teal-500`;
+          const helperText = nextDisabled
+            ? '<p class="text-xs text-stone-500">Resolve the drop decision before continuing.</p>'
+            : '';
+          advanceControlsMarkup = `
+            <div class="mt-4 flex flex-col gap-2">
+              <button type="button" class="${buttonClass}" data-action="advance-after-decision" ${disabledAttr}>
+                Next store
+              </button>
+              ${helperText}
+            </div>
+          `;
+        }
+    
         const baseMarkup = `
           <p class="text-lg font-medium">Recommendation:</p>
           <p class="text-3xl font-bold recommendation-${recommendation.toLowerCase()}">${recommendation.toUpperCase()}</p>
@@ -1660,7 +1805,7 @@
           <p class="text-xs text-stone-500">${summaryLine}</p>
         `;
     
-        display.innerHTML = `${baseMarkup}${pendingDropMarkup}`;
+        display.innerHTML = `${baseMarkup}${pendingDropMarkup}${advanceControlsMarkup}`;
     
         if (pendingDropMarkup) {
           const confirmButton = display.querySelector('[data-action="confirm-pending-drop"]');
@@ -1670,6 +1815,12 @@
           const cancelButton = display.querySelector('[data-action="cancel-pending-drop"]');
           if (cancelButton) {
             cancelButton.addEventListener('click', cancelPendingDrop);
+          }
+        }
+        if (advanceControlsMarkup) {
+          const advanceButton = display.querySelector('[data-action="advance-after-decision"]');
+          if (advanceButton) {
+            advanceButton.addEventListener('click', handleAdvanceAfterDecision);
           }
         }
       }
@@ -1759,7 +1910,7 @@
         }
     
         appState.pendingDrop = null;
-        advanceToNextStore();
+        renderAll();
       }
     
       function cancelPendingDrop() {
@@ -1768,10 +1919,23 @@
         }
     
         appState.pendingDrop = null;
+        renderAll();
+      }
+    
+      function handleAdvanceAfterDecision() {
+        if (appState.pendingDrop) {
+          return;
+        }
+    
         advanceToNextStore();
       }
     
       function advanceToNextStore() {
+        appState.pendingDrop = null;
+        appState.awaitingAdvance = false;
+        appState.activeDecisionStopId = null;
+        appState.lastRecommendation = null;
+    
         let nextIndex = appState.currentIndex + 1;
         while (nextIndex < appState.stops.length && appState.stops[nextIndex].status !== 'tovisit') {
           nextIndex += 1;
@@ -1839,12 +2003,13 @@
             if (!dropResult) {
               if (matchedPendingDrop) {
                 appState.pendingDrop = null;
-                advanceToNextStore();
+                renderAll();
               }
               return;
             }
             if (matchedPendingDrop) {
-              advanceToNextStore();
+              appState.pendingDrop = null;
+              renderAll();
             } else if (dropResult.index === appState.currentIndex) {
               advanceToNextStore();
             } else {
