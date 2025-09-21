@@ -199,12 +199,12 @@
             <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">${posteriorMean}</p>
             <div class="mt-2 space-y-1 leading-tight">
               <div>
-                <p class="text-[10px] uppercase tracking-wide text-stone-400">Uncertainty</p>
-                <p class="text-xs text-stone-600">±${posteriorStd}</p>
+                <p class="text-xs uppercase tracking-wide text-stone-600">
+                  Uncertainty&nbsp;:&nbsp;±${posteriorStd}</p>
               </div>
               <div>
-                <p class="text-[10px] uppercase tracking-wide text-stone-400">Initial Score</p>
-                <p class="text-xs text-stone-600">${initialScore}</p>
+                <p class="text-xs uppercase tracking-wide text-stone-600">
+                  Initial Score&nbsp;:&nbsp;${initialScore}</p>
               </div>
             </div>
           </div>
