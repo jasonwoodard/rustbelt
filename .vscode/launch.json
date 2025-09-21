@@ -15,10 +15,10 @@
         "--lambda", "0.10",
         "--seed", "7",
         "--verbose",
-        "--out", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.json",
-        "--kml", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.kml",
-        "--csv", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.csv",
-        "--html", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.html"
+        "--out", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}-pretrip.json",
+        "--kml", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}-pretrip.kml",
+        "--csv", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}-pretrip.csv",
+        "--html", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}-pretrip.html"
       ],
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
@@ -42,10 +42,10 @@
         "--lambda", "0.10",
         "--seed", "7",
         "--verbose",
-        "--out", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.json",
-        "--kml", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.kml",
-        "--csv", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.csv",
-        "--html", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.html"
+        "--out", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}-pretrip.json",
+        "--kml", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}-pretrip.kml",
+        "--csv", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}-pretrip.csv",
+        "--html", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}-pretrip.html"
       ],
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
@@ -69,10 +69,10 @@
         "--lambda", "0.1",
         "--seed", "7",
         "--verbose",
-        "--out", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.json",
-        "--kml", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.kml",
-        "--csv", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.csv",
-        "--html", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.html"
+        "--out", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}-pretrip.json",
+        "--kml", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}-pretrip.kml",
+        "--csv", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}-pretrip.csv",
+        "--html", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}-pretrip.html"
       ],
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
@@ -91,15 +91,15 @@
       "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/tsx",
       "program": "${workspaceFolder}/src/index.ts",
       "args": [
-        "--trip", "${workspaceFolder}/data/day-Thu-BU-v3-2025-09-18-T0147.json",
+        "--trip", "${workspaceFolder}/data/day-Thu-BU-v2-2025-09-18-T0042.json",
         "--day", "Thu",
         "--lambda", "0.1",
         "--seed", "7",
         "--verbose",
-        "--out", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.json",
-        "--kml", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.kml",
-        "--csv", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.csv",
-        "--html", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.html"
+        "--out", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}-pretrip.json",
+        "--kml", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}-pretrip.kml",
+        "--csv", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}-pretrip.csv",
+        "--html", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}-pretrip.html"
       ],
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
@@ -118,15 +118,15 @@
       "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/tsx",
       "program": "${workspaceFolder}/src/index.ts",
       "args": [
-        "--trip", "${workspaceFolder}/data/day-Fri-RX-v2-2025-09-18-T0215.json",
+        "--trip", "${workspaceFolder}/data/day-Fri-RX-v1-2025-09-18-T0207.json",
         "--day", "Fri",
         "--lambda", "0.1",
         "--seed", "7",
         "--verbose",
-         "--out", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.json",
-        "--kml", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.kml",
-        "--csv", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.csv",
-        "--html", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}.html"
+         "--out", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}-pretrip.json",
+        "--kml", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}-pretrip.kml",
+        "--csv", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}-pretrip.csv",
+        "--html", "${workspaceFolder}/out/itinerary-${runId}-${timestamp}-pretrip.html"
       ],
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",

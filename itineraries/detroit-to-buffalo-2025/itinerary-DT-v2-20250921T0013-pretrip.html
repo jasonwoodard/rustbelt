@@ -501,20 +501,149 @@
     .recommendation-leave {
       color: #be123c;
     }
+    
+    .dashboard-glossary {
+      background: #ffffff;
+      border: 1px solid var(--stone-200);
+      border-radius: 1.5rem;
+      padding: clamp(1.75rem, 2.5vw + 1rem, 3rem);
+      box-shadow: 0 18px 36px rgba(28, 25, 23, 0.08);
+    }
+    
+    .glossary-header {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+    
+    .glossary-heading {
+      font-size: clamp(1.75rem, 2.2vw + 1.5rem, 2.5rem);
+      font-weight: 600;
+      color: var(--stone-900);
+    }
+    
+    .glossary-subheading {
+      max-width: 36rem;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--stone-500);
+    }
+    
+    @media (min-width: 768px) {
+      .glossary-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    
+    }
+    
+    .glossary-grid {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+    
+    .glossary-entry {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      padding: 1.75rem;
+      background: var(--stone-50);
+      border: 1px solid var(--stone-200);
+      border-radius: 1.15rem;
+      box-shadow: 0 12px 30px rgba(28, 25, 23, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      overflow: hidden;
+    }
+    
+    .glossary-entry:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 38px rgba(28, 25, 23, 0.1);
+    }
+    
+    .glossary-entry__heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+    
+    .glossary-entry__title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--stone-900);
+    }
+    
+    .glossary-entry__description {
+      font-size: 0.975rem;
+      line-height: 1.65;
+      color: var(--stone-600);
+    }
+    
+    .glossary-entry__callouts {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .glossary-entry__callout {
+      display: grid;
+      gap: 0.35rem;
+      padding: 1rem 1.25rem;
+      border-radius: 0.9rem;
+      border: 1px solid var(--stone-200);
+      background: #ffffff;
+      box-shadow: 0 8px 18px rgba(28, 25, 23, 0.08);
+    }
+    
+    .glossary-entry__callout--high {
+      background: #eef6f2;
+      border-color: #d5e7dc;
+    }
+    
+    .glossary-entry__callout--low {
+      background: #f8efef;
+      border-color: #ebd6d7;
+    }
+    
+    .glossary-entry__callout-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    
+    .glossary-entry__callout--high .glossary-entry__callout-label {
+      color: var(--teal-800);
+    }
+    
+    .glossary-entry__callout--low .glossary-entry__callout-label {
+      color: var(--stone-700);
+    }
+    
+    .glossary-entry__callout p {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--stone-700);
+    }
     </style>
   </head>
-  <body class="text-stone-800" data-active-day-id="Mon">
-    <script id="itinerary-data" type="application/json">{"runTimestamp":"2025-09-20T18:09:18.691Z","runId":"AA-v1","runNote":"Ann Arbor TS go long (manual TS firstStopLock)","days":[{"dayId":"Mon","stops":[{"id":"HCGs1","name":"Hollywood Casino Greektown","type":"start","arrive":"09:00","depart":"09:00","lat":42.336873,"lon":-83.0418499},{"id":"TS","name":"The ShareHouse","type":"store","arrive":"10:09","depart":"10:39","lat":42.28746620984,"lon":-83.830718044144,"address":"5161 Jackson Rd, Ann Arbor, MI 48103","dwellMin":30,"legIn":{"fromId":"HCGs1","toId":"TS","driveMin":69.3442113611251,"distanceMi":40.45078996065631},"score":5,"tags":["must-visit","Thrift"]},{"id":"RAGS","name":"Ragstock","type":"store","arrive":"10:47","depart":"11:17","lat":42.279535758164,"lon":-83.7453166195,"address":"337 E Liberty St, Ann Arbor, MI 48104","dwellMin":30,"legIn":{"fromId":"TS","toId":"RAGS","driveMin":7.542452050594691,"distanceMi":4.399763696180236},"score":4,"tags":["Vintage"]},{"id":"TSAFS","name":"The Salvation Army Family Store & Donation Center","type":"store","arrive":"11:19","depart":"11:49","lat":42.261142020686,"lon":-83.740301350218,"address":"1621 S State St, Ann Arbor, MI 48104","dwellMin":30,"legIn":{"fromId":"RAGS","toId":"TSAFS","driveMin":2.2225867582091015,"distanceMi":1.2965089422886424},"score":3.7,"tags":["Thrift"]},{"id":"AATS","name":"Ann Arbor Thrift Shop","type":"store","arrive":"11:54","depart":"12:24","lat":42.255689991053,"lon":-83.690434090721,"address":"3500 Washtenaw Ave K, Ann Arbor, MI 48104","dwellMin":30,"legIn":{"fromId":"TSAFS","toId":"AATS","driveMin":4.419049667099438,"distanceMi":2.5777789724746722},"score":3.5,"tags":["Thrift"]},{"id":"SCR","name":"SCRAP Creative Reuse","type":"store","arrive":"12:25","depart":"12:55","lat":42.252675241419,"lon":-83.673510381064,"address":"4567 Washtenaw Ave, Ann Arbor, MI 48108","dwellMin":30,"legIn":{"fromId":"AATS","toId":"SCR","driveMin":1.5260810702852947,"distanceMi":0.8902139576664219},"score":3.8,"tags":["Thrift"]},{"id":"VWT9","name":"Value World Thrift","type":"store","arrive":"13:03","depart":"13:33","lat":42.245572221237,"lon":-83.582547913813,"address":"1410 E Michigan Ave, Ypsilanti, MI 48198","dwellMin":30,"legIn":{"fromId":"SCR","toId":"VWT9","driveMin":8.019646681019639,"distanceMi":4.678127230594789},"score":4,"tags":["Thrift"]},{"id":"TSAFSCT","name":"The Salvation Army Family Store & Donation Center","type":"store","arrive":"13:49","depart":"14:19","lat":42.351439786378,"lon":-83.469170034323,"address":"43403 Joy Rd, Canton Township, MI 48187","dwellMin":30,"legIn":{"fromId":"VWT9","toId":"TSAFSCT","driveMin":15.997101359225267,"distanceMi":9.331642459548073},"score":3.7,"tags":["Thrift"]},{"id":"TBIN","name":"The Barn in Northville","type":"store","arrive":"14:30","depart":"15:00","lat":42.436301752318,"lon":-83.519719175565,"address":"48120 Eight Mile W, Northville, MI 48167","dwellMin":30,"legIn":{"fromId":"TSAFSCT","toId":"TBIN","driveMin":10.981274992994765,"distanceMi":6.405743745913613},"score":3.8,"tags":["Antique"]},{"id":"TPCAA","name":"Town Peddler Craft and Antique Mall","type":"store","arrive":"15:14","depart":"15:44","lat":42.367865594867,"lon":-83.391025127892,"address":"35323 Plymouth Rd, Livonia, MI 48150","dwellMin":30,"legIn":{"fromId":"TBIN","toId":"TPCAA","driveMin":13.871211417514735,"distanceMi":8.091539993550262},"score":4,"tags":["must-visit","Antique"]},{"id":"VWT-Westland","name":"Value World Thrift","type":"store","arrive":"15:47","depart":"16:17","lat":42.343181412273,"lon":-83.388254959552,"address":"35300 Central City Pkwy, Westland, MI 48185","dwellMin":30,"legIn":{"fromId":"TPCAA","toId":"VWT-Westland","driveMin":2.9338049058073223,"distanceMi":1.7113861950542713},"score":4,"tags":["Thrift"]},{"id":"HCGe1","name":"Hollywood Casino Greektown","type":"end","arrive":"16:47","depart":"16:47","lat":42.336873,"lon":-83.0418499,"legIn":{"fromId":"VWT-Westland","toId":"HCGe1","driveMin":30.33742564206288,"distanceMi":17.696831624536678}}],"excluded":[{"id":"AAPTS","reason":"timeWindow","nearestAlternateId":"TSAFS"},{"id":"AAV","reason":"timeWindow","nearestAlternateId":"VWT9"},{"id":"CAM","reason":"timeWindow","nearestAlternateId":"TS"},{"id":"CCA","reason":"timeWindow","nearestAlternateId":"SCR"},{"id":"FASV","reason":"timeWindow","nearestAlternateId":"VWT9"},{"id":"FKVV","reason":"timeWindow","nearestAlternateId":"TSAFSCT"},{"id":"GIOSM","reason":"timeWindow","nearestAlternateId":"TSAFS"},{"id":"GSADC","reason":"timeWindow","nearestAlternateId":"TSAFSCT"},{"id":"GSADY","reason":"timeWindow","nearestAlternateId":"SCR"},{"id":"JMA","reason":"timeWindow","nearestAlternateId":"VWT9"},{"id":"KTS","reason":"timeWindow","nearestAlternateId":"TS"},{"id":"LHAAR","reason":"timeWindow","nearestAlternateId":"VWT9"},{"id":"NARS","reason":"timeWindow","nearestAlternateId":"TSAFS"},{"id":"PTS","reason":"timeWindow","nearestAlternateId":"TSAFSCT"},{"id":"SCA","reason":"timeWindow","nearestAlternateId":"VWT9"},{"id":"TGV","reason":"timeWindow","nearestAlternateId":"RAGS"},{"id":"TTD","reason":"timeWindow","nearestAlternateId":"VWT9"}],"metrics":{"storeCount":16,"storesVisited":10,"visitedIds":["TS","RAGS","TSAFS","AATS","SCR","VWT9","TSAFSCT","TBIN","TPCAA","VWT-Westland"],"totalScore":39.5,"scorePerStore":3.95,"scorePerMin":0.08454716559084784,"scorePerDriveMin":0.2362513018028212,"scorePerMile":0.4050022316619792,"totalDriveMin":167.19484590593825,"totalDwellMin":300,"slackMin":12.805154094062118,"totalDistanceMiles":97.53032677846397,"onTimeRisk":0}}]}</script>
+  <body class="text-stone-800" data-active-day-id="Tue">
+    <script id="itinerary-data" type="application/json">{"runTimestamp":"2025-09-21T04:13:22.446Z","runId":"DT-v2","runNote":"Tuesday, Detroit Core (pull ALL must visit)","days":[{"dayId":"Tue","stops":[{"id":"HCGs1","name":"Hollywood Casino Greektown","type":"start","arrive":"09:00","depart":"09:00","lat":42.336873,"lon":-83.0418499},{"id":"RWBT","name":"Red White & Blue Thrift Store","type":"store","arrive":"09:31","depart":"10:01","lat":42.572945446062,"lon":-82.890151473912,"address":"37545 Southbound Gratiot Ave, Clinton Township, MI 48036","dwellMin":30,"legIn":{"fromId":"HCGs1","toId":"RWBT","driveMin":30.945564534961786,"distanceMi":18.051579312061044},"score":4,"tags":["Thrift"]},{"id":"TWL","name":"Time Warp LLC","type":"store","arrive":"10:07","depart":"10:37","lat":42.526049813184,"lon":-82.896065923419,"address":"31336 Harper Ave, St Clair Shores, MI 48082","dwellMin":30,"legIn":{"fromId":"RWBT","toId":"TWL","driveMin":5.578571691126345,"distanceMi":3.254166819823701},"score":4,"tags":["Antique"]},{"id":"VWT-Eastpointe","name":"Value World Thrift","type":"store","arrive":"10:43","depart":"11:13","lat":42.478985165724,"lon":-82.926959459334,"address":"24900 Kelly Rd, Eastpointe, MI 48021","dwellMin":30,"legIn":{"fromId":"TWL","toId":"VWT-Eastpointe","driveMin":6.193131961147832,"distanceMi":3.6126603106695683},"score":4.5,"tags":["Thrift"]},{"id":"VWT-Warren","name":"Value World Thrift","type":"store","arrive":"11:27","depart":"11:57","lat":42.490817636058,"lon":-83.083943979949,"address":"2001 E 11 Mile Rd, Warren, MI 48092","dwellMin":30,"legIn":{"fromId":"VWT-Eastpointe","toId":"VWT-Warren","driveMin":13.783936524793697,"distanceMi":8.04062963946299},"score":4.1,"tags":["Thrift"]},{"id":"VogueVint","name":"Vogue Vintage","type":"store","arrive":"12:01","depart":"12:31","lat":42.465465383937,"lon":-83.12332615312,"address":"2141 Hilton Rd, Ferndale, MI 48220","dwellMin":30,"legIn":{"fromId":"VWT-Warren","toId":"VogueVint","driveMin":4.566576039401998,"distanceMi":2.6638360229844986},"score":4,"tags":["Thrift"]},{"id":"VWT-OakPark","name":"Value World Thrift","type":"store","arrive":"12:36","depart":"13:06","lat":42.457659382447,"lon":-83.181801001668,"address":"22130 Coolidge Hwy, Oak Park, MI 48237","dwellMin":30,"legIn":{"fromId":"VogueVint","toId":"VWT-OakPark","driveMin":5.192626958830507,"distanceMi":3.0290323926511293},"score":4,"tags":["Thrift"]},{"id":"VWT-Southfield","name":"Value World Thrift","type":"store","arrive":"13:16","depart":"13:46","lat":42.442742196635,"lon":-83.295836478484,"address":"25646 Eight Mile W, Southfield, MI 48033","dwellMin":30,"legIn":{"fromId":"VWT-OakPark","toId":"VWT-Southfield","driveMin":10.121861259193796,"distanceMi":5.9044190678630475},"score":4.5,"tags":["Thrift"]},{"id":"VMDV","name":"V-Male Detroit Vintage","type":"store","arrive":"14:07","depart":"14:37","lat":42.269215142856,"lon":-83.268896777462,"address":"23902 Van Born Rd, Dearborn Heights, MI 48125","dwellMin":30,"legIn":{"fromId":"VWT-Southfield","toId":"VMDV","driveMin":20.688579875204223,"distanceMi":12.068338260535796},"score":4.1,"tags":["Vintage"]},{"id":"VWT-Taylor","name":"Value World Thrift","type":"store","arrive":"14:39","depart":"15:09","lat":42.255786246719,"lon":-83.256431414123,"address":"22615 Ecorse Rd, Taylor, MI 48180","dwellMin":30,"legIn":{"fromId":"VMDV","toId":"VWT-Taylor","driveMin":1.9297802408419824,"distanceMi":1.1257051404911564},"score":3.9,"tags":["Thrift"]},{"id":"MCAG","name":"Motor City Antique Gallery","type":"store","arrive":"15:31","depart":"16:01","lat":42.073186243077,"lon":-83.309260852639,"address":"13431 Telegraph Rd, Flat Rock, MI 48134","dwellMin":30,"legIn":{"fromId":"VWT-Taylor","toId":"MCAG","driveMin":22.12016001343562,"distanceMi":12.903426674504113},"score":4,"tags":["Antique"]},{"id":"VWT-Southgate","name":"Value World Thrift","type":"store","arrive":"16:21","depart":"16:51","lat":42.219891152932,"lon":-83.193964111776,"address":"12125 Dix Toledo Rd, Southgate, MI 48195","dwellMin":30,"legIn":{"fromId":"MCAG","toId":"VWT-Southgate","driveMin":20.11156770858995,"distanceMi":11.731747830010804},"score":3.8,"tags":["Thrift"]},{"id":"FV","name":"Flamingo Vintage","type":"store","arrive":"17:05","depart":"17:35","lat":42.318117771122,"lon":-83.100947517187,"address":"5449 Vernor W, Detroit, MI 48209","dwellMin":30,"legIn":{"fromId":"VWT-Southgate","toId":"FV","driveMin":14.20687124632982,"distanceMi":8.287341560359062},"score":3.8,"tags":["Vintage"]},{"id":"HCGe1","name":"Hollywood Casino Greektown","type":"end","arrive":"17:41","depart":"17:41","lat":42.336873,"lon":-83.0418499,"legIn":{"fromId":"FV","toId":"HCGe1","driveMin":5.631768988378376,"distanceMi":3.2851985765540523}}],"excluded":[{"id":"CAE","reason":"timeWindow","nearestAlternateId":"VWT-Warren"},{"id":"CATTF","reason":"timeWindow","nearestAlternateId":"RWBT"},{"id":"CR","reason":"timeWindow","nearestAlternateId":"VWT-OakPark"},{"id":"DFM","reason":"timeWindow","nearestAlternateId":"VWT-Southfield"},{"id":"EUR","reason":"timeWindow","nearestAlternateId":"VWT-Southfield"},{"id":"FCFIA","reason":"timeWindow","nearestAlternateId":"VWT-Eastpointe"},{"id":"FTRS","reason":"timeWindow","nearestAlternateId":"VWT-Southfield"},{"id":"GCOHT","reason":"timeWindow","nearestAlternateId":"VWT-OakPark"},{"id":"GSADL","reason":"timeWindow","nearestAlternateId":"VWT-Southfield"},{"id":"LAFV","reason":"timeWindow","nearestAlternateId":"VogueVint"},{"id":"MA","reason":"timeWindow","nearestAlternateId":"RWBT"},{"id":"ODTS","reason":"timeWindow","nearestAlternateId":"VWT-Southfield"},{"id":"OFA","reason":"timeWindow","nearestAlternateId":"VWT-OakPark"},{"id":"PACM","reason":"timeWindow","nearestAlternateId":"VWT-Southgate"},{"id":"RIAVA","reason":"timeWindow","nearestAlternateId":"FV"},{"id":"RR","reason":"timeWindow","nearestAlternateId":"VogueVint"},{"id":"SAL","reason":"timeWindow","nearestAlternateId":"VWT-Warren"},{"id":"SVDPT","reason":"timeWindow","nearestAlternateId":"VWT-Southfield"},{"id":"TSAFSAH","reason":"timeWindow","nearestAlternateId":"VWT-OakPark"},{"id":"TSAFSRO","reason":"timeWindow","nearestAlternateId":"VogueVint"},{"id":"TSAFSWB","reason":"timeWindow","nearestAlternateId":"VWT-Southfield"},{"id":"VA","reason":"timeWindow","nearestAlternateId":"VMDV"},{"id":"VEML","reason":"timeWindow","nearestAlternateId":"FV"},{"id":"VVACV","reason":"timeWindow","nearestAlternateId":"VWT-Southfield"}],"metrics":{"storeCount":28,"storesVisited":12,"visitedIds":["RWBT","TWL","VWT-Eastpointe","VWT-Warren","VogueVint","VWT-OakPark","VWT-Southfield","VMDV","VWT-Taylor","MCAG","VWT-Southgate","FV"],"totalScore":48.699999999999996,"scorePerStore":4.058333333333333,"scorePerMin":0.09346135224650119,"scorePerDriveMin":0.30235114262830265,"scorePerMile":0.5183162445056617,"totalDriveMin":161.07099704223594,"totalDwellMin":360,"slackMin":18.92900295776394,"totalDistanceMiles":93.95808160797097,"onTimeRisk":0}}]}</script>
     <div class="container mx-auto p-4 md:p-6 lg:p-8">
       <header class="mb-6">
         <h1 class="text-3xl font-bold text-stone-900">Rust Belt Bandit Planner</h1>
         <div id="run-info" class="text-stone-600 mt-1 text-sm space-x-0">
           <span class="font-semibold">Run ID:</span>
-          <span class="ml-1">AA-v1</span>
-          <span class="ml-2 text-stone-500">Ann Arbor TS go long (manual TS firstStopLock)</span>
+          <span class="ml-1">DT-v2</span>
+          <span class="ml-2 text-stone-500">Tuesday, Detroit Core (pull ALL must visit)</span>
         </div>
-        <p class="text-xs text-stone-500 mt-1">Generated 2025-09-20T18:09:18.691Z</p>
-        <p id="active-day-label" class="text-sm text-stone-600 mt-2">Day Mon</p>
+        <p class="text-xs text-stone-500 mt-1">Generated 2025-09-21T04:13:22.446Z</p>
+        <p id="active-day-label" class="text-sm text-stone-600 mt-2">Day Tue</p>
       </header>
       <main class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <section class="lg:col-span-1 bg-white p-4 rounded-lg shadow-sm">
@@ -522,28 +651,13 @@
           <div id="itinerary-list" class="space-y-2">
             <div
               class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="TS"
+              data-stop-id="RWBT"
               data-stop-type="store"
             >
               <div class="flex justify-between items-start">
                 <div>
-                  <p class="font-semibold">The ShareHouse</p>
-                  <p class="text-xs text-stone-500">10:09 – 10:39</p>
-                </div>
-                <div class="text-right">
-                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">5.0</p>
-                </div>
-              </div>
-            </div>
-            <div
-              class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="RAGS"
-              data-stop-type="store"
-            >
-              <div class="flex justify-between items-start">
-                <div>
-                  <p class="font-semibold">Ragstock</p>
-                  <p class="text-xs text-stone-500">10:47 – 11:17</p>
+                  <p class="font-semibold">Red White &amp; Blue Thrift Store</p>
+                  <p class="text-xs text-stone-500">09:31 – 10:01</p>
                 </div>
                 <div class="text-right">
                   <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.0</p>
@@ -552,43 +666,148 @@
             </div>
             <div
               class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="TSAFS"
+              data-stop-id="TWL"
               data-stop-type="store"
             >
               <div class="flex justify-between items-start">
                 <div>
-                  <p class="font-semibold">The Salvation Army Family Store &amp; Donation Center</p>
-                  <p class="text-xs text-stone-500">11:19 – 11:49</p>
+                  <p class="font-semibold">Time Warp LLC</p>
+                  <p class="text-xs text-stone-500">10:07 – 10:37</p>
                 </div>
                 <div class="text-right">
-                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">3.7</p>
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.0</p>
                 </div>
               </div>
             </div>
             <div
               class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="AATS"
+              data-stop-id="VWT-Eastpointe"
               data-stop-type="store"
             >
               <div class="flex justify-between items-start">
                 <div>
-                  <p class="font-semibold">Ann Arbor Thrift Shop</p>
-                  <p class="text-xs text-stone-500">11:54 – 12:24</p>
+                  <p class="font-semibold">Value World Thrift</p>
+                  <p class="text-xs text-stone-500">10:43 – 11:13</p>
                 </div>
                 <div class="text-right">
-                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">3.5</p>
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.5</p>
                 </div>
               </div>
             </div>
             <div
               class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="SCR"
+              data-stop-id="VWT-Warren"
               data-stop-type="store"
             >
               <div class="flex justify-between items-start">
                 <div>
-                  <p class="font-semibold">SCRAP Creative Reuse</p>
-                  <p class="text-xs text-stone-500">12:25 – 12:55</p>
+                  <p class="font-semibold">Value World Thrift</p>
+                  <p class="text-xs text-stone-500">11:27 – 11:57</p>
+                </div>
+                <div class="text-right">
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.1</p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="p-3 rounded-md shadow-sm status-tovisit"
+              data-stop-id="VogueVint"
+              data-stop-type="store"
+            >
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="font-semibold">Vogue Vintage</p>
+                  <p class="text-xs text-stone-500">12:01 – 12:31</p>
+                </div>
+                <div class="text-right">
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.0</p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="p-3 rounded-md shadow-sm status-tovisit"
+              data-stop-id="VWT-OakPark"
+              data-stop-type="store"
+            >
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="font-semibold">Value World Thrift</p>
+                  <p class="text-xs text-stone-500">12:36 – 13:06</p>
+                </div>
+                <div class="text-right">
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.0</p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="p-3 rounded-md shadow-sm status-tovisit"
+              data-stop-id="VWT-Southfield"
+              data-stop-type="store"
+            >
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="font-semibold">Value World Thrift</p>
+                  <p class="text-xs text-stone-500">13:16 – 13:46</p>
+                </div>
+                <div class="text-right">
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.5</p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="p-3 rounded-md shadow-sm status-tovisit"
+              data-stop-id="VMDV"
+              data-stop-type="store"
+            >
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="font-semibold">V-Male Detroit Vintage</p>
+                  <p class="text-xs text-stone-500">14:07 – 14:37</p>
+                </div>
+                <div class="text-right">
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.1</p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="p-3 rounded-md shadow-sm status-tovisit"
+              data-stop-id="VWT-Taylor"
+              data-stop-type="store"
+            >
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="font-semibold">Value World Thrift</p>
+                  <p class="text-xs text-stone-500">14:39 – 15:09</p>
+                </div>
+                <div class="text-right">
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">3.9</p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="p-3 rounded-md shadow-sm status-tovisit"
+              data-stop-id="MCAG"
+              data-stop-type="store"
+            >
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="font-semibold">Motor City Antique Gallery</p>
+                  <p class="text-xs text-stone-500">15:31 – 16:01</p>
+                </div>
+                <div class="text-right">
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.0</p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="p-3 rounded-md shadow-sm status-tovisit"
+              data-stop-id="VWT-Southgate"
+              data-stop-type="store"
+            >
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="font-semibold">Value World Thrift</p>
+                  <p class="text-xs text-stone-500">16:21 – 16:51</p>
                 </div>
                 <div class="text-right">
                   <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">3.8</p>
@@ -597,76 +816,16 @@
             </div>
             <div
               class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="VWT9"
+              data-stop-id="FV"
               data-stop-type="store"
             >
               <div class="flex justify-between items-start">
                 <div>
-                  <p class="font-semibold">Value World Thrift</p>
-                  <p class="text-xs text-stone-500">13:03 – 13:33</p>
-                </div>
-                <div class="text-right">
-                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.0</p>
-                </div>
-              </div>
-            </div>
-            <div
-              class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="TSAFSCT"
-              data-stop-type="store"
-            >
-              <div class="flex justify-between items-start">
-                <div>
-                  <p class="font-semibold">The Salvation Army Family Store &amp; Donation Center</p>
-                  <p class="text-xs text-stone-500">13:49 – 14:19</p>
-                </div>
-                <div class="text-right">
-                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">3.7</p>
-                </div>
-              </div>
-            </div>
-            <div
-              class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="TBIN"
-              data-stop-type="store"
-            >
-              <div class="flex justify-between items-start">
-                <div>
-                  <p class="font-semibold">The Barn in Northville</p>
-                  <p class="text-xs text-stone-500">14:30 – 15:00</p>
+                  <p class="font-semibold">Flamingo Vintage</p>
+                  <p class="text-xs text-stone-500">17:05 – 17:35</p>
                 </div>
                 <div class="text-right">
                   <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">3.8</p>
-                </div>
-              </div>
-            </div>
-            <div
-              class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="TPCAA"
-              data-stop-type="store"
-            >
-              <div class="flex justify-between items-start">
-                <div>
-                  <p class="font-semibold">Town Peddler Craft and Antique Mall</p>
-                  <p class="text-xs text-stone-500">15:14 – 15:44</p>
-                </div>
-                <div class="text-right">
-                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.0</p>
-                </div>
-              </div>
-            </div>
-            <div
-              class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="VWT-Westland"
-              data-stop-type="store"
-            >
-              <div class="flex justify-between items-start">
-                <div>
-                  <p class="font-semibold">Value World Thrift</p>
-                  <p class="text-xs text-stone-500">15:47 – 16:17</p>
-                </div>
-                <div class="text-right">
-                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.0</p>
                 </div>
               </div>
             </div>
@@ -674,20 +833,22 @@
           <noscript>
             <div class="mt-4 space-y-3 text-sm text-stone-600">
               <div>
-                <p class="font-semibold">Day Mon</p>
+                <p class="font-semibold">Day Tue</p>
                 <ul class="list-disc list-inside text-xs text-stone-500">
                   <li>09:00 – 09:00 · Hollywood Casino Greektown (start)</li>
-                  <li>10:09 – 10:39 · The ShareHouse (store)</li>
-                  <li>10:47 – 11:17 · Ragstock (store)</li>
-                  <li>11:19 – 11:49 · The Salvation Army Family Store &amp; Donation Center (store)</li>
-                  <li>11:54 – 12:24 · Ann Arbor Thrift Shop (store)</li>
-                  <li>12:25 – 12:55 · SCRAP Creative Reuse (store)</li>
-                  <li>13:03 – 13:33 · Value World Thrift (store)</li>
-                  <li>13:49 – 14:19 · The Salvation Army Family Store &amp; Donation Center (store)</li>
-                  <li>14:30 – 15:00 · The Barn in Northville (store)</li>
-                  <li>15:14 – 15:44 · Town Peddler Craft and Antique Mall (store)</li>
-                  <li>15:47 – 16:17 · Value World Thrift (store)</li>
-                  <li>16:47 – 16:47 · Hollywood Casino Greektown (end)</li>
+                  <li>09:31 – 10:01 · Red White &amp; Blue Thrift Store (store)</li>
+                  <li>10:07 – 10:37 · Time Warp LLC (store)</li>
+                  <li>10:43 – 11:13 · Value World Thrift (store)</li>
+                  <li>11:27 – 11:57 · Value World Thrift (store)</li>
+                  <li>12:01 – 12:31 · Vogue Vintage (store)</li>
+                  <li>12:36 – 13:06 · Value World Thrift (store)</li>
+                  <li>13:16 – 13:46 · Value World Thrift (store)</li>
+                  <li>14:07 – 14:37 · V-Male Detroit Vintage (store)</li>
+                  <li>14:39 – 15:09 · Value World Thrift (store)</li>
+                  <li>15:31 – 16:01 · Motor City Antique Gallery (store)</li>
+                  <li>16:21 – 16:51 · Value World Thrift (store)</li>
+                  <li>17:05 – 17:35 · Flamingo Vintage (store)</li>
+                  <li>17:41 – 17:41 · Hollywood Casino Greektown (end)</li>
                 </ul>
               </div>
             </div>
@@ -800,80 +961,196 @@
           </div>
         </section>
       </main>
-      <section class="mt-10 bg-white p-6 rounded-lg shadow-sm">
-        <h2 class="text-2xl font-semibold text-stone-900 mb-4">Dashboard Glossary</h2>
-        <div class="space-y-6 text-sm text-stone-700">
-          <div>
-            <h3 class="text-lg font-semibold text-stone-800">Total Stores</h3>
-            <ul class="list-disc list-inside space-y-1">
-              <li>Shows how many store stops are on the agenda so you can gauge the full workload and pacing for the day.</li>
-              <li>Higher values indicate a heavy route that may stretch the crew thin and are bad if you are already resource constrained.</li>
-              <li>Lower values indicate a lighter schedule that is easier to cover well and are good for maintaining focus.</li>
-            </ul>
+      <section class="mt-10">
+        <div class="dashboard-glossary">
+          <div class="glossary-header">
+            <h2 class="glossary-heading">Dashboard Glossary</h2>
+            <p class="glossary-subheading">
+              Use this reference to decode each metric on the dashboard so you can make confident, in-the-moment decisions during a run.
+            </p>
           </div>
-          <div>
-            <h3 class="text-lg font-semibold text-stone-800">Stores Visited</h3>
-            <ul class="list-disc list-inside space-y-1">
-              <li>Tracks how many stores have been worked so you can judge progress against the plan and momentum of the run.</li>
-              <li>Higher values indicate you are keeping pace with the itinerary and are good for staying on track.</li>
-              <li>Lower values indicate the crew is falling behind schedule and are bad if there are many targets left.</li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="text-lg font-semibold text-stone-800">Avg. J-Score</h3>
-            <ul class="list-disc list-inside space-y-1">
-              <li>Summarizes the average expected juice from all scheduled stores so you know the overall quality of the day's lineup.</li>
-              <li>Higher values indicate a slate of promising locations worth investing time in and are good for morale.</li>
-              <li>Lower values indicate the route is filled with long-shot prospects and are bad when deciding where to focus.</li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="text-lg font-semibold text-stone-800">Remaining Posterior μ</h3>
-            <ul class="list-disc list-inside space-y-1">
-              <li>Estimates the expected payout of the stores you have not hit yet, guiding whether to push forward or start wrapping.</li>
-              <li>Higher values indicate the remaining pipeline still looks lucrative and are good reasons to keep pressing.</li>
-              <li>Lower values indicate the rest of the day is unlikely to deliver much and are bad for continued investment.</li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="text-lg font-semibold text-stone-800">Remaining Uncertainty σ</h3>
-            <ul class="list-disc list-inside space-y-1">
-              <li>Shows how unknown the untouched stores still are so you know if surprises—good or bad—are likely.</li>
-              <li>Higher values indicate the remaining stops are still a wild card and are uncertain for planning confidence.</li>
-              <li>Lower values indicate you have a reliable read on what's left and are good for making firm commitments.</li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="text-lg font-semibold text-stone-800">Current Posterior μ</h3>
-            <ul class="list-disc list-inside space-y-1">
-              <li>Captures the best estimate of the current store's quality, telling you if sticking around is likely to pay off.</li>
-              <li>Higher values indicate the store is delivering and are good signals to stay engaged.</li>
-              <li>Lower values indicate the location is probably a dud and are bad signs that favor moving on.</li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="text-lg font-semibold text-stone-800">Current Uncertainty σ</h3>
-            <ul class="list-disc list-inside space-y-1">
-              <li>Measures how confident you are about the current store's read so you know whether to trust the estimate.</li>
-              <li>Higher values indicate the intel is still fuzzy and are uncertain for making a strong call.</li>
-              <li>Lower values indicate you have solid evidence on the store and are good for decisive action.</li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="text-lg font-semibold text-stone-800">Current Upper Confidence Bound (UCB) Score</h3>
-            <ul class="list-disc list-inside space-y-1">
-              <li>Blends the current store's quality and risk so you know the upside if you keep working it right now.</li>
-              <li>Higher values indicate strong upside potential worth pursuing and are good for doubling down.</li>
-              <li>Lower values indicate limited headroom on this stop and are bad when deciding whether to commit more time.</li>
-            </ul>
-          </div>
-          <div>
-            <h3 class="text-lg font-semibold text-stone-800">Remaining Upper Confidence Bound (UCB) Score</h3>
-            <ul class="list-disc list-inside space-y-1">
-              <li>Combines the expected quality and risk of the untouched stores to show the upside left in the route.</li>
-              <li>Higher values indicate the back half of the itinerary could still hit big and are good motivation to keep pushing.</li>
-              <li>Lower values indicate the remaining stops have limited upside and are bad when weighing an early exit.</li>
-            </ul>
+
+          <!-- Glossary Grid -->
+          <div class="glossary-grid">
+            <!-- Total Stores -->
+            <article class="glossary-entry">
+              <header class="glossary-entry__heading">
+                <h3 class="glossary-entry__title">Total Stores</h3>
+              </header>
+              <p class="glossary-entry__description">
+                Shows how many store stops are on the agenda so you can gauge the full workload and pacing for the day.
+              </p>
+              <div class="glossary-entry__callouts">
+                <div class="glossary-entry__callout glossary-entry__callout--high">
+                  <span class="glossary-entry__callout-label">High</span>
+                  <p>A long day ahead that can be draining if your resources are limited.</p>
+                </div>
+                <div class="glossary-entry__callout glossary-entry__callout--low">
+                  <span class="glossary-entry__callout-label">Low</span>
+                  <p>A more manageable itinerary that makes it easier to stay focused and on schedule.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Stores Visited -->
+            <article class="glossary-entry">
+              <header class="glossary-entry__heading">
+                <h3 class="glossary-entry__title">Stores Visited</h3>
+              </header>
+              <p class="glossary-entry__description">
+                Tracks how many stores have been worked so you can judge progress against the plan and momentum of the run.
+              </p>
+              <div class="glossary-entry__callouts">
+                <div class="glossary-entry__callout glossary-entry__callout--high">
+                  <span class="glossary-entry__callout-label">High</span>
+                  <p>You're on pace and keeping momentum with the route plan.</p>
+                </div>
+                <div class="glossary-entry__callout glossary-entry__callout--low">
+                  <span class="glossary-entry__callout-label">Low</span>
+                  <p>A signal you might be falling behind, especially if many stops remain.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Avg. J-Score -->
+            <article class="glossary-entry">
+              <header class="glossary-entry__heading">
+                <h3 class="glossary-entry__title">Avg. J-Score</h3>
+              </header>
+              <p class="glossary-entry__description">
+                Summarizes the average anticipated value for your entire itinerary—the mean of your personal &ldquo;want-to-go&rdquo; scores for each store.
+              </p>
+              <div class="glossary-entry__callouts">
+                <div class="glossary-entry__callout glossary-entry__callout--high">
+                  <span class="glossary-entry__callout-label">High</span>
+                  <p>The route is packed with promising stops that can keep morale high.</p>
+                </div>
+                <div class="glossary-entry__callout glossary-entry__callout--low">
+                  <span class="glossary-entry__callout-label">Low</span>
+                  <p>You're likely hunting for needles in a haystack, so prioritization becomes critical.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Remaining Posterior μ -->
+            <article class="glossary-entry">
+              <header class="glossary-entry__heading">
+                <h3 class="glossary-entry__title">Remaining Posterior μ</h3>
+              </header>
+              <p class="glossary-entry__description">
+                Estimates the updated anticipated value of the stores you haven't hit yet, guiding whether to push forward or start wrapping up.
+              </p>
+              <div class="glossary-entry__callouts">
+                <div class="glossary-entry__callout glossary-entry__callout--high">
+                  <span class="glossary-entry__callout-label">High</span>
+                  <p>The rest of the run still looks highly promising, so keep pressing.</p>
+                </div>
+                <div class="glossary-entry__callout glossary-entry__callout--low">
+                  <span class="glossary-entry__callout-label">Low</span>
+                  <p>The remaining stops may not offer much upside, signaling it could be time to wind down.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Remaining Uncertainty σ -->
+            <article class="glossary-entry">
+              <header class="glossary-entry__heading">
+                <h3 class="glossary-entry__title">Remaining Uncertainty σ</h3>
+              </header>
+              <p class="glossary-entry__description">
+                Shows how unknown the untouched stores still are so you know if surprises&mdash;good or bad&mdash;are likely.
+              </p>
+              <div class="glossary-entry__callouts">
+                <div class="glossary-entry__callout glossary-entry__callout--high">
+                  <span class="glossary-entry__callout-label">High</span>
+                  <p>The remaining stores are wild cards&mdash;expect the unexpected.</p>
+                </div>
+                <div class="glossary-entry__callout glossary-entry__callout--low">
+                  <span class="glossary-entry__callout-label">Low</span>
+                  <p>Those stops are predictable, giving you more confidence to stick with the plan.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Current Posterior μ -->
+            <article class="glossary-entry">
+              <header class="glossary-entry__heading">
+                <h3 class="glossary-entry__title">Current Posterior μ</h3>
+              </header>
+              <p class="glossary-entry__description">
+                Captures the best estimate of the current store&rsquo;s quality, telling you if sticking around is likely to pay off.
+              </p>
+              <div class="glossary-entry__callouts">
+                <div class="glossary-entry__callout glossary-entry__callout--high">
+                  <span class="glossary-entry__callout-label">High</span>
+                  <p>A green light that the store is living up to its potential&mdash;stay engaged.</p>
+                </div>
+                <div class="glossary-entry__callout glossary-entry__callout--low">
+                  <span class="glossary-entry__callout-label">Low</span>
+                  <p>A hint this stop may be a bust, making a quick exit more appealing.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Current Uncertainty σ -->
+            <article class="glossary-entry">
+              <header class="glossary-entry__heading">
+                <h3 class="glossary-entry__title">Current Uncertainty σ</h3>
+              </header>
+              <p class="glossary-entry__description">
+                Measures how confident you are about the current store&rsquo;s read so you know whether to trust the estimate.
+              </p>
+              <div class="glossary-entry__callouts">
+                <div class="glossary-entry__callout glossary-entry__callout--high">
+                  <span class="glossary-entry__callout-label">High</span>
+                  <p>You still don&rsquo;t have enough intel&mdash;keep collecting data.</p>
+                </div>
+                <div class="glossary-entry__callout glossary-entry__callout--low">
+                  <span class="glossary-entry__callout-label">Low</span>
+                  <p>The read is solid, so it&rsquo;s easier to make a decisive call.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Current Upper Confidence Bound (UCB) Score -->
+            <article class="glossary-entry">
+              <header class="glossary-entry__heading">
+                <h3 class="glossary-entry__title">Current Upper Confidence Bound (UCB) Score</h3>
+              </header>
+              <p class="glossary-entry__description">
+                Blends the current store&rsquo;s quality and risk so you understand the upside if you keep working it right now.
+              </p>
+              <div class="glossary-entry__callouts">
+                <div class="glossary-entry__callout glossary-entry__callout--high">
+                  <span class="glossary-entry__callout-label">High</span>
+                  <p>There&rsquo;s strong potential for a big find, making it worth more of your time.</p>
+                </div>
+                <div class="glossary-entry__callout glossary-entry__callout--low">
+                  <span class="glossary-entry__callout-label">Low</span>
+                  <p>The upside is limited, so moving on could be the smarter play.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Remaining Upper Confidence Bound (UCB) Score -->
+            <article class="glossary-entry">
+              <header class="glossary-entry__heading">
+                <h3 class="glossary-entry__title">Remaining Upper Confidence Bound (UCB) Score</h3>
+              </header>
+              <p class="glossary-entry__description">
+                Combines the expected quality and risk of the untouched stores to show the upside left in the route.
+              </p>
+              <div class="glossary-entry__callouts">
+                <div class="glossary-entry__callout glossary-entry__callout--high">
+                  <span class="glossary-entry__callout-label">High</span>
+                  <p>The rest of the itinerary still has major potential, so stay aggressive.</p>
+                </div>
+                <div class="glossary-entry__callout glossary-entry__callout--low">
+                  <span class="glossary-entry__callout-label">Low</span>
+                  <p>Limited upside remains, which could be a cue to wrap the day early.</p>
+                </div>
+              </div>
+            </article>
           </div>
         </div>
       </section>
@@ -893,6 +1170,7 @@
         currentIndex: 0,
         log: [],
         dayId: null,
+        pendingDrop: null,
         mqaMap: {
           Bust: 0.0,
           Average: 3.5,
@@ -1115,6 +1393,7 @@
           }`;
           const posteriorMean = stop.posterior ? stop.posterior.mean.toFixed(2) : formatScore(stop.score);
           const posteriorStd = stop.posterior ? stop.posterior.std.toFixed(2) : '0.00';
+          const initialScore = formatScore(stop.score);
           const statusLabel =
             stop.status === 'visited'
               ? `Visited – ${stop.mqa ?? 'n/a'}`
@@ -1134,10 +1413,19 @@
                 <p class="font-semibold">${nameMarkup}</p>
                 <p class="text-xs text-stone-500">${statusLabel}</p>
               </div>
-              <div class="flex flex-col items-end text-right gap-1">
-                <div>
+              <div class="flex flex-col items-end text-right gap-2">
+                <div class="text-right">
                   <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">${posteriorMean}</p>
-                  <p class="text-xs text-stone-500">±${posteriorStd}</p>
+                  <div class="mt-2 space-y-1 leading-tight">
+                    <div>
+                      <p class="text-xs uppercase tracking-wide text-stone-600">
+                      Uncertainty&nbsp;:&nbsp;±${posteriorStd}</p>
+                    </div>
+                    <div>
+                      <p class="text-xs uppercase tracking-wide text-stone-600">
+                        Initial Score&nbsp;:&nbsp;${initialScore}</p>
+                    </div>
+                  </div>
                 </div>
                 ${dropButtonHtml}
               </div>
@@ -1304,12 +1592,86 @@
         const metaLine = [reason, diffText, zText].filter(Boolean).join(' · ');
         const summaryLine = [currentSummary, poolSummary].filter(Boolean).join(' | ');
     
-        display.innerHTML = `
+        let pendingDropMarkup = '';
+        const pendingDrop = appState.pendingDrop;
+        if (pendingDrop) {
+          const pendingStop = appState.stops.find(
+            (s) => String(s.id) === String(pendingDrop.stopId ?? pendingDrop.id),
+          );
+          if (pendingStop && pendingStop.status === 'tovisit') {
+            const nameMarkup = pendingStop.mapsUrl
+              ? `<a class="store-link" href="${pendingStop.mapsUrl}" target="_blank" rel="noopener noreferrer">${pendingStop.name}</a>`
+              : pendingStop.name;
+            const posteriorMean = pendingStop.posterior
+              ? pendingStop.posterior.mean.toFixed(2)
+              : formatScore(pendingStop.score);
+            const posteriorStd = pendingStop.posterior
+              ? pendingStop.posterior.std.toFixed(2)
+              : '0.00';
+            const scheduleParts = [];
+            if (pendingStop.arrive) {
+              scheduleParts.push(`Arrive ${pendingStop.arrive}`);
+            }
+            if (pendingStop.depart) {
+              scheduleParts.push(`Depart ${pendingStop.depart}`);
+            }
+            const scheduleLine =
+              scheduleParts.length > 0
+                ? `<p class="text-xs text-amber-800 mt-1">${scheduleParts.join(' · ')}</p>`
+                : '';
+    
+            pendingDropMarkup = `
+          <div class="pending-drop-panel mt-4 rounded-lg border border-amber-200 bg-amber-50 p-4 text-amber-900">
+            <p class="font-semibold">Extend your stay?</p>
+            <p class="mt-1 text-sm">Drop the lowest-rated remaining store to stay longer.</p>
+            <div class="mt-2 text-sm">
+              <p class="font-medium">${nameMarkup}</p>
+              <p class="text-xs text-amber-800">Posterior μ=${posteriorMean} σ=${posteriorStd}</p>
+              ${scheduleLine}
+            </div>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <button
+                type="button"
+                class="pending-drop-confirm rounded-md bg-amber-600 px-3 py-2 text-sm font-semibold text-white shadow hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-1"
+                data-action="confirm-pending-drop"
+                data-stop-id="${pendingStop.id}"
+              >
+                Drop this store
+              </button>
+              <button
+                type="button"
+                class="pending-drop-cancel rounded-md border border-amber-400 px-3 py-2 text-sm font-semibold text-amber-900 hover:bg-amber-100 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-1"
+                data-action="cancel-pending-drop"
+              >
+                Keep all future stores
+              </button>
+            </div>
+          </div>
+        `;
+          } else {
+            appState.pendingDrop = null;
+          }
+        }
+    
+        const baseMarkup = `
           <p class="text-lg font-medium">Recommendation:</p>
           <p class="text-3xl font-bold recommendation-${recommendation.toLowerCase()}">${recommendation.toUpperCase()}</p>
           <p class="text-sm text-stone-600">${metaLine}</p>
           <p class="text-xs text-stone-500">${summaryLine}</p>
         `;
+    
+        display.innerHTML = `${baseMarkup}${pendingDropMarkup}`;
+    
+        if (pendingDropMarkup) {
+          const confirmButton = display.querySelector('[data-action="confirm-pending-drop"]');
+          if (confirmButton) {
+            confirmButton.addEventListener('click', confirmPendingDrop);
+          }
+          const cancelButton = display.querySelector('[data-action="cancel-pending-drop"]');
+          if (cancelButton) {
+            cancelButton.addEventListener('click', cancelPendingDrop);
+          }
+        }
       }
     
       function dropStopById(stopId, reason) {
@@ -1354,6 +1716,13 @@
           timestamp: new Date().toISOString(),
         });
     
+        if (
+          appState.pendingDrop &&
+          String(appState.pendingDrop.stopId ?? appState.pendingDrop.id) === normalizedId
+        ) {
+          appState.pendingDrop = null;
+        }
+    
         return { stop, index: stopIndex };
       }
     
@@ -1368,18 +1737,38 @@
           stop.posterior.mean < min.posterior.mean ? stop : min,
         );
     
-        setTimeout(() => {
-          const confirmed = window.confirm(
-            `To extend your stay, drop the lowest-rated remaining store:\n\n${lowestScoringStop.name} (Posterior μ: ${lowestScoringStop.posterior.mean.toFixed(
-              2,
-            )})\n\nDrop this store?`,
-          );
+        appState.pendingDrop = {
+          stopId: lowestScoringStop.id,
+          reason: 'overrun-drop-lowest',
+        };
     
-          if (confirmed) {
-            dropStopById(lowestScoringStop.id, 'overrun-drop-lowest');
-          }
-          advanceToNextStore();
-        }, 500);
+        renderAll();
+      }
+    
+      function confirmPendingDrop() {
+        const pendingDrop = appState.pendingDrop;
+        if (!pendingDrop) {
+          return;
+        }
+    
+        const stopId = pendingDrop.stopId ?? pendingDrop.id;
+        const reason = pendingDrop.reason ?? 'pending-drop';
+    
+        if (stopId != null) {
+          dropStopById(stopId, reason);
+        }
+    
+        appState.pendingDrop = null;
+        advanceToNextStore();
+      }
+    
+      function cancelPendingDrop() {
+        if (!appState.pendingDrop) {
+          return;
+        }
+    
+        appState.pendingDrop = null;
+        advanceToNextStore();
       }
     
       function advanceToNextStore() {
@@ -1437,6 +1826,9 @@
             if (!stop || stop.status !== 'tovisit') {
               return;
             }
+            const matchedPendingDrop =
+              !!appState.pendingDrop &&
+              String(appState.pendingDrop.stopId ?? appState.pendingDrop.id) === stopId;
             const confirmed = window.confirm(
               `Drop ${stop.name}?\n\nThis will mark the store as dropped.`,
             );
@@ -1445,9 +1837,15 @@
             }
             const dropResult = dropStopById(stopId, 'manual-drop');
             if (!dropResult) {
+              if (matchedPendingDrop) {
+                appState.pendingDrop = null;
+                advanceToNextStore();
+              }
               return;
             }
-            if (dropResult.index === appState.currentIndex) {
+            if (matchedPendingDrop) {
+              advanceToNextStore();
+            } else if (dropResult.index === appState.currentIndex) {
               advanceToNextStore();
             } else {
               renderAll();

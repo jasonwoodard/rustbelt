@@ -68,6 +68,28 @@
       outline-offset: 2px;
       border-radius: 0.25rem;
     }
+    
+    .drop-store-button {
+      background: none;
+      border: none;
+      padding: 0;
+      font-size: 0.75rem;
+      line-height: 1rem;
+      color: var(--stone-500);
+      cursor: pointer;
+      text-decoration: underline;
+      text-decoration-style: dotted;
+    }
+    
+    .drop-store-button:hover {
+      color: var(--rose-600);
+    }
+    
+    .drop-store-button:focus-visible {
+      outline: 2px solid rgba(225, 29, 72, 0.45);
+      outline-offset: 2px;
+      border-radius: 0.25rem;
+    }
     button,
     input,
     select {
@@ -479,20 +501,149 @@
     .recommendation-leave {
       color: #be123c;
     }
+    
+    .dashboard-glossary {
+      background: #ffffff;
+      border: 1px solid var(--stone-200);
+      border-radius: 1.5rem;
+      padding: clamp(1.75rem, 2.5vw + 1rem, 3rem);
+      box-shadow: 0 18px 36px rgba(28, 25, 23, 0.08);
+    }
+    
+    .glossary-header {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+    
+    .glossary-heading {
+      font-size: clamp(1.75rem, 2.2vw + 1.5rem, 2.5rem);
+      font-weight: 600;
+      color: var(--stone-900);
+    }
+    
+    .glossary-subheading {
+      max-width: 36rem;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--stone-500);
+    }
+    
+    @media (min-width: 768px) {
+      .glossary-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    
+    }
+    
+    .glossary-grid {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+    
+    .glossary-entry {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      padding: 1.75rem;
+      background: var(--stone-50);
+      border: 1px solid var(--stone-200);
+      border-radius: 1.15rem;
+      box-shadow: 0 12px 30px rgba(28, 25, 23, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      overflow: hidden;
+    }
+    
+    .glossary-entry:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 38px rgba(28, 25, 23, 0.1);
+    }
+    
+    .glossary-entry__heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+    
+    .glossary-entry__title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--stone-900);
+    }
+    
+    .glossary-entry__description {
+      font-size: 0.975rem;
+      line-height: 1.65;
+      color: var(--stone-600);
+    }
+    
+    .glossary-entry__callouts {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .glossary-entry__callout {
+      display: grid;
+      gap: 0.35rem;
+      padding: 1rem 1.25rem;
+      border-radius: 0.9rem;
+      border: 1px solid var(--stone-200);
+      background: #ffffff;
+      box-shadow: 0 8px 18px rgba(28, 25, 23, 0.08);
+    }
+    
+    .glossary-entry__callout--high {
+      background: #eef6f2;
+      border-color: #d5e7dc;
+    }
+    
+    .glossary-entry__callout--low {
+      background: #f8efef;
+      border-color: #ebd6d7;
+    }
+    
+    .glossary-entry__callout-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    
+    .glossary-entry__callout--high .glossary-entry__callout-label {
+      color: var(--teal-800);
+    }
+    
+    .glossary-entry__callout--low .glossary-entry__callout-label {
+      color: var(--stone-700);
+    }
+    
+    .glossary-entry__callout p {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--stone-700);
+    }
     </style>
   </head>
-  <body class="text-stone-800" data-active-day-id="Thu">
-    <script id="itinerary-data" type="application/json">{"runTimestamp":"2025-09-18T04:43:32.016Z","runId":"BU-v2","runNote":"Thursday, Cleveland to South of Buffalo AFTER USS Cod MOAR Speed","days":[{"dayId":"Thu","stops":[{"id":"DPHCDs","name":"Drury Plaza Hotel Cleveland Downtown","type":"start","arrive":"11:00","depart":"11:00","lat":41.5022859,"lon":-81.6944654},{"id":"AU","name":"Antiques & Uniques","type":"store","arrive":"11:19","depart":"11:49","lat":41.616224227171,"lon":-81.460742434228,"address":"30200 Euclid Ave, Wickliffe, OH 44092","dwellMin":30,"legIn":{"fromId":"DPHCDs","toId":"AU","driveMin":19.229226217418592,"distanceMi":14.421919663063944},"score":4.8,"tags":["must-visit","Antique"]},{"id":"SBTL","name":"Shops By The Lake","type":"store","arrive":"12:10","depart":"12:40","lat":41.748994881171,"lon":-81.208780911127,"address":"1871 N Ridge Rd, Painesville, OH 44077","dwellMin":30,"legIn":{"fromId":"AU","toId":"SBTL","driveMin":21.21643183892518,"distanceMi":15.912323879193883},"score":4,"tags":["must-visit","Vintage"]},{"id":"FSW","name":"Fat Sally's Warehouse","type":"store","arrive":"13:11","depart":"13:41","lat":41.893855805386,"lon":-80.804068111485,"address":"1569 Laird Dr, Ashtabula, OH 44004","dwellMin":30,"legIn":{"fromId":"SBTL","toId":"FSW","driveMin":30.823999450519317,"distanceMi":23.117999587889486},"score":4.1,"tags":["Antique"]},{"id":"RRAC","name":"Rcs & Randys Antiques Co-Op","type":"store","arrive":"15:36","depart":"16:06","lat":42.489967125549,"lon":-79.323415719901,"address":"212 Lake Shore Dr E, Dunkirk, NY 14048","dwellMin":30,"legIn":{"fromId":"FSW","toId":"RRAC","driveMin":115.01750789989885,"distanceMi":86.26313092492413},"score":4,"tags":["Antique"]},{"id":"SAVERSB","name":"Savers","type":"store","arrive":"16:50","depart":"17:20","lat":42.7853963,"lon":-78.8107985,"address":"3701 McKinley Pkwy, Buffalo, NY 14219","dwellMin":30,"legIn":{"fromId":"RRAC","toId":"SAVERSB","driveMin":44.132528968390176,"distanceMi":33.09939672629263},"score":4.8,"tags":["must-visit","Thrift"]},{"id":"HRBe","name":"Hyatt Regency Buffalo / Hotel and Conference Center","type":"end","arrive":"17:31","depart":"17:31","lat":42.8879852,"lon":-78.8768433,"legIn":{"fromId":"SAVERSB","toId":"HRBe","driveMin":10.451256211464308,"distanceMi":7.83844215859823}}],"excluded":[{"id":"AAM","reason":"timeWindow","nearestAlternateId":"FSW"},{"id":"BA","reason":"timeWindow","nearestAlternateId":"FSW"},{"id":"CFAN","reason":"timeWindow","nearestAlternateId":"FSW"},{"id":"CMT","reason":"timeWindow","nearestAlternateId":"FSW"},{"id":"CSTAT","reason":"timeWindow","nearestAlternateId":"FSW"},{"id":"CTS","reason":"timeWindow","nearestAlternateId":"FSW"},{"id":"FKOE","reason":"timeWindow","nearestAlternateId":"FSW"},{"id":"FKTS","reason":"timeWindow","nearestAlternateId":"FSW"},{"id":"FNJ","reason":"timeWindow","nearestAlternateId":"FSW"},{"id":"GSTS","reason":"timeWindow","nearestAlternateId":"FSW"},{"id":"IAM","reason":"timeWindow","nearestAlternateId":"RRAC"},{"id":"MB","reason":"timeWindow","nearestAlternateId":"SBTL"},{"id":"MSA","reason":"timeWindow","nearestAlternateId":"AU"},{"id":"MTS","reason":"timeWindow","nearestAlternateId":"FSW"},{"id":"OA","reason":"timeWindow","nearestAlternateId":"FSW"},{"id":"RCTS","reason":"timeWindow","nearestAlternateId":"FSW"},{"id":"RT","reason":"timeWindow","nearestAlternateId":"RRAC"},{"id":"STA","reason":"timeWindow","nearestAlternateId":"AU"},{"id":"TCS","reason":"timeWindow","nearestAlternateId":"FSW"},{"id":"TGD","reason":"timeWindow","nearestAlternateId":"SBTL"},{"id":"TRVM","reason":"timeWindow","nearestAlternateId":"FSW"},{"id":"TSYRS","reason":"timeWindow","nearestAlternateId":"AU"},{"id":"WSAM","reason":"timeWindow","nearestAlternateId":"RRAC"}],"metrics":{"storeCount":27,"storesVisited":5,"visitedIds":["AU","SBTL","FSW","RRAC","SAVERSB"],"totalScore":21.7,"scorePerStore":4.34,"scorePerMin":0.055517044608796806,"scorePerDriveMin":0.09008973455351042,"scorePerMile":0.12011964607134723,"totalDriveMin":240.87095058661643,"totalDwellMin":150,"slackMin":29.129049413383427,"totalDistanceMiles":180.65321293996232,"onTimeRisk":0}}]}</script>
+  <body class="text-stone-800" data-active-day-id="Wed">
+    <script id="itinerary-data" type="application/json">{"runTimestamp":"2025-09-21T04:16:00.913Z","runId":"CL-v1","runNote":"Wednesday, Detroit to Cleveland","days":[{"dayId":"Wed","stops":[{"id":"HCGs1","name":"Hollywood Casino Greektown","type":"start","arrive":"09:00","depart":"09:00","lat":42.336873,"lon":-83.0418499},{"id":"TVAT","name":"The Vault Antiques & Treasures","type":"store","arrive":"10:30","depart":"10:60","lat":41.692281669916,"lon":-83.582227128609,"address":"1583 W Sylvania Ave, Toledo, OH 43612","dwellMin":30,"legIn":{"fromId":"HCGs1","toId":"TVAT","driveMin":89.94825170837217,"distanceMi":52.46981349655043},"score":4.3,"tags":["must-visit","Antique"]},{"id":"TCKA","name":"The Copper Kettle Antiques","type":"store","arrive":"11:10","depart":"11:40","lat":41.611610835276,"lon":-83.625851872076,"address":"1544 S Byrne Rd, Toledo, OH 43614","dwellMin":30,"legIn":{"fromId":"TVAT","toId":"TCKA","driveMin":10.305773501340987,"distanceMi":6.011701209115576},"score":4.6,"tags":["Antique"]},{"id":"AVM","name":"Armory vintage Market","type":"store","arrive":"12:37","depart":"13:07","lat":41.343487452168,"lon":-83.09905933427,"address":"1005 E State St, Fremont, OH 43420","dwellMin":30,"legIn":{"fromId":"TCKA","toId":"AVM","driveMin":56.51571804185394,"distanceMi":32.967502191081465},"score":4.1,"tags":["must-visit","Vintage"]},{"id":"BSS","name":"Big Ship Salvage","type":"store","arrive":"13:49","depart":"14:19","lat":41.327814088911,"lon":-82.620663899344,"address":"11001 US Hwy 250 N unit d-1, Milan, OH 44846","dwellMin":30,"legIn":{"fromId":"AVM","toId":"BSS","driveMin":42.587166261205155,"distanceMi":24.842513652369675},"score":5,"tags":["must-visit","Nautical"]},{"id":"VWT-Olmstead","name":"Value World Thrift","type":"store","arrive":"15:25","depart":"15:55","lat":41.42552860898,"lon":-81.897199579145,"address":"24869 Lorain Rd, North Olmsted, OH 44070","dwellMin":30,"legIn":{"fromId":"BSS","toId":"VWT-Olmstead","driveMin":65.33484892360383,"distanceMi":38.11199520543556},"score":4.5,"tags":["Thrift"]},{"id":"VWT-Lakewood","name":"Value World Thrift","type":"store","arrive":"16:08","depart":"16:38","lat":41.483958040635,"lon":-81.771809570569,"address":"11900 Detroit Ave, Lakewood, OH 44107","dwellMin":30,"legIn":{"fromId":"VWT-Olmstead","toId":"VWT-Lakewood","driveMin":13.107382388380419,"distanceMi":7.645973059888577},"score":4.5,"tags":["Thrift"]},{"id":"SL","name":"Sweet Lorain","type":"store","arrive":"16:41","depart":"17:11","lat":41.473321308529,"lon":-81.733915357678,"address":"7105 Lorain Ave, Cleveland, OH 44102","dwellMin":30,"legIn":{"fromId":"VWT-Lakewood","toId":"SL","driveMin":3.59103058573689,"distanceMi":2.0947678416798525},"score":4.9,"tags":["must-visit","Antique"]},{"id":"PG","name":"Paradise Galleria","type":"store","arrive":"17:13","depart":"17:43","lat":41.480752749907,"lon":-81.712500222034,"address":"3910 Lorain Ave, Cleveland, OH 44113","dwellMin":30,"legIn":{"fromId":"SL","toId":"PG","driveMin":2.094396144766539,"distanceMi":1.2217310844471476},"score":4.1,"tags":["must-visit","Vintage"]},{"id":"DPHCDe","name":"Drury Plaza Hotel Cleveland Downtown","type":"end","arrive":"17:47","depart":"17:47","lat":41.50262133812,"lon":-81.691522330395,"legIn":{"fromId":"PG","toId":"DPHCDe","driveMin":3.1896137629583676,"distanceMi":1.8606080283923812}}],"excluded":[{"id":"AIC","reason":"timeWindow","nearestAlternateId":"AVM"},{"id":"AU","reason":"timeWindow","nearestAlternateId":"PG"},{"id":"CWUTS","reason":"timeWindow","nearestAlternateId":"TCKA"},{"id":"GCHFH","reason":"timeWindow","nearestAlternateId":"VWT-Olmstead"},{"id":"HOD","reason":"timeWindow","nearestAlternateId":"TVAT"},{"id":"MAM","reason":"timeWindow","nearestAlternateId":"TCKA"},{"id":"MSA","reason":"timeWindow","nearestAlternateId":"VWT-Olmstead"},{"id":"MTA","reason":"timeWindow","nearestAlternateId":"AVM"},{"id":"NLRS","reason":"timeWindow","nearestAlternateId":"TCKA"},{"id":"NTYC","reason":"timeWindow","nearestAlternateId":"AVM"},{"id":"NTYRS","reason":"timeWindow","nearestAlternateId":"VWT-Olmstead"},{"id":"PAPE","reason":"timeWindow","nearestAlternateId":"AVM"},{"id":"STA","reason":"timeWindow","nearestAlternateId":"VWT-Olmstead"},{"id":"TES","reason":"timeWindow","nearestAlternateId":"BSS"},{"id":"TSYRS","reason":"timeWindow","nearestAlternateId":"VWT-Olmstead"},{"id":"V","reason":"timeWindow","nearestAlternateId":"TCKA"}],"metrics":{"storeCount":21,"storesVisited":8,"visitedIds":["TVAT","TCKA","AVM","BSS","VWT-Olmstead","VWT-Lakewood","SL","PG"],"totalScore":36,"scorePerStore":4.5,"scorePerMin":0.06835345509038478,"scorePerDriveMin":0.12557810345689538,"scorePerMile":0.21527674878324918,"totalDriveMin":286.6741813182183,"totalDwellMin":240,"slackMin":13.325818681781584,"totalDistanceMiles":167.2266057689607,"onTimeRisk":0}}]}</script>
     <div class="container mx-auto p-4 md:p-6 lg:p-8">
       <header class="mb-6">
         <h1 class="text-3xl font-bold text-stone-900">Rust Belt Bandit Planner</h1>
         <div id="run-info" class="text-stone-600 mt-1 text-sm space-x-0">
           <span class="font-semibold">Run ID:</span>
-          <span class="ml-1">BU-v2</span>
-          <span class="ml-2 text-stone-500">Thursday, Cleveland to South of Buffalo AFTER USS Cod MOAR Speed</span>
+          <span class="ml-1">CL-v1</span>
+          <span class="ml-2 text-stone-500">Wednesday, Detroit to Cleveland</span>
         </div>
-        <p class="text-xs text-stone-500 mt-1">Generated 2025-09-18T04:43:32.016Z</p>
-        <p id="active-day-label" class="text-sm text-stone-600 mt-2">Day Thu</p>
+        <p class="text-xs text-stone-500 mt-1">Generated 2025-09-21T04:16:00.913Z</p>
+        <p id="active-day-label" class="text-sm text-stone-600 mt-2">Day Wed</p>
       </header>
       <main class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <section class="lg:col-span-1 bg-white p-4 rounded-lg shadow-sm">
@@ -500,43 +651,43 @@
           <div id="itinerary-list" class="space-y-2">
             <div
               class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="AU"
+              data-stop-id="TVAT"
               data-stop-type="store"
             >
               <div class="flex justify-between items-start">
                 <div>
-                  <p class="font-semibold">Antiques &amp; Uniques</p>
-                  <p class="text-xs text-stone-500">11:19 – 11:49</p>
+                  <p class="font-semibold">The Vault Antiques &amp; Treasures</p>
+                  <p class="text-xs text-stone-500">10:30 – 10:60</p>
                 </div>
                 <div class="text-right">
-                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.8</p>
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.3</p>
                 </div>
               </div>
             </div>
             <div
               class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="SBTL"
+              data-stop-id="TCKA"
               data-stop-type="store"
             >
               <div class="flex justify-between items-start">
                 <div>
-                  <p class="font-semibold">Shops By The Lake</p>
-                  <p class="text-xs text-stone-500">12:10 – 12:40</p>
+                  <p class="font-semibold">The Copper Kettle Antiques</p>
+                  <p class="text-xs text-stone-500">11:10 – 11:40</p>
                 </div>
                 <div class="text-right">
-                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.0</p>
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.6</p>
                 </div>
               </div>
             </div>
             <div
               class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="FSW"
+              data-stop-id="AVM"
               data-stop-type="store"
             >
               <div class="flex justify-between items-start">
                 <div>
-                  <p class="font-semibold">Fat Sally&#39;s Warehouse</p>
-                  <p class="text-xs text-stone-500">13:11 – 13:41</p>
+                  <p class="font-semibold">Armory vintage Market</p>
+                  <p class="text-xs text-stone-500">12:37 – 13:07</p>
                 </div>
                 <div class="text-right">
                   <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.1</p>
@@ -545,31 +696,76 @@
             </div>
             <div
               class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="RRAC"
+              data-stop-id="BSS"
               data-stop-type="store"
             >
               <div class="flex justify-between items-start">
                 <div>
-                  <p class="font-semibold">Rcs &amp; Randys Antiques Co-Op</p>
-                  <p class="text-xs text-stone-500">15:36 – 16:06</p>
+                  <p class="font-semibold">Big Ship Salvage</p>
+                  <p class="text-xs text-stone-500">13:49 – 14:19</p>
                 </div>
                 <div class="text-right">
-                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.0</p>
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">5.0</p>
                 </div>
               </div>
             </div>
             <div
               class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="SAVERSB"
+              data-stop-id="VWT-Olmstead"
               data-stop-type="store"
             >
               <div class="flex justify-between items-start">
                 <div>
-                  <p class="font-semibold">Savers</p>
-                  <p class="text-xs text-stone-500">16:50 – 17:20</p>
+                  <p class="font-semibold">Value World Thrift</p>
+                  <p class="text-xs text-stone-500">15:25 – 15:55</p>
                 </div>
                 <div class="text-right">
-                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.8</p>
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.5</p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="p-3 rounded-md shadow-sm status-tovisit"
+              data-stop-id="VWT-Lakewood"
+              data-stop-type="store"
+            >
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="font-semibold">Value World Thrift</p>
+                  <p class="text-xs text-stone-500">16:08 – 16:38</p>
+                </div>
+                <div class="text-right">
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.5</p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="p-3 rounded-md shadow-sm status-tovisit"
+              data-stop-id="SL"
+              data-stop-type="store"
+            >
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="font-semibold">Sweet Lorain</p>
+                  <p class="text-xs text-stone-500">16:41 – 17:11</p>
+                </div>
+                <div class="text-right">
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.9</p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="p-3 rounded-md shadow-sm status-tovisit"
+              data-stop-id="PG"
+              data-stop-type="store"
+            >
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="font-semibold">Paradise Galleria</p>
+                  <p class="text-xs text-stone-500">17:13 – 17:43</p>
+                </div>
+                <div class="text-right">
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.1</p>
                 </div>
               </div>
             </div>
@@ -577,15 +773,18 @@
           <noscript>
             <div class="mt-4 space-y-3 text-sm text-stone-600">
               <div>
-                <p class="font-semibold">Day Thu</p>
+                <p class="font-semibold">Day Wed</p>
                 <ul class="list-disc list-inside text-xs text-stone-500">
-                  <li>11:00 – 11:00 · Drury Plaza Hotel Cleveland Downtown (start)</li>
-                  <li>11:19 – 11:49 · Antiques &amp; Uniques (store)</li>
-                  <li>12:10 – 12:40 · Shops By The Lake (store)</li>
-                  <li>13:11 – 13:41 · Fat Sally&#39;s Warehouse (store)</li>
-                  <li>15:36 – 16:06 · Rcs &amp; Randys Antiques Co-Op (store)</li>
-                  <li>16:50 – 17:20 · Savers (store)</li>
-                  <li>17:31 – 17:31 · Hyatt Regency Buffalo &#x2F; Hotel and Conference Center (end)</li>
+                  <li>09:00 – 09:00 · Hollywood Casino Greektown (start)</li>
+                  <li>10:30 – 10:60 · The Vault Antiques &amp; Treasures (store)</li>
+                  <li>11:10 – 11:40 · The Copper Kettle Antiques (store)</li>
+                  <li>12:37 – 13:07 · Armory vintage Market (store)</li>
+                  <li>13:49 – 14:19 · Big Ship Salvage (store)</li>
+                  <li>15:25 – 15:55 · Value World Thrift (store)</li>
+                  <li>16:08 – 16:38 · Value World Thrift (store)</li>
+                  <li>16:41 – 17:11 · Sweet Lorain (store)</li>
+                  <li>17:13 – 17:43 · Paradise Galleria (store)</li>
+                  <li>17:47 – 17:47 · Drury Plaza Hotel Cleveland Downtown (end)</li>
                 </ul>
               </div>
             </div>
@@ -674,11 +873,11 @@
               </div>
               <div class="bg-emerald-50 p-3 rounded-md col-span-2">
                 <p class="text-2xl font-bold text-emerald-800" id="dashboard-current-ucb">0.0</p>
-                <p class="text-sm text-emerald-700">Current UCB Score</p>
+                <p class="text-sm text-emerald-700">Current Upper Confidence Bound (UCB) Score</p>
               </div>
               <div class="bg-teal-100 p-3 rounded-md col-span-2">
                 <p class="text-2xl font-bold text-teal-900" id="dashboard-remaining-ucb">0.0</p>
-                <p class="text-sm text-teal-900">Remaining UCB Score</p>
+                <p class="text-sm text-teal-900">Remaining Upper Confidence Bound (UCB) Score</p>
               </div>
             </div>
           </div>
@@ -698,6 +897,199 @@
           </div>
         </section>
       </main>
+      <section class="mt-10">
+        <div class="dashboard-glossary">
+          <div class="glossary-header">
+            <h2 class="glossary-heading">Dashboard Glossary</h2>
+            <p class="glossary-subheading">
+              Use this reference to decode each metric on the dashboard so you can make confident, in-the-moment decisions during a run.
+            </p>
+          </div>
+
+          <!-- Glossary Grid -->
+          <div class="glossary-grid">
+            <!-- Total Stores -->
+            <article class="glossary-entry">
+              <header class="glossary-entry__heading">
+                <h3 class="glossary-entry__title">Total Stores</h3>
+              </header>
+              <p class="glossary-entry__description">
+                Shows how many store stops are on the agenda so you can gauge the full workload and pacing for the day.
+              </p>
+              <div class="glossary-entry__callouts">
+                <div class="glossary-entry__callout glossary-entry__callout--high">
+                  <span class="glossary-entry__callout-label">High</span>
+                  <p>A long day ahead that can be draining if your resources are limited.</p>
+                </div>
+                <div class="glossary-entry__callout glossary-entry__callout--low">
+                  <span class="glossary-entry__callout-label">Low</span>
+                  <p>A more manageable itinerary that makes it easier to stay focused and on schedule.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Stores Visited -->
+            <article class="glossary-entry">
+              <header class="glossary-entry__heading">
+                <h3 class="glossary-entry__title">Stores Visited</h3>
+              </header>
+              <p class="glossary-entry__description">
+                Tracks how many stores have been worked so you can judge progress against the plan and momentum of the run.
+              </p>
+              <div class="glossary-entry__callouts">
+                <div class="glossary-entry__callout glossary-entry__callout--high">
+                  <span class="glossary-entry__callout-label">High</span>
+                  <p>You're on pace and keeping momentum with the route plan.</p>
+                </div>
+                <div class="glossary-entry__callout glossary-entry__callout--low">
+                  <span class="glossary-entry__callout-label">Low</span>
+                  <p>A signal you might be falling behind, especially if many stops remain.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Avg. J-Score -->
+            <article class="glossary-entry">
+              <header class="glossary-entry__heading">
+                <h3 class="glossary-entry__title">Avg. J-Score</h3>
+              </header>
+              <p class="glossary-entry__description">
+                Summarizes the average anticipated value for your entire itinerary—the mean of your personal &ldquo;want-to-go&rdquo; scores for each store.
+              </p>
+              <div class="glossary-entry__callouts">
+                <div class="glossary-entry__callout glossary-entry__callout--high">
+                  <span class="glossary-entry__callout-label">High</span>
+                  <p>The route is packed with promising stops that can keep morale high.</p>
+                </div>
+                <div class="glossary-entry__callout glossary-entry__callout--low">
+                  <span class="glossary-entry__callout-label">Low</span>
+                  <p>You're likely hunting for needles in a haystack, so prioritization becomes critical.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Remaining Posterior μ -->
+            <article class="glossary-entry">
+              <header class="glossary-entry__heading">
+                <h3 class="glossary-entry__title">Remaining Posterior μ</h3>
+              </header>
+              <p class="glossary-entry__description">
+                Estimates the updated anticipated value of the stores you haven't hit yet, guiding whether to push forward or start wrapping up.
+              </p>
+              <div class="glossary-entry__callouts">
+                <div class="glossary-entry__callout glossary-entry__callout--high">
+                  <span class="glossary-entry__callout-label">High</span>
+                  <p>The rest of the run still looks highly promising, so keep pressing.</p>
+                </div>
+                <div class="glossary-entry__callout glossary-entry__callout--low">
+                  <span class="glossary-entry__callout-label">Low</span>
+                  <p>The remaining stops may not offer much upside, signaling it could be time to wind down.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Remaining Uncertainty σ -->
+            <article class="glossary-entry">
+              <header class="glossary-entry__heading">
+                <h3 class="glossary-entry__title">Remaining Uncertainty σ</h3>
+              </header>
+              <p class="glossary-entry__description">
+                Shows how unknown the untouched stores still are so you know if surprises&mdash;good or bad&mdash;are likely.
+              </p>
+              <div class="glossary-entry__callouts">
+                <div class="glossary-entry__callout glossary-entry__callout--high">
+                  <span class="glossary-entry__callout-label">High</span>
+                  <p>The remaining stores are wild cards&mdash;expect the unexpected.</p>
+                </div>
+                <div class="glossary-entry__callout glossary-entry__callout--low">
+                  <span class="glossary-entry__callout-label">Low</span>
+                  <p>Those stops are predictable, giving you more confidence to stick with the plan.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Current Posterior μ -->
+            <article class="glossary-entry">
+              <header class="glossary-entry__heading">
+                <h3 class="glossary-entry__title">Current Posterior μ</h3>
+              </header>
+              <p class="glossary-entry__description">
+                Captures the best estimate of the current store&rsquo;s quality, telling you if sticking around is likely to pay off.
+              </p>
+              <div class="glossary-entry__callouts">
+                <div class="glossary-entry__callout glossary-entry__callout--high">
+                  <span class="glossary-entry__callout-label">High</span>
+                  <p>A green light that the store is living up to its potential&mdash;stay engaged.</p>
+                </div>
+                <div class="glossary-entry__callout glossary-entry__callout--low">
+                  <span class="glossary-entry__callout-label">Low</span>
+                  <p>A hint this stop may be a bust, making a quick exit more appealing.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Current Uncertainty σ -->
+            <article class="glossary-entry">
+              <header class="glossary-entry__heading">
+                <h3 class="glossary-entry__title">Current Uncertainty σ</h3>
+              </header>
+              <p class="glossary-entry__description">
+                Measures how confident you are about the current store&rsquo;s read so you know whether to trust the estimate.
+              </p>
+              <div class="glossary-entry__callouts">
+                <div class="glossary-entry__callout glossary-entry__callout--high">
+                  <span class="glossary-entry__callout-label">High</span>
+                  <p>You still don&rsquo;t have enough intel&mdash;keep collecting data.</p>
+                </div>
+                <div class="glossary-entry__callout glossary-entry__callout--low">
+                  <span class="glossary-entry__callout-label">Low</span>
+                  <p>The read is solid, so it&rsquo;s easier to make a decisive call.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Current Upper Confidence Bound (UCB) Score -->
+            <article class="glossary-entry">
+              <header class="glossary-entry__heading">
+                <h3 class="glossary-entry__title">Current Upper Confidence Bound (UCB) Score</h3>
+              </header>
+              <p class="glossary-entry__description">
+                Blends the current store&rsquo;s quality and risk so you understand the upside if you keep working it right now.
+              </p>
+              <div class="glossary-entry__callouts">
+                <div class="glossary-entry__callout glossary-entry__callout--high">
+                  <span class="glossary-entry__callout-label">High</span>
+                  <p>There&rsquo;s strong potential for a big find, making it worth more of your time.</p>
+                </div>
+                <div class="glossary-entry__callout glossary-entry__callout--low">
+                  <span class="glossary-entry__callout-label">Low</span>
+                  <p>The upside is limited, so moving on could be the smarter play.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Remaining Upper Confidence Bound (UCB) Score -->
+            <article class="glossary-entry">
+              <header class="glossary-entry__heading">
+                <h3 class="glossary-entry__title">Remaining Upper Confidence Bound (UCB) Score</h3>
+              </header>
+              <p class="glossary-entry__description">
+                Combines the expected quality and risk of the untouched stores to show the upside left in the route.
+              </p>
+              <div class="glossary-entry__callouts">
+                <div class="glossary-entry__callout glossary-entry__callout--high">
+                  <span class="glossary-entry__callout-label">High</span>
+                  <p>The rest of the itinerary still has major potential, so stay aggressive.</p>
+                </div>
+                <div class="glossary-entry__callout glossary-entry__callout--low">
+                  <span class="glossary-entry__callout-label">Low</span>
+                  <p>Limited upside remains, which could be a cue to wrap the day early.</p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
     </div>
     <script>
     (function () {
@@ -714,6 +1106,7 @@
         currentIndex: 0,
         log: [],
         dayId: null,
+        pendingDrop: null,
         mqaMap: {
           Bust: 0.0,
           Average: 3.5,
@@ -912,10 +1305,13 @@
           currentPosterior ? `±${currentPosterior.std.toFixed(2)}` : '±--',
         );
         const currentUcbText =
-          currentPosterior?.lastObservation != null
-            ? currentPosterior.lastObservation.toFixed(2)
+          currentPosterior && typeof currentPosterior.upper === 'number'
+            ? currentPosterior.upper.toFixed(2)
             : '--';
-        const remainingUcbText = poolPosterior ? poolPosterior.mean.toFixed(2) : '--';
+        const remainingUcbText =
+          poolPosterior && typeof poolPosterior.upper === 'number'
+            ? poolPosterior.upper.toFixed(2)
+            : '--';
         setText('dashboard-current-ucb', currentUcbText);
         setText('dashboard-remaining-ucb', remainingUcbText);
       }
@@ -933,6 +1329,7 @@
           }`;
           const posteriorMean = stop.posterior ? stop.posterior.mean.toFixed(2) : formatScore(stop.score);
           const posteriorStd = stop.posterior ? stop.posterior.std.toFixed(2) : '0.00';
+          const initialScore = formatScore(stop.score);
           const statusLabel =
             stop.status === 'visited'
               ? `Visited – ${stop.mqa ?? 'n/a'}`
@@ -942,15 +1339,31 @@
           const nameMarkup = stop.mapsUrl
             ? `<a class="store-link" href="${stop.mapsUrl}" target="_blank" rel="noopener noreferrer">${stop.name}</a>`
             : stop.name;
+          const dropButtonHtml =
+            stop.status === 'tovisit'
+              ? `<button type="button" class="drop-store-button mt-1 transition-colors" data-drop-stop-id="${stop.id}">Drop store</button>`
+              : '';
           div.innerHTML = `
-            <div class="flex justify-between items-start">
+            <div class="flex justify-between items-start gap-3">
               <div>
                 <p class="font-semibold">${nameMarkup}</p>
                 <p class="text-xs text-stone-500">${statusLabel}</p>
               </div>
-              <div class="text-right">
-                <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">${posteriorMean}</p>
-                <p class="text-xs text-stone-500">±${posteriorStd}</p>
+              <div class="flex flex-col items-end text-right gap-2">
+                <div class="text-right">
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">${posteriorMean}</p>
+                  <div class="mt-2 space-y-1 leading-tight">
+                    <div>
+                      <p class="text-xs uppercase tracking-wide text-stone-600">
+                      Uncertainty&nbsp;:&nbsp;±${posteriorStd}</p>
+                    </div>
+                    <div>
+                      <p class="text-xs uppercase tracking-wide text-stone-600">
+                        Initial Score&nbsp;:&nbsp;${initialScore}</p>
+                    </div>
+                  </div>
+                </div>
+                ${dropButtonHtml}
               </div>
             </div>
           `;
@@ -1018,7 +1431,7 @@
           div.innerHTML = `
             <p class="font-medium">${nameHtml}</p>
             <p class="text-stone-600">MQA: <span class="font-semibold">${entry.mqa}</span>${mqaValueText} → Decision: <span class="font-semibold">${entry.decision}</span></p>
-            <p class="text-xs text-stone-500">Posterior μ=${posterior.mean.toFixed(2)} σ=${posterior.std.toFixed(2)} | UCB=${currentUcbText} | Pool μ=${pool.mean.toFixed(2)} σ=${pool.std.toFixed(2)} | Pool UCB=${remainingUcbText}${
+            <p class="text-xs text-stone-500">Posterior μ=${posterior.mean.toFixed(2)} σ=${posterior.std.toFixed(2)} | Upper Confidence Bound (UCB)=${currentUcbText} | Pool μ=${pool.mean.toFixed(2)} σ=${pool.std.toFixed(2)} | Pool Upper Confidence Bound (UCB)=${remainingUcbText}${
             zScoreText ? ` ${zScoreText}` : ''
           }</p>
           `;
@@ -1091,7 +1504,10 @@
       function updateRecommendationDisplay(recommendation, meta, currentPosterior, poolPosterior) {
         const display = document.getElementById('recommendation-display');
         if (!display) return;
-        const diffText = meta.diff != null ? `ΔUCB=${meta.diff.toFixed(2)}` : '';
+        const diffText =
+          meta.diff != null
+            ? `ΔUpper Confidence Bound (UCB)=${meta.diff.toFixed(2)}`
+            : '';
         const zText = meta.zScore != null && Number.isFinite(meta.zScore) ? `z=${meta.zScore.toFixed(2)}` : '';
         const reason = humanizeReason(meta.reason);
         const currentUcbText =
@@ -1099,25 +1515,151 @@
             ? meta.currentUcb.toFixed(2)
             : '--';
         const currentSummary = currentPosterior
-          ? `Current μ=${currentPosterior.mean.toFixed(2)} σ=${currentPosterior.std.toFixed(2)} UCB=${currentUcbText}`
+          ? `Current μ=${currentPosterior.mean.toFixed(2)} σ=${currentPosterior.std.toFixed(2)} Upper Confidence Bound (UCB)=${currentUcbText}`
           : '';
         const poolUcbText =
           meta.remainingUcb != null && Number.isFinite(meta.remainingUcb)
             ? meta.remainingUcb.toFixed(2)
             : '--';
         const poolSummary = poolPosterior
-          ? `Pool μ=${poolPosterior.mean.toFixed(2)} σ=${poolPosterior.std.toFixed(2)} UCB=${poolUcbText}`
+          ? `Pool μ=${poolPosterior.mean.toFixed(2)} σ=${poolPosterior.std.toFixed(2)} Upper Confidence Bound (UCB)=${poolUcbText}`
           : '';
     
         const metaLine = [reason, diffText, zText].filter(Boolean).join(' · ');
         const summaryLine = [currentSummary, poolSummary].filter(Boolean).join(' | ');
     
-        display.innerHTML = `
+        let pendingDropMarkup = '';
+        const pendingDrop = appState.pendingDrop;
+        if (pendingDrop) {
+          const pendingStop = appState.stops.find(
+            (s) => String(s.id) === String(pendingDrop.stopId ?? pendingDrop.id),
+          );
+          if (pendingStop && pendingStop.status === 'tovisit') {
+            const nameMarkup = pendingStop.mapsUrl
+              ? `<a class="store-link" href="${pendingStop.mapsUrl}" target="_blank" rel="noopener noreferrer">${pendingStop.name}</a>`
+              : pendingStop.name;
+            const posteriorMean = pendingStop.posterior
+              ? pendingStop.posterior.mean.toFixed(2)
+              : formatScore(pendingStop.score);
+            const posteriorStd = pendingStop.posterior
+              ? pendingStop.posterior.std.toFixed(2)
+              : '0.00';
+            const scheduleParts = [];
+            if (pendingStop.arrive) {
+              scheduleParts.push(`Arrive ${pendingStop.arrive}`);
+            }
+            if (pendingStop.depart) {
+              scheduleParts.push(`Depart ${pendingStop.depart}`);
+            }
+            const scheduleLine =
+              scheduleParts.length > 0
+                ? `<p class="text-xs text-amber-800 mt-1">${scheduleParts.join(' · ')}</p>`
+                : '';
+    
+            pendingDropMarkup = `
+          <div class="pending-drop-panel mt-4 rounded-lg border border-amber-200 bg-amber-50 p-4 text-amber-900">
+            <p class="font-semibold">Extend your stay?</p>
+            <p class="mt-1 text-sm">Drop the lowest-rated remaining store to stay longer.</p>
+            <div class="mt-2 text-sm">
+              <p class="font-medium">${nameMarkup}</p>
+              <p class="text-xs text-amber-800">Posterior μ=${posteriorMean} σ=${posteriorStd}</p>
+              ${scheduleLine}
+            </div>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <button
+                type="button"
+                class="pending-drop-confirm rounded-md bg-amber-600 px-3 py-2 text-sm font-semibold text-white shadow hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-1"
+                data-action="confirm-pending-drop"
+                data-stop-id="${pendingStop.id}"
+              >
+                Drop this store
+              </button>
+              <button
+                type="button"
+                class="pending-drop-cancel rounded-md border border-amber-400 px-3 py-2 text-sm font-semibold text-amber-900 hover:bg-amber-100 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-1"
+                data-action="cancel-pending-drop"
+              >
+                Keep all future stores
+              </button>
+            </div>
+          </div>
+        `;
+          } else {
+            appState.pendingDrop = null;
+          }
+        }
+    
+        const baseMarkup = `
           <p class="text-lg font-medium">Recommendation:</p>
           <p class="text-3xl font-bold recommendation-${recommendation.toLowerCase()}">${recommendation.toUpperCase()}</p>
           <p class="text-sm text-stone-600">${metaLine}</p>
           <p class="text-xs text-stone-500">${summaryLine}</p>
         `;
+    
+        display.innerHTML = `${baseMarkup}${pendingDropMarkup}`;
+    
+        if (pendingDropMarkup) {
+          const confirmButton = display.querySelector('[data-action="confirm-pending-drop"]');
+          if (confirmButton) {
+            confirmButton.addEventListener('click', confirmPendingDrop);
+          }
+          const cancelButton = display.querySelector('[data-action="cancel-pending-drop"]');
+          if (cancelButton) {
+            cancelButton.addEventListener('click', cancelPendingDrop);
+          }
+        }
+      }
+    
+      function dropStopById(stopId, reason) {
+        const normalizedId = String(stopId);
+        const stopIndex = appState.stops.findIndex((s) => String(s.id) === normalizedId);
+        if (stopIndex === -1) return null;
+    
+        const stop = appState.stops[stopIndex];
+        if (stop.status !== 'tovisit') {
+          return null;
+        }
+    
+        stop.status = 'dropped';
+        stop.decision = 'Dropped';
+        stop.decisionReason = reason;
+    
+        const posteriorSummary = serializePosterior(stop.posterior);
+        stop.posteriorSummary = {
+          ...posteriorSummary,
+          diff: null,
+          zScore: null,
+          currentUcb: null,
+          remainingUcb: null,
+        };
+    
+        const poolSnapshot = serializePool(computeRemainingPoolPosterior());
+    
+        appState.log.push({
+          name: stop.name,
+          mapsUrl: stop.mapsUrl,
+          mqa: 'N/A',
+          mqaValue: null,
+          decision: 'Dropped',
+          decisionReason: reason,
+          diff: null,
+          zScore: null,
+          currentUcb: null,
+          remainingUcb: null,
+          observationCount: null,
+          posterior: posteriorSummary,
+          pool: poolSnapshot,
+          timestamp: new Date().toISOString(),
+        });
+    
+        if (
+          appState.pendingDrop &&
+          String(appState.pendingDrop.stopId ?? appState.pendingDrop.id) === normalizedId
+        ) {
+          appState.pendingDrop = null;
+        }
+    
+        return { stop, index: stopIndex };
       }
     
       function handleOverrun() {
@@ -1131,34 +1673,38 @@
           stop.posterior.mean < min.posterior.mean ? stop : min,
         );
     
-        setTimeout(() => {
-          const confirmed = window.confirm(
-            `To extend your stay, drop the lowest-rated remaining store:\n\n${lowestScoringStop.name} (Posterior μ: ${lowestScoringStop.posterior.mean.toFixed(
-              2,
-            )})\n\nDrop this store?`,
-          );
+        appState.pendingDrop = {
+          stopId: lowestScoringStop.id,
+          reason: 'overrun-drop-lowest',
+        };
     
-          if (confirmed) {
-            const stopToDrop = appState.stops.find((s) => s.id === lowestScoringStop.id);
-            if (stopToDrop) {
-              stopToDrop.status = 'dropped';
-              appState.log.push({
-                name: stopToDrop.name,
-                mapsUrl: stopToDrop.mapsUrl,
-                mqa: 'N/A',
-                mqaValue: null,
-                decision: 'Dropped',
-                decisionReason: 'overrun-drop-lowest',
-                diff: null,
-                zScore: null,
-                posterior: serializePosterior(stopToDrop.posterior),
-                pool: serializePool(computeRemainingPoolPosterior()),
-                timestamp: new Date().toISOString(),
-              });
-            }
-          }
-          advanceToNextStore();
-        }, 500);
+        renderAll();
+      }
+    
+      function confirmPendingDrop() {
+        const pendingDrop = appState.pendingDrop;
+        if (!pendingDrop) {
+          return;
+        }
+    
+        const stopId = pendingDrop.stopId ?? pendingDrop.id;
+        const reason = pendingDrop.reason ?? 'pending-drop';
+    
+        if (stopId != null) {
+          dropStopById(stopId, reason);
+        }
+    
+        appState.pendingDrop = null;
+        advanceToNextStore();
+      }
+    
+      function cancelPendingDrop() {
+        if (!appState.pendingDrop) {
+          return;
+        }
+    
+        appState.pendingDrop = null;
+        advanceToNextStore();
       }
     
       function advanceToNextStore() {
@@ -1193,6 +1739,53 @@
         if (bustButton) {
           bustButton.addEventListener('click', () => {
             processDecision('Bust');
+          });
+        }
+    
+        const itineraryList = document.getElementById('itinerary-list');
+        if (itineraryList) {
+          itineraryList.addEventListener('click', (event) => {
+            const target = event.target;
+            if (!(target instanceof Element)) {
+              return;
+            }
+            const button = target.closest('button[data-drop-stop-id]');
+            if (!button) {
+              return;
+            }
+            event.preventDefault();
+            const stopId = button.getAttribute('data-drop-stop-id');
+            if (!stopId) {
+              return;
+            }
+            const stop = appState.stops.find((s) => String(s.id) === stopId);
+            if (!stop || stop.status !== 'tovisit') {
+              return;
+            }
+            const matchedPendingDrop =
+              !!appState.pendingDrop &&
+              String(appState.pendingDrop.stopId ?? appState.pendingDrop.id) === stopId;
+            const confirmed = window.confirm(
+              `Drop ${stop.name}?\n\nThis will mark the store as dropped.`,
+            );
+            if (!confirmed) {
+              return;
+            }
+            const dropResult = dropStopById(stopId, 'manual-drop');
+            if (!dropResult) {
+              if (matchedPendingDrop) {
+                appState.pendingDrop = null;
+                advanceToNextStore();
+              }
+              return;
+            }
+            if (matchedPendingDrop) {
+              advanceToNextStore();
+            } else if (dropResult.index === appState.currentIndex) {
+              advanceToNextStore();
+            } else {
+              renderAll();
+            }
           });
         }
     
@@ -1243,8 +1836,21 @@
       }
     
       function getRecommendation(currentPosterior, poolPosterior, mqaKey, mqaValue) {
-        const currentUcb = typeof mqaValue === 'number' ? mqaValue : null;
-        const remainingUcb = poolPosterior ? poolPosterior.mean : null;
+        const fallbackCurrentUcb = typeof mqaValue === 'number' ? mqaValue : null;
+        const derivedCurrentUcb =
+          currentPosterior && typeof currentPosterior.upper === 'number'
+            ? currentPosterior.upper
+            : null;
+        const currentUcb = derivedCurrentUcb ?? fallbackCurrentUcb;
+        const derivedRemainingUcb =
+          poolPosterior && typeof poolPosterior.upper === 'number'
+            ? poolPosterior.upper
+            : null;
+        const fallbackRemainingUcb =
+          poolPosterior && typeof poolPosterior.mean === 'number'
+            ? poolPosterior.mean
+            : null;
+        const remainingUcb = derivedRemainingUcb ?? fallbackRemainingUcb;
         const observationCount = currentPosterior?.observationCount ?? 0;
     
         if (mqaKey === 'Bust') {
@@ -1499,7 +2105,9 @@
         const text = reason
           .replace(/[-_]/g, ' ')
           .replace(/\b([a-z])/g, (m) => m.toUpperCase());
-        return text.replace(/\bMqa\b/g, 'MQA').replace(/\bUcb\b/g, 'UCB');
+        return text
+          .replace(/\bMqa\b/g, 'MQA')
+          .replace(/\bUcb\b/g, 'Upper Confidence Bound (UCB)');
       }
     })();
     </script>

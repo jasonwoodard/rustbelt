@@ -1,7 +1,7 @@
 {
-  "runTimestamp": "2025-09-18T06:18:34.792Z",
-  "runId": "RX-v2",
-  "runNote": "Buffalo in the AM, long run to Roxbury. Skip Rochester",
+  "runTimestamp": "2025-09-21T04:19:59.606Z",
+  "runId": "RX-v1",
+  "runNote": "Buffalo in the AM, long run to Roxbury",
   "days": [
     {
       "dayId": "Fri",
@@ -80,41 +80,20 @@
           ]
         },
         {
-          "id": "HTSHFT",
-          "name": "Hearts Thrift Store - Hearts for the Homeless Thrift Store (Tonawanda)",
-          "type": "store",
-          "arrive": "11:57",
-          "depart": "12:27",
-          "lat": 42.980811214442,
-          "lon": -78.850974884193,
-          "address": "2217 Sheridan Dr, Buffalo, NY 14223",
-          "dwellMin": 30,
-          "legIn": {
-            "fromId": "HTSHFB",
-            "toId": "HTSHFT",
-            "driveMin": 4.492364472917948,
-            "distanceMi": 3.369273354688461
-          },
-          "score": 4,
-          "tags": [
-            "Thrift"
-          ]
-        },
-        {
           "id": "SAVERST",
           "name": "Savers",
           "type": "store",
-          "arrive": "12:29",
-          "depart": "12:59",
+          "arrive": "11:59",
+          "depart": "12:29",
           "lat": 42.981112399689,
           "lon": -78.825751077632,
           "address": "2309 Eggert Rd, Tonawanda Town, NY 14150",
           "dwellMin": 30,
           "legIn": {
-            "fromId": "HTSHFT",
+            "fromId": "HTSHFB",
             "toId": "SAVERST",
-            "driveMin": 1.7002395628293903,
-            "distanceMi": 1.2751796721220428
+            "driveMin": 5.97639016637379,
+            "distanceMi": 4.482292624780342
           },
           "score": 5,
           "tags": [
@@ -126,8 +105,8 @@
           "id": "AWFM",
           "name": "Antique World & Flea Market",
           "type": "store",
-          "arrive": "13:16",
-          "depart": "13:46",
+          "arrive": "12:46",
+          "depart": "13:16",
           "lat": 42.983831250138,
           "lon": -78.572300161758,
           "address": "11111 Main St, Clarence, NY 14031",
@@ -144,20 +123,41 @@
           ]
         },
         {
+          "id": "SAVERSR",
+          "name": "Savers",
+          "type": "store",
+          "arrive": "14:33",
+          "depart": "15:03",
+          "lat": 43.208852107704,
+          "lon": -77.460114345954,
+          "address": "980 Ridge Rd, Webster, NY 14580",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "AWFM",
+            "toId": "SAVERSR",
+            "driveMin": 77.63547989349723,
+            "distanceMi": 58.226609920122925
+          },
+          "score": 5,
+          "tags": [
+            "Thrift"
+          ]
+        },
+        {
           "id": "GJE",
           "name": "Grandma Jaree's Emporium",
           "type": "store",
-          "arrive": "16:01",
-          "depart": "16:31",
+          "arrive": "16:08",
+          "depart": "16:38",
           "lat": 42.932716334904,
           "lon": -76.572979661258,
           "address": "25 McMaster St, Auburn, NY 13021",
           "dwellMin": 30,
           "legIn": {
-            "fromId": "AWFM",
+            "fromId": "SAVERSR",
             "toId": "GJE",
-            "driveMin": 134.87728995937007,
-            "distanceMi": 101.15796746952756
+            "driveMin": 64.89632364610115,
+            "distanceMi": 48.67224273457586
           },
           "score": 4.9,
           "tags": [
@@ -169,8 +169,8 @@
           "id": "ROXe",
           "name": "Roxbury",
           "type": "end",
-          "arrive": "18:60",
-          "depart": "18:60",
+          "arrive": "19:07",
+          "depart": "19:07",
           "lat": 42.2839,
           "lon": -74.5651,
           "legIn": {
@@ -190,17 +190,22 @@
         {
           "id": "AFAC",
           "reason": "timeWindow",
-          "nearestAlternateId": "AWFM"
+          "nearestAlternateId": "SAVERSR"
         },
         {
           "id": "ATBR",
           "reason": "timeWindow",
-          "nearestAlternateId": "HTSHFT"
+          "nearestAlternateId": "SAVERST"
         },
         {
           "id": "BRV",
           "reason": "timeWindow",
           "nearestAlternateId": "AB"
+        },
+        {
+          "id": "CAOL",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SAVERSR"
         },
         {
           "id": "CGAE",
@@ -213,9 +218,14 @@
           "nearestAlternateId": "AB"
         },
         {
+          "id": "EA",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SAVERSR"
+        },
+        {
           "id": "FLTT",
           "reason": "timeWindow",
-          "nearestAlternateId": "GJE"
+          "nearestAlternateId": "SAVERSR"
         },
         {
           "id": "FTVA",
@@ -230,7 +240,7 @@
         {
           "id": "HFHR",
           "reason": "timeWindow",
-          "nearestAlternateId": "GJE"
+          "nearestAlternateId": "SAVERSR"
         },
         {
           "id": "HFHRN",
@@ -243,6 +253,16 @@
           "nearestAlternateId": "ATSWS"
         },
         {
+          "id": "HTSHFT",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SAVERST"
+        },
+        {
+          "id": "LH",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SAVERSR"
+        },
+        {
           "id": "OHVC",
           "reason": "timeWindow",
           "nearestAlternateId": "AB"
@@ -250,12 +270,17 @@
         {
           "id": "PLAM",
           "reason": "timeWindow",
-          "nearestAlternateId": "GJE"
+          "nearestAlternateId": "SAVERSR"
         },
         {
           "id": "SA",
           "reason": "timeWindow",
           "nearestAlternateId": "AB"
+        },
+        {
+          "id": "SAT",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SAVERSR"
         },
         {
           "id": "SCBAC",
@@ -276,29 +301,34 @@
           "id": "STR",
           "reason": "timeWindow",
           "nearestAlternateId": "AB"
+        },
+        {
+          "id": "UVM",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SAVERSR"
         }
       ],
       "metrics": {
-        "storeCount": 24,
+        "storeCount": 29,
         "storesVisited": 7,
         "visitedIds": [
           "ATSWS",
           "AB",
           "HTSHFB",
-          "HTSHFT",
           "SAVERST",
           "AWFM",
+          "SAVERSR",
           "GJE"
         ],
-        "totalScore": 31.700000000000003,
-        "scorePerStore": 4.528571428571429,
-        "scorePerMin": 0.05875194181301838,
-        "scorePerDriveMin": 0.09618984014648352,
-        "scorePerMile": 0.12825312019531138,
-        "totalDriveMin": 329.5566345855798,
+        "totalScore": 32.7,
+        "scorePerStore": 4.671428571428572,
+        "scorePerMin": 0.05978117519874288,
+        "scorePerDriveMin": 0.09703409954297933,
+        "scorePerMile": 0.1293787993906391,
+        "totalDriveMin": 336.9949342964345,
         "totalDwellMin": 210,
-        "slackMin": 60.443365414420214,
-        "totalDistanceMiles": 247.16747593918484,
+        "slackMin": 53.00506570356538,
+        "totalDistanceMiles": 252.7462007223259,
         "onTimeRisk": 0
       }
     }
