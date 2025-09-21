@@ -222,6 +222,9 @@
     .gap-6 {
       gap: 1.5rem;
     }
+    .space-y-1 > * + * {
+      margin-top: 0.25rem;
+    }
     .space-y-2 > * + * {
       margin-top: 0.5rem;
     }
@@ -296,6 +299,15 @@
     .text-3xl {
       font-size: 1.875rem;
       line-height: 2.25rem;
+    }
+    .leading-tight {
+      line-height: 1.25;
+    }
+    .uppercase {
+      text-transform: uppercase;
+    }
+    .tracking-wide {
+      letter-spacing: 0.08em;
     }
     .font-medium {
       font-weight: 500;
@@ -495,6 +507,86 @@
       color: #991b1b;
       text-decoration: line-through;
     }
+    .pending-drop-panel {
+      border: 1px solid rgba(225, 29, 72, 0.25);
+      background: #fef2f2;
+      color: var(--stone-900);
+      box-shadow: 0 12px 24px rgba(190, 18, 60, 0.12);
+    }
+    .pending-drop-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--stone-900);
+    }
+    .pending-drop-subtitle {
+      margin-top: 0.25rem;
+      font-size: 0.875rem;
+      color: var(--stone-600);
+    }
+    .pending-drop-store {
+      margin-top: 1rem;
+      background: #ffffff;
+      border: 1px solid var(--stone-200);
+      border-radius: 0.5rem;
+    }
+    .pending-drop-store .pending-drop-store-name {
+      color: var(--stone-900);
+    }
+    .pending-drop-store .pending-drop-store-status {
+      margin-top: 0.125rem;
+    }
+    .pending-drop-store .pending-drop-store-mean {
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
+    .pending-drop-store .pending-drop-store-metrics {
+      color: var(--stone-600);
+    }
+    .pending-drop-store-schedule {
+      margin-top: 0.75rem;
+      font-size: 0.75rem;
+      color: var(--stone-500);
+    }
+    .pending-drop-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+    }
+    .pending-drop-action {
+      border: none;
+      border-radius: 0.5rem;
+      padding: 0.625rem 1rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 150ms ease, color 150ms ease, box-shadow 150ms ease;
+    }
+    .pending-drop-action:focus-visible {
+      outline-offset: 3px;
+    }
+    .pending-drop-action--danger {
+      background: var(--rose-600);
+      color: #ffffff;
+      box-shadow: 0 12px 24px rgba(190, 18, 60, 0.2);
+    }
+    .pending-drop-action--danger:hover {
+      background: var(--rose-700);
+    }
+    .pending-drop-action--danger:focus-visible {
+      outline: 3px solid rgba(225, 29, 72, 0.45);
+    }
+    .pending-drop-action--secondary {
+      background: #ffffff;
+      border: 1px solid var(--stone-300);
+      color: var(--stone-700);
+      box-shadow: 0 4px 12px rgba(28, 25, 23, 0.08);
+    }
+    .pending-drop-action--secondary:hover {
+      background: var(--stone-100);
+    }
+    .pending-drop-action--secondary:focus-visible {
+      outline: 3px solid rgba(120, 113, 108, 0.45);
+    }
     .recommendation-stay {
       color: #0f766e;
     }
@@ -632,18 +724,18 @@
     }
     </style>
   </head>
-  <body class="text-stone-800" data-active-day-id="Wed">
-    <script id="itinerary-data" type="application/json">{"runTimestamp":"2025-09-21T04:16:00.913Z","runId":"CL-v1","runNote":"Wednesday, Detroit to Cleveland","days":[{"dayId":"Wed","stops":[{"id":"HCGs1","name":"Hollywood Casino Greektown","type":"start","arrive":"09:00","depart":"09:00","lat":42.336873,"lon":-83.0418499},{"id":"TVAT","name":"The Vault Antiques & Treasures","type":"store","arrive":"10:30","depart":"10:60","lat":41.692281669916,"lon":-83.582227128609,"address":"1583 W Sylvania Ave, Toledo, OH 43612","dwellMin":30,"legIn":{"fromId":"HCGs1","toId":"TVAT","driveMin":89.94825170837217,"distanceMi":52.46981349655043},"score":4.3,"tags":["must-visit","Antique"]},{"id":"TCKA","name":"The Copper Kettle Antiques","type":"store","arrive":"11:10","depart":"11:40","lat":41.611610835276,"lon":-83.625851872076,"address":"1544 S Byrne Rd, Toledo, OH 43614","dwellMin":30,"legIn":{"fromId":"TVAT","toId":"TCKA","driveMin":10.305773501340987,"distanceMi":6.011701209115576},"score":4.6,"tags":["Antique"]},{"id":"AVM","name":"Armory vintage Market","type":"store","arrive":"12:37","depart":"13:07","lat":41.343487452168,"lon":-83.09905933427,"address":"1005 E State St, Fremont, OH 43420","dwellMin":30,"legIn":{"fromId":"TCKA","toId":"AVM","driveMin":56.51571804185394,"distanceMi":32.967502191081465},"score":4.1,"tags":["must-visit","Vintage"]},{"id":"BSS","name":"Big Ship Salvage","type":"store","arrive":"13:49","depart":"14:19","lat":41.327814088911,"lon":-82.620663899344,"address":"11001 US Hwy 250 N unit d-1, Milan, OH 44846","dwellMin":30,"legIn":{"fromId":"AVM","toId":"BSS","driveMin":42.587166261205155,"distanceMi":24.842513652369675},"score":5,"tags":["must-visit","Nautical"]},{"id":"VWT-Olmstead","name":"Value World Thrift","type":"store","arrive":"15:25","depart":"15:55","lat":41.42552860898,"lon":-81.897199579145,"address":"24869 Lorain Rd, North Olmsted, OH 44070","dwellMin":30,"legIn":{"fromId":"BSS","toId":"VWT-Olmstead","driveMin":65.33484892360383,"distanceMi":38.11199520543556},"score":4.5,"tags":["Thrift"]},{"id":"VWT-Lakewood","name":"Value World Thrift","type":"store","arrive":"16:08","depart":"16:38","lat":41.483958040635,"lon":-81.771809570569,"address":"11900 Detroit Ave, Lakewood, OH 44107","dwellMin":30,"legIn":{"fromId":"VWT-Olmstead","toId":"VWT-Lakewood","driveMin":13.107382388380419,"distanceMi":7.645973059888577},"score":4.5,"tags":["Thrift"]},{"id":"SL","name":"Sweet Lorain","type":"store","arrive":"16:41","depart":"17:11","lat":41.473321308529,"lon":-81.733915357678,"address":"7105 Lorain Ave, Cleveland, OH 44102","dwellMin":30,"legIn":{"fromId":"VWT-Lakewood","toId":"SL","driveMin":3.59103058573689,"distanceMi":2.0947678416798525},"score":4.9,"tags":["must-visit","Antique"]},{"id":"PG","name":"Paradise Galleria","type":"store","arrive":"17:13","depart":"17:43","lat":41.480752749907,"lon":-81.712500222034,"address":"3910 Lorain Ave, Cleveland, OH 44113","dwellMin":30,"legIn":{"fromId":"SL","toId":"PG","driveMin":2.094396144766539,"distanceMi":1.2217310844471476},"score":4.1,"tags":["must-visit","Vintage"]},{"id":"DPHCDe","name":"Drury Plaza Hotel Cleveland Downtown","type":"end","arrive":"17:47","depart":"17:47","lat":41.50262133812,"lon":-81.691522330395,"legIn":{"fromId":"PG","toId":"DPHCDe","driveMin":3.1896137629583676,"distanceMi":1.8606080283923812}}],"excluded":[{"id":"AIC","reason":"timeWindow","nearestAlternateId":"AVM"},{"id":"AU","reason":"timeWindow","nearestAlternateId":"PG"},{"id":"CWUTS","reason":"timeWindow","nearestAlternateId":"TCKA"},{"id":"GCHFH","reason":"timeWindow","nearestAlternateId":"VWT-Olmstead"},{"id":"HOD","reason":"timeWindow","nearestAlternateId":"TVAT"},{"id":"MAM","reason":"timeWindow","nearestAlternateId":"TCKA"},{"id":"MSA","reason":"timeWindow","nearestAlternateId":"VWT-Olmstead"},{"id":"MTA","reason":"timeWindow","nearestAlternateId":"AVM"},{"id":"NLRS","reason":"timeWindow","nearestAlternateId":"TCKA"},{"id":"NTYC","reason":"timeWindow","nearestAlternateId":"AVM"},{"id":"NTYRS","reason":"timeWindow","nearestAlternateId":"VWT-Olmstead"},{"id":"PAPE","reason":"timeWindow","nearestAlternateId":"AVM"},{"id":"STA","reason":"timeWindow","nearestAlternateId":"VWT-Olmstead"},{"id":"TES","reason":"timeWindow","nearestAlternateId":"BSS"},{"id":"TSYRS","reason":"timeWindow","nearestAlternateId":"VWT-Olmstead"},{"id":"V","reason":"timeWindow","nearestAlternateId":"TCKA"}],"metrics":{"storeCount":21,"storesVisited":8,"visitedIds":["TVAT","TCKA","AVM","BSS","VWT-Olmstead","VWT-Lakewood","SL","PG"],"totalScore":36,"scorePerStore":4.5,"scorePerMin":0.06835345509038478,"scorePerDriveMin":0.12557810345689538,"scorePerMile":0.21527674878324918,"totalDriveMin":286.6741813182183,"totalDwellMin":240,"slackMin":13.325818681781584,"totalDistanceMiles":167.2266057689607,"onTimeRisk":0}}]}</script>
+  <body class="text-stone-800" data-active-day-id="Fri">
+    <script id="itinerary-data" type="application/json">{"runTimestamp":"2025-09-21T05:46:09.005Z","runId":"RX-v1","runNote":"Buffalo in the AM, long run to Roxbury","days":[{"dayId":"Fri","stops":[{"id":"HRBs","name":"Hyatt Regency Buffalo / Hotel and Conference Center","type":"start","arrive":"10:00","depart":"10:00","lat":42.8879852,"lon":-78.8768433},{"id":"ATSWS","name":"AMVETS Thrift Store West Seneca","type":"store","arrive":"10:08","depart":"10:38","lat":42.828791050897,"lon":-78.784309435252,"address":"1900 Ridge Rd, West Seneca, NY 14224","dwellMin":30,"legIn":{"fromId":"HRBs","toId":"ATSWS","driveMin":8.293827801817349,"distanceMi":6.220370851363012},"score":4.1,"tags":["Thrift"]},{"id":"AB","name":"AMVETS Buffalo","type":"store","arrive":"10:51","depart":"11:21","lat":42.945290339859,"lon":-78.878246854094,"address":"1833 Elmwood Ave, Buffalo, NY 14207","dwellMin":30,"legIn":{"fromId":"ATSWS","toId":"AB","driveMin":12.465675417663176,"distanceMi":9.349256563247382},"score":4.6,"tags":["must-visit","Thrift"]},{"id":"HTSHFB","name":"Hearts Thrift Store - Hearts for the Homeless Thrift Store (Buffalo)","type":"store","arrive":"11:23","depart":"11:53","lat":42.952777142833,"lon":-78.905501188492,"address":"890 Tonawanda St, Buffalo, NY 14207","dwellMin":30,"legIn":{"fromId":"AB","toId":"HTSHFB","driveMin":1.9629818777659207,"distanceMi":1.4722364083244406},"score":4.3,"tags":["Thrift"]},{"id":"SAVERST","name":"Savers","type":"store","arrive":"11:59","depart":"12:29","lat":42.981112399689,"lon":-78.825751077632,"address":"2309 Eggert Rd, Tonawanda Town, NY 14150","dwellMin":30,"legIn":{"fromId":"HTSHFB","toId":"SAVERST","driveMin":5.97639016637379,"distanceMi":4.482292624780342},"score":5,"tags":["must-visit","Thrift"]},{"id":"AWFM","name":"Antique World & Flea Market","type":"store","arrive":"12:46","depart":"13:16","lat":42.983831250138,"lon":-78.572300161758,"address":"11111 Main St, Clarence, NY 14031","dwellMin":30,"legIn":{"fromId":"SAVERST","toId":"AWFM","driveMin":17.083284483704013,"distanceMi":12.81246336277801},"score":4.8,"tags":["Antique"]},{"id":"SAVERSR","name":"Savers","type":"store","arrive":"14:33","depart":"15:03","lat":43.208852107704,"lon":-77.460114345954,"address":"980 Ridge Rd, Webster, NY 14580","dwellMin":30,"legIn":{"fromId":"AWFM","toId":"SAVERSR","driveMin":77.63547989349723,"distanceMi":58.226609920122925},"score":5,"tags":["Thrift"]},{"id":"GJE","name":"Grandma Jaree's Emporium","type":"store","arrive":"16:08","depart":"16:38","lat":42.932716334904,"lon":-76.572979661258,"address":"25 McMaster St, Auburn, NY 13021","dwellMin":30,"legIn":{"fromId":"SAVERSR","toId":"GJE","driveMin":64.89632364610115,"distanceMi":48.67224273457586},"score":4.9,"tags":["must-visit","Junk"]},{"id":"ROXe","name":"Roxbury","type":"end","arrive":"19:07","depart":"19:07","lat":42.2839,"lon":-74.5651,"legIn":{"fromId":"GJE","toId":"ROXe","driveMin":148.6809710095119,"distanceMi":111.51072825713393}}],"excluded":[{"id":"2TAC","reason":"timeWindow","nearestAlternateId":"SAVERST"},{"id":"AFAC","reason":"timeWindow","nearestAlternateId":"SAVERSR"},{"id":"ATBR","reason":"timeWindow","nearestAlternateId":"SAVERST"},{"id":"BRV","reason":"timeWindow","nearestAlternateId":"AB"},{"id":"CAOL","reason":"timeWindow","nearestAlternateId":"SAVERSR"},{"id":"CGAE","reason":"timeWindow","nearestAlternateId":"SAVERST"},{"id":"COO","reason":"timeWindow","nearestAlternateId":"AB"},{"id":"EA","reason":"timeWindow","nearestAlternateId":"SAVERSR"},{"id":"FLTT","reason":"timeWindow","nearestAlternateId":"SAVERSR"},{"id":"FTVA","reason":"timeWindow","nearestAlternateId":"SAVERST"},{"id":"HA","reason":"timeWindow","nearestAlternateId":"AWFM"},{"id":"HFHR","reason":"timeWindow","nearestAlternateId":"SAVERSR"},{"id":"HFHRN","reason":"timeWindow","nearestAlternateId":"SAVERST"},{"id":"HFHRS","reason":"timeWindow","nearestAlternateId":"ATSWS"},{"id":"HTSHFT","reason":"timeWindow","nearestAlternateId":"SAVERST"},{"id":"LH","reason":"timeWindow","nearestAlternateId":"SAVERSR"},{"id":"OHVC","reason":"timeWindow","nearestAlternateId":"AB"},{"id":"PLAM","reason":"timeWindow","nearestAlternateId":"SAVERSR"},{"id":"SA","reason":"timeWindow","nearestAlternateId":"AB"},{"id":"SAT","reason":"timeWindow","nearestAlternateId":"SAVERSR"},{"id":"SCBAC","reason":"timeWindow","nearestAlternateId":"SAVERST"},{"id":"SDDS","reason":"timeWindow","nearestAlternateId":"AB"},{"id":"SLADD","reason":"timeWindow","nearestAlternateId":"ATSWS"},{"id":"STR","reason":"timeWindow","nearestAlternateId":"AB"},{"id":"UVM","reason":"timeWindow","nearestAlternateId":"SAVERSR"}],"metrics":{"storeCount":29,"storesVisited":7,"visitedIds":["ATSWS","AB","HTSHFB","SAVERST","AWFM","SAVERSR","GJE"],"totalScore":32.7,"scorePerStore":4.671428571428572,"scorePerMin":0.05978117519874288,"scorePerDriveMin":0.09703409954297933,"scorePerMile":0.1293787993906391,"totalDriveMin":336.9949342964345,"totalDwellMin":210,"slackMin":53.00506570356538,"totalDistanceMiles":252.7462007223259,"onTimeRisk":0}}]}</script>
     <div class="container mx-auto p-4 md:p-6 lg:p-8">
       <header class="mb-6">
         <h1 class="text-3xl font-bold text-stone-900">Rust Belt Bandit Planner</h1>
         <div id="run-info" class="text-stone-600 mt-1 text-sm space-x-0">
           <span class="font-semibold">Run ID:</span>
-          <span class="ml-1">CL-v1</span>
-          <span class="ml-2 text-stone-500">Wednesday, Detroit to Cleveland</span>
+          <span class="ml-1">RX-v1</span>
+          <span class="ml-2 text-stone-500">Buffalo in the AM, long run to Roxbury</span>
         </div>
-        <p class="text-xs text-stone-500 mt-1">Generated 2025-09-21T04:16:00.913Z</p>
-        <p id="active-day-label" class="text-sm text-stone-600 mt-2">Day Wed</p>
+        <p class="text-xs text-stone-500 mt-1">Generated 2025-09-21T05:46:09.005Z</p>
+        <p id="active-day-label" class="text-sm text-stone-600 mt-2">Day Fri</p>
       </header>
       <main class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <section class="lg:col-span-1 bg-white p-4 rounded-lg shadow-sm">
@@ -651,28 +743,28 @@
           <div id="itinerary-list" class="space-y-2">
             <div
               class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="TVAT"
+              data-stop-id="ATSWS"
               data-stop-type="store"
             >
               <div class="flex justify-between items-start">
                 <div>
-                  <p class="font-semibold">The Vault Antiques &amp; Treasures</p>
-                  <p class="text-xs text-stone-500">10:30 – 10:60</p>
+                  <p class="font-semibold">AMVETS Thrift Store West Seneca</p>
+                  <p class="text-xs text-stone-500">10:08 – 10:38</p>
                 </div>
                 <div class="text-right">
-                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.3</p>
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.1</p>
                 </div>
               </div>
             </div>
             <div
               class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="TCKA"
+              data-stop-id="AB"
               data-stop-type="store"
             >
               <div class="flex justify-between items-start">
                 <div>
-                  <p class="font-semibold">The Copper Kettle Antiques</p>
-                  <p class="text-xs text-stone-500">11:10 – 11:40</p>
+                  <p class="font-semibold">AMVETS Buffalo</p>
+                  <p class="text-xs text-stone-500">10:51 – 11:21</p>
                 </div>
                 <div class="text-right">
                   <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.6</p>
@@ -681,28 +773,28 @@
             </div>
             <div
               class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="AVM"
+              data-stop-id="HTSHFB"
               data-stop-type="store"
             >
               <div class="flex justify-between items-start">
                 <div>
-                  <p class="font-semibold">Armory vintage Market</p>
-                  <p class="text-xs text-stone-500">12:37 – 13:07</p>
+                  <p class="font-semibold">Hearts Thrift Store - Hearts for the Homeless Thrift Store (Buffalo)</p>
+                  <p class="text-xs text-stone-500">11:23 – 11:53</p>
                 </div>
                 <div class="text-right">
-                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.1</p>
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.3</p>
                 </div>
               </div>
             </div>
             <div
               class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="BSS"
+              data-stop-id="SAVERST"
               data-stop-type="store"
             >
               <div class="flex justify-between items-start">
                 <div>
-                  <p class="font-semibold">Big Ship Salvage</p>
-                  <p class="text-xs text-stone-500">13:49 – 14:19</p>
+                  <p class="font-semibold">Savers</p>
+                  <p class="text-xs text-stone-500">11:59 – 12:29</p>
                 </div>
                 <div class="text-right">
                   <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">5.0</p>
@@ -711,61 +803,46 @@
             </div>
             <div
               class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="VWT-Olmstead"
+              data-stop-id="AWFM"
               data-stop-type="store"
             >
               <div class="flex justify-between items-start">
                 <div>
-                  <p class="font-semibold">Value World Thrift</p>
-                  <p class="text-xs text-stone-500">15:25 – 15:55</p>
+                  <p class="font-semibold">Antique World &amp; Flea Market</p>
+                  <p class="text-xs text-stone-500">12:46 – 13:16</p>
                 </div>
                 <div class="text-right">
-                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.5</p>
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.8</p>
                 </div>
               </div>
             </div>
             <div
               class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="VWT-Lakewood"
+              data-stop-id="SAVERSR"
               data-stop-type="store"
             >
               <div class="flex justify-between items-start">
                 <div>
-                  <p class="font-semibold">Value World Thrift</p>
+                  <p class="font-semibold">Savers</p>
+                  <p class="text-xs text-stone-500">14:33 – 15:03</p>
+                </div>
+                <div class="text-right">
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">5.0</p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="p-3 rounded-md shadow-sm status-tovisit"
+              data-stop-id="GJE"
+              data-stop-type="store"
+            >
+              <div class="flex justify-between items-start">
+                <div>
+                  <p class="font-semibold">Grandma Jaree&#39;s Emporium</p>
                   <p class="text-xs text-stone-500">16:08 – 16:38</p>
                 </div>
                 <div class="text-right">
-                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.5</p>
-                </div>
-              </div>
-            </div>
-            <div
-              class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="SL"
-              data-stop-type="store"
-            >
-              <div class="flex justify-between items-start">
-                <div>
-                  <p class="font-semibold">Sweet Lorain</p>
-                  <p class="text-xs text-stone-500">16:41 – 17:11</p>
-                </div>
-                <div class="text-right">
                   <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.9</p>
-                </div>
-              </div>
-            </div>
-            <div
-              class="p-3 rounded-md shadow-sm status-tovisit"
-              data-stop-id="PG"
-              data-stop-type="store"
-            >
-              <div class="flex justify-between items-start">
-                <div>
-                  <p class="font-semibold">Paradise Galleria</p>
-                  <p class="text-xs text-stone-500">17:13 – 17:43</p>
-                </div>
-                <div class="text-right">
-                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">4.1</p>
                 </div>
               </div>
             </div>
@@ -773,18 +850,17 @@
           <noscript>
             <div class="mt-4 space-y-3 text-sm text-stone-600">
               <div>
-                <p class="font-semibold">Day Wed</p>
+                <p class="font-semibold">Day Fri</p>
                 <ul class="list-disc list-inside text-xs text-stone-500">
-                  <li>09:00 – 09:00 · Hollywood Casino Greektown (start)</li>
-                  <li>10:30 – 10:60 · The Vault Antiques &amp; Treasures (store)</li>
-                  <li>11:10 – 11:40 · The Copper Kettle Antiques (store)</li>
-                  <li>12:37 – 13:07 · Armory vintage Market (store)</li>
-                  <li>13:49 – 14:19 · Big Ship Salvage (store)</li>
-                  <li>15:25 – 15:55 · Value World Thrift (store)</li>
-                  <li>16:08 – 16:38 · Value World Thrift (store)</li>
-                  <li>16:41 – 17:11 · Sweet Lorain (store)</li>
-                  <li>17:13 – 17:43 · Paradise Galleria (store)</li>
-                  <li>17:47 – 17:47 · Drury Plaza Hotel Cleveland Downtown (end)</li>
+                  <li>10:00 – 10:00 · Hyatt Regency Buffalo &#x2F; Hotel and Conference Center (start)</li>
+                  <li>10:08 – 10:38 · AMVETS Thrift Store West Seneca (store)</li>
+                  <li>10:51 – 11:21 · AMVETS Buffalo (store)</li>
+                  <li>11:23 – 11:53 · Hearts Thrift Store - Hearts for the Homeless Thrift Store (Buffalo) (store)</li>
+                  <li>11:59 – 12:29 · Savers (store)</li>
+                  <li>12:46 – 13:16 · Antique World &amp; Flea Market (store)</li>
+                  <li>14:33 – 15:03 · Savers (store)</li>
+                  <li>16:08 – 16:38 · Grandma Jaree&#39;s Emporium (store)</li>
+                  <li>19:07 – 19:07 · Roxbury (end)</li>
                 </ul>
               </div>
             </div>
@@ -1107,6 +1183,9 @@
         log: [],
         dayId: null,
         pendingDrop: null,
+        awaitingAdvance: false,
+        activeDecisionStopId: null,
+        lastRecommendation: null,
         mqaMap: {
           Bust: 0.0,
           Average: 3.5,
@@ -1248,6 +1327,7 @@
         renderItineraryList(currentStop);
         renderCurrentStore(currentStop);
         renderTripLog();
+        refreshRecommendationDisplay();
       }
     
       function calculateMetrics(excludeId) {
@@ -1321,7 +1401,11 @@
         if (!container) return;
         container.innerHTML = '';
         appState.stops.forEach((stop, index) => {
-          const isCurrent = currentStop && stop.id === currentStop.id && stop.status === 'tovisit';
+          const awaitingStopId = appState.awaitingAdvance ? appState.activeDecisionStopId : null;
+          const isAwaitingCurrent =
+            awaitingStopId != null && String(stop.id) === String(awaitingStopId);
+          const isCurrent =
+            (currentStop && stop.id === currentStop.id && stop.status === 'tovisit') || isAwaitingCurrent;
           const div = document.createElement('div');
           div.id = `row-${stop.id}`;
           div.className = `p-3 rounded-md transition-all duration-300 ease-in-out status-${stop.status} ${
@@ -1376,7 +1460,12 @@
         const form = document.getElementById('mqa-form');
         if (!nameEl || !form) return;
     
-        if (!currentStop || currentStop.status !== 'tovisit') {
+        const awaitingCurrent =
+          appState.awaitingAdvance &&
+          currentStop &&
+          String(currentStop.id) === String(appState.activeDecisionStopId);
+    
+        if (!currentStop || (currentStop.status !== 'tovisit' && !awaitingCurrent)) {
           nameEl.textContent = 'Trip Complete!';
           form.style.display = 'none';
           setText('timeline-arrive-time', '--:--');
@@ -1384,11 +1473,12 @@
           return;
         }
     
-        form.style.display = 'block';
-        nameEl.textContent = currentStop.name;
-        if (currentStop.mapsUrl) {
-          nameEl.innerHTML = `<a class="store-link" href="${currentStop.mapsUrl}" target="_blank" rel="noopener noreferrer">${currentStop.name}</a>`;
-        }
+        form.style.display = awaitingCurrent ? 'none' : 'block';
+    
+        const nameMarkup = currentStop.mapsUrl
+          ? `<a class="store-link" href="${currentStop.mapsUrl}" target="_blank" rel="noopener noreferrer">${currentStop.name}</a>`
+          : currentStop.name;
+        nameEl.innerHTML = nameMarkup;
     
         const [arriveH, arriveM] = currentStop.arrive.split(':').map(Number);
         const mqaTime = new Date();
@@ -1440,6 +1530,15 @@
         container.scrollTop = container.scrollHeight;
       }
     
+      function refreshRecommendationDisplay() {
+        if (!appState.lastRecommendation) {
+          return;
+        }
+    
+        const { recommendation, meta, currentPosterior, poolPosterior } = appState.lastRecommendation;
+        updateRecommendationDisplay(recommendation, meta, currentPosterior, poolPosterior);
+      }
+    
       function processDecision(mqaKey) {
         const currentStop = appState.stops[appState.currentIndex];
         if (!currentStop) return;
@@ -1461,19 +1560,35 @@
           mqaValue,
         );
         const recommendation = decisionMeta.decision;
+        const posteriorSummary = serializePosterior(currentStop.posterior);
+        const poolSummary = poolPosterior ? serializePool(poolPosterior) : null;
+        const recommendationMeta = { ...decisionMeta };
     
-        updateRecommendationDisplay(recommendation, decisionMeta, currentStop.posterior, poolPosterior);
+        appState.lastRecommendation = {
+          recommendation,
+          meta: recommendationMeta,
+          currentPosterior: posteriorSummary,
+          poolPosterior: poolSummary,
+        };
+    
+        updateRecommendationDisplay(recommendation, recommendationMeta, posteriorSummary, poolSummary);
     
         currentStop.mqa = mqaKey;
         currentStop.mqaValue = mqaValue;
         currentStop.decision = recommendation;
         currentStop.decisionReason = decisionMeta.reason;
         currentStop.status = 'visited';
-        currentStop.posteriorSummary = serializePosterior(currentStop.posterior);
-        currentStop.posteriorSummary.diff = decisionMeta.diff;
-        currentStop.posteriorSummary.zScore = decisionMeta.zScore;
-        currentStop.posteriorSummary.currentUcb = decisionMeta.currentUcb ?? null;
-        currentStop.posteriorSummary.remainingUcb = decisionMeta.remainingUcb ?? null;
+        currentStop.posteriorSummary = {
+          ...posteriorSummary,
+          diff: decisionMeta.diff,
+          zScore: decisionMeta.zScore,
+          currentUcb: decisionMeta.currentUcb ?? null,
+          remainingUcb: decisionMeta.remainingUcb ?? null,
+        };
+    
+        const shouldPauseBeforeAdvancing = recommendation === 'Stay' && mqaKey === 'Exceptional';
+        appState.awaitingAdvance = shouldPauseBeforeAdvancing;
+        appState.activeDecisionStopId = shouldPauseBeforeAdvancing ? currentStop.id : null;
     
         appState.log.push({
           name: currentStop.name,
@@ -1487,8 +1602,8 @@
           currentUcb: decisionMeta.currentUcb ?? null,
           remainingUcb: decisionMeta.remainingUcb ?? null,
           observationCount: decisionMeta.observationCount ?? null,
-          posterior: serializePosterior(currentStop.posterior),
-          pool: serializePool(poolPosterior),
+          posterior: posteriorSummary,
+          pool: poolSummary ?? serializePool(poolPosterior),
           timestamp: new Date().toISOString(),
         });
     
@@ -1544,6 +1659,13 @@
             const posteriorStd = pendingStop.posterior
               ? pendingStop.posterior.std.toFixed(2)
               : '0.00';
+            const initialScore = formatScore(pendingStop.score);
+            const statusLabel =
+              pendingStop.status === 'visited'
+                ? `Visited – ${pendingStop.mqa ?? 'n/a'}`
+                : pendingStop.status === 'dropped'
+                ? 'Dropped'
+                : 'To Visit';
             const scheduleParts = [];
             if (pendingStop.arrive) {
               scheduleParts.push(`Arrive ${pendingStop.arrive}`);
@@ -1551,35 +1673,51 @@
             if (pendingStop.depart) {
               scheduleParts.push(`Depart ${pendingStop.depart}`);
             }
-            const scheduleLine =
+            const scheduleMarkup =
               scheduleParts.length > 0
-                ? `<p class="text-xs text-amber-800 mt-1">${scheduleParts.join(' · ')}</p>`
+                ? `<p class="pending-drop-store-schedule">${scheduleParts.join(' · ')}</p>`
                 : '';
+            const storeSummaryMarkup = `
+              <div class="pending-drop-store p-3 rounded-md shadow-sm">
+                <div class="flex justify-between items-start gap-3">
+                  <div>
+                    <p class="font-semibold pending-drop-store-name">${nameMarkup}</p>
+                    <p class="text-xs text-stone-500 pending-drop-store-status">${statusLabel}</p>
+                  </div>
+                  <div class="flex flex-col items-end text-right gap-2">
+                    <div class="text-right">
+                      <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded pending-drop-store-mean">${posteriorMean}</p>
+                      <div class="mt-2 space-y-1 leading-tight pending-drop-store-metrics">
+                        <p class="text-xs uppercase tracking-wide text-stone-600">Uncertainty&nbsp;:&nbsp;±${posteriorStd}</p>
+                        <p class="text-xs uppercase tracking-wide text-stone-600">Initial Score&nbsp;:&nbsp;${initialScore}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                ${scheduleMarkup}
+              </div>
+            `;
     
             pendingDropMarkup = `
-          <div class="pending-drop-panel mt-4 rounded-lg border border-amber-200 bg-amber-50 p-4 text-amber-900">
-            <p class="font-semibold">Extend your stay?</p>
-            <p class="mt-1 text-sm">Drop the lowest-rated remaining store to stay longer.</p>
-            <div class="mt-2 text-sm">
-              <p class="font-medium">${nameMarkup}</p>
-              <p class="text-xs text-amber-800">Posterior μ=${posteriorMean} σ=${posteriorStd}</p>
-              ${scheduleLine}
-            </div>
-            <div class="mt-3 flex flex-wrap gap-2">
+          <div class="pending-drop-panel mt-4 rounded-lg p-4">
+            <p class="pending-drop-title">Extend your stay?</p>
+            <p class="pending-drop-subtitle">Drop the lowest-rated remaining store to stay longer.</p>
+            ${storeSummaryMarkup}
+            <div class="pending-drop-actions">
               <button
                 type="button"
-                class="pending-drop-confirm rounded-md bg-amber-600 px-3 py-2 text-sm font-semibold text-white shadow hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-1"
+                class="pending-drop-action pending-drop-action--danger"
                 data-action="confirm-pending-drop"
                 data-stop-id="${pendingStop.id}"
               >
-                Drop this store
+                Drop store?
               </button>
               <button
                 type="button"
-                class="pending-drop-cancel rounded-md border border-amber-400 px-3 py-2 text-sm font-semibold text-amber-900 hover:bg-amber-100 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-1"
+                class="pending-drop-action pending-drop-action--secondary"
                 data-action="cancel-pending-drop"
               >
-                Keep all future stores
+                Do NOT Drop
               </button>
             </div>
           </div>
@@ -1589,6 +1727,29 @@
           }
         }
     
+        let advanceControlsMarkup = '';
+        const awaitingAdvance = appState.awaitingAdvance && appState.activeDecisionStopId != null;
+        if (awaitingAdvance) {
+          const nextDisabled = !!appState.pendingDrop;
+          const disabledAttr = nextDisabled ? 'disabled aria-disabled="true"' : '';
+          const baseButtonClass =
+            'next-store-button rounded-md px-3 py-2 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-offset-1';
+          const buttonClass = nextDisabled
+            ? `${baseButtonClass} bg-stone-300 text-stone-500 cursor-not-allowed focus:ring-stone-300`
+            : `${baseButtonClass} bg-teal-600 text-white shadow hover:bg-teal-700 focus:ring-teal-500`;
+          const helperText = nextDisabled
+            ? '<p class="text-xs text-stone-500">Resolve the drop decision before continuing.</p>'
+            : '';
+          advanceControlsMarkup = `
+            <div class="mt-4 flex flex-col gap-2">
+              <button type="button" class="${buttonClass}" data-action="advance-after-decision" ${disabledAttr}>
+                Next store
+              </button>
+              ${helperText}
+            </div>
+          `;
+        }
+    
         const baseMarkup = `
           <p class="text-lg font-medium">Recommendation:</p>
           <p class="text-3xl font-bold recommendation-${recommendation.toLowerCase()}">${recommendation.toUpperCase()}</p>
@@ -1596,7 +1757,7 @@
           <p class="text-xs text-stone-500">${summaryLine}</p>
         `;
     
-        display.innerHTML = `${baseMarkup}${pendingDropMarkup}`;
+        display.innerHTML = `${baseMarkup}${pendingDropMarkup}${advanceControlsMarkup}`;
     
         if (pendingDropMarkup) {
           const confirmButton = display.querySelector('[data-action="confirm-pending-drop"]');
@@ -1606,6 +1767,12 @@
           const cancelButton = display.querySelector('[data-action="cancel-pending-drop"]');
           if (cancelButton) {
             cancelButton.addEventListener('click', cancelPendingDrop);
+          }
+        }
+        if (advanceControlsMarkup) {
+          const advanceButton = display.querySelector('[data-action="advance-after-decision"]');
+          if (advanceButton) {
+            advanceButton.addEventListener('click', handleAdvanceAfterDecision);
           }
         }
       }
@@ -1695,7 +1862,7 @@
         }
     
         appState.pendingDrop = null;
-        advanceToNextStore();
+        renderAll();
       }
     
       function cancelPendingDrop() {
@@ -1704,10 +1871,23 @@
         }
     
         appState.pendingDrop = null;
+        renderAll();
+      }
+    
+      function handleAdvanceAfterDecision() {
+        if (appState.pendingDrop) {
+          return;
+        }
+    
         advanceToNextStore();
       }
     
       function advanceToNextStore() {
+        appState.pendingDrop = null;
+        appState.awaitingAdvance = false;
+        appState.activeDecisionStopId = null;
+        appState.lastRecommendation = null;
+    
         let nextIndex = appState.currentIndex + 1;
         while (nextIndex < appState.stops.length && appState.stops[nextIndex].status !== 'tovisit') {
           nextIndex += 1;
@@ -1775,12 +1955,13 @@
             if (!dropResult) {
               if (matchedPendingDrop) {
                 appState.pendingDrop = null;
-                advanceToNextStore();
+                renderAll();
               }
               return;
             }
             if (matchedPendingDrop) {
-              advanceToNextStore();
+              appState.pendingDrop = null;
+              renderAll();
             } else if (dropResult.index === appState.currentIndex) {
               advanceToNextStore();
             } else {
