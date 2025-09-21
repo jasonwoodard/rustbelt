@@ -1,6 +1,0 @@
-run_timestamp,run_id,day_id,store_id,store_name,must_visit,arrive,depart,lat,lon,address,dwell_min,drive_min,distance_mi,score,tags
-2025-09-18T04:43:32.016Z,BU-v2,Thu,AU,Antiques & Uniques,true,11:19,11:49,41.616224227171,-81.460742434228,"30200 Euclid Ave, Wickliffe, OH 44092",30,19.229226217418592,14.421919663063944,4.8,must-visit;Antique
-2025-09-18T04:43:32.016Z,BU-v2,Thu,SBTL,Shops By The Lake,true,12:10,12:40,41.748994881171,-81.208780911127,"1871 N Ridge Rd, Painesville, OH 44077",30,21.21643183892518,15.912323879193883,4,must-visit;Vintage
-2025-09-18T04:43:32.016Z,BU-v2,Thu,FSW,Fat Sally's Warehouse,false,13:11,13:41,41.893855805386,-80.804068111485,"1569 Laird Dr, Ashtabula, OH 44004",30,30.823999450519317,23.117999587889486,4.1,Antique
-2025-09-18T04:43:32.016Z,BU-v2,Thu,RRAC,Rcs & Randys Antiques Co-Op,false,15:36,16:06,42.489967125549,-79.323415719901,"212 Lake Shore Dr E, Dunkirk, NY 14048",30,115.01750789989885,86.26313092492413,4,Antique
-2025-09-18T04:43:32.016Z,BU-v2,Thu,SAVERSB,Savers,true,16:50,17:20,42.7853963,-78.8107985,"3701 McKinley Pkwy, Buffalo, NY 14219",30,44.132528968390176,33.09939672629263,4.8,must-visit;Thrift
