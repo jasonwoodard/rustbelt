@@ -182,6 +182,7 @@
       }`;
       const posteriorMean = stop.posterior ? stop.posterior.mean.toFixed(2) : formatScore(stop.score);
       const posteriorStd = stop.posterior ? stop.posterior.std.toFixed(2) : '0.00';
+      const initialScore = formatScore(stop.score);
       const statusLabel =
         stop.status === 'visited'
           ? `Visited – ${stop.mqa ?? 'n/a'}`
@@ -196,7 +197,16 @@
           </div>
           <div class="text-right">
             <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">${posteriorMean}</p>
-            <p class="text-xs text-stone-500">±${posteriorStd}</p>
+            <div class="mt-2 space-y-1 leading-tight">
+              <div>
+                <p class="text-[10px] uppercase tracking-wide text-stone-400">Uncertainty</p>
+                <p class="text-xs text-stone-600">±${posteriorStd}</p>
+              </div>
+              <div>
+                <p class="text-[10px] uppercase tracking-wide text-stone-400">Initial Score</p>
+                <p class="text-xs text-stone-600">${initialScore}</p>
+              </div>
+            </div>
           </div>
         </div>
       `;
