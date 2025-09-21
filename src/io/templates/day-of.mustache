@@ -186,99 +186,124 @@
           </div>
         </section>
       </main>
-      <section class="mt-10 bg-white p-6 rounded-lg shadow-sm">
-        <h2 class="text-2xl font-bold mb-6 text-stone-900">Dashboard Glossary</h2>
-
-        <!-- Glossary Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Total Stores -->
-          <div>
-            <h3 class="font-semibold text-lg text-stone-800">Total Stores</h3>
-            <p class="text-sm text-stone-600 mt-1">Shows how many store stops are on the agenda so you can gauge the full workload and pacing for the day.</p>
-            <ul class="list-disc list-inside text-xs text-stone-500 mt-2 space-y-2">
-              <li>A high count suggests a long day, which can be draining if your resources are limited.</li>
-              <li>A low count means a more manageable day, making it easier to stay focused and on schedule.</li>
-            </ul>
+      <section class="mt-10">
+        <div class="bg-white border border-stone-200 rounded-xl p-8 shadow-sm">
+          <div class="flex items-center justify-between flex-wrap gap-4 mb-8">
+            <h2 class="text-3xl font-semibold text-stone-900">Dashboard Glossary</h2>
+            <p class="text-sm text-stone-500 max-w-2xl">
+              Use this reference to decode each metric on the dashboard so you can make confident, in-the-moment decisions during a run.
+            </p>
           </div>
 
-          <!-- Stores Visited -->
-          <div>
-            <h3 class="font-semibold text-lg text-stone-800">Stores Visited</h3>
-            <p class="text-sm text-stone-600 mt-1">Tracks how many stores have been worked so you can judge progress against the plan and momentum of the run.</p>
-            <ul class="list-disc list-inside text-xs text-stone-500 mt-2 space-y-2">
-              <li>A high number shows you're on track and keeping pace with your plan.</li>
-              <li>A low number can be a red flag if many stops remain, indicating you're behind schedule.</li>
-            </ul>
-          </div>
+          <!-- Glossary Grid -->
+          <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <!-- Total Stores -->
+            <div class="bg-stone-50 border border-stone-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+              <h3 class="text-lg font-semibold text-stone-900">Total Stores</h3>
+              <p class="mt-2 text-sm leading-relaxed text-stone-600">
+                Shows how many store stops are on the agenda so you can gauge the full workload and pacing for the day.
+              </p>
+              <div class="mt-4 space-y-2 text-sm leading-relaxed text-stone-600">
+                <p><span class="font-semibold text-stone-700">High:</span> A long day ahead that can be draining if your resources are limited.</p>
+                <p><span class="font-semibold text-stone-700">Low:</span> A more manageable itinerary that makes it easier to stay focused and on schedule.</p>
+              </div>
+            </div>
 
-          <!-- Avg. J-Score -->
-          <div>
-            <h3 class="font-semibold text-lg text-stone-800">Avg. J-Score</h3>
-            <p class="text-sm text-stone-600 mt-1">Summarizes the average anticipated value for your entire itinerary. It's the average of your personal 'want-to-go' scores, giving you a baseline for the day's potential.</p>
-            <ul class="list-disc list-inside text-xs text-stone-500 mt-2 space-y-2">
-              <li>A high average suggests a promising route filled with valuable stops, which is a great boost for morale.</li>
-              <li>A low average means you might be looking for needles in a haystack, making it tougher to prioritize.</li>
-            </ul>
-          </div>
+            <!-- Stores Visited -->
+            <div class="bg-stone-50 border border-stone-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+              <h3 class="text-lg font-semibold text-stone-900">Stores Visited</h3>
+              <p class="mt-2 text-sm leading-relaxed text-stone-600">
+                Tracks how many stores have been worked so you can judge progress against the plan and momentum of the run.
+              </p>
+              <div class="mt-4 space-y-2 text-sm leading-relaxed text-stone-600">
+                <p><span class="font-semibold text-stone-700">High:</span> You're on pace and keeping momentum with the route plan.</p>
+                <p><span class="font-semibold text-stone-700">Low:</span> A signal you might be falling behind, especially if many stops remain.</p>
+              </div>
+            </div>
 
-          <!-- Remaining Posterior μ -->
-          <div>
-            <h3 class="font-semibold text-lg text-stone-800">Remaining Posterior μ</h3>
-            <p class="text-sm text-stone-600 mt-1">Estimates the updated anticipated value of the stores you haven't hit yet, guiding whether to push forward or start wrapping.</p>
-            <ul class="list-disc list-inside text-xs text-stone-500 mt-2 space-y-2">
-              <li>A high score means the rest of your trip still looks highly promising—a great reason to keep pushing forward.</li>
-              <li>A low score suggests the remaining stops may not offer much value, which could be a signal to wrap up.</li>
-            </ul>
-          </div>
+            <!-- Avg. J-Score -->
+            <div class="bg-stone-50 border border-stone-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+              <h3 class="text-lg font-semibold text-stone-900">Avg. J-Score</h3>
+              <p class="mt-2 text-sm leading-relaxed text-stone-600">
+                Summarizes the average anticipated value for your entire itinerary—the mean of your personal &ldquo;want-to-go&rdquo; scores for each store.
+              </p>
+              <div class="mt-4 space-y-2 text-sm leading-relaxed text-stone-600">
+                <p><span class="font-semibold text-stone-700">High:</span> The route is packed with promising stops that can keep morale high.</p>
+                <p><span class="font-semibold text-stone-700">Low:</span> You're likely hunting for needles in a haystack, so prioritization becomes critical.</p>
+              </div>
+            </div>
 
-          <!-- Remaining Uncertainty σ -->
-          <div>
-            <h3 class="font-semibold text-lg text-stone-800">Remaining Uncertainty σ</h3>
-            <p class="text-sm text-stone-600 mt-1">Shows how unknown the untouched stores still are so you know if surprises—good or bad—are likely.</p>
-            <ul class="list-disc list-inside text-xs text-stone-500 mt-2 space-y-2">
-              <li>A high value means the remaining stores are wild cards; expect the unexpected.</li>
-              <li>A low value means the remaining stops are predictable, giving you more confidence to stick to your plan.</li>
-            </ul>
-          </div>
+            <!-- Remaining Posterior μ -->
+            <div class="bg-stone-50 border border-stone-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+              <h3 class="text-lg font-semibold text-stone-900">Remaining Posterior μ</h3>
+              <p class="mt-2 text-sm leading-relaxed text-stone-600">
+                Estimates the updated anticipated value of the stores you haven't hit yet, guiding whether to push forward or start wrapping up.
+              </p>
+              <div class="mt-4 space-y-2 text-sm leading-relaxed text-stone-600">
+                <p><span class="font-semibold text-stone-700">High:</span> The rest of the run still looks highly promising, so keep pressing.</p>
+                <p><span class="font-semibold text-stone-700">Low:</span> The remaining stops may not offer much upside, signaling it could be time to wind down.</p>
+              </div>
+            </div>
 
-          <!-- Current Posterior μ -->
-          <div>
-            <h3 class="font-semibold text-lg text-stone-800">Current Posterior μ</h3>
-            <p class="text-sm text-stone-600 mt-1">Captures the best estimate of the current store’s quality, telling you if sticking around is likely to pay off.</p>
-            <ul class="list-disc list-inside text-xs text-stone-500 mt-2 space-y-2">
-              <li>A high value is a green light, suggesting this store is living up to its potential—a good signal to stay engaged.</li>
-              <li>A low value suggests this stop may be a bust, favoring a quick exit.</li>
-            </ul>
-          </div>
+            <!-- Remaining Uncertainty σ -->
+            <div class="bg-stone-50 border border-stone-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+              <h3 class="text-lg font-semibold text-stone-900">Remaining Uncertainty σ</h3>
+              <p class="mt-2 text-sm leading-relaxed text-stone-600">
+                Shows how unknown the untouched stores still are so you know if surprises&mdash;good or bad&mdash;are likely.
+              </p>
+              <div class="mt-4 space-y-2 text-sm leading-relaxed text-stone-600">
+                <p><span class="font-semibold text-stone-700">High:</span> The remaining stores are wild cards&mdash;expect the unexpected.</p>
+                <p><span class="font-semibold text-stone-700">Low:</span> Those stops are predictable, giving you more confidence to stick with the plan.</p>
+              </div>
+            </div>
 
-          <!-- Current Uncertainty σ -->
-          <div>
-            <h3 class="font-semibold text-lg text-stone-800">Current Uncertainty σ</h3>
-            <p class="text-sm text-stone-600 mt-1">Measures how confident you are about the current store’s read so you know whether to trust the estimate.</p>
-            <ul class="list-disc list-inside text-xs text-stone-500 mt-2 space-y-2">
-              <li>A high value means you don't have enough data yet; the intel on this store is still fuzzy.</li>
-              <li>A low value means you have solid evidence, making it easy to make a decisive choice.</li>
-            </ul>
-          </div>
+            <!-- Current Posterior μ -->
+            <div class="bg-stone-50 border border-stone-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+              <h3 class="text-lg font-semibold text-stone-900">Current Posterior μ</h3>
+              <p class="mt-2 text-sm leading-relaxed text-stone-600">
+                Captures the best estimate of the current store&rsquo;s quality, telling you if sticking around is likely to pay off.
+              </p>
+              <div class="mt-4 space-y-2 text-sm leading-relaxed text-stone-600">
+                <p><span class="font-semibold text-stone-700">High:</span> A green light that the store is living up to its potential&mdash;stay engaged.</p>
+                <p><span class="font-semibold text-stone-700">Low:</span> A hint this stop may be a bust, making a quick exit more appealing.</p>
+              </div>
+            </div>
 
-          <!-- Current Upper Confidence Bound (UCB) Score -->
-          <div>
-            <h3 class="font-semibold text-lg text-stone-800">Current Upper Confidence Bound (UCB) Score</h3>
-            <p class="text-sm text-stone-600 mt-1">Blends the current store's quality and risk so you know the upside if you keep working it right now.</p>
-            <ul class="list-disc list-inside text-xs text-stone-500 mt-2 space-y-2">
-              <li>A high score means there's a strong potential for a big find, which could be a good reason to commit more time.</li>
-              <li>A low score suggests this stop has limited upside, making a quick exit the better option.</li>
-            </ul>
-          </div>
+            <!-- Current Uncertainty σ -->
+            <div class="bg-stone-50 border border-stone-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+              <h3 class="text-lg font-semibold text-stone-900">Current Uncertainty σ</h3>
+              <p class="mt-2 text-sm leading-relaxed text-stone-600">
+                Measures how confident you are about the current store&rsquo;s read so you know whether to trust the estimate.
+              </p>
+              <div class="mt-4 space-y-2 text-sm leading-relaxed text-stone-600">
+                <p><span class="font-semibold text-stone-700">High:</span> You still don&rsquo;t have enough intel&mdash;keep collecting data.</p>
+                <p><span class="font-semibold text-stone-700">Low:</span> The read is solid, so it&rsquo;s easier to make a decisive call.</p>
+              </div>
+            </div>
 
-          <!-- Remaining Upper Confidence Bound (UCB) Score -->
-          <div>
-            <h3 class="font-semibold text-lg text-stone-800">Remaining Upper Confidence Bound (UCB) Score</h3>
-            <p class="text-sm text-stone-600 mt-1">Combines the expected quality and risk of the untouched stores to show the upside left in the route.</p>
-            <ul class="list-disc list-inside text-xs text-stone-500 mt-2 space-y-2">
-              <li>A high score indicates the rest of the trip has major potential, providing great motivation to keep pushing forward.</li>
-              <li>A low score means there's limited upside left in the itinerary, which could be a factor in deciding to end the day early.</li>
-            </ul>
+            <!-- Current Upper Confidence Bound (UCB) Score -->
+            <div class="bg-stone-50 border border-stone-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+              <h3 class="text-lg font-semibold text-stone-900">Current Upper Confidence Bound (UCB) Score</h3>
+              <p class="mt-2 text-sm leading-relaxed text-stone-600">
+                Blends the current store&rsquo;s quality and risk so you understand the upside if you keep working it right now.
+              </p>
+              <div class="mt-4 space-y-2 text-sm leading-relaxed text-stone-600">
+                <p><span class="font-semibold text-stone-700">High:</span> There&rsquo;s strong potential for a big find, making it worth more of your time.</p>
+                <p><span class="font-semibold text-stone-700">Low:</span> The upside is limited, so moving on could be the smarter play.</p>
+              </div>
+            </div>
+
+            <!-- Remaining Upper Confidence Bound (UCB) Score -->
+            <div class="bg-stone-50 border border-stone-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+              <h3 class="text-lg font-semibold text-stone-900">Remaining Upper Confidence Bound (UCB) Score</h3>
+              <p class="mt-2 text-sm leading-relaxed text-stone-600">
+                Combines the expected quality and risk of the untouched stores to show the upside left in the route.
+              </p>
+              <div class="mt-4 space-y-2 text-sm leading-relaxed text-stone-600">
+                <p><span class="font-semibold text-stone-700">High:</span> The rest of the itinerary still has major potential, so stay aggressive.</p>
+                <p><span class="font-semibold text-stone-700">Low:</span> Limited upside remains, which could be a cue to wrap the day early.</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
