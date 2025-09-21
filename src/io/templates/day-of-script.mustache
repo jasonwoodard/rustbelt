@@ -14,6 +14,9 @@
     log: [],
     dayId: null,
     pendingDrop: null,
+    awaitingAdvance: false,
+    activeDecisionStopId: null,
+    lastRecommendation: null,
     mqaMap: {
       Bust: 0.0,
       Average: 3.5,
@@ -155,6 +158,7 @@
     renderItineraryList(currentStop);
     renderCurrentStore(currentStop);
     renderTripLog();
+    refreshRecommendationDisplay();
   }
 
   function calculateMetrics(excludeId) {
@@ -228,7 +232,11 @@
     if (!container) return;
     container.innerHTML = '';
     appState.stops.forEach((stop, index) => {
-      const isCurrent = currentStop && stop.id === currentStop.id && stop.status === 'tovisit';
+      const awaitingStopId = appState.awaitingAdvance ? appState.activeDecisionStopId : null;
+      const isAwaitingCurrent =
+        awaitingStopId != null && String(stop.id) === String(awaitingStopId);
+      const isCurrent =
+        (currentStop && stop.id === currentStop.id && stop.status === 'tovisit') || isAwaitingCurrent;
       const div = document.createElement('div');
       div.id = `row-${stop.id}`;
       div.className = `p-3 rounded-md transition-all duration-300 ease-in-out status-${stop.status} ${
@@ -283,7 +291,12 @@
     const form = document.getElementById('mqa-form');
     if (!nameEl || !form) return;
 
-    if (!currentStop || currentStop.status !== 'tovisit') {
+    const awaitingCurrent =
+      appState.awaitingAdvance &&
+      currentStop &&
+      String(currentStop.id) === String(appState.activeDecisionStopId);
+
+    if (!currentStop || (currentStop.status !== 'tovisit' && !awaitingCurrent)) {
       nameEl.textContent = 'Trip Complete!';
       form.style.display = 'none';
       setText('timeline-arrive-time', '--:--');
@@ -291,11 +304,12 @@
       return;
     }
 
-    form.style.display = 'block';
-    nameEl.textContent = currentStop.name;
-    if (currentStop.mapsUrl) {
-      nameEl.innerHTML = `<a class="store-link" href="${currentStop.mapsUrl}" target="_blank" rel="noopener noreferrer">${currentStop.name}</a>`;
-    }
+    form.style.display = awaitingCurrent ? 'none' : 'block';
+
+    const nameMarkup = currentStop.mapsUrl
+      ? `<a class="store-link" href="${currentStop.mapsUrl}" target="_blank" rel="noopener noreferrer">${currentStop.name}</a>`
+      : currentStop.name;
+    nameEl.innerHTML = nameMarkup;
 
     const [arriveH, arriveM] = currentStop.arrive.split(':').map(Number);
     const mqaTime = new Date();
@@ -347,6 +361,15 @@
     container.scrollTop = container.scrollHeight;
   }
 
+  function refreshRecommendationDisplay() {
+    if (!appState.lastRecommendation) {
+      return;
+    }
+
+    const { recommendation, meta, currentPosterior, poolPosterior } = appState.lastRecommendation;
+    updateRecommendationDisplay(recommendation, meta, currentPosterior, poolPosterior);
+  }
+
   function processDecision(mqaKey) {
     const currentStop = appState.stops[appState.currentIndex];
     if (!currentStop) return;
@@ -368,19 +391,35 @@
       mqaValue,
     );
     const recommendation = decisionMeta.decision;
+    const posteriorSummary = serializePosterior(currentStop.posterior);
+    const poolSummary = poolPosterior ? serializePool(poolPosterior) : null;
+    const recommendationMeta = { ...decisionMeta };
 
-    updateRecommendationDisplay(recommendation, decisionMeta, currentStop.posterior, poolPosterior);
+    appState.lastRecommendation = {
+      recommendation,
+      meta: recommendationMeta,
+      currentPosterior: posteriorSummary,
+      poolPosterior: poolSummary,
+    };
+
+    updateRecommendationDisplay(recommendation, recommendationMeta, posteriorSummary, poolSummary);
 
     currentStop.mqa = mqaKey;
     currentStop.mqaValue = mqaValue;
     currentStop.decision = recommendation;
     currentStop.decisionReason = decisionMeta.reason;
     currentStop.status = 'visited';
-    currentStop.posteriorSummary = serializePosterior(currentStop.posterior);
-    currentStop.posteriorSummary.diff = decisionMeta.diff;
-    currentStop.posteriorSummary.zScore = decisionMeta.zScore;
-    currentStop.posteriorSummary.currentUcb = decisionMeta.currentUcb ?? null;
-    currentStop.posteriorSummary.remainingUcb = decisionMeta.remainingUcb ?? null;
+    currentStop.posteriorSummary = {
+      ...posteriorSummary,
+      diff: decisionMeta.diff,
+      zScore: decisionMeta.zScore,
+      currentUcb: decisionMeta.currentUcb ?? null,
+      remainingUcb: decisionMeta.remainingUcb ?? null,
+    };
+
+    const shouldPauseBeforeAdvancing = recommendation === 'Stay' && mqaKey === 'Exceptional';
+    appState.awaitingAdvance = shouldPauseBeforeAdvancing;
+    appState.activeDecisionStopId = shouldPauseBeforeAdvancing ? currentStop.id : null;
 
     appState.log.push({
       name: currentStop.name,
@@ -394,8 +433,8 @@
       currentUcb: decisionMeta.currentUcb ?? null,
       remainingUcb: decisionMeta.remainingUcb ?? null,
       observationCount: decisionMeta.observationCount ?? null,
-      posterior: serializePosterior(currentStop.posterior),
-      pool: serializePool(poolPosterior),
+      posterior: posteriorSummary,
+      pool: poolSummary ?? serializePool(poolPosterior),
       timestamp: new Date().toISOString(),
     });
 
@@ -496,6 +535,29 @@
       }
     }
 
+    let advanceControlsMarkup = '';
+    const awaitingAdvance = appState.awaitingAdvance && appState.activeDecisionStopId != null;
+    if (awaitingAdvance) {
+      const nextDisabled = !!appState.pendingDrop;
+      const disabledAttr = nextDisabled ? 'disabled aria-disabled="true"' : '';
+      const baseButtonClass =
+        'next-store-button rounded-md px-3 py-2 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-offset-1';
+      const buttonClass = nextDisabled
+        ? `${baseButtonClass} bg-stone-300 text-stone-500 cursor-not-allowed focus:ring-stone-300`
+        : `${baseButtonClass} bg-teal-600 text-white shadow hover:bg-teal-700 focus:ring-teal-500`;
+      const helperText = nextDisabled
+        ? '<p class="text-xs text-stone-500">Resolve the drop decision before continuing.</p>'
+        : '';
+      advanceControlsMarkup = `
+        <div class="mt-4 flex flex-col gap-2">
+          <button type="button" class="${buttonClass}" data-action="advance-after-decision" ${disabledAttr}>
+            Next store
+          </button>
+          ${helperText}
+        </div>
+      `;
+    }
+
     const baseMarkup = `
       <p class="text-lg font-medium">Recommendation:</p>
       <p class="text-3xl font-bold recommendation-${recommendation.toLowerCase()}">${recommendation.toUpperCase()}</p>
@@ -503,7 +565,7 @@
       <p class="text-xs text-stone-500">${summaryLine}</p>
     `;
 
-    display.innerHTML = `${baseMarkup}${pendingDropMarkup}`;
+    display.innerHTML = `${baseMarkup}${pendingDropMarkup}${advanceControlsMarkup}`;
 
     if (pendingDropMarkup) {
       const confirmButton = display.querySelector('[data-action="confirm-pending-drop"]');
@@ -513,6 +575,12 @@
       const cancelButton = display.querySelector('[data-action="cancel-pending-drop"]');
       if (cancelButton) {
         cancelButton.addEventListener('click', cancelPendingDrop);
+      }
+    }
+    if (advanceControlsMarkup) {
+      const advanceButton = display.querySelector('[data-action="advance-after-decision"]');
+      if (advanceButton) {
+        advanceButton.addEventListener('click', handleAdvanceAfterDecision);
       }
     }
   }
@@ -602,7 +670,7 @@
     }
 
     appState.pendingDrop = null;
-    advanceToNextStore();
+    renderAll();
   }
 
   function cancelPendingDrop() {
@@ -611,10 +679,23 @@
     }
 
     appState.pendingDrop = null;
+    renderAll();
+  }
+
+  function handleAdvanceAfterDecision() {
+    if (appState.pendingDrop) {
+      return;
+    }
+
     advanceToNextStore();
   }
 
   function advanceToNextStore() {
+    appState.pendingDrop = null;
+    appState.awaitingAdvance = false;
+    appState.activeDecisionStopId = null;
+    appState.lastRecommendation = null;
+
     let nextIndex = appState.currentIndex + 1;
     while (nextIndex < appState.stops.length && appState.stops[nextIndex].status !== 'tovisit') {
       nextIndex += 1;
@@ -682,12 +763,13 @@
         if (!dropResult) {
           if (matchedPendingDrop) {
             appState.pendingDrop = null;
-            advanceToNextStore();
+            renderAll();
           }
           return;
         }
         if (matchedPendingDrop) {
-          advanceToNextStore();
+          appState.pendingDrop = null;
+          renderAll();
         } else if (dropResult.index === appState.currentIndex) {
           advanceToNextStore();
         } else {
