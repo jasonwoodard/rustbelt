@@ -14,6 +14,9 @@
     log: [],
     dayId: null,
     pendingDrop: null,
+    awaitingAdvance: false,
+    activeDecisionStopId: null,
+    lastRecommendation: null,
     mqaMap: {
       Bust: 0.0,
       Average: 3.5,
@@ -155,6 +158,7 @@
     renderItineraryList(currentStop);
     renderCurrentStore(currentStop);
     renderTripLog();
+    refreshRecommendationDisplay();
   }
 
   function calculateMetrics(excludeId) {
@@ -228,7 +232,11 @@
     if (!container) return;
     container.innerHTML = '';
     appState.stops.forEach((stop, index) => {
-      const isCurrent = currentStop && stop.id === currentStop.id && stop.status === 'tovisit';
+      const awaitingStopId = appState.awaitingAdvance ? appState.activeDecisionStopId : null;
+      const isAwaitingCurrent =
+        awaitingStopId != null && String(stop.id) === String(awaitingStopId);
+      const isCurrent =
+        (currentStop && stop.id === currentStop.id && stop.status === 'tovisit') || isAwaitingCurrent;
       const div = document.createElement('div');
       div.id = `row-${stop.id}`;
       div.className = `p-3 rounded-md transition-all duration-300 ease-in-out status-${stop.status} ${
@@ -283,7 +291,12 @@
     const form = document.getElementById('mqa-form');
     if (!nameEl || !form) return;
 
-    if (!currentStop || currentStop.status !== 'tovisit') {
+    const awaitingCurrent =
+      appState.awaitingAdvance &&
+      currentStop &&
+      String(currentStop.id) === String(appState.activeDecisionStopId);
+
+    if (!currentStop || (currentStop.status !== 'tovisit' && !awaitingCurrent)) {
       nameEl.textContent = 'Trip Complete!';
       form.style.display = 'none';
       setText('timeline-arrive-time', '--:--');
@@ -291,11 +304,12 @@
       return;
     }
 
-    form.style.display = 'block';
-    nameEl.textContent = currentStop.name;
-    if (currentStop.mapsUrl) {
-      nameEl.innerHTML = `<a class="store-link" href="${currentStop.mapsUrl}" target="_blank" rel="noopener noreferrer">${currentStop.name}</a>`;
-    }
+    form.style.display = awaitingCurrent ? 'none' : 'block';
+
+    const nameMarkup = currentStop.mapsUrl
+      ? `<a class="store-link" href="${currentStop.mapsUrl}" target="_blank" rel="noopener noreferrer">${currentStop.name}</a>`
+      : currentStop.name;
+    nameEl.innerHTML = nameMarkup;
 
     const [arriveH, arriveM] = currentStop.arrive.split(':').map(Number);
     const mqaTime = new Date();
@@ -347,6 +361,15 @@
     container.scrollTop = container.scrollHeight;
   }
 
+  function refreshRecommendationDisplay() {
+    if (!appState.lastRecommendation) {
+      return;
+    }
+
+    const { recommendation, meta, currentPosterior, poolPosterior } = appState.lastRecommendation;
+    updateRecommendationDisplay(recommendation, meta, currentPosterior, poolPosterior);
+  }
+
   function processDecision(mqaKey) {
     const currentStop = appState.stops[appState.currentIndex];
     if (!currentStop) return;
@@ -368,19 +391,35 @@
       mqaValue,
     );
     const recommendation = decisionMeta.decision;
+    const posteriorSummary = serializePosterior(currentStop.posterior);
+    const poolSummary = poolPosterior ? serializePool(poolPosterior) : null;
+    const recommendationMeta = { ...decisionMeta };
 
-    updateRecommendationDisplay(recommendation, decisionMeta, currentStop.posterior, poolPosterior);
+    appState.lastRecommendation = {
+      recommendation,
+      meta: recommendationMeta,
+      currentPosterior: posteriorSummary,
+      poolPosterior: poolSummary,
+    };
+
+    updateRecommendationDisplay(recommendation, recommendationMeta, posteriorSummary, poolSummary);
 
     currentStop.mqa = mqaKey;
     currentStop.mqaValue = mqaValue;
     currentStop.decision = recommendation;
     currentStop.decisionReason = decisionMeta.reason;
     currentStop.status = 'visited';
-    currentStop.posteriorSummary = serializePosterior(currentStop.posterior);
-    currentStop.posteriorSummary.diff = decisionMeta.diff;
-    currentStop.posteriorSummary.zScore = decisionMeta.zScore;
-    currentStop.posteriorSummary.currentUcb = decisionMeta.currentUcb ?? null;
-    currentStop.posteriorSummary.remainingUcb = decisionMeta.remainingUcb ?? null;
+    currentStop.posteriorSummary = {
+      ...posteriorSummary,
+      diff: decisionMeta.diff,
+      zScore: decisionMeta.zScore,
+      currentUcb: decisionMeta.currentUcb ?? null,
+      remainingUcb: decisionMeta.remainingUcb ?? null,
+    };
+
+    const shouldPauseBeforeAdvancing = recommendation === 'Stay' && mqaKey === 'Exceptional';
+    appState.awaitingAdvance = shouldPauseBeforeAdvancing;
+    appState.activeDecisionStopId = shouldPauseBeforeAdvancing ? currentStop.id : null;
 
     appState.log.push({
       name: currentStop.name,
@@ -394,8 +433,8 @@
       currentUcb: decisionMeta.currentUcb ?? null,
       remainingUcb: decisionMeta.remainingUcb ?? null,
       observationCount: decisionMeta.observationCount ?? null,
-      posterior: serializePosterior(currentStop.posterior),
-      pool: serializePool(poolPosterior),
+      posterior: posteriorSummary,
+      pool: poolSummary ?? serializePool(poolPosterior),
       timestamp: new Date().toISOString(),
     });
 
@@ -451,6 +490,13 @@
         const posteriorStd = pendingStop.posterior
           ? pendingStop.posterior.std.toFixed(2)
           : '0.00';
+        const initialScore = formatScore(pendingStop.score);
+        const statusLabel =
+          pendingStop.status === 'visited'
+            ? `Visited – ${pendingStop.mqa ?? 'n/a'}`
+            : pendingStop.status === 'dropped'
+            ? 'Dropped'
+            : 'To Visit';
         const scheduleParts = [];
         if (pendingStop.arrive) {
           scheduleParts.push(`Arrive ${pendingStop.arrive}`);
@@ -458,24 +504,40 @@
         if (pendingStop.depart) {
           scheduleParts.push(`Depart ${pendingStop.depart}`);
         }
-        const scheduleLine =
+        const scheduleMarkup =
           scheduleParts.length > 0
-            ? `<p class="text-xs text-amber-800 mt-1">${scheduleParts.join(' · ')}</p>`
+            ? `<p class="pending-drop-store-schedule">${scheduleParts.join(' · ')}</p>`
             : '';
+        const storeSummaryMarkup = `
+          <div class="pending-drop-store p-3 rounded-md shadow-sm">
+            <div class="flex justify-between items-start gap-3">
+              <div>
+                <p class="font-semibold pending-drop-store-name">${nameMarkup}</p>
+                <p class="text-xs text-stone-500 pending-drop-store-status">${statusLabel}</p>
+              </div>
+              <div class="flex flex-col items-end text-right gap-2">
+                <div class="text-right">
+                  <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded pending-drop-store-mean">${posteriorMean}</p>
+                  <div class="mt-2 space-y-1 leading-tight pending-drop-store-metrics">
+                    <p class="text-xs uppercase tracking-wide text-stone-600">Uncertainty&nbsp;:&nbsp;±${posteriorStd}</p>
+                    <p class="text-xs uppercase tracking-wide text-stone-600">Initial Score&nbsp;:&nbsp;${initialScore}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            ${scheduleMarkup}
+          </div>
+        `;
 
         pendingDropMarkup = `
-      <div class="pending-drop-panel mt-4 rounded-lg border border-amber-200 bg-amber-50 p-4 text-amber-900">
-        <p class="font-semibold">Extend your stay?</p>
-        <p class="mt-1 text-sm">Drop the lowest-rated remaining store to stay longer.</p>
-        <div class="mt-2 text-sm">
-          <p class="font-medium">${nameMarkup}</p>
-          <p class="text-xs text-amber-800">Posterior μ=${posteriorMean} σ=${posteriorStd}</p>
-          ${scheduleLine}
-        </div>
-        <div class="mt-3 flex flex-wrap gap-2">
+      <div class="pending-drop-panel mt-4 rounded-lg p-4">
+        <p class="pending-drop-title">Extend your stay?</p>
+        <p class="pending-drop-subtitle">Drop the lowest-rated remaining store to stay longer.</p>
+        ${storeSummaryMarkup}
+        <div class="pending-drop-actions">
           <button
             type="button"
-            class="pending-drop-confirm rounded-md bg-amber-600 px-3 py-2 text-sm font-semibold text-white shadow hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-1"
+            class="pending-drop-action pending-drop-action--danger"
             data-action="confirm-pending-drop"
             data-stop-id="${pendingStop.id}"
           >
@@ -483,7 +545,7 @@
           </button>
           <button
             type="button"
-            class="pending-drop-cancel rounded-md border border-amber-400 px-3 py-2 text-sm font-semibold text-amber-900 hover:bg-amber-100 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-1"
+            class="pending-drop-action pending-drop-action--secondary"
             data-action="cancel-pending-drop"
           >
             Keep all future stores
@@ -496,6 +558,29 @@
       }
     }
 
+    let advanceControlsMarkup = '';
+    const awaitingAdvance = appState.awaitingAdvance && appState.activeDecisionStopId != null;
+    if (awaitingAdvance) {
+      const nextDisabled = !!appState.pendingDrop;
+      const disabledAttr = nextDisabled ? 'disabled aria-disabled="true"' : '';
+      const baseButtonClass =
+        'next-store-button rounded-md px-3 py-2 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-offset-1';
+      const buttonClass = nextDisabled
+        ? `${baseButtonClass} bg-stone-300 text-stone-500 cursor-not-allowed focus:ring-stone-300`
+        : `${baseButtonClass} bg-teal-600 text-white shadow hover:bg-teal-700 focus:ring-teal-500`;
+      const helperText = nextDisabled
+        ? '<p class="text-xs text-stone-500">Resolve the drop decision before continuing.</p>'
+        : '';
+      advanceControlsMarkup = `
+        <div class="mt-4 flex flex-col gap-2">
+          <button type="button" class="${buttonClass}" data-action="advance-after-decision" ${disabledAttr}>
+            Next store
+          </button>
+          ${helperText}
+        </div>
+      `;
+    }
+
     const baseMarkup = `
       <p class="text-lg font-medium">Recommendation:</p>
       <p class="text-3xl font-bold recommendation-${recommendation.toLowerCase()}">${recommendation.toUpperCase()}</p>
@@ -503,7 +588,7 @@
       <p class="text-xs text-stone-500">${summaryLine}</p>
     `;
 
-    display.innerHTML = `${baseMarkup}${pendingDropMarkup}`;
+    display.innerHTML = `${baseMarkup}${pendingDropMarkup}${advanceControlsMarkup}`;
 
     if (pendingDropMarkup) {
       const confirmButton = display.querySelector('[data-action="confirm-pending-drop"]');
@@ -513,6 +598,12 @@
       const cancelButton = display.querySelector('[data-action="cancel-pending-drop"]');
       if (cancelButton) {
         cancelButton.addEventListener('click', cancelPendingDrop);
+      }
+    }
+    if (advanceControlsMarkup) {
+      const advanceButton = display.querySelector('[data-action="advance-after-decision"]');
+      if (advanceButton) {
+        advanceButton.addEventListener('click', handleAdvanceAfterDecision);
       }
     }
   }
@@ -602,7 +693,7 @@
     }
 
     appState.pendingDrop = null;
-    advanceToNextStore();
+    renderAll();
   }
 
   function cancelPendingDrop() {
@@ -611,10 +702,23 @@
     }
 
     appState.pendingDrop = null;
+    renderAll();
+  }
+
+  function handleAdvanceAfterDecision() {
+    if (appState.pendingDrop) {
+      return;
+    }
+
     advanceToNextStore();
   }
 
   function advanceToNextStore() {
+    appState.pendingDrop = null;
+    appState.awaitingAdvance = false;
+    appState.activeDecisionStopId = null;
+    appState.lastRecommendation = null;
+
     let nextIndex = appState.currentIndex + 1;
     while (nextIndex < appState.stops.length && appState.stops[nextIndex].status !== 'tovisit') {
       nextIndex += 1;
@@ -682,12 +786,13 @@
         if (!dropResult) {
           if (matchedPendingDrop) {
             appState.pendingDrop = null;
-            advanceToNextStore();
+            renderAll();
           }
           return;
         }
         if (matchedPendingDrop) {
-          advanceToNextStore();
+          appState.pendingDrop = null;
+          renderAll();
         } else if (dropResult.index === appState.currentIndex) {
           advanceToNextStore();
         } else {
