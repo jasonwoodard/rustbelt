@@ -39,6 +39,9 @@
     },
   };
 
+  let stopCardTemplateCache = null;
+  let stopCardTemplateErrorLogged = false;
+
   document.addEventListener('DOMContentLoaded', init);
 
   function createMapsUrl(stop) {
@@ -227,62 +230,154 @@
     setText('dashboard-remaining-ucb', remainingUcbText);
   }
 
+  function getStopCardTemplate() {
+    if (stopCardTemplateCache) {
+      return stopCardTemplateCache;
+    }
+
+    const template = document.getElementById('stop-card-template');
+    if (template instanceof HTMLTemplateElement) {
+      stopCardTemplateCache = template;
+      return template;
+    }
+
+    if (!stopCardTemplateErrorLogged) {
+      console.error('Stop card template not found.');
+      stopCardTemplateErrorLogged = true;
+    }
+
+    return null;
+  }
+
+  function createStopCardElement(stop, options = {}) {
+    const template = getStopCardTemplate();
+    if (!template) {
+      return null;
+    }
+
+    const fragment = template.content.cloneNode(true);
+    const card = fragment.querySelector('.stop-card');
+    if (!card) {
+      return null;
+    }
+
+    const { highlight = false, includeDropButton = false } = options;
+
+    const stopId = stop?.id != null ? String(stop.id) : '';
+    if (stopId) {
+      card.id = `row-${stopId}`;
+      card.dataset.stopId = stopId;
+    } else {
+      card.removeAttribute('id');
+      delete card.dataset.stopId;
+    }
+
+    if (stop?.type != null) {
+      card.dataset.stopType = String(stop.type);
+    } else {
+      delete card.dataset.stopType;
+    }
+
+    card.classList.remove('status-tovisit', 'status-visited', 'status-dropped');
+    const statusClass = stop?.status ? `status-${stop.status}` : 'status-tovisit';
+    card.classList.add(statusClass);
+
+    if (highlight) {
+      card.classList.add('ring-2', 'ring-teal-500', 'shadow-md');
+      card.classList.remove('shadow-sm');
+    }
+
+    const stopName = typeof stop?.name === 'string' ? stop.name : '';
+    const nameTextEl = card.querySelector('.stop-name-text');
+    const nameLinkEl = card.querySelector('.stop-name-link');
+    if (nameTextEl) {
+      nameTextEl.textContent = stopName;
+    }
+    if (nameLinkEl) {
+      nameLinkEl.textContent = stopName;
+      if (stop?.mapsUrl) {
+        nameLinkEl.href = stop.mapsUrl;
+        nameLinkEl.classList.remove('hidden');
+        if (nameTextEl) {
+          nameTextEl.classList.add('hidden');
+        }
+      } else {
+        nameLinkEl.removeAttribute('href');
+        nameLinkEl.classList.add('hidden');
+        if (nameTextEl) {
+          nameTextEl.classList.remove('hidden');
+        }
+      }
+    }
+
+    const statusLabel =
+      stop?.status === 'visited'
+        ? `Visited – ${stop.mqa ?? 'n/a'}`
+        : stop?.status === 'dropped'
+        ? 'Dropped'
+        : 'To Visit';
+    const statusEl = card.querySelector('.stop-status');
+    if (statusEl) {
+      statusEl.textContent = statusLabel;
+    }
+
+    const posteriorMean = stop?.posterior
+      ? stop.posterior.mean.toFixed(2)
+      : formatScore(stop?.score);
+    const posteriorStd = stop?.posterior
+      ? stop.posterior.std.toFixed(2)
+      : '0.00';
+    const initialScore = formatScore(stop?.score);
+
+    const meanEl = card.querySelector('.stop-posterior-mean');
+    if (meanEl) {
+      meanEl.textContent = posteriorMean;
+    }
+
+    const uncertaintyEl = card.querySelector('.stop-posterior-uncertainty');
+    if (uncertaintyEl) {
+      uncertaintyEl.textContent = `Uncertainty\u00A0:\u00A0±${posteriorStd}`;
+    }
+
+    const initialScoreEl = card.querySelector('.stop-initial-score');
+    if (initialScoreEl) {
+      initialScoreEl.textContent = `Initial Score\u00A0:\u00A0${initialScore}`;
+    }
+
+    const dropButton = card.querySelector('.drop-store-button');
+    if (dropButton) {
+      if (includeDropButton && stopId) {
+        dropButton.hidden = false;
+        dropButton.dataset.dropStopId = stopId;
+      } else {
+        dropButton.hidden = true;
+        dropButton.removeAttribute('data-drop-stop-id');
+      }
+    }
+
+    return card;
+  }
+
   function renderItineraryList(currentStop) {
     const container = document.getElementById('itinerary-list');
     if (!container) return;
-    container.innerHTML = '';
-    appState.stops.forEach((stop, index) => {
+    container.replaceChildren();
+    if (!getStopCardTemplate()) {
+      return;
+    }
+    appState.stops.forEach((stop) => {
       const awaitingStopId = appState.awaitingAdvance ? appState.activeDecisionStopId : null;
       const isAwaitingCurrent =
         awaitingStopId != null && String(stop.id) === String(awaitingStopId);
       const isCurrent =
         (currentStop && stop.id === currentStop.id && stop.status === 'tovisit') || isAwaitingCurrent;
-      const div = document.createElement('div');
-      div.id = `row-${stop.id}`;
-      div.className = `p-3 rounded-md transition-all duration-300 ease-in-out status-${stop.status} ${
-        isCurrent ? 'ring-2 ring-teal-500 shadow-md' : 'shadow-sm'
-      }`;
-      const posteriorMean = stop.posterior ? stop.posterior.mean.toFixed(2) : formatScore(stop.score);
-      const posteriorStd = stop.posterior ? stop.posterior.std.toFixed(2) : '0.00';
-      const initialScore = formatScore(stop.score);
-      const statusLabel =
-        stop.status === 'visited'
-          ? `Visited – ${stop.mqa ?? 'n/a'}`
-          : stop.status === 'dropped'
-          ? 'Dropped'
-          : 'To Visit';
-      const nameMarkup = stop.mapsUrl
-        ? `<a class="store-link" href="${stop.mapsUrl}" target="_blank" rel="noopener noreferrer">${stop.name}</a>`
-        : stop.name;
-      const dropButtonHtml =
-        stop.status === 'tovisit'
-          ? `<button type="button" class="drop-store-button mt-1 transition-colors" data-drop-stop-id="${stop.id}">Drop store</button>`
-          : '';
-      div.innerHTML = `
-        <div class="flex justify-between items-start gap-3">
-          <div>
-            <p class="font-semibold">${nameMarkup}</p>
-            <p class="text-xs text-stone-500">${statusLabel}</p>
-          </div>
-          <div class="flex flex-col items-end text-right gap-2">
-            <div class="text-right">
-              <p class="font-mono text-sm bg-stone-200 text-stone-700 px-2 py-1 rounded">${posteriorMean}</p>
-              <div class="mt-2 space-y-1 leading-tight">
-                <div>
-                  <p class="text-xs uppercase tracking-wide text-stone-600">
-                  Uncertainty&nbsp;:&nbsp;±${posteriorStd}</p>
-                </div>
-                <div>
-                  <p class="text-xs uppercase tracking-wide text-stone-600">
-                    Initial Score&nbsp;:&nbsp;${initialScore}</p>
-                </div>
-              </div>
-            </div>
-            ${dropButtonHtml}
-          </div>
-        </div>
-      `;
-      container.appendChild(div);
+      const card = createStopCardElement(stop, {
+        highlight: isCurrent,
+        includeDropButton: stop.status === 'tovisit',
+      });
+      if (card) {
+        container.appendChild(card);
+      }
     });
   }
 
@@ -305,11 +400,21 @@
     }
 
     form.style.display = awaitingCurrent ? 'none' : 'block';
-
-    const nameMarkup = currentStop.mapsUrl
-      ? `<a class="store-link" href="${currentStop.mapsUrl}" target="_blank" rel="noopener noreferrer">${currentStop.name}</a>`
-      : currentStop.name;
-    nameEl.innerHTML = nameMarkup;
+    while (nameEl.firstChild) {
+      nameEl.removeChild(nameEl.firstChild);
+    }
+    const currentName = typeof currentStop.name === 'string' ? currentStop.name : '';
+    if (currentStop.mapsUrl) {
+      const link = document.createElement('a');
+      link.className = 'store-link';
+      link.href = currentStop.mapsUrl;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.textContent = currentName;
+      nameEl.appendChild(link);
+    } else {
+      nameEl.textContent = currentName;
+    }
 
     const [arriveH, arriveM] = currentStop.arrive.split(':').map(Number);
     const mqaTime = new Date();
