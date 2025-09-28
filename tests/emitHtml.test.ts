@@ -63,6 +63,7 @@ describe('emitHtml', () => {
     expect(html).toContain('Measured Quality Assessment (MQA)');
     expect(html).toContain('Store A');
     expect(html).toContain(`data-active-day-id="${day.dayId}`);
+    expect(html).toContain('<script src="./day-of-app.js" defer></script>');
 
     const scriptMatch = html.match(
       /<script id="itinerary-data" type="application\/json">([\s\S]*?)<\/script>/,

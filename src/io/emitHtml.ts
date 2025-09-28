@@ -11,10 +11,6 @@ const dayOfPartials = {
     new URL('./templates/day-of-style.mustache', import.meta.url),
     'utf8',
   ),
-  dayOfScript: readFileSync(
-    new URL('./templates/day-of-script.mustache', import.meta.url),
-    'utf8',
-  ),
 };
 
 const legacyTemplate = readFileSync(
@@ -41,6 +37,8 @@ export interface EmitHtmlOptions {
   legacyTable?: boolean;
   /** Preferred active day identifier */
   activeDayId?: string;
+  /** Path to the day-of browser bundle relative to the HTML file */
+  bundlePath?: string;
 }
 
 interface TemplateStop {
@@ -69,6 +67,7 @@ interface DayOfViewModel {
   activeDayId?: string;
   activeDay?: TemplateDay;
   hasMultipleDays: boolean;
+  bundlePath: string;
 }
 
 interface LegacyViewModel {
@@ -118,6 +117,7 @@ export function emitHtml(
 
   const template = opts.template ?? dayOfTemplate;
   const partials = opts.partials ?? dayOfPartials;
+  const bundlePath = opts.bundlePath ?? './day-of-app.js';
 
   const templateDays: TemplateDay[] = days.map((d) => {
     const stops = d.stops.map<TemplateStop>((s) => ({
@@ -152,6 +152,7 @@ export function emitHtml(
     activeDayId: activeDay?.dayId,
     activeDay,
     hasMultipleDays: templateDays.length > 1,
+    bundlePath,
   };
 
   return Mustache.render(template, view, partials);
