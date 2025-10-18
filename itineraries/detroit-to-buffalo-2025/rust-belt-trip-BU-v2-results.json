@@ -1,0 +1,673 @@
+{
+  "runInfo": {
+    "runTimestamp": "2025-09-21T05:46:04.705Z",
+    "runId": "BU-v2",
+    "runNote": "Thursday, Cleveland to South of Buffalo AFTER USS Cod MOAR Speed",
+    "days": [
+      {
+        "dayId": "Thu",
+        "stops": [
+          {
+            "id": "DPHCDs",
+            "name": "Drury Plaza Hotel Cleveland Downtown",
+            "type": "start",
+            "arrive": "11:00",
+            "depart": "11:00",
+            "lat": 41.5022859,
+            "lon": -81.6944654
+          },
+          {
+            "id": "AU",
+            "name": "Antiques & Uniques",
+            "type": "store",
+            "arrive": "11:19",
+            "depart": "11:49",
+            "lat": 41.616224227171,
+            "lon": -81.460742434228,
+            "address": "30200 Euclid Ave, Wickliffe, OH 44092",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "DPHCDs",
+              "toId": "AU",
+              "driveMin": 19.229226217418592,
+              "distanceMi": 14.421919663063944
+            },
+            "score": 4.8,
+            "tags": [
+              "must-visit",
+              "Antique"
+            ]
+          },
+          {
+            "id": "SBTL",
+            "name": "Shops By The Lake",
+            "type": "store",
+            "arrive": "12:10",
+            "depart": "12:40",
+            "lat": 41.748994881171,
+            "lon": -81.208780911127,
+            "address": "1871 N Ridge Rd, Painesville, OH 44077",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "AU",
+              "toId": "SBTL",
+              "driveMin": 21.21643183892518,
+              "distanceMi": 15.912323879193883
+            },
+            "score": 4,
+            "tags": [
+              "must-visit",
+              "Vintage"
+            ]
+          },
+          {
+            "id": "FSW",
+            "name": "Fat Sally's Warehouse",
+            "type": "store",
+            "arrive": "13:11",
+            "depart": "13:41",
+            "lat": 41.893855805386,
+            "lon": -80.804068111485,
+            "address": "1569 Laird Dr, Ashtabula, OH 44004",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "SBTL",
+              "toId": "FSW",
+              "driveMin": 30.823999450519317,
+              "distanceMi": 23.117999587889486
+            },
+            "score": 4.1,
+            "tags": [
+              "Antique"
+            ]
+          },
+          {
+            "id": "RRAC",
+            "name": "Rcs & Randys Antiques Co-Op",
+            "type": "store",
+            "arrive": "15:36",
+            "depart": "16:06",
+            "lat": 42.489967125549,
+            "lon": -79.323415719901,
+            "address": "212 Lake Shore Dr E, Dunkirk, NY 14048",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "FSW",
+              "toId": "RRAC",
+              "driveMin": 115.01750789989885,
+              "distanceMi": 86.26313092492413
+            },
+            "score": 4,
+            "tags": [
+              "Antique"
+            ]
+          },
+          {
+            "id": "SAVERSB",
+            "name": "Savers",
+            "type": "store",
+            "arrive": "16:50",
+            "depart": "17:20",
+            "lat": 42.7853963,
+            "lon": -78.8107985,
+            "address": "3701 McKinley Pkwy, Buffalo, NY 14219",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "RRAC",
+              "toId": "SAVERSB",
+              "driveMin": 44.132528968390176,
+              "distanceMi": 33.09939672629263
+            },
+            "score": 4.8,
+            "tags": [
+              "must-visit",
+              "Thrift"
+            ]
+          },
+          {
+            "id": "HRBe",
+            "name": "Hyatt Regency Buffalo / Hotel and Conference Center",
+            "type": "end",
+            "arrive": "17:31",
+            "depart": "17:31",
+            "lat": 42.8879852,
+            "lon": -78.8768433,
+            "legIn": {
+              "fromId": "SAVERSB",
+              "toId": "HRBe",
+              "driveMin": 10.451256211464308,
+              "distanceMi": 7.83844215859823
+            }
+          }
+        ],
+        "excluded": [
+          {
+            "id": "AAM",
+            "reason": "timeWindow",
+            "nearestAlternateId": "FSW"
+          },
+          {
+            "id": "BA",
+            "reason": "timeWindow",
+            "nearestAlternateId": "FSW"
+          },
+          {
+            "id": "CFAN",
+            "reason": "timeWindow",
+            "nearestAlternateId": "FSW"
+          },
+          {
+            "id": "CMT",
+            "reason": "timeWindow",
+            "nearestAlternateId": "FSW"
+          },
+          {
+            "id": "CSTAT",
+            "reason": "timeWindow",
+            "nearestAlternateId": "FSW"
+          },
+          {
+            "id": "CTS",
+            "reason": "timeWindow",
+            "nearestAlternateId": "FSW"
+          },
+          {
+            "id": "FKOE",
+            "reason": "timeWindow",
+            "nearestAlternateId": "FSW"
+          },
+          {
+            "id": "FKTS",
+            "reason": "timeWindow",
+            "nearestAlternateId": "FSW"
+          },
+          {
+            "id": "FNJ",
+            "reason": "timeWindow",
+            "nearestAlternateId": "FSW"
+          },
+          {
+            "id": "GSTS",
+            "reason": "timeWindow",
+            "nearestAlternateId": "FSW"
+          },
+          {
+            "id": "IAM",
+            "reason": "timeWindow",
+            "nearestAlternateId": "RRAC"
+          },
+          {
+            "id": "MB",
+            "reason": "timeWindow",
+            "nearestAlternateId": "SBTL"
+          },
+          {
+            "id": "MSA",
+            "reason": "timeWindow",
+            "nearestAlternateId": "AU"
+          },
+          {
+            "id": "MTS",
+            "reason": "timeWindow",
+            "nearestAlternateId": "FSW"
+          },
+          {
+            "id": "OA",
+            "reason": "timeWindow",
+            "nearestAlternateId": "FSW"
+          },
+          {
+            "id": "RCTS",
+            "reason": "timeWindow",
+            "nearestAlternateId": "FSW"
+          },
+          {
+            "id": "RT",
+            "reason": "timeWindow",
+            "nearestAlternateId": "RRAC"
+          },
+          {
+            "id": "STA",
+            "reason": "timeWindow",
+            "nearestAlternateId": "AU"
+          },
+          {
+            "id": "TCS",
+            "reason": "timeWindow",
+            "nearestAlternateId": "FSW"
+          },
+          {
+            "id": "TGD",
+            "reason": "timeWindow",
+            "nearestAlternateId": "SBTL"
+          },
+          {
+            "id": "TRVM",
+            "reason": "timeWindow",
+            "nearestAlternateId": "FSW"
+          },
+          {
+            "id": "TSYRS",
+            "reason": "timeWindow",
+            "nearestAlternateId": "AU"
+          },
+          {
+            "id": "WSAM",
+            "reason": "timeWindow",
+            "nearestAlternateId": "RRAC"
+          }
+        ],
+        "metrics": {
+          "storeCount": 27,
+          "storesVisited": 5,
+          "visitedIds": [
+            "AU",
+            "SBTL",
+            "FSW",
+            "RRAC",
+            "SAVERSB"
+          ],
+          "totalScore": 21.7,
+          "scorePerStore": 4.34,
+          "scorePerMin": 0.055517044608796806,
+          "scorePerDriveMin": 0.09008973455351042,
+          "scorePerMile": 0.12011964607134723,
+          "totalDriveMin": 240.87095058661643,
+          "totalDwellMin": 150,
+          "slackMin": 29.129049413383427,
+          "totalDistanceMiles": 180.65321293996232,
+          "onTimeRisk": 0
+        }
+      }
+    ]
+  },
+  "activeDayId": "Thu",
+  "finalStopsState": [
+    {
+      "id": "AU",
+      "name": "Antiques & Uniques",
+      "type": "store",
+      "arrive": "11:19",
+      "depart": "11:49",
+      "score": 4.8,
+      "status": "visited",
+      "mqa": "Average",
+      "mqaValue": 3.5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "posterior": {
+        "alpha": 4.540001,
+        "beta": 0.4600010000000002,
+        "mean": 4.539999184000326,
+        "meanNormalized": 0.9079998368000652,
+        "std": 0.5899721226667963,
+        "variance": 0.34806710552396536,
+        "lower": 3.9500270613335298,
+        "upper": 5,
+        "observationCount": 1,
+        "totalQuality": 3.5,
+        "lastObservation": 3.5,
+        "priorNormalized": 0.96,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "SBTL",
+      "name": "Shops By The Lake",
+      "type": "store",
+      "arrive": "12:10",
+      "depart": "12:40",
+      "score": 4,
+      "status": "visited",
+      "mqa": "Exceptional",
+      "mqaValue": 5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "posterior": {
+        "alpha": 4.200001,
+        "beta": 0.8000009999999999,
+        "mean": 4.1999993200002725,
+        "meanNormalized": 0.8399998640000544,
+        "std": 0.748331610094328,
+        "variance": 0.5600001986663694,
+        "lower": 3.4516677099059443,
+        "upper": 4.948330930094601,
+        "observationCount": 1,
+        "totalQuality": 5,
+        "lastObservation": 5,
+        "priorNormalized": 0.8,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "FSW",
+      "name": "Fat Sally's Warehouse",
+      "type": "store",
+      "arrive": "13:11",
+      "depart": "13:41",
+      "score": 4.1,
+      "status": "visited",
+      "mqa": "Good",
+      "mqaValue": 4.2,
+      "decision": "Leave",
+      "decisionReason": "ucb-favors-remaining",
+      "posterior": {
+        "alpha": 4.120001,
+        "beta": 0.8800010000000001,
+        "mean": 4.119999352000259,
+        "meanNormalized": 0.8239998704000518,
+        "std": 0.7773460073636353,
+        "variance": 0.604266815164185,
+        "lower": 3.3426533446366236,
+        "upper": 4.897345359363895,
+        "observationCount": 1,
+        "totalQuality": 4.2,
+        "lastObservation": 4.2,
+        "priorNormalized": 0.82,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "RRAC",
+      "name": "Rcs & Randys Antiques Co-Op",
+      "type": "store",
+      "arrive": "15:36",
+      "depart": "16:06",
+      "score": 4,
+      "status": "dropped",
+      "mqa": null,
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "overrun-drop-lowest",
+      "posterior": {
+        "alpha": 3.2000010000000003,
+        "beta": 0.8000009999999999,
+        "mean": 3.999999250000375,
+        "meanNormalized": 0.799999850000075,
+        "std": 0.8944272636719043,
+        "variance": 0.8000001299996102,
+        "lower": 3.1055719863284708,
+        "upper": 4.894426513672279,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.8,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "SAVERSB",
+      "name": "Savers",
+      "type": "store",
+      "arrive": "16:50",
+      "depart": "17:20",
+      "score": 4.8,
+      "status": "visited",
+      "mqa": "Exceptional",
+      "mqaValue": 5,
+      "decision": "Stay",
+      "decisionReason": "no-remaining-stops",
+      "posterior": {
+        "alpha": 4.840001,
+        "beta": 0.16000100000000014,
+        "mean": 4.8399990640003745,
+        "meanNormalized": 0.9679998128000749,
+        "std": 0.3592594518224642,
+        "variance": 0.12906735372377748,
+        "lower": 4.48073961217791,
+        "upper": 5,
+        "observationCount": 1,
+        "totalQuality": 5,
+        "lastObservation": 5,
+        "priorNormalized": 0.96,
+        "pseudo": 4
+      }
+    }
+  ],
+  "tripLog": [
+    {
+      "name": "Antiques & Uniques",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.616224227171%2C-81.460742434228%20Antiques%20%26%20Uniques%2030200%20Euclid%20Ave%2C%20Wickliffe%2C%20OH%2044092",
+      "mqa": "Average",
+      "mqaValue": 3.5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "diff": 0.381777190270828,
+      "zScore": 0.5204736315815265,
+      "currentUcb": 5,
+      "remainingUcb": 4.618222809729172,
+      "observationCount": 1,
+      "posterior": {
+        "alpha": 4.540001,
+        "beta": 0.4600010000000002,
+        "mean": 4.539999184000326,
+        "meanNormalized": 0.9079998368000652,
+        "std": 0.5899721226667963,
+        "variance": 0.34806710552396536,
+        "lower": 3.9500270613335298,
+        "upper": 5,
+        "observationCount": 1,
+        "totalQuality": 3.5,
+        "lastObservation": 3.5,
+        "priorNormalized": 0.96,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 14.220000999999998,
+        "beta": 2.7800010000000004,
+        "mean": 4.182352743252618,
+        "meanNormalized": 0.8364705486505236,
+        "std": 0.4358700664765539,
+        "variance": 0.1899827148502755,
+        "lower": 3.7464826767760644,
+        "upper": 4.618222809729172,
+        "count": 4,
+        "pseudoAlpha": 13.52,
+        "pseudoBeta": 2.48,
+        "observationCount": 1,
+        "totalObservedQuality": 3.5
+      },
+      "timestamp": "2025-10-01T01:57:06.162Z"
+    },
+    {
+      "name": "Shops By The Lake",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.748994881171%2C-81.208780911127%20Shops%20By%20The%20Lake%201871%20N%20Ridge%20Rd%2C%20Painesville%2C%20OH%2044077",
+      "mqa": "Exceptional",
+      "mqaValue": 5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "diff": 0.20561008029750294,
+      "zScore": 0.23548285174206832,
+      "currentUcb": 4.948330930094601,
+      "remainingUcb": 4.742720849797098,
+      "observationCount": 1,
+      "posterior": {
+        "alpha": 4.200001,
+        "beta": 0.8000009999999999,
+        "mean": 4.1999993200002725,
+        "meanNormalized": 0.8399998640000544,
+        "std": 0.748331610094328,
+        "variance": 0.5600001986663694,
+        "lower": 3.4516677099059443,
+        "upper": 4.948330930094601,
+        "observationCount": 1,
+        "totalQuality": 5,
+        "lastObservation": 5,
+        "priorNormalized": 0.8,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 12.020000999999999,
+        "beta": 1.9800010000000001,
+        "mean": 4.2928568867347305,
+        "meanNormalized": 0.8585713773469461,
+        "std": 0.449863963062367,
+        "variance": 0.2023775852621787,
+        "lower": 3.8429929236723637,
+        "upper": 4.742720849797098,
+        "count": 3,
+        "pseudoAlpha": 10.32,
+        "pseudoBeta": 1.6800000000000002,
+        "observationCount": 2,
+        "totalObservedQuality": 8.5
+      },
+      "timestamp": "2025-10-01T01:57:14.044Z"
+    },
+    {
+      "name": "Rcs & Randys Antiques Co-Op",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=42.489967125549%2C-79.323415719901%20Rcs%20%26%20Randys%20Antiques%20Co-Op%20212%20Lake%20Shore%20Dr%20E%2C%20Dunkirk%2C%20NY%2014048",
+      "mqa": "N/A",
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "overrun-drop-lowest",
+      "diff": null,
+      "zScore": null,
+      "currentUcb": null,
+      "remainingUcb": null,
+      "observationCount": null,
+      "posterior": {
+        "alpha": 3.2000010000000003,
+        "beta": 0.8000009999999999,
+        "mean": 3.999999250000375,
+        "meanNormalized": 0.799999850000075,
+        "std": 0.8944272636719043,
+        "variance": 0.8000001299996102,
+        "lower": 3.1055719863284708,
+        "upper": 4.894426513672279,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.8,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 8.820001,
+        "beta": 1.1800010000000003,
+        "mean": 4.409999618000076,
+        "meanNormalized": 0.8819999236000152,
+        "std": 0.4863501344585789,
+        "variance": 0.23653645328787776,
+        "lower": 3.9236494835414972,
+        "upper": 4.896349752458655,
+        "count": 2,
+        "pseudoAlpha": 7.119999999999999,
+        "pseudoBeta": 0.8800000000000003,
+        "observationCount": 2,
+        "totalObservedQuality": 8.5
+      },
+      "timestamp": "2025-10-01T01:57:19.953Z"
+    },
+    {
+      "name": "Fat Sally's Warehouse",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.893855805386%2C-80.804068111485%20Fat%20Sally's%20Warehouse%201569%20Laird%20Dr%2C%20Ashtabula%2C%20OH%2044004",
+      "mqa": "Good",
+      "mqaValue": 4.2,
+      "decision": "Leave",
+      "decisionReason": "ucb-favors-remaining",
+      "diff": -0.1026546406361053,
+      "zScore": -0.11091886214144182,
+      "currentUcb": 4.897345359363895,
+      "remainingUcb": 5,
+      "observationCount": 1,
+      "posterior": {
+        "alpha": 4.120001,
+        "beta": 0.8800010000000001,
+        "mean": 4.119999352000259,
+        "meanNormalized": 0.8239998704000518,
+        "std": 0.7773460073636353,
+        "variance": 0.604266815164185,
+        "lower": 3.3426533446366236,
+        "upper": 4.897345359363895,
+        "observationCount": 1,
+        "totalQuality": 4.2,
+        "lastObservation": 4.2,
+        "priorNormalized": 0.82,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 6.380001,
+        "beta": 0.6200010000000001,
+        "mean": 4.557142269387922,
+        "meanNormalized": 0.9114284538775845,
+        "std": 0.5022655148121623,
+        "variance": 0.2522706473695264,
+        "lower": 4.05487675457576,
+        "upper": 5,
+        "count": 1,
+        "pseudoAlpha": 3.84,
+        "pseudoBeta": 0.16000000000000014,
+        "observationCount": 3,
+        "totalObservedQuality": 12.7
+      },
+      "timestamp": "2025-10-01T01:57:27.767Z"
+    },
+    {
+      "name": "Savers",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=42.7853963%2C-78.8107985%20Savers%203701%20McKinley%20Pkwy%2C%20Buffalo%2C%20NY%2014219",
+      "mqa": "Exceptional",
+      "mqaValue": 5,
+      "decision": "Stay",
+      "decisionReason": "no-remaining-stops",
+      "diff": 5,
+      "zScore": null,
+      "currentUcb": 5,
+      "remainingUcb": 5,
+      "observationCount": 1,
+      "posterior": {
+        "alpha": 4.840001,
+        "beta": 0.16000100000000014,
+        "mean": 4.8399990640003745,
+        "meanNormalized": 0.9679998128000749,
+        "std": 0.3592594518224642,
+        "variance": 0.12906735372377748,
+        "lower": 4.48073961217791,
+        "upper": 5,
+        "observationCount": 1,
+        "totalQuality": 5,
+        "lastObservation": 5,
+        "priorNormalized": 0.96,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 3.540001,
+        "beta": 0.46000099999999994,
+        "mean": 4.424999037500481,
+        "meanNormalized": 0.8849998075000962,
+        "std": 0.713355127250256,
+        "variance": 0.5088755375742289,
+        "lower": 3.7116439102502246,
+        "upper": 5,
+        "count": 0,
+        "pseudoAlpha": 0,
+        "pseudoBeta": 0,
+        "observationCount": 4,
+        "totalObservedQuality": 17.7
+      },
+      "timestamp": "2025-10-01T01:57:38.336Z"
+    }
+  ],
+  "posteriorPool": {
+    "alpha": 3.540001,
+    "beta": 0.46000099999999994,
+    "mean": 4.424999037500481,
+    "meanNormalized": 0.8849998075000962,
+    "std": 0.713355127250256,
+    "variance": 0.5088755375742289,
+    "lower": 3.7116439102502246,
+    "upper": 5,
+    "count": 0,
+    "pseudoAlpha": 0,
+    "pseudoBeta": 0,
+    "observationCount": 4,
+    "totalObservedQuality": 17.7,
+    "observedAlpha": 3.54,
+    "observedBeta": 0.45999999999999996
+  },
+  "posteriorConfig": {
+    "priorStrength": 4,
+    "baseAlpha": 0.000001,
+    "baseBeta": 0.000001,
+    "credibleZ": 1,
+    "defaultScore": 3.5
+  }
+}

@@ -1,0 +1,1112 @@
+{
+  "runInfo": {
+    "runTimestamp": "2025-09-21T05:43:54.854Z",
+    "runId": "AA-v1",
+    "runNote": "Ann Arbor TS go long (manual TS firstStopLock)",
+    "days": [
+      {
+        "dayId": "Mon",
+        "stops": [
+          {
+            "id": "HCGs1",
+            "name": "Hollywood Casino Greektown",
+            "type": "start",
+            "arrive": "09:00",
+            "depart": "09:00",
+            "lat": 42.336873,
+            "lon": -83.0418499
+          },
+          {
+            "id": "TS",
+            "name": "The ShareHouse",
+            "type": "store",
+            "arrive": "10:09",
+            "depart": "10:39",
+            "lat": 42.28746620984,
+            "lon": -83.830718044144,
+            "address": "5161 Jackson Rd, Ann Arbor, MI 48103",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "HCGs1",
+              "toId": "TS",
+              "driveMin": 69.3442113611251,
+              "distanceMi": 40.45078996065631
+            },
+            "score": 5,
+            "tags": [
+              "must-visit",
+              "Thrift"
+            ]
+          },
+          {
+            "id": "RAGS",
+            "name": "Ragstock",
+            "type": "store",
+            "arrive": "10:47",
+            "depart": "11:17",
+            "lat": 42.279535758164,
+            "lon": -83.7453166195,
+            "address": "337 E Liberty St, Ann Arbor, MI 48104",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "TS",
+              "toId": "RAGS",
+              "driveMin": 7.542452050594691,
+              "distanceMi": 4.399763696180236
+            },
+            "score": 4,
+            "tags": [
+              "Vintage"
+            ]
+          },
+          {
+            "id": "TSAFS",
+            "name": "The Salvation Army Family Store & Donation Center",
+            "type": "store",
+            "arrive": "11:19",
+            "depart": "11:49",
+            "lat": 42.261142020686,
+            "lon": -83.740301350218,
+            "address": "1621 S State St, Ann Arbor, MI 48104",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "RAGS",
+              "toId": "TSAFS",
+              "driveMin": 2.2225867582091015,
+              "distanceMi": 1.2965089422886424
+            },
+            "score": 3.7,
+            "tags": [
+              "Thrift"
+            ]
+          },
+          {
+            "id": "AATS",
+            "name": "Ann Arbor Thrift Shop",
+            "type": "store",
+            "arrive": "11:54",
+            "depart": "12:24",
+            "lat": 42.255689991053,
+            "lon": -83.690434090721,
+            "address": "3500 Washtenaw Ave K, Ann Arbor, MI 48104",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "TSAFS",
+              "toId": "AATS",
+              "driveMin": 4.419049667099438,
+              "distanceMi": 2.5777789724746722
+            },
+            "score": 3.5,
+            "tags": [
+              "Thrift"
+            ]
+          },
+          {
+            "id": "SCR",
+            "name": "SCRAP Creative Reuse",
+            "type": "store",
+            "arrive": "12:25",
+            "depart": "12:55",
+            "lat": 42.252675241419,
+            "lon": -83.673510381064,
+            "address": "4567 Washtenaw Ave, Ann Arbor, MI 48108",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "AATS",
+              "toId": "SCR",
+              "driveMin": 1.5260810702852947,
+              "distanceMi": 0.8902139576664219
+            },
+            "score": 3.8,
+            "tags": [
+              "Thrift"
+            ]
+          },
+          {
+            "id": "VWT9",
+            "name": "Value World Thrift",
+            "type": "store",
+            "arrive": "13:03",
+            "depart": "13:33",
+            "lat": 42.245572221237,
+            "lon": -83.582547913813,
+            "address": "1410 E Michigan Ave, Ypsilanti, MI 48198",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "SCR",
+              "toId": "VWT9",
+              "driveMin": 8.019646681019639,
+              "distanceMi": 4.678127230594789
+            },
+            "score": 4,
+            "tags": [
+              "Thrift"
+            ]
+          },
+          {
+            "id": "TSAFSCT",
+            "name": "The Salvation Army Family Store & Donation Center",
+            "type": "store",
+            "arrive": "13:49",
+            "depart": "14:19",
+            "lat": 42.351439786378,
+            "lon": -83.469170034323,
+            "address": "43403 Joy Rd, Canton Township, MI 48187",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "VWT9",
+              "toId": "TSAFSCT",
+              "driveMin": 15.997101359225267,
+              "distanceMi": 9.331642459548073
+            },
+            "score": 3.7,
+            "tags": [
+              "Thrift"
+            ]
+          },
+          {
+            "id": "TBIN",
+            "name": "The Barn in Northville",
+            "type": "store",
+            "arrive": "14:30",
+            "depart": "15:00",
+            "lat": 42.436301752318,
+            "lon": -83.519719175565,
+            "address": "48120 Eight Mile W, Northville, MI 48167",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "TSAFSCT",
+              "toId": "TBIN",
+              "driveMin": 10.981274992994765,
+              "distanceMi": 6.405743745913613
+            },
+            "score": 3.8,
+            "tags": [
+              "Antique"
+            ]
+          },
+          {
+            "id": "TPCAA",
+            "name": "Town Peddler Craft and Antique Mall",
+            "type": "store",
+            "arrive": "15:14",
+            "depart": "15:44",
+            "lat": 42.367865594867,
+            "lon": -83.391025127892,
+            "address": "35323 Plymouth Rd, Livonia, MI 48150",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "TBIN",
+              "toId": "TPCAA",
+              "driveMin": 13.871211417514735,
+              "distanceMi": 8.091539993550262
+            },
+            "score": 4,
+            "tags": [
+              "must-visit",
+              "Antique"
+            ]
+          },
+          {
+            "id": "VWT-Westland",
+            "name": "Value World Thrift",
+            "type": "store",
+            "arrive": "15:47",
+            "depart": "16:17",
+            "lat": 42.343181412273,
+            "lon": -83.388254959552,
+            "address": "35300 Central City Pkwy, Westland, MI 48185",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "TPCAA",
+              "toId": "VWT-Westland",
+              "driveMin": 2.9338049058073223,
+              "distanceMi": 1.7113861950542713
+            },
+            "score": 4,
+            "tags": [
+              "Thrift"
+            ]
+          },
+          {
+            "id": "HCGe1",
+            "name": "Hollywood Casino Greektown",
+            "type": "end",
+            "arrive": "16:47",
+            "depart": "16:47",
+            "lat": 42.336873,
+            "lon": -83.0418499,
+            "legIn": {
+              "fromId": "VWT-Westland",
+              "toId": "HCGe1",
+              "driveMin": 30.33742564206288,
+              "distanceMi": 17.696831624536678
+            }
+          }
+        ],
+        "excluded": [
+          {
+            "id": "AAPTS",
+            "reason": "timeWindow",
+            "nearestAlternateId": "TSAFS"
+          },
+          {
+            "id": "AAV",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VWT9"
+          },
+          {
+            "id": "CAM",
+            "reason": "timeWindow",
+            "nearestAlternateId": "TS"
+          },
+          {
+            "id": "CCA",
+            "reason": "timeWindow",
+            "nearestAlternateId": "SCR"
+          },
+          {
+            "id": "FASV",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VWT9"
+          },
+          {
+            "id": "FKVV",
+            "reason": "timeWindow",
+            "nearestAlternateId": "TSAFSCT"
+          },
+          {
+            "id": "GIOSM",
+            "reason": "timeWindow",
+            "nearestAlternateId": "TSAFS"
+          },
+          {
+            "id": "GSADC",
+            "reason": "timeWindow",
+            "nearestAlternateId": "TSAFSCT"
+          },
+          {
+            "id": "GSADY",
+            "reason": "timeWindow",
+            "nearestAlternateId": "SCR"
+          },
+          {
+            "id": "JMA",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VWT9"
+          },
+          {
+            "id": "KTS",
+            "reason": "timeWindow",
+            "nearestAlternateId": "TS"
+          },
+          {
+            "id": "LHAAR",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VWT9"
+          },
+          {
+            "id": "NARS",
+            "reason": "timeWindow",
+            "nearestAlternateId": "TSAFS"
+          },
+          {
+            "id": "PTS",
+            "reason": "timeWindow",
+            "nearestAlternateId": "TSAFSCT"
+          },
+          {
+            "id": "SCA",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VWT9"
+          },
+          {
+            "id": "TGV",
+            "reason": "timeWindow",
+            "nearestAlternateId": "RAGS"
+          },
+          {
+            "id": "TTD",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VWT9"
+          }
+        ],
+        "metrics": {
+          "storeCount": 16,
+          "storesVisited": 10,
+          "visitedIds": [
+            "TS",
+            "RAGS",
+            "TSAFS",
+            "AATS",
+            "SCR",
+            "VWT9",
+            "TSAFSCT",
+            "TBIN",
+            "TPCAA",
+            "VWT-Westland"
+          ],
+          "totalScore": 39.5,
+          "scorePerStore": 3.95,
+          "scorePerMin": 0.08454716559084784,
+          "scorePerDriveMin": 0.2362513018028212,
+          "scorePerMile": 0.4050022316619792,
+          "totalDriveMin": 167.19484590593825,
+          "totalDwellMin": 300,
+          "slackMin": 12.805154094062118,
+          "totalDistanceMiles": 97.53032677846397,
+          "onTimeRisk": 0
+        }
+      }
+    ]
+  },
+  "activeDayId": "Mon",
+  "finalStopsState": [
+    {
+      "id": "TS",
+      "name": "The ShareHouse",
+      "type": "store",
+      "arrive": "10:09",
+      "depart": "10:39",
+      "score": 5,
+      "status": "visited",
+      "mqa": "Exceptional",
+      "mqaValue": 5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "posterior": {
+        "alpha": 5.000001,
+        "beta": 0.000001,
+        "mean": 4.9999990000003995,
+        "meanNormalized": 0.9999998000000799,
+        "std": 0.0009128705031690319,
+        "variance": 8.333325555560815e-7,
+        "lower": 4.999086129497231,
+        "upper": 5,
+        "observationCount": 1,
+        "totalQuality": 5,
+        "lastObservation": 5,
+        "priorNormalized": 1,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "RAGS",
+      "name": "Ragstock",
+      "type": "store",
+      "arrive": "10:47",
+      "depart": "11:17",
+      "score": 4,
+      "status": "visited",
+      "mqa": "Average",
+      "mqaValue": 3.5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "posterior": {
+        "alpha": 3.9000010000000005,
+        "beta": 1.1000009999999998,
+        "mean": 3.899999440000224,
+        "meanNormalized": 0.7799998880000448,
+        "std": 0.8455767398644759,
+        "variance": 0.7150000229998356,
+        "lower": 3.0544227001357482,
+        "upper": 4.7455761798647,
+        "observationCount": 1,
+        "totalQuality": 3.5,
+        "lastObservation": 3.5,
+        "priorNormalized": 0.8,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "TSAFS",
+      "name": "The Salvation Army Family Store & Donation Center",
+      "type": "store",
+      "arrive": "11:19",
+      "depart": "11:49",
+      "score": 3.7,
+      "status": "dropped",
+      "mqa": null,
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "manual-drop",
+      "posterior": {
+        "alpha": 2.960001,
+        "beta": 1.040001,
+        "mean": 3.6999994000003,
+        "meanNormalized": 0.73999988000006,
+        "std": 0.9808159374723795,
+        "variance": 0.9619999031998226,
+        "lower": 2.7191834625279205,
+        "upper": 4.68081533747268,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.74,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "AATS",
+      "name": "Ann Arbor Thrift Shop",
+      "type": "store",
+      "arrive": "11:54",
+      "depart": "12:24",
+      "score": 3.5,
+      "status": "dropped",
+      "mqa": null,
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "overrun-drop-lowest",
+      "posterior": {
+        "alpha": 2.800001,
+        "beta": 1.200001,
+        "mean": 3.49999950000025,
+        "meanNormalized": 0.69999990000005,
+        "std": 1.0246949692469158,
+        "variance": 1.0499997799999379,
+        "lower": 2.475304530753334,
+        "upper": 4.524694469247166,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.7,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "SCR",
+      "name": "SCRAP Creative Reuse",
+      "type": "store",
+      "arrive": "12:25",
+      "depart": "12:55",
+      "score": 3.8,
+      "status": "visited",
+      "mqa": "Good",
+      "mqaValue": 4.2,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "posterior": {
+        "alpha": 3.880001,
+        "beta": 1.1200009999999998,
+        "mean": 3.8799994480002202,
+        "meanNormalized": 0.7759998896000441,
+        "std": 0.8510385885283274,
+        "variance": 0.7242666791642877,
+        "lower": 3.028960859471893,
+        "upper": 4.731038036528547,
+        "observationCount": 1,
+        "totalQuality": 4.2,
+        "lastObservation": 4.2,
+        "priorNormalized": 0.76,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "VWT9",
+      "name": "Value World Thrift",
+      "type": "store",
+      "arrive": "13:03",
+      "depart": "13:33",
+      "score": 4,
+      "status": "visited",
+      "mqa": "Average",
+      "mqaValue": 3.5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "posterior": {
+        "alpha": 3.9000010000000005,
+        "beta": 1.1000009999999998,
+        "mean": 3.899999440000224,
+        "meanNormalized": 0.7799998880000448,
+        "std": 0.8455767398644759,
+        "variance": 0.7150000229998356,
+        "lower": 3.0544227001357482,
+        "upper": 4.7455761798647,
+        "observationCount": 1,
+        "totalQuality": 3.5,
+        "lastObservation": 3.5,
+        "priorNormalized": 0.8,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "TSAFSCT",
+      "name": "The Salvation Army Family Store & Donation Center",
+      "type": "store",
+      "arrive": "13:49",
+      "depart": "14:19",
+      "score": 3.7,
+      "status": "visited",
+      "mqa": "Good",
+      "mqaValue": 4.2,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "posterior": {
+        "alpha": 3.800001,
+        "beta": 1.2000009999999999,
+        "mean": 3.799999480000208,
+        "meanNormalized": 0.7599998960000416,
+        "std": 0.8717797726489609,
+        "variance": 0.7599999719998739,
+        "lower": 2.9282197073512473,
+        "upper": 4.671779252649169,
+        "observationCount": 1,
+        "totalQuality": 4.2,
+        "lastObservation": 4.2,
+        "priorNormalized": 0.74,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "TBIN",
+      "name": "The Barn in Northville",
+      "type": "store",
+      "arrive": "14:30",
+      "depart": "15:00",
+      "score": 3.8,
+      "status": "dropped",
+      "mqa": null,
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "manual-drop",
+      "posterior": {
+        "alpha": 3.040001,
+        "beta": 0.960001,
+        "mean": 3.799999350000325,
+        "meanNormalized": 0.759999870000065,
+        "std": 0.9549868968733326,
+        "variance": 0.9119999731997572,
+        "lower": 2.8450124531269925,
+        "upper": 4.754986246873657,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.76,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "TPCAA",
+      "name": "Town Peddler Craft and Antique Mall",
+      "type": "store",
+      "arrive": "15:14",
+      "depart": "15:44",
+      "score": 4,
+      "status": "visited",
+      "mqa": "Good",
+      "mqaValue": 4.2,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "posterior": {
+        "alpha": 4.040001,
+        "beta": 0.9600009999999998,
+        "mean": 4.039999384000247,
+        "meanNormalized": 0.8079998768000493,
+        "std": 0.8039901123437049,
+        "variance": 0.6464001007464432,
+        "lower": 3.236009271656542,
+        "upper": 4.843989496343951,
+        "observationCount": 1,
+        "totalQuality": 4.2,
+        "lastObservation": 4.2,
+        "priorNormalized": 0.8,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "VWT-Westland",
+      "name": "Value World Thrift",
+      "type": "store",
+      "arrive": "15:47",
+      "depart": "16:17",
+      "score": 4,
+      "status": "visited",
+      "mqa": "Average",
+      "mqaValue": 3.5,
+      "decision": "Stay",
+      "decisionReason": "no-remaining-stops",
+      "posterior": {
+        "alpha": 3.9000010000000005,
+        "beta": 1.1000009999999998,
+        "mean": 3.899999440000224,
+        "meanNormalized": 0.7799998880000448,
+        "std": 0.8455767398644759,
+        "variance": 0.7150000229998356,
+        "lower": 3.0544227001357482,
+        "upper": 4.7455761798647,
+        "observationCount": 1,
+        "totalQuality": 3.5,
+        "lastObservation": 3.5,
+        "priorNormalized": 0.8,
+        "pseudo": 4
+      }
+    }
+  ],
+  "tripLog": [
+    {
+      "name": "The ShareHouse",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=42.28746620984%2C-83.830718044144%20The%20ShareHouse%205161%20Jackson%20Rd%2C%20Ann%20Arbor%2C%20MI%2048103",
+      "mqa": "Exceptional",
+      "mqaValue": 5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "diff": 0.7953541698529039,
+      "zScore": 2.340775993909233,
+      "currentUcb": 5,
+      "remainingUcb": 4.204645830147096,
+      "observationCount": 1,
+      "posterior": {
+        "alpha": 5.000001,
+        "beta": 0.000001,
+        "mean": 4.9999990000003995,
+        "meanNormalized": 0.9999998000000799,
+        "std": 0.0009128705031690319,
+        "variance": 8.333325555560815e-7,
+        "lower": 4.999086129497231,
+        "upper": 5,
+        "observationCount": 1,
+        "totalQuality": 5,
+        "lastObservation": 5,
+        "priorNormalized": 1,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 28.600001,
+        "beta": 8.400000999999998,
+        "mean": 3.8648647910883898,
+        "meanNormalized": 0.772972958217678,
+        "std": 0.3397810390587064,
+        "variance": 0.11545115450381416,
+        "lower": 3.5250837520296834,
+        "upper": 4.204645830147096,
+        "count": 9,
+        "pseudoAlpha": 27.599999999999998,
+        "pseudoBeta": 8.399999999999999,
+        "observationCount": 1,
+        "totalObservedQuality": 5
+      },
+      "timestamp": "2025-09-22T23:34:53.186Z"
+    },
+    {
+      "name": "Ann Arbor Thrift Shop",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=42.255689991053%2C-83.690434090721%20Ann%20Arbor%20Thrift%20Shop%203500%20Washtenaw%20Ave%20K%2C%20Ann%20Arbor%2C%20MI%2048104",
+      "mqa": "N/A",
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "overrun-drop-lowest",
+      "diff": null,
+      "zScore": null,
+      "currentUcb": null,
+      "remainingUcb": null,
+      "observationCount": null,
+      "posterior": {
+        "alpha": 2.800001,
+        "beta": 1.200001,
+        "mean": 3.49999950000025,
+        "meanNormalized": 0.69999990000005,
+        "std": 1.0246949692469158,
+        "variance": 1.0499997799999379,
+        "lower": 2.475304530753334,
+        "upper": 4.524694469247166,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.7,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 25.800000999999998,
+        "beta": 7.200000999999999,
+        "mean": 3.9090908236914657,
+        "meanNormalized": 0.7818181647382931,
+        "std": 0.3541544528350239,
+        "variance": 0.12542537646287516,
+        "lower": 3.5549363708564417,
+        "upper": 4.263245276526489,
+        "count": 8,
+        "pseudoAlpha": 24.799999999999997,
+        "pseudoBeta": 7.199999999999999,
+        "observationCount": 1,
+        "totalObservedQuality": 5
+      },
+      "timestamp": "2025-09-22T23:34:57.095Z"
+    },
+    {
+      "name": "The Salvation Army Family Store & Donation Center",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=42.261142020686%2C-83.740301350218%20The%20Salvation%20Army%20Family%20Store%20%26%20Donation%20Center%201621%20S%20State%20St%2C%20Ann%20Arbor%2C%20MI%2048104",
+      "mqa": "N/A",
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "manual-drop",
+      "diff": null,
+      "zScore": null,
+      "currentUcb": null,
+      "remainingUcb": null,
+      "observationCount": null,
+      "posterior": {
+        "alpha": 2.960001,
+        "beta": 1.040001,
+        "mean": 3.6999994000003,
+        "meanNormalized": 0.73999988000006,
+        "std": 0.9808159374723795,
+        "variance": 0.9619999031998226,
+        "lower": 2.7191834625279205,
+        "upper": 4.68081533747268,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.74,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 22.840001,
+        "beta": 6.160000999999999,
+        "mean": 3.9379309353151077,
+        "meanNormalized": 0.7875861870630215,
+        "std": 0.37337891149341373,
+        "variance": 0.1394118115480065,
+        "lower": 3.564552023821694,
+        "upper": 4.311309846808522,
+        "count": 7,
+        "pseudoAlpha": 21.84,
+        "pseudoBeta": 6.159999999999999,
+        "observationCount": 1,
+        "totalObservedQuality": 5
+      },
+      "timestamp": "2025-09-22T23:35:02.759Z"
+    },
+    {
+      "name": "Ragstock",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=42.279535758164%2C-83.7453166195%20Ragstock%20337%20E%20Liberty%20St%2C%20Ann%20Arbor%2C%20MI%2048104",
+      "mqa": "Average",
+      "mqaValue": 3.5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "diff": 0.43693912834587945,
+      "zScore": 0.4677260787611254,
+      "currentUcb": 4.7455761798647,
+      "remainingUcb": 4.30863705151882,
+      "observationCount": 1,
+      "posterior": {
+        "alpha": 3.9000010000000005,
+        "beta": 1.1000009999999998,
+        "mean": 3.899999440000224,
+        "meanNormalized": 0.7799998880000448,
+        "std": 0.8455767398644759,
+        "variance": 0.7150000229998356,
+        "lower": 3.0544227001357482,
+        "upper": 4.7455761798647,
+        "observationCount": 1,
+        "totalQuality": 3.5,
+        "lastObservation": 3.5,
+        "priorNormalized": 0.8,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 20.340000999999997,
+        "beta": 5.660000999999999,
+        "mean": 3.9115383529585883,
+        "meanNormalized": 0.7823076705917177,
+        "std": 0.3970986985602317,
+        "variance": 0.15768737639822977,
+        "lower": 3.5144396543983567,
+        "upper": 4.30863705151882,
+        "count": 6,
+        "pseudoAlpha": 18.639999999999997,
+        "pseudoBeta": 5.359999999999999,
+        "observationCount": 2,
+        "totalObservedQuality": 8.5
+      },
+      "timestamp": "2025-09-22T23:35:11.596Z"
+    },
+    {
+      "name": "SCRAP Creative Reuse",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=42.252675241419%2C-83.673510381064%20SCRAP%20Creative%20Reuse%204567%20Washtenaw%20Ave%2C%20Ann%20Arbor%2C%20MI%2048108",
+      "mqa": "Good",
+      "mqaValue": 4.2,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "diff": 0.3709080418301083,
+      "zScore": 0.39143586878668685,
+      "currentUcb": 4.731038036528547,
+      "remainingUcb": 4.360129994698439,
+      "observationCount": 1,
+      "posterior": {
+        "alpha": 3.880001,
+        "beta": 1.1200009999999998,
+        "mean": 3.8799994480002202,
+        "meanNormalized": 0.7759998896000441,
+        "std": 0.8510385885283274,
+        "variance": 0.7242666791642877,
+        "lower": 3.028960859471893,
+        "upper": 4.731038036528547,
+        "observationCount": 1,
+        "totalQuality": 4.2,
+        "lastObservation": 4.2,
+        "priorNormalized": 0.76,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 18.140000999999998,
+        "beta": 4.860001,
+        "mean": 3.9434781353497272,
+        "meanNormalized": 0.7886956270699454,
+        "std": 0.41665185934871185,
+        "variance": 0.17359877189873876,
+        "lower": 3.5268262760010156,
+        "upper": 4.360129994698439,
+        "count": 5,
+        "pseudoAlpha": 15.599999999999998,
+        "pseudoBeta": 4.3999999999999995,
+        "observationCount": 3,
+        "totalObservedQuality": 12.7
+      },
+      "timestamp": "2025-09-22T23:35:23.126Z"
+    },
+    {
+      "name": "Value World Thrift",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=42.245572221237%2C-83.582547913813%20Value%20World%20Thrift%201410%20E%20Michigan%20Ave%2C%20Ypsilanti%2C%20MI%2048198",
+      "mqa": "Average",
+      "mqaValue": 3.5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "diff": 0.38507924134745153,
+      "zScore": 0.401921420212314,
+      "currentUcb": 4.7455761798647,
+      "remainingUcb": 4.360496938517248,
+      "observationCount": 1,
+      "posterior": {
+        "alpha": 3.9000010000000005,
+        "beta": 1.1000009999999998,
+        "mean": 3.899999440000224,
+        "meanNormalized": 0.7799998880000448,
+        "std": 0.8455767398644759,
+        "variance": 0.7150000229998356,
+        "lower": 3.0544227001357482,
+        "upper": 4.7455761798647,
+        "observationCount": 1,
+        "totalQuality": 3.5,
+        "lastObservation": 3.5,
+        "priorNormalized": 0.8,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 15.640000999999998,
+        "beta": 4.360001,
+        "mean": 3.9099998590000142,
+        "meanNormalized": 0.7819999718000028,
+        "std": 0.4504970795172342,
+        "variance": 0.20294761865355726,
+        "lower": 3.45950277948278,
+        "upper": 4.360496938517248,
+        "count": 4,
+        "pseudoAlpha": 12.399999999999999,
+        "pseudoBeta": 3.5999999999999996,
+        "observationCount": 4,
+        "totalObservedQuality": 16.2
+      },
+      "timestamp": "2025-09-22T23:35:30.424Z"
+    },
+    {
+      "name": "The Salvation Army Family Store & Donation Center",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=42.351439786378%2C-83.469170034323%20The%20Salvation%20Army%20Family%20Store%20%26%20Donation%20Center%2043403%20Joy%20Rd%2C%20Canton%20Township%2C%20MI%2048187",
+      "mqa": "Good",
+      "mqaValue": 4.2,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "diff": 0.21979539264782577,
+      "zScore": 0.22133762240426583,
+      "currentUcb": 4.671779252649169,
+      "remainingUcb": 4.451983860001343,
+      "observationCount": 1,
+      "posterior": {
+        "alpha": 3.800001,
+        "beta": 1.2000009999999999,
+        "mean": 3.799999480000208,
+        "meanNormalized": 0.7599998960000416,
+        "std": 0.8717797726489609,
+        "variance": 0.7599999719998739,
+        "lower": 2.9282197073512473,
+        "upper": 4.671779252649169,
+        "observationCount": 1,
+        "totalQuality": 4.2,
+        "lastObservation": 4.2,
+        "priorNormalized": 0.74,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 13.520001,
+        "beta": 3.4800009999999997,
+        "mean": 3.9764704145328924,
+        "meanNormalized": 0.7952940829065784,
+        "std": 0.47551344546845087,
+        "variance": 0.2261130368212774,
+        "lower": 3.5009569690644415,
+        "upper": 4.451983860001343,
+        "count": 3,
+        "pseudoAlpha": 9.440000000000001,
+        "pseudoBeta": 2.5599999999999996,
+        "observationCount": 5,
+        "totalObservedQuality": 20.4
+      },
+      "timestamp": "2025-09-22T23:35:33.293Z"
+    },
+    {
+      "name": "The Barn in Northville",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=42.436301752318%2C-83.519719175565%20The%20Barn%20in%20Northville%2048120%20Eight%20Mile%20W%2C%20Northville%2C%20MI%2048167",
+      "mqa": "N/A",
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "manual-drop",
+      "diff": null,
+      "zScore": null,
+      "currentUcb": null,
+      "remainingUcb": null,
+      "observationCount": null,
+      "posterior": {
+        "alpha": 3.040001,
+        "beta": 0.960001,
+        "mean": 3.799999350000325,
+        "meanNormalized": 0.759999870000065,
+        "std": 0.9549868968733326,
+        "variance": 0.9119999731997572,
+        "lower": 2.8450124531269925,
+        "upper": 4.754986246873657,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.76,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 10.480001000000001,
+        "beta": 2.5200009999999997,
+        "mean": 4.030768995266309,
+        "meanNormalized": 0.8061537990532617,
+        "std": 0.5282549252711262,
+        "variance": 0.2790532660732031,
+        "lower": 3.5025140699951827,
+        "upper": 4.5590239205374345,
+        "count": 2,
+        "pseudoAlpha": 6.4,
+        "pseudoBeta": 1.5999999999999996,
+        "observationCount": 5,
+        "totalObservedQuality": 20.4
+      },
+      "timestamp": "2025-09-22T23:35:38.448Z"
+    },
+    {
+      "name": "Town Peddler Craft and Antique Mall",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=42.367865594867%2C-83.391025127892%20Town%20Peddler%20Craft%20and%20Antique%20Mall%2035323%20Plymouth%20Rd%2C%20Livonia%2C%20MI%2048150",
+      "mqa": "Good",
+      "mqaValue": 4.2,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "diff": 0.19496902776057556,
+      "zScore": 0.1956209862046769,
+      "currentUcb": 4.843989496343951,
+      "remainingUcb": 4.649020468583376,
+      "observationCount": 1,
+      "posterior": {
+        "alpha": 4.040001,
+        "beta": 0.9600009999999998,
+        "mean": 4.039999384000247,
+        "meanNormalized": 0.8079998768000493,
+        "std": 0.8039901123437049,
+        "variance": 0.6464001007464432,
+        "lower": 3.236009271656542,
+        "upper": 4.843989496343951,
+        "observationCount": 1,
+        "totalQuality": 4.2,
+        "lastObservation": 4.2,
+        "priorNormalized": 0.8,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 8.120001,
+        "beta": 1.8800009999999996,
+        "mean": 4.059999688000062,
+        "meanNormalized": 0.8119999376000124,
+        "std": 0.5890207805833144,
+        "variance": 0.346945479958977,
+        "lower": 3.470978907416747,
+        "upper": 4.649020468583376,
+        "count": 1,
+        "pseudoAlpha": 3.2,
+        "pseudoBeta": 0.7999999999999998,
+        "observationCount": 6,
+        "totalObservedQuality": 24.599999999999998
+      },
+      "timestamp": "2025-09-22T23:35:45.085Z"
+    },
+    {
+      "name": "Value World Thrift",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=42.343181412273%2C-83.388254959552%20Value%20World%20Thrift%2035300%20Central%20City%20Pkwy%2C%20Westland%2C%20MI%2048185",
+      "mqa": "Average",
+      "mqaValue": 3.5,
+      "decision": "Stay",
+      "decisionReason": "no-remaining-stops",
+      "diff": 4.7455761798647,
+      "zScore": null,
+      "currentUcb": 4.7455761798647,
+      "remainingUcb": 4.717575681876123,
+      "observationCount": 1,
+      "posterior": {
+        "alpha": 3.9000010000000005,
+        "beta": 1.1000009999999998,
+        "mean": 3.899999440000224,
+        "meanNormalized": 0.7799998880000448,
+        "std": 0.8455767398644759,
+        "variance": 0.7150000229998356,
+        "lower": 3.0544227001357482,
+        "upper": 4.7455761798647,
+        "observationCount": 1,
+        "totalQuality": 3.5,
+        "lastObservation": 3.5,
+        "priorNormalized": 0.8,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 5.620001,
+        "beta": 1.3800009999999998,
+        "mean": 4.014285281632777,
+        "meanNormalized": 0.8028570563265554,
+        "std": 0.7032904002433461,
+        "variance": 0.49461738707444597,
+        "lower": 3.3109948813894308,
+        "upper": 4.717575681876123,
+        "count": 0,
+        "pseudoAlpha": 0,
+        "pseudoBeta": 0,
+        "observationCount": 7,
+        "totalObservedQuality": 28.099999999999998
+      },
+      "timestamp": "2025-09-22T23:36:01.894Z"
+    }
+  ],
+  "posteriorPool": {
+    "alpha": 5.620001,
+    "beta": 1.3800009999999998,
+    "mean": 4.014285281632777,
+    "meanNormalized": 0.8028570563265554,
+    "std": 0.7032904002433461,
+    "variance": 0.49461738707444597,
+    "lower": 3.3109948813894308,
+    "upper": 4.717575681876123,
+    "count": 0,
+    "pseudoAlpha": 0,
+    "pseudoBeta": 0,
+    "observationCount": 7,
+    "totalObservedQuality": 28.099999999999998,
+    "observedAlpha": 5.62,
+    "observedBeta": 1.38
+  },
+  "posteriorConfig": {
+    "priorStrength": 4,
+    "baseAlpha": 0.000001,
+    "baseBeta": 0.000001,
+    "credibleZ": 1,
+    "defaultScore": 3.5
+  }
+}

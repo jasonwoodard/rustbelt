@@ -1,0 +1,404 @@
+{
+  "runTimestamp": "2025-10-09T04:02:40.884Z",
+  "runId": "DT-v2-PT1",
+  "runNote": "Tuesday, Detroit Core (no must visit) - PT1 AScore Rev1",
+  "days": [
+    {
+      "dayId": "Tue",
+      "stops": [
+        {
+          "id": "HCGs1",
+          "name": "Hollywood Casino Greektown",
+          "type": "start",
+          "arrive": "09:00",
+          "depart": "09:00",
+          "lat": 42.336873,
+          "lon": -83.0418499
+        },
+        {
+          "id": "TSAFSWB",
+          "name": "The Salvation Army Family Store & Donation Center",
+          "type": "store",
+          "arrive": "09:41",
+          "depart": "10:11",
+          "lat": 42.60343091747,
+          "lon": -83.348784921158,
+          "address": "3232 Orchard Lake Rd, West Bloomfield Township, MI 48324",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "HCGs1",
+            "toId": "TSAFSWB",
+            "driveMin": 41.424568185155444,
+            "distanceMi": 24.16433144134068
+          },
+          "score": 3.641,
+          "tags": [
+            "Thrift"
+          ]
+        },
+        {
+          "id": "EUR",
+          "name": "Encore Upscale Resale",
+          "type": "store",
+          "arrive": "10:24",
+          "depart": "10:54",
+          "lat": 42.5031816,
+          "lon": -83.3743423,
+          "address": "29080 Southfield Rd, Southfield, MI 48076",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "TSAFSWB",
+            "toId": "EUR",
+            "driveMin": 12.081813021375766,
+            "distanceMi": 7.047724262469197
+          },
+          "score": 3.289,
+          "tags": [
+            "Thrift"
+          ]
+        },
+        {
+          "id": "GSADL",
+          "name": "Goodwill Store and Donations: Livonia",
+          "type": "store",
+          "arrive": "11:09",
+          "depart": "11:39",
+          "lat": 42.37688631625,
+          "lon": -83.333492634022,
+          "address": "12651 Middlebelt Rd, Livonia, MI 48150",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "EUR",
+            "toId": "GSADL",
+            "driveMin": 15.379561075875884,
+            "distanceMi": 8.971410627594267
+          },
+          "score": 3.397,
+          "tags": [
+            "Thrift"
+          ]
+        },
+        {
+          "id": "OFA",
+          "name": "Odd Fellows Antiques",
+          "type": "store",
+          "arrive": "11:58",
+          "depart": "12:28",
+          "lat": 42.503092747942,
+          "lon": -83.191987481283,
+          "address": "3248 12 Mile Rd, Berkley, MI 48072",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "GSADL",
+            "toId": "OFA",
+            "driveMin": 19.40268496702575,
+            "distanceMi": 11.318232897431686
+          },
+          "score": 3.49,
+          "tags": [
+            "Antique"
+          ]
+        },
+        {
+          "id": "CR",
+          "name": "Council Resale",
+          "type": "store",
+          "arrive": "12:28",
+          "depart": "12:58",
+          "lat": 42.502987878223,
+          "lon": -83.191678632857,
+          "address": "3297 12 Mile Rd, Berkley, MI 48072",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "OFA",
+            "toId": "CR",
+            "driveMin": 0.029692914395155284,
+            "distanceMi": 0.01732086673050725
+          },
+          "score": 3.49,
+          "tags": [
+            "Thrift"
+          ]
+        },
+        {
+          "id": "LAFV",
+          "name": "Lost and Found Vintage",
+          "type": "store",
+          "arrive": "13:03",
+          "depart": "13:33",
+          "lat": 42.486255298557,
+          "lon": -83.146635128433,
+          "address": "510 S Washington Ave, Royal Oak, MI 48067",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "CR",
+            "toId": "LAFV",
+            "driveMin": 4.40496077940409,
+            "distanceMi": 2.5695604546523856
+          },
+          "score": 3.397,
+          "tags": [
+            "Vintage"
+          ]
+        },
+        {
+          "id": "TSAFSRO",
+          "name": "The Salvation Army Family Store & Donation Center",
+          "type": "store",
+          "arrive": "13:33",
+          "depart": "14:03",
+          "lat": 42.48722963695,
+          "lon": -83.143962061469,
+          "address": "114 E 4th St, Royal Oak, MI 48067",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "LAFV",
+            "toId": "TSAFSRO",
+            "driveMin": 0.2604488675366824,
+            "distanceMi": 0.1519285060630647
+          },
+          "score": 3.397,
+          "tags": [
+            "Thrift"
+          ]
+        },
+        {
+          "id": "TWL",
+          "name": "Time Warp LLC",
+          "type": "store",
+          "arrive": "14:25",
+          "depart": "14:55",
+          "lat": 42.526049813184,
+          "lon": -82.896065923419,
+          "address": "31336 Harper Ave, St Clair Shores, MI 48082",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "TSAFSRO",
+            "toId": "TWL",
+            "driveMin": 22.129028958656,
+            "distanceMi": 12.908600225882667
+          },
+          "score": 3.307,
+          "tags": [
+            "Antique"
+          ]
+        },
+        {
+          "id": "FCFIA",
+          "name": "Full Circle Foundation, Inc. and Upscale Resale Shop",
+          "type": "store",
+          "arrive": "15:11",
+          "depart": "15:41",
+          "lat": 42.394424448012,
+          "lon": -82.923305647129,
+          "address": "17006 Mack Ave, Grosse Pointe Park, MI 48230",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "TWL",
+            "toId": "FCFIA",
+            "driveMin": 15.771292970891029,
+            "distanceMi": 9.199920899686434
+          },
+          "score": 3.541,
+          "tags": [
+            "Thrift"
+          ]
+        },
+        {
+          "id": "MCAG",
+          "name": "Motor City Antique Gallery",
+          "type": "store",
+          "arrive": "16:32",
+          "depart": "17:02",
+          "lat": 42.073186243077,
+          "lon": -83.309260852639,
+          "address": "13431 Telegraph Rd, Flat Rock, MI 48134",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "FCFIA",
+            "toId": "MCAG",
+            "driveMin": 50.92593473039894,
+            "distanceMi": 29.706795259399385
+          },
+          "score": 3.358,
+          "tags": [
+            "Antique"
+          ]
+        },
+        {
+          "id": "HCGe1",
+          "name": "Hollywood Casino Greektown",
+          "type": "end",
+          "arrive": "17:41",
+          "depart": "17:41",
+          "lat": 42.336873,
+          "lon": -83.0418499,
+          "legIn": {
+            "fromId": "MCAG",
+            "toId": "HCGe1",
+            "driveMin": 39.06373063104534,
+            "distanceMi": 22.787176201443113
+          }
+        }
+      ],
+      "excluded": [
+        {
+          "id": "CAE",
+          "reason": "timeWindow",
+          "nearestAlternateId": "CR"
+        },
+        {
+          "id": "CATTF",
+          "reason": "timeWindow",
+          "nearestAlternateId": "TWL"
+        },
+        {
+          "id": "DFM",
+          "reason": "timeWindow",
+          "nearestAlternateId": "TSAFSWB"
+        },
+        {
+          "id": "FTRS",
+          "reason": "timeWindow",
+          "nearestAlternateId": "TSAFSWB"
+        },
+        {
+          "id": "FV",
+          "reason": "timeWindow",
+          "nearestAlternateId": "FCFIA"
+        },
+        {
+          "id": "GCOHT",
+          "reason": "timeWindow",
+          "nearestAlternateId": "LAFV"
+        },
+        {
+          "id": "MA",
+          "reason": "timeWindow",
+          "nearestAlternateId": "TWL"
+        },
+        {
+          "id": "ODTS",
+          "reason": "timeWindow",
+          "nearestAlternateId": "TSAFSWB"
+        },
+        {
+          "id": "PACM",
+          "reason": "timeWindow",
+          "nearestAlternateId": "GSADL"
+        },
+        {
+          "id": "RIAVA",
+          "reason": "timeWindow",
+          "nearestAlternateId": "GSADL"
+        },
+        {
+          "id": "RR",
+          "reason": "timeWindow",
+          "nearestAlternateId": "LAFV"
+        },
+        {
+          "id": "RWBT",
+          "reason": "timeWindow",
+          "nearestAlternateId": "TWL"
+        },
+        {
+          "id": "SAL",
+          "reason": "timeWindow",
+          "nearestAlternateId": "TSAFSRO"
+        },
+        {
+          "id": "SVDPT",
+          "reason": "timeWindow",
+          "nearestAlternateId": "EUR"
+        },
+        {
+          "id": "TSAFSAH",
+          "reason": "timeWindow",
+          "nearestAlternateId": "TSAFSWB"
+        },
+        {
+          "id": "VA",
+          "reason": "timeWindow",
+          "nearestAlternateId": "GSADL"
+        },
+        {
+          "id": "VEML",
+          "reason": "timeWindow",
+          "nearestAlternateId": "FCFIA"
+        },
+        {
+          "id": "VMDV",
+          "reason": "timeWindow",
+          "nearestAlternateId": "GSADL"
+        },
+        {
+          "id": "VogueVint",
+          "reason": "timeWindow",
+          "nearestAlternateId": "TSAFSRO"
+        },
+        {
+          "id": "VVACV",
+          "reason": "timeWindow",
+          "nearestAlternateId": "GSADL"
+        },
+        {
+          "id": "VWT-Eastpointe",
+          "reason": "timeWindow",
+          "nearestAlternateId": "TWL"
+        },
+        {
+          "id": "VWT-OakPark",
+          "reason": "timeWindow",
+          "nearestAlternateId": "LAFV"
+        },
+        {
+          "id": "VWT-Southfield",
+          "reason": "timeWindow",
+          "nearestAlternateId": "GSADL"
+        },
+        {
+          "id": "VWT-Southgate",
+          "reason": "timeWindow",
+          "nearestAlternateId": "MCAG"
+        },
+        {
+          "id": "VWT-Taylor",
+          "reason": "timeWindow",
+          "nearestAlternateId": "GSADL"
+        },
+        {
+          "id": "VWT-Warren",
+          "reason": "timeWindow",
+          "nearestAlternateId": "TSAFSRO"
+        }
+      ],
+      "metrics": {
+        "storeCount": 28,
+        "storesVisited": 10,
+        "visitedIds": [
+          "TSAFSWB",
+          "EUR",
+          "GSADL",
+          "OFA",
+          "CR",
+          "LAFV",
+          "TSAFSRO",
+          "TWL",
+          "FCFIA",
+          "MCAG"
+        ],
+        "totalScore": 34.306999999999995,
+        "scorePerStore": 3.4306999999999994,
+        "scorePerMin": 0.06586433308804797,
+        "scorePerDriveMin": 0.15532404873774186,
+        "scorePerMile": 0.266269797836129,
+        "totalDriveMin": 220.8737171017601,
+        "totalDwellMin": 300,
+        "slackMin": 19.126282898240106,
+        "totalDistanceMiles": 128.84300164269337,
+        "onTimeRisk": 0
+      }
+    }
+  ]
+}

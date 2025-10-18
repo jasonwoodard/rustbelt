@@ -1,0 +1,922 @@
+{
+  "runInfo": {
+    "runTimestamp": "2025-09-21T05:45:59.884Z",
+    "runId": "CL-v1",
+    "runNote": "Wednesday, Detroit to Cleveland",
+    "days": [
+      {
+        "dayId": "Wed",
+        "stops": [
+          {
+            "id": "HCGs1",
+            "name": "Hollywood Casino Greektown",
+            "type": "start",
+            "arrive": "09:00",
+            "depart": "09:00",
+            "lat": 42.336873,
+            "lon": -83.0418499
+          },
+          {
+            "id": "TVAT",
+            "name": "The Vault Antiques & Treasures",
+            "type": "store",
+            "arrive": "10:30",
+            "depart": "10:60",
+            "lat": 41.692281669916,
+            "lon": -83.582227128609,
+            "address": "1583 W Sylvania Ave, Toledo, OH 43612",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "HCGs1",
+              "toId": "TVAT",
+              "driveMin": 89.94825170837217,
+              "distanceMi": 52.46981349655043
+            },
+            "score": 4.3,
+            "tags": [
+              "must-visit",
+              "Antique"
+            ]
+          },
+          {
+            "id": "TCKA",
+            "name": "The Copper Kettle Antiques",
+            "type": "store",
+            "arrive": "11:10",
+            "depart": "11:40",
+            "lat": 41.611610835276,
+            "lon": -83.625851872076,
+            "address": "1544 S Byrne Rd, Toledo, OH 43614",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "TVAT",
+              "toId": "TCKA",
+              "driveMin": 10.305773501340987,
+              "distanceMi": 6.011701209115576
+            },
+            "score": 4.6,
+            "tags": [
+              "Antique"
+            ]
+          },
+          {
+            "id": "AVM",
+            "name": "Armory vintage Market",
+            "type": "store",
+            "arrive": "12:37",
+            "depart": "13:07",
+            "lat": 41.343487452168,
+            "lon": -83.09905933427,
+            "address": "1005 E State St, Fremont, OH 43420",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "TCKA",
+              "toId": "AVM",
+              "driveMin": 56.51571804185394,
+              "distanceMi": 32.967502191081465
+            },
+            "score": 4.1,
+            "tags": [
+              "must-visit",
+              "Vintage"
+            ]
+          },
+          {
+            "id": "BSS",
+            "name": "Big Ship Salvage",
+            "type": "store",
+            "arrive": "13:49",
+            "depart": "14:19",
+            "lat": 41.327814088911,
+            "lon": -82.620663899344,
+            "address": "11001 US Hwy 250 N unit d-1, Milan, OH 44846",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "AVM",
+              "toId": "BSS",
+              "driveMin": 42.587166261205155,
+              "distanceMi": 24.842513652369675
+            },
+            "score": 5,
+            "tags": [
+              "must-visit",
+              "Nautical"
+            ]
+          },
+          {
+            "id": "VWT-Olmstead",
+            "name": "Value World Thrift",
+            "type": "store",
+            "arrive": "15:25",
+            "depart": "15:55",
+            "lat": 41.42552860898,
+            "lon": -81.897199579145,
+            "address": "24869 Lorain Rd, North Olmsted, OH 44070",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "BSS",
+              "toId": "VWT-Olmstead",
+              "driveMin": 65.33484892360383,
+              "distanceMi": 38.11199520543556
+            },
+            "score": 4.5,
+            "tags": [
+              "Thrift"
+            ]
+          },
+          {
+            "id": "VWT-Lakewood",
+            "name": "Value World Thrift",
+            "type": "store",
+            "arrive": "16:08",
+            "depart": "16:38",
+            "lat": 41.483958040635,
+            "lon": -81.771809570569,
+            "address": "11900 Detroit Ave, Lakewood, OH 44107",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "VWT-Olmstead",
+              "toId": "VWT-Lakewood",
+              "driveMin": 13.107382388380419,
+              "distanceMi": 7.645973059888577
+            },
+            "score": 4.5,
+            "tags": [
+              "Thrift"
+            ]
+          },
+          {
+            "id": "SL",
+            "name": "Sweet Lorain",
+            "type": "store",
+            "arrive": "16:41",
+            "depart": "17:11",
+            "lat": 41.473321308529,
+            "lon": -81.733915357678,
+            "address": "7105 Lorain Ave, Cleveland, OH 44102",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "VWT-Lakewood",
+              "toId": "SL",
+              "driveMin": 3.59103058573689,
+              "distanceMi": 2.0947678416798525
+            },
+            "score": 4.9,
+            "tags": [
+              "must-visit",
+              "Antique"
+            ]
+          },
+          {
+            "id": "PG",
+            "name": "Paradise Galleria",
+            "type": "store",
+            "arrive": "17:13",
+            "depart": "17:43",
+            "lat": 41.480752749907,
+            "lon": -81.712500222034,
+            "address": "3910 Lorain Ave, Cleveland, OH 44113",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "SL",
+              "toId": "PG",
+              "driveMin": 2.094396144766539,
+              "distanceMi": 1.2217310844471476
+            },
+            "score": 4.1,
+            "tags": [
+              "must-visit",
+              "Vintage"
+            ]
+          },
+          {
+            "id": "DPHCDe",
+            "name": "Drury Plaza Hotel Cleveland Downtown",
+            "type": "end",
+            "arrive": "17:47",
+            "depart": "17:47",
+            "lat": 41.50262133812,
+            "lon": -81.691522330395,
+            "legIn": {
+              "fromId": "PG",
+              "toId": "DPHCDe",
+              "driveMin": 3.1896137629583676,
+              "distanceMi": 1.8606080283923812
+            }
+          }
+        ],
+        "excluded": [
+          {
+            "id": "AIC",
+            "reason": "timeWindow",
+            "nearestAlternateId": "AVM"
+          },
+          {
+            "id": "AU",
+            "reason": "timeWindow",
+            "nearestAlternateId": "PG"
+          },
+          {
+            "id": "CWUTS",
+            "reason": "timeWindow",
+            "nearestAlternateId": "TCKA"
+          },
+          {
+            "id": "GCHFH",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VWT-Olmstead"
+          },
+          {
+            "id": "HOD",
+            "reason": "timeWindow",
+            "nearestAlternateId": "TVAT"
+          },
+          {
+            "id": "MAM",
+            "reason": "timeWindow",
+            "nearestAlternateId": "TCKA"
+          },
+          {
+            "id": "MSA",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VWT-Olmstead"
+          },
+          {
+            "id": "MTA",
+            "reason": "timeWindow",
+            "nearestAlternateId": "AVM"
+          },
+          {
+            "id": "NLRS",
+            "reason": "timeWindow",
+            "nearestAlternateId": "TCKA"
+          },
+          {
+            "id": "NTYC",
+            "reason": "timeWindow",
+            "nearestAlternateId": "AVM"
+          },
+          {
+            "id": "NTYRS",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VWT-Olmstead"
+          },
+          {
+            "id": "PAPE",
+            "reason": "timeWindow",
+            "nearestAlternateId": "AVM"
+          },
+          {
+            "id": "STA",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VWT-Olmstead"
+          },
+          {
+            "id": "TES",
+            "reason": "timeWindow",
+            "nearestAlternateId": "BSS"
+          },
+          {
+            "id": "TSYRS",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VWT-Olmstead"
+          },
+          {
+            "id": "V",
+            "reason": "timeWindow",
+            "nearestAlternateId": "TCKA"
+          }
+        ],
+        "metrics": {
+          "storeCount": 21,
+          "storesVisited": 8,
+          "visitedIds": [
+            "TVAT",
+            "TCKA",
+            "AVM",
+            "BSS",
+            "VWT-Olmstead",
+            "VWT-Lakewood",
+            "SL",
+            "PG"
+          ],
+          "totalScore": 36,
+          "scorePerStore": 4.5,
+          "scorePerMin": 0.06835345509038478,
+          "scorePerDriveMin": 0.12557810345689538,
+          "scorePerMile": 0.21527674878324918,
+          "totalDriveMin": 286.6741813182183,
+          "totalDwellMin": 240,
+          "slackMin": 13.325818681781584,
+          "totalDistanceMiles": 167.2266057689607,
+          "onTimeRisk": 0
+        }
+      }
+    ]
+  },
+  "activeDayId": "Wed",
+  "finalStopsState": [
+    {
+      "id": "TVAT",
+      "name": "The Vault Antiques & Treasures",
+      "type": "store",
+      "arrive": "10:30",
+      "depart": "10:60",
+      "score": 4.3,
+      "status": "visited",
+      "mqa": "Average",
+      "mqaValue": 3.5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "posterior": {
+        "alpha": 4.140001,
+        "beta": 0.8600010000000001,
+        "mean": 4.139999344000262,
+        "meanNormalized": 0.8279998688000524,
+        "std": 0.7703247112828879,
+        "variance": 0.5934001608130647,
+        "lower": 3.3696746327173734,
+        "upper": 4.91032405528315,
+        "observationCount": 1,
+        "totalQuality": 3.5,
+        "lastObservation": 3.5,
+        "priorNormalized": 0.86,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "TCKA",
+      "name": "The Copper Kettle Antiques",
+      "type": "store",
+      "arrive": "11:10",
+      "depart": "11:40",
+      "score": 4.6,
+      "status": "visited",
+      "mqa": "Average",
+      "mqaValue": 3.5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "posterior": {
+        "alpha": 4.380001,
+        "beta": 0.6200010000000002,
+        "mean": 4.379999248000301,
+        "meanNormalized": 0.8759998496000602,
+        "std": 0.6727557657770591,
+        "variance": 0.4526003203862772,
+        "lower": 3.707243482223242,
+        "upper": 5,
+        "observationCount": 1,
+        "totalQuality": 3.5,
+        "lastObservation": 3.5,
+        "priorNormalized": 0.9199999999999999,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "AVM",
+      "name": "Armory vintage Market",
+      "type": "store",
+      "arrive": "12:37",
+      "depart": "13:07",
+      "score": 4.1,
+      "status": "visited",
+      "mqa": "Exceptional",
+      "mqaValue": 5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "posterior": {
+        "alpha": 4.280001,
+        "beta": 0.7200010000000002,
+        "mean": 4.279999288000285,
+        "meanNormalized": 0.855999857600057,
+        "std": 0.7166590899814195,
+        "variance": 0.5136002512529962,
+        "lower": 3.5633401980188655,
+        "upper": 4.996658377981705,
+        "observationCount": 1,
+        "totalQuality": 5,
+        "lastObservation": 5,
+        "priorNormalized": 0.82,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "BSS",
+      "name": "Big Ship Salvage",
+      "type": "store",
+      "arrive": "13:49",
+      "depart": "14:19",
+      "score": 5,
+      "status": "visited",
+      "mqa": "Exceptional",
+      "mqaValue": 5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "posterior": {
+        "alpha": 5.000001,
+        "beta": 0.000001,
+        "mean": 4.9999990000003995,
+        "meanNormalized": 0.9999998000000799,
+        "std": 0.0009128705031690319,
+        "variance": 8.333325555560815e-7,
+        "lower": 4.999086129497231,
+        "upper": 5,
+        "observationCount": 1,
+        "totalQuality": 5,
+        "lastObservation": 5,
+        "priorNormalized": 1,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "VWT-Olmstead",
+      "name": "Value World Thrift",
+      "type": "store",
+      "arrive": "15:25",
+      "depart": "15:55",
+      "score": 4.5,
+      "status": "dropped",
+      "mqa": null,
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "manual-drop",
+      "posterior": {
+        "alpha": 3.6000010000000002,
+        "beta": 0.4000009999999999,
+        "mean": 4.4999990000005,
+        "meanNormalized": 0.8999998000001,
+        "std": 0.6708208553698609,
+        "variance": 0.45000061999915186,
+        "lower": 3.8291781446306388,
+        "upper": 5,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.9,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "VWT-Lakewood",
+      "name": "Value World Thrift",
+      "type": "store",
+      "arrive": "16:08",
+      "depart": "16:38",
+      "score": 4.5,
+      "status": "visited",
+      "mqa": "Average",
+      "mqaValue": 3.5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "posterior": {
+        "alpha": 4.300001,
+        "beta": 0.7000009999999999,
+        "mean": 4.2999992800002875,
+        "meanNormalized": 0.8599998560000576,
+        "std": 0.7082844989438191,
+        "variance": 0.5016669314440968,
+        "lower": 3.5917147810564685,
+        "upper": 5,
+        "observationCount": 1,
+        "totalQuality": 3.5,
+        "lastObservation": 3.5,
+        "priorNormalized": 0.9,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "SL",
+      "name": "Sweet Lorain",
+      "type": "store",
+      "arrive": "16:41",
+      "depart": "17:11",
+      "score": 4.9,
+      "status": "visited",
+      "mqa": "Exceptional",
+      "mqaValue": 5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "posterior": {
+        "alpha": 4.920001000000001,
+        "beta": 0.08000099999999963,
+        "mean": 4.919999032000388,
+        "meanNormalized": 0.9839998064000776,
+        "std": 0.2561264511641561,
+        "variance": 0.06560075898594485,
+        "lower": 4.663872580836232,
+        "upper": 5,
+        "observationCount": 1,
+        "totalQuality": 5,
+        "lastObservation": 5,
+        "priorNormalized": 0.9800000000000001,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "PG",
+      "name": "Paradise Galleria",
+      "type": "store",
+      "arrive": "17:13",
+      "depart": "17:43",
+      "score": 4.1,
+      "status": "dropped",
+      "mqa": null,
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "overrun-drop-lowest",
+      "posterior": {
+        "alpha": 3.280001,
+        "beta": 0.7200010000000002,
+        "mean": 4.0999992000004,
+        "meanNormalized": 0.81999984000008,
+        "std": 0.8590693899793715,
+        "variance": 0.7380002167995295,
+        "lower": 3.2409298100210284,
+        "upper": 4.959068589979771,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.82,
+        "pseudo": 4
+      }
+    }
+  ],
+  "tripLog": [
+    {
+      "name": "The Vault Antiques & Treasures",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.692281669916%2C-83.582227128609%20The%20Vault%20Antiques%20%26%20Treasures%201583%20W%20Sylvania%20Ave%2C%20Toledo%2C%20OH%2043612",
+      "mqa": "Average",
+      "mqaValue": 3.5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "diff": 0.14168859022531777,
+      "zScore": 0.17318831427485443,
+      "currentUcb": 4.91032405528315,
+      "remainingUcb": 4.768635465057832,
+      "observationCount": 1,
+      "posterior": {
+        "alpha": 4.140001,
+        "beta": 0.8600010000000001,
+        "mean": 4.139999344000262,
+        "meanNormalized": 0.8279998688000524,
+        "std": 0.7703247112828879,
+        "variance": 0.5934001608130647,
+        "lower": 3.3696746327173734,
+        "upper": 4.91032405528315,
+        "observationCount": 1,
+        "totalQuality": 3.5,
+        "lastObservation": 3.5,
+        "priorNormalized": 0.86,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 26.060001000000003,
+        "beta": 2.9400010000000005,
+        "mean": 4.493103310820461,
+        "meanNormalized": 0.8986206621640923,
+        "std": 0.2755321542373702,
+        "variance": 0.07591796801868597,
+        "lower": 4.217571156583091,
+        "upper": 4.768635465057832,
+        "count": 7,
+        "pseudoAlpha": 25.360000000000003,
+        "pseudoBeta": 2.64,
+        "observationCount": 1,
+        "totalObservedQuality": 3.5
+      },
+      "timestamp": "2025-09-24T22:57:14.738Z"
+    },
+    {
+      "name": "The Copper Kettle Antiques",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.611610835276%2C-83.625851872076%20The%20Copper%20Kettle%20Antiques%201544%20S%20Byrne%20Rd%2C%20Toledo%2C%20OH%2043614",
+      "mqa": "Average",
+      "mqaValue": 3.5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "diff": 0.2577131699425843,
+      "zScore": 0.34911952395180146,
+      "currentUcb": 5,
+      "remainingUcb": 4.742286830057416,
+      "observationCount": 1,
+      "posterior": {
+        "alpha": 4.380001,
+        "beta": 0.6200010000000002,
+        "mean": 4.379999248000301,
+        "meanNormalized": 0.8759998496000602,
+        "std": 0.6727557657770591,
+        "variance": 0.4526003203862772,
+        "lower": 3.707243482223242,
+        "upper": 5,
+        "observationCount": 1,
+        "totalQuality": 3.5,
+        "lastObservation": 3.5,
+        "priorNormalized": 0.9199999999999999,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 23.080001,
+        "beta": 2.920001,
+        "mean": 4.438461389349124,
+        "meanNormalized": 0.8876922778698249,
+        "std": 0.30382544070829176,
+        "variance": 0.09230989842158771,
+        "lower": 4.134635948640832,
+        "upper": 4.742286830057416,
+        "count": 6,
+        "pseudoAlpha": 21.68,
+        "pseudoBeta": 2.32,
+        "observationCount": 2,
+        "totalObservedQuality": 7
+      },
+      "timestamp": "2025-09-24T22:57:19.938Z"
+    },
+    {
+      "name": "Armory vintage Market",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.343487452168%2C-83.09905933427%20Armory%20vintage%20Market%201005%20E%20State%20St%2C%20Fremont%2C%20OH%2043420",
+      "mqa": "Exceptional",
+      "mqaValue": 5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "diff": 0.17474090569292233,
+      "zScore": 0.22489579484561356,
+      "currentUcb": 4.996658377981705,
+      "remainingUcb": 4.821917472288782,
+      "observationCount": 1,
+      "posterior": {
+        "alpha": 4.280001,
+        "beta": 0.7200010000000002,
+        "mean": 4.279999288000285,
+        "meanNormalized": 0.855999857600057,
+        "std": 0.7166590899814195,
+        "variance": 0.5136002512529962,
+        "lower": 3.5633401980188655,
+        "upper": 4.996658377981705,
+        "observationCount": 1,
+        "totalQuality": 5,
+        "lastObservation": 5,
+        "priorNormalized": 0.82,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 20.800000999999998,
+        "beta": 2.2000009999999994,
+        "mean": 4.521738954631395,
+        "meanNormalized": 0.904347790926279,
+        "std": 0.3001785176573869,
+        "variance": 0.09010714246298614,
+        "lower": 4.221560436974008,
+        "upper": 4.821917472288782,
+        "count": 5,
+        "pseudoAlpha": 18.4,
+        "pseudoBeta": 1.5999999999999996,
+        "observationCount": 3,
+        "totalObservedQuality": 12
+      },
+      "timestamp": "2025-09-24T22:57:27.610Z"
+    },
+    {
+      "name": "Big Ship Salvage",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.327814088911%2C-82.620663899344%20Big%20Ship%20Salvage%2011001%20US%20Hwy%20250%20N%20unit%20d-1%2C%20Milan%2C%20OH%2044846",
+      "mqa": "Exceptional",
+      "mqaValue": 5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "diff": 0.208609445034309,
+      "zScore": 0.6110555112152114,
+      "currentUcb": 5,
+      "remainingUcb": 4.791390554965691,
+      "observationCount": 1,
+      "posterior": {
+        "alpha": 5.000001,
+        "beta": 0.000001,
+        "mean": 4.9999990000003995,
+        "meanNormalized": 0.9999998000000799,
+        "std": 0.0009128705031690319,
+        "variance": 8.333325555560815e-7,
+        "lower": 4.999086129497231,
+        "upper": 5,
+        "observationCount": 1,
+        "totalQuality": 5,
+        "lastObservation": 5,
+        "priorNormalized": 1,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 17.800000999999998,
+        "beta": 2.2000009999999994,
+        "mean": 4.44999980500002,
+        "meanNormalized": 0.8899999610000039,
+        "std": 0.34139074996567154,
+        "variance": 0.11654764416212365,
+        "lower": 4.108609055034348,
+        "upper": 4.791390554965691,
+        "count": 4,
+        "pseudoAlpha": 14.4,
+        "pseudoBeta": 1.5999999999999996,
+        "observationCount": 4,
+        "totalObservedQuality": 17
+      },
+      "timestamp": "2025-09-24T22:58:07.521Z"
+    },
+    {
+      "name": "Value World Thrift",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.42552860898%2C-81.897199579145%20Value%20World%20Thrift%2024869%20Lorain%20Rd%2C%20North%20Olmsted%2C%20OH%2044070",
+      "mqa": "N/A",
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "manual-drop",
+      "diff": null,
+      "zScore": null,
+      "currentUcb": null,
+      "remainingUcb": null,
+      "observationCount": null,
+      "posterior": {
+        "alpha": 3.6000010000000002,
+        "beta": 0.4000009999999999,
+        "mean": 4.4999990000005,
+        "meanNormalized": 0.8999998000001,
+        "std": 0.6708208553698609,
+        "variance": 0.45000061999915186,
+        "lower": 3.8291781446306388,
+        "upper": 5,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.9,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 14.200001,
+        "beta": 1.8000009999999997,
+        "mean": 4.437499757812531,
+        "meanNormalized": 0.8874999515625062,
+        "std": 0.3831828310978074,
+        "variance": 0.14682908204813078,
+        "lower": 4.054316926714724,
+        "upper": 4.820682588910338,
+        "count": 3,
+        "pseudoAlpha": 10.8,
+        "pseudoBeta": 1.1999999999999997,
+        "observationCount": 4,
+        "totalObservedQuality": 17
+      },
+      "timestamp": "2025-09-24T22:58:21.312Z"
+    },
+    {
+      "name": "Value World Thrift",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.483958040635%2C-81.771809570569%20Value%20World%20Thrift%2011900%20Detroit%20Ave%2C%20Lakewood%2C%20OH%2044107",
+      "mqa": "Average",
+      "mqaValue": 3.5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "diff": 0.20331368822186224,
+      "zScore": 0.24220377660750417,
+      "currentUcb": 5,
+      "remainingUcb": 4.796686311778138,
+      "observationCount": 1,
+      "posterior": {
+        "alpha": 4.300001,
+        "beta": 0.7000009999999999,
+        "mean": 4.2999992800002875,
+        "meanNormalized": 0.8599998560000576,
+        "std": 0.7082844989438191,
+        "variance": 0.5016669314440968,
+        "lower": 3.5917147810564685,
+        "upper": 5,
+        "observationCount": 1,
+        "totalQuality": 3.5,
+        "lastObservation": 3.5,
+        "priorNormalized": 0.9,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 11.300001,
+        "beta": 1.7000009999999999,
+        "mean": 4.346153562130221,
+        "meanNormalized": 0.8692307124260442,
+        "std": 0.450532749647917,
+        "variance": 0.20297975850531266,
+        "lower": 3.8956208124823037,
+        "upper": 4.796686311778138,
+        "count": 2,
+        "pseudoAlpha": 7.2,
+        "pseudoBeta": 0.7999999999999998,
+        "observationCount": 5,
+        "totalObservedQuality": 20.5
+      },
+      "timestamp": "2025-09-24T22:58:32.676Z"
+    },
+    {
+      "name": "Sweet Lorain",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.473321308529%2C-81.733915357678%20Sweet%20Lorain%207105%20Lorain%20Ave%2C%20Cleveland%2C%20OH%2044102",
+      "mqa": "Exceptional",
+      "mqaValue": 5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "diff": 0.2545397980900441,
+      "zScore": 0.41614077017699735,
+      "currentUcb": 5,
+      "remainingUcb": 4.745460201909956,
+      "observationCount": 1,
+      "posterior": {
+        "alpha": 4.920001000000001,
+        "beta": 0.08000099999999963,
+        "mean": 4.919999032000388,
+        "meanNormalized": 0.9839998064000776,
+        "std": 0.2561264511641561,
+        "variance": 0.06560075898594485,
+        "lower": 4.663872580836232,
+        "upper": 5,
+        "observationCount": 1,
+        "totalQuality": 5,
+        "lastObservation": 5,
+        "priorNormalized": 0.9800000000000001,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 8.380001,
+        "beta": 1.6200010000000002,
+        "mean": 4.1899996620000675,
+        "meanNormalized": 0.8379999324000135,
+        "std": 0.5554605399098886,
+        "variance": 0.308536411396985,
+        "lower": 3.634539122090179,
+        "upper": 4.745460201909956,
+        "count": 1,
+        "pseudoAlpha": 3.28,
+        "pseudoBeta": 0.7200000000000002,
+        "observationCount": 6,
+        "totalObservedQuality": 25.5
+      },
+      "timestamp": "2025-09-24T22:58:35.580Z"
+    },
+    {
+      "name": "Paradise Galleria",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=41.480752749907%2C-81.712500222034%20Paradise%20Galleria%203910%20Lorain%20Ave%2C%20Cleveland%2C%20OH%2044113",
+      "mqa": "N/A",
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "overrun-drop-lowest",
+      "diff": null,
+      "zScore": null,
+      "currentUcb": null,
+      "remainingUcb": null,
+      "observationCount": null,
+      "posterior": {
+        "alpha": 3.280001,
+        "beta": 0.7200010000000002,
+        "mean": 4.0999992000004,
+        "meanNormalized": 0.81999984000008,
+        "std": 0.8590693899793715,
+        "variance": 0.7380002167995295,
+        "lower": 3.2409298100210284,
+        "upper": 4.959068589979771,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.82,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 5.100001,
+        "beta": 0.9000010000000002,
+        "mean": 4.249999416666861,
+        "meanNormalized": 0.8499998833333722,
+        "std": 0.6748016778443698,
+        "variance": 0.4553573044215767,
+        "lower": 3.575197738822491,
+        "upper": 4.92480109451123,
+        "count": 0,
+        "pseudoAlpha": 0,
+        "pseudoBeta": 0,
+        "observationCount": 6,
+        "totalObservedQuality": 25.5
+      },
+      "timestamp": "2025-09-24T22:58:40.826Z"
+    }
+  ],
+  "posteriorPool": {
+    "alpha": 5.100001,
+    "beta": 0.9000010000000002,
+    "mean": 4.249999416666861,
+    "meanNormalized": 0.8499998833333722,
+    "std": 0.6748016778443698,
+    "variance": 0.4553573044215767,
+    "lower": 3.575197738822491,
+    "upper": 4.92480109451123,
+    "count": 0,
+    "pseudoAlpha": 0,
+    "pseudoBeta": 0,
+    "observationCount": 6,
+    "totalObservedQuality": 25.5,
+    "observedAlpha": 5.1,
+    "observedBeta": 0.9000000000000001
+  },
+  "posteriorConfig": {
+    "priorStrength": 4,
+    "baseAlpha": 0.000001,
+    "baseBeta": 0.000001,
+    "credibleZ": 1,
+    "defaultScore": 3.5
+  }
+}

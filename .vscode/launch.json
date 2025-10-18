@@ -31,13 +31,13 @@
     },
     {
       // Run the day solver with args (breakpoints work in TS)
-      "name": "Detroit: SolveDay (tsx)",
+      "name": "Detroit PT: SolveDay (tsx)",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/tsx",
       "program": "${workspaceFolder}/src/index.ts",
       "args": [
-        "--trip", "${workspaceFolder}/data/day-Tue-DT-v2-2025-09-16-T0031.json",
+        "--trip", "${workspaceFolder}/data/day-Tue-DT-v2PT-2025-09-16-T0031.json",
         "--day", "Tue",
         "--lambda", "0.10",
         "--seed", "7",
