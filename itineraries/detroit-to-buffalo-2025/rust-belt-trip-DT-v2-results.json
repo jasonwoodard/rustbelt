@@ -1,0 +1,1333 @@
+{
+  "runInfo": {
+    "runTimestamp": "2025-09-21T05:45:54.467Z",
+    "runId": "DT-v2",
+    "runNote": "Tuesday, Detroit Core (pull ALL must visit)",
+    "days": [
+      {
+        "dayId": "Tue",
+        "stops": [
+          {
+            "id": "HCGs1",
+            "name": "Hollywood Casino Greektown",
+            "type": "start",
+            "arrive": "09:00",
+            "depart": "09:00",
+            "lat": 42.336873,
+            "lon": -83.0418499
+          },
+          {
+            "id": "RWBT",
+            "name": "Red White & Blue Thrift Store",
+            "type": "store",
+            "arrive": "09:31",
+            "depart": "10:01",
+            "lat": 42.572945446062,
+            "lon": -82.890151473912,
+            "address": "37545 Southbound Gratiot Ave, Clinton Township, MI 48036",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "HCGs1",
+              "toId": "RWBT",
+              "driveMin": 30.945564534961786,
+              "distanceMi": 18.051579312061044
+            },
+            "score": 4,
+            "tags": [
+              "Thrift"
+            ]
+          },
+          {
+            "id": "TWL",
+            "name": "Time Warp LLC",
+            "type": "store",
+            "arrive": "10:07",
+            "depart": "10:37",
+            "lat": 42.526049813184,
+            "lon": -82.896065923419,
+            "address": "31336 Harper Ave, St Clair Shores, MI 48082",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "RWBT",
+              "toId": "TWL",
+              "driveMin": 5.578571691126345,
+              "distanceMi": 3.254166819823701
+            },
+            "score": 4,
+            "tags": [
+              "Antique"
+            ]
+          },
+          {
+            "id": "VWT-Eastpointe",
+            "name": "Value World Thrift",
+            "type": "store",
+            "arrive": "10:43",
+            "depart": "11:13",
+            "lat": 42.478985165724,
+            "lon": -82.926959459334,
+            "address": "24900 Kelly Rd, Eastpointe, MI 48021",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "TWL",
+              "toId": "VWT-Eastpointe",
+              "driveMin": 6.193131961147832,
+              "distanceMi": 3.6126603106695683
+            },
+            "score": 4.5,
+            "tags": [
+              "Thrift"
+            ]
+          },
+          {
+            "id": "VWT-Warren",
+            "name": "Value World Thrift",
+            "type": "store",
+            "arrive": "11:27",
+            "depart": "11:57",
+            "lat": 42.490817636058,
+            "lon": -83.083943979949,
+            "address": "2001 E 11 Mile Rd, Warren, MI 48092",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "VWT-Eastpointe",
+              "toId": "VWT-Warren",
+              "driveMin": 13.783936524793697,
+              "distanceMi": 8.04062963946299
+            },
+            "score": 4.1,
+            "tags": [
+              "Thrift"
+            ]
+          },
+          {
+            "id": "VogueVint",
+            "name": "Vogue Vintage",
+            "type": "store",
+            "arrive": "12:01",
+            "depart": "12:31",
+            "lat": 42.465465383937,
+            "lon": -83.12332615312,
+            "address": "2141 Hilton Rd, Ferndale, MI 48220",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "VWT-Warren",
+              "toId": "VogueVint",
+              "driveMin": 4.566576039401998,
+              "distanceMi": 2.6638360229844986
+            },
+            "score": 4,
+            "tags": [
+              "Thrift"
+            ]
+          },
+          {
+            "id": "VWT-OakPark",
+            "name": "Value World Thrift",
+            "type": "store",
+            "arrive": "12:36",
+            "depart": "13:06",
+            "lat": 42.457659382447,
+            "lon": -83.181801001668,
+            "address": "22130 Coolidge Hwy, Oak Park, MI 48237",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "VogueVint",
+              "toId": "VWT-OakPark",
+              "driveMin": 5.192626958830507,
+              "distanceMi": 3.0290323926511293
+            },
+            "score": 4,
+            "tags": [
+              "Thrift"
+            ]
+          },
+          {
+            "id": "VWT-Southfield",
+            "name": "Value World Thrift",
+            "type": "store",
+            "arrive": "13:16",
+            "depart": "13:46",
+            "lat": 42.442742196635,
+            "lon": -83.295836478484,
+            "address": "25646 Eight Mile W, Southfield, MI 48033",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "VWT-OakPark",
+              "toId": "VWT-Southfield",
+              "driveMin": 10.121861259193796,
+              "distanceMi": 5.9044190678630475
+            },
+            "score": 4.5,
+            "tags": [
+              "Thrift"
+            ]
+          },
+          {
+            "id": "VMDV",
+            "name": "V-Male Detroit Vintage",
+            "type": "store",
+            "arrive": "14:07",
+            "depart": "14:37",
+            "lat": 42.269215142856,
+            "lon": -83.268896777462,
+            "address": "23902 Van Born Rd, Dearborn Heights, MI 48125",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "VWT-Southfield",
+              "toId": "VMDV",
+              "driveMin": 20.688579875204223,
+              "distanceMi": 12.068338260535796
+            },
+            "score": 4.1,
+            "tags": [
+              "Vintage"
+            ]
+          },
+          {
+            "id": "VWT-Taylor",
+            "name": "Value World Thrift",
+            "type": "store",
+            "arrive": "14:39",
+            "depart": "15:09",
+            "lat": 42.255786246719,
+            "lon": -83.256431414123,
+            "address": "22615 Ecorse Rd, Taylor, MI 48180",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "VMDV",
+              "toId": "VWT-Taylor",
+              "driveMin": 1.9297802408419824,
+              "distanceMi": 1.1257051404911564
+            },
+            "score": 3.9,
+            "tags": [
+              "Thrift"
+            ]
+          },
+          {
+            "id": "MCAG",
+            "name": "Motor City Antique Gallery",
+            "type": "store",
+            "arrive": "15:31",
+            "depart": "16:01",
+            "lat": 42.073186243077,
+            "lon": -83.309260852639,
+            "address": "13431 Telegraph Rd, Flat Rock, MI 48134",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "VWT-Taylor",
+              "toId": "MCAG",
+              "driveMin": 22.12016001343562,
+              "distanceMi": 12.903426674504113
+            },
+            "score": 4,
+            "tags": [
+              "Antique"
+            ]
+          },
+          {
+            "id": "VWT-Southgate",
+            "name": "Value World Thrift",
+            "type": "store",
+            "arrive": "16:21",
+            "depart": "16:51",
+            "lat": 42.219891152932,
+            "lon": -83.193964111776,
+            "address": "12125 Dix Toledo Rd, Southgate, MI 48195",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "MCAG",
+              "toId": "VWT-Southgate",
+              "driveMin": 20.11156770858995,
+              "distanceMi": 11.731747830010804
+            },
+            "score": 3.8,
+            "tags": [
+              "Thrift"
+            ]
+          },
+          {
+            "id": "FV",
+            "name": "Flamingo Vintage",
+            "type": "store",
+            "arrive": "17:05",
+            "depart": "17:35",
+            "lat": 42.318117771122,
+            "lon": -83.100947517187,
+            "address": "5449 Vernor W, Detroit, MI 48209",
+            "dwellMin": 30,
+            "legIn": {
+              "fromId": "VWT-Southgate",
+              "toId": "FV",
+              "driveMin": 14.20687124632982,
+              "distanceMi": 8.287341560359062
+            },
+            "score": 3.8,
+            "tags": [
+              "Vintage"
+            ]
+          },
+          {
+            "id": "HCGe1",
+            "name": "Hollywood Casino Greektown",
+            "type": "end",
+            "arrive": "17:41",
+            "depart": "17:41",
+            "lat": 42.336873,
+            "lon": -83.0418499,
+            "legIn": {
+              "fromId": "FV",
+              "toId": "HCGe1",
+              "driveMin": 5.631768988378376,
+              "distanceMi": 3.2851985765540523
+            }
+          }
+        ],
+        "excluded": [
+          {
+            "id": "CAE",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VWT-Warren"
+          },
+          {
+            "id": "CATTF",
+            "reason": "timeWindow",
+            "nearestAlternateId": "RWBT"
+          },
+          {
+            "id": "CR",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VWT-OakPark"
+          },
+          {
+            "id": "DFM",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VWT-Southfield"
+          },
+          {
+            "id": "EUR",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VWT-Southfield"
+          },
+          {
+            "id": "FCFIA",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VWT-Eastpointe"
+          },
+          {
+            "id": "FTRS",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VWT-Southfield"
+          },
+          {
+            "id": "GCOHT",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VWT-OakPark"
+          },
+          {
+            "id": "GSADL",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VWT-Southfield"
+          },
+          {
+            "id": "LAFV",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VogueVint"
+          },
+          {
+            "id": "MA",
+            "reason": "timeWindow",
+            "nearestAlternateId": "RWBT"
+          },
+          {
+            "id": "ODTS",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VWT-Southfield"
+          },
+          {
+            "id": "OFA",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VWT-OakPark"
+          },
+          {
+            "id": "PACM",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VWT-Southgate"
+          },
+          {
+            "id": "RIAVA",
+            "reason": "timeWindow",
+            "nearestAlternateId": "FV"
+          },
+          {
+            "id": "RR",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VogueVint"
+          },
+          {
+            "id": "SAL",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VWT-Warren"
+          },
+          {
+            "id": "SVDPT",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VWT-Southfield"
+          },
+          {
+            "id": "TSAFSAH",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VWT-OakPark"
+          },
+          {
+            "id": "TSAFSRO",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VogueVint"
+          },
+          {
+            "id": "TSAFSWB",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VWT-Southfield"
+          },
+          {
+            "id": "VA",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VMDV"
+          },
+          {
+            "id": "VEML",
+            "reason": "timeWindow",
+            "nearestAlternateId": "FV"
+          },
+          {
+            "id": "VVACV",
+            "reason": "timeWindow",
+            "nearestAlternateId": "VWT-Southfield"
+          }
+        ],
+        "metrics": {
+          "storeCount": 28,
+          "storesVisited": 12,
+          "visitedIds": [
+            "RWBT",
+            "TWL",
+            "VWT-Eastpointe",
+            "VWT-Warren",
+            "VogueVint",
+            "VWT-OakPark",
+            "VWT-Southfield",
+            "VMDV",
+            "VWT-Taylor",
+            "MCAG",
+            "VWT-Southgate",
+            "FV"
+          ],
+          "totalScore": 48.699999999999996,
+          "scorePerStore": 4.058333333333333,
+          "scorePerMin": 0.09346135224650119,
+          "scorePerDriveMin": 0.30235114262830265,
+          "scorePerMile": 0.5183162445056617,
+          "totalDriveMin": 161.07099704223594,
+          "totalDwellMin": 360,
+          "slackMin": 18.92900295776394,
+          "totalDistanceMiles": 93.95808160797097,
+          "onTimeRisk": 0
+        }
+      }
+    ]
+  },
+  "activeDayId": "Tue",
+  "finalStopsState": [
+    {
+      "id": "RWBT",
+      "name": "Red White & Blue Thrift Store",
+      "type": "store",
+      "arrive": "09:31",
+      "depart": "10:01",
+      "score": 4,
+      "status": "visited",
+      "mqa": "Exceptional",
+      "mqaValue": 5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "posterior": {
+        "alpha": 4.200001,
+        "beta": 0.8000009999999999,
+        "mean": 4.1999993200002725,
+        "meanNormalized": 0.8399998640000544,
+        "std": 0.748331610094328,
+        "variance": 0.5600001986663694,
+        "lower": 3.4516677099059443,
+        "upper": 4.948330930094601,
+        "observationCount": 1,
+        "totalQuality": 5,
+        "lastObservation": 5,
+        "priorNormalized": 0.8,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "TWL",
+      "name": "Time Warp LLC",
+      "type": "store",
+      "arrive": "10:07",
+      "depart": "10:37",
+      "score": 4,
+      "status": "visited",
+      "mqa": "Exceptional",
+      "mqaValue": 5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "posterior": {
+        "alpha": 4.200001,
+        "beta": 0.8000009999999999,
+        "mean": 4.1999993200002725,
+        "meanNormalized": 0.8399998640000544,
+        "std": 0.748331610094328,
+        "variance": 0.5600001986663694,
+        "lower": 3.4516677099059443,
+        "upper": 4.948330930094601,
+        "observationCount": 1,
+        "totalQuality": 5,
+        "lastObservation": 5,
+        "priorNormalized": 0.8,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "VWT-Eastpointe",
+      "name": "Value World Thrift",
+      "type": "store",
+      "arrive": "10:43",
+      "depart": "11:13",
+      "score": 4.5,
+      "status": "visited",
+      "mqa": "Good",
+      "mqaValue": 4.2,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "posterior": {
+        "alpha": 4.4400010000000005,
+        "beta": 0.5600009999999997,
+        "mean": 4.43999922400031,
+        "meanNormalized": 0.8879998448000621,
+        "std": 0.6437393600515486,
+        "variance": 0.4144003636795774,
+        "lower": 3.7962598639487615,
+        "upper": 5,
+        "observationCount": 1,
+        "totalQuality": 4.2,
+        "lastObservation": 4.2,
+        "priorNormalized": 0.9,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "VWT-Warren",
+      "name": "Value World Thrift",
+      "type": "store",
+      "arrive": "11:27",
+      "depart": "11:57",
+      "score": 4.1,
+      "status": "visited",
+      "mqa": "Average",
+      "mqaValue": 3.5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "posterior": {
+        "alpha": 3.9800009999999997,
+        "beta": 1.0200010000000002,
+        "mean": 3.979999408000236,
+        "meanNormalized": 0.7959998816000472,
+        "std": 0.8225570293419191,
+        "variance": 0.6766000665198028,
+        "lower": 3.157442378658317,
+        "upper": 4.802556437342155,
+        "observationCount": 1,
+        "totalQuality": 3.5,
+        "lastObservation": 3.5,
+        "priorNormalized": 0.82,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "VogueVint",
+      "name": "Vogue Vintage",
+      "type": "store",
+      "arrive": "12:01",
+      "depart": "12:31",
+      "score": 4,
+      "status": "dropped",
+      "mqa": null,
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "manual-drop",
+      "posterior": {
+        "alpha": 3.2000010000000003,
+        "beta": 0.8000009999999999,
+        "mean": 3.999999250000375,
+        "meanNormalized": 0.799999850000075,
+        "std": 0.8944272636719043,
+        "variance": 0.8000001299996102,
+        "lower": 3.1055719863284708,
+        "upper": 4.894426513672279,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.8,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "VWT-OakPark",
+      "name": "Value World Thrift",
+      "type": "store",
+      "arrive": "12:36",
+      "depart": "13:06",
+      "score": 4,
+      "status": "dropped",
+      "mqa": null,
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "manual-drop",
+      "posterior": {
+        "alpha": 3.2000010000000003,
+        "beta": 0.8000009999999999,
+        "mean": 3.999999250000375,
+        "meanNormalized": 0.799999850000075,
+        "std": 0.8944272636719043,
+        "variance": 0.8000001299996102,
+        "lower": 3.1055719863284708,
+        "upper": 4.894426513672279,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.8,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "VWT-Southfield",
+      "name": "Value World Thrift",
+      "type": "store",
+      "arrive": "13:16",
+      "depart": "13:46",
+      "score": 4.5,
+      "status": "dropped",
+      "mqa": null,
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "manual-drop",
+      "posterior": {
+        "alpha": 3.6000010000000002,
+        "beta": 0.4000009999999999,
+        "mean": 4.4999990000005,
+        "meanNormalized": 0.8999998000001,
+        "std": 0.6708208553698609,
+        "variance": 0.45000061999915186,
+        "lower": 3.8291781446306388,
+        "upper": 5,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.9,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "VMDV",
+      "name": "V-Male Detroit Vintage",
+      "type": "store",
+      "arrive": "14:07",
+      "depart": "14:37",
+      "score": 4.1,
+      "status": "dropped",
+      "mqa": null,
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "manual-drop",
+      "posterior": {
+        "alpha": 3.280001,
+        "beta": 0.7200010000000002,
+        "mean": 4.0999992000004,
+        "meanNormalized": 0.81999984000008,
+        "std": 0.8590693899793715,
+        "variance": 0.7380002167995295,
+        "lower": 3.2409298100210284,
+        "upper": 4.959068589979771,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.82,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "VWT-Taylor",
+      "name": "Value World Thrift",
+      "type": "store",
+      "arrive": "14:39",
+      "depart": "15:09",
+      "score": 3.9,
+      "status": "dropped",
+      "mqa": null,
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "manual-drop",
+      "posterior": {
+        "alpha": 3.1200010000000002,
+        "beta": 0.8800009999999999,
+        "mean": 3.89999930000035,
+        "meanNormalized": 0.77999986000007,
+        "std": 0.9262829204944277,
+        "variance": 0.8580000487996863,
+        "lower": 2.9737163795059223,
+        "upper": 4.826282220494778,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.78,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "MCAG",
+      "name": "Motor City Antique Gallery",
+      "type": "store",
+      "arrive": "15:31",
+      "depart": "16:01",
+      "score": 4,
+      "status": "dropped",
+      "mqa": null,
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "manual-drop",
+      "posterior": {
+        "alpha": 3.2000010000000003,
+        "beta": 0.8000009999999999,
+        "mean": 3.999999250000375,
+        "meanNormalized": 0.799999850000075,
+        "std": 0.8944272636719043,
+        "variance": 0.8000001299996102,
+        "lower": 3.1055719863284708,
+        "upper": 4.894426513672279,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.8,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "VWT-Southgate",
+      "name": "Value World Thrift",
+      "type": "store",
+      "arrive": "16:21",
+      "depart": "16:51",
+      "score": 3.8,
+      "status": "dropped",
+      "mqa": null,
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "overrun-drop-lowest",
+      "posterior": {
+        "alpha": 3.040001,
+        "beta": 0.960001,
+        "mean": 3.799999350000325,
+        "meanNormalized": 0.759999870000065,
+        "std": 0.9549868968733326,
+        "variance": 0.9119999731997572,
+        "lower": 2.8450124531269925,
+        "upper": 4.754986246873657,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.76,
+        "pseudo": 4
+      }
+    },
+    {
+      "id": "FV",
+      "name": "Flamingo Vintage",
+      "type": "store",
+      "arrive": "17:05",
+      "depart": "17:35",
+      "score": 3.8,
+      "status": "dropped",
+      "mqa": null,
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "manual-drop",
+      "posterior": {
+        "alpha": 3.040001,
+        "beta": 0.960001,
+        "mean": 3.799999350000325,
+        "meanNormalized": 0.759999870000065,
+        "std": 0.9549868968733326,
+        "variance": 0.9119999731997572,
+        "lower": 2.8450124531269925,
+        "upper": 4.754986246873657,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.76,
+        "pseudo": 4
+      }
+    }
+  ],
+  "tripLog": [
+    {
+      "name": "Red White & Blue Thrift Store",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=42.572945446062%2C-82.890151473912%20Red%20White%20%26%20Blue%20Thrift%20Store%2037545%20Southbound%20Gratiot%20Ave%2C%20Clinton%20Township%2C%20MI%2048036",
+      "mqa": "Exceptional",
+      "mqaValue": 5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "diff": 0.578765076885996,
+      "zScore": 0.7227258268788596,
+      "currentUcb": 4.948330930094601,
+      "remainingUcb": 4.369565853208605,
+      "observationCount": 1,
+      "posterior": {
+        "alpha": 4.200001,
+        "beta": 0.8000009999999999,
+        "mean": 4.1999993200002725,
+        "meanNormalized": 0.8399998640000544,
+        "std": 0.748331610094328,
+        "variance": 0.5600001986663694,
+        "lower": 3.4516677099059443,
+        "upper": 4.948330930094601,
+        "observationCount": 1,
+        "totalQuality": 5,
+        "lastObservation": 5,
+        "priorNormalized": 0.8,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 36.760001,
+        "beta": 8.240000999999998,
+        "mean": 4.084444374024694,
+        "meanNormalized": 0.8168888748049389,
+        "std": 0.2851214791839107,
+        "variance": 0.08129425789202122,
+        "lower": 3.799322894840784,
+        "upper": 4.369565853208605,
+        "count": 11,
+        "pseudoAlpha": 35.760000000000005,
+        "pseudoBeta": 8.239999999999998,
+        "observationCount": 1,
+        "totalObservedQuality": 5
+      },
+      "timestamp": "2025-09-28T23:30:44.150Z"
+    },
+    {
+      "name": "Value World Thrift",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=42.219891152932%2C-83.193964111776%20Value%20World%20Thrift%2012125%20Dix%20Toledo%20Rd%2C%20Southgate%2C%20MI%2048195",
+      "mqa": "N/A",
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "overrun-drop-lowest",
+      "diff": null,
+      "zScore": null,
+      "currentUcb": null,
+      "remainingUcb": null,
+      "observationCount": null,
+      "posterior": {
+        "alpha": 3.040001,
+        "beta": 0.960001,
+        "mean": 3.799999350000325,
+        "meanNormalized": 0.759999870000065,
+        "std": 0.9549868968733326,
+        "variance": 0.9119999731997572,
+        "lower": 2.8450124531269925,
+        "upper": 4.754986246873657,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.76,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 33.720001,
+        "beta": 7.2800009999999995,
+        "mean": 4.112195043307559,
+        "meanNormalized": 0.8224390086615118,
+        "std": 0.2948295297805333,
+        "variance": 0.08692445163061037,
+        "lower": 3.817365513527026,
+        "upper": 4.407024573088092,
+        "count": 10,
+        "pseudoAlpha": 32.720000000000006,
+        "pseudoBeta": 7.279999999999999,
+        "observationCount": 1,
+        "totalObservedQuality": 5
+      },
+      "timestamp": "2025-09-28T23:30:47.266Z"
+    },
+    {
+      "name": "Time Warp LLC",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=42.526049813184%2C-82.896065923419%20Time%20Warp%20LLC%2031336%20Harper%20Ave%2C%20St%20Clair%20Shores%2C%20MI%2048082",
+      "mqa": "Exceptional",
+      "mqaValue": 5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "diff": 0.4998459819245795,
+      "zScore": 0.6196626811251937,
+      "currentUcb": 4.948330930094601,
+      "remainingUcb": 4.448484948170021,
+      "observationCount": 1,
+      "posterior": {
+        "alpha": 4.200001,
+        "beta": 0.8000009999999999,
+        "mean": 4.1999993200002725,
+        "meanNormalized": 0.8399998640000544,
+        "std": 0.748331610094328,
+        "variance": 0.5600001986663694,
+        "lower": 3.4516677099059443,
+        "upper": 4.948330930094601,
+        "observationCount": 1,
+        "totalQuality": 5,
+        "lastObservation": 5,
+        "priorNormalized": 0.8,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 31.520001000000004,
+        "beta": 6.480001,
+        "mean": 4.147368334349036,
+        "meanNormalized": 0.8294736668698071,
+        "std": 0.301116613820986,
+        "variance": 0.09067121511901681,
+        "lower": 3.8462517205280498,
+        "upper": 4.448484948170021,
+        "count": 9,
+        "pseudoAlpha": 29.520000000000003,
+        "pseudoBeta": 6.4799999999999995,
+        "observationCount": 2,
+        "totalObservedQuality": 10
+      },
+      "timestamp": "2025-09-28T23:30:59.134Z"
+    },
+    {
+      "name": "Flamingo Vintage",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=42.318117771122%2C-83.100947517187%20Flamingo%20Vintage%205449%20Vernor%20W%2C%20Detroit%2C%20MI%2048209",
+      "mqa": "N/A",
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "manual-drop",
+      "diff": null,
+      "zScore": null,
+      "currentUcb": null,
+      "remainingUcb": null,
+      "observationCount": null,
+      "posterior": {
+        "alpha": 3.040001,
+        "beta": 0.960001,
+        "mean": 3.799999350000325,
+        "meanNormalized": 0.759999870000065,
+        "std": 0.9549868968733326,
+        "variance": 0.9119999731997572,
+        "lower": 2.8450124531269925,
+        "upper": 4.754986246873657,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.76,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 28.480001000000005,
+        "beta": 5.520001,
+        "mean": 4.188235194809694,
+        "meanNormalized": 0.8376470389619389,
+        "std": 0.31167115145514046,
+        "variance": 0.09713890664937311,
+        "lower": 3.876564043354554,
+        "upper": 4.499906346264835,
+        "count": 8,
+        "pseudoAlpha": 26.480000000000004,
+        "pseudoBeta": 5.52,
+        "observationCount": 2,
+        "totalObservedQuality": 10
+      },
+      "timestamp": "2025-09-28T23:31:05.618Z"
+    },
+    {
+      "name": "Value World Thrift",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=42.478985165724%2C-82.926959459334%20Value%20World%20Thrift%2024900%20Kelly%20Rd%2C%20Eastpointe%2C%20MI%2048021",
+      "mqa": "Good",
+      "mqaValue": 4.2,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "diff": 0.5193471094181223,
+      "zScore": 0.7169029955761781,
+      "currentUcb": 5,
+      "remainingUcb": 4.480652890581878,
+      "observationCount": 1,
+      "posterior": {
+        "alpha": 4.4400010000000005,
+        "beta": 0.5600009999999997,
+        "mean": 4.43999922400031,
+        "meanNormalized": 0.8879998448000621,
+        "std": 0.6437393600515486,
+        "variance": 0.4144003636795774,
+        "lower": 3.7962598639487615,
+        "upper": 5,
+        "observationCount": 1,
+        "totalQuality": 4.2,
+        "lastObservation": 4.2,
+        "priorNormalized": 0.9,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 25.720001,
+        "beta": 5.280001,
+        "mean": 4.148386990426646,
+        "meanNormalized": 0.8296773980853291,
+        "std": 0.3322659001552319,
+        "variance": 0.11040062840596652,
+        "lower": 3.816121090271414,
+        "upper": 4.480652890581878,
+        "count": 7,
+        "pseudoAlpha": 22.88,
+        "pseudoBeta": 5.12,
+        "observationCount": 3,
+        "totalObservedQuality": 14.2
+      },
+      "timestamp": "2025-09-28T23:31:51.263Z"
+    },
+    {
+      "name": "Value World Thrift",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=42.490817636058%2C-83.083943979949%20Value%20World%20Thrift%202001%20E%2011%20Mile%20Rd%2C%20Warren%2C%20MI%2048092",
+      "mqa": "Average",
+      "mqaValue": 3.5,
+      "decision": "Stay",
+      "decisionReason": "ucb-favors-current",
+      "diff": 0.3187619378549904,
+      "zScore": 0.35632899894651554,
+      "currentUcb": 4.802556437342155,
+      "remainingUcb": 4.483794499487165,
+      "observationCount": 1,
+      "posterior": {
+        "alpha": 3.9800009999999997,
+        "beta": 1.0200010000000002,
+        "mean": 3.979999408000236,
+        "meanNormalized": 0.7959998816000472,
+        "std": 0.8225570293419191,
+        "variance": 0.6766000665198028,
+        "lower": 3.157442378658317,
+        "upper": 4.802556437342155,
+        "observationCount": 1,
+        "totalQuality": 3.5,
+        "lastObservation": 3.5,
+        "priorNormalized": 0.82,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 23.140000999999998,
+        "beta": 4.860001,
+        "mean": 4.132142740561233,
+        "meanNormalized": 0.8264285481122465,
+        "std": 0.35165175892593187,
+        "variance": 0.1236589595557017,
+        "lower": 3.780490981635301,
+        "upper": 4.483794499487165,
+        "count": 6,
+        "pseudoAlpha": 19.599999999999998,
+        "pseudoBeta": 4.3999999999999995,
+        "observationCount": 4,
+        "totalObservedQuality": 17.7
+      },
+      "timestamp": "2025-09-28T23:32:11.350Z"
+    },
+    {
+      "name": "Vogue Vintage",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=42.465465383937%2C-83.12332615312%20Vogue%20Vintage%202141%20Hilton%20Rd%2C%20Ferndale%2C%20MI%2048220",
+      "mqa": "N/A",
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "manual-drop",
+      "diff": null,
+      "zScore": null,
+      "currentUcb": null,
+      "remainingUcb": null,
+      "observationCount": null,
+      "posterior": {
+        "alpha": 3.2000010000000003,
+        "beta": 0.8000009999999999,
+        "mean": 3.999999250000375,
+        "meanNormalized": 0.799999850000075,
+        "std": 0.8944272636719043,
+        "variance": 0.8000001299996102,
+        "lower": 3.1055719863284708,
+        "upper": 4.894426513672279,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.8,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 19.940001,
+        "beta": 4.060001,
+        "mean": 4.154166528819456,
+        "meanNormalized": 0.8308333057638911,
+        "std": 0.37489906982198645,
+        "variance": 0.14054931255339068,
+        "lower": 3.7792674589974693,
+        "upper": 4.529065598641442,
+        "count": 5,
+        "pseudoAlpha": 16.4,
+        "pseudoBeta": 3.5999999999999996,
+        "observationCount": 4,
+        "totalObservedQuality": 17.7
+      },
+      "timestamp": "2025-09-28T23:32:44.795Z"
+    },
+    {
+      "name": "Value World Thrift",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=42.457659382447%2C-83.181801001668%20Value%20World%20Thrift%2022130%20Coolidge%20Hwy%2C%20Oak%20Park%2C%20MI%2048237",
+      "mqa": "N/A",
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "manual-drop",
+      "diff": null,
+      "zScore": null,
+      "currentUcb": null,
+      "remainingUcb": null,
+      "observationCount": null,
+      "posterior": {
+        "alpha": 3.2000010000000003,
+        "beta": 0.8000009999999999,
+        "mean": 3.999999250000375,
+        "meanNormalized": 0.799999850000075,
+        "std": 0.8944272636719043,
+        "variance": 0.8000001299996102,
+        "lower": 3.1055719863284708,
+        "upper": 4.894426513672279,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.8,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 16.740001,
+        "beta": 3.260001,
+        "mean": 4.184999831500017,
+        "meanNormalized": 0.8369999663000034,
+        "std": 0.40301100321793043,
+        "variance": 0.16241786871472272,
+        "lower": 3.781988828282086,
+        "upper": 4.588010834717947,
+        "count": 4,
+        "pseudoAlpha": 13.2,
+        "pseudoBeta": 2.8,
+        "observationCount": 4,
+        "totalObservedQuality": 17.7
+      },
+      "timestamp": "2025-09-28T23:32:50.748Z"
+    },
+    {
+      "name": "Value World Thrift",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=42.442742196635%2C-83.295836478484%20Value%20World%20Thrift%2025646%20Eight%20Mile%20W%2C%20Southfield%2C%20MI%2048033",
+      "mqa": "N/A",
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "manual-drop",
+      "diff": null,
+      "zScore": null,
+      "currentUcb": null,
+      "remainingUcb": null,
+      "observationCount": null,
+      "posterior": {
+        "alpha": 3.6000010000000002,
+        "beta": 0.4000009999999999,
+        "mean": 4.4999990000005,
+        "meanNormalized": 0.8999998000001,
+        "std": 0.6708208553698609,
+        "variance": 0.45000061999915186,
+        "lower": 3.8291781446306388,
+        "upper": 5,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.9,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 13.140001000000002,
+        "beta": 2.860001,
+        "mean": 4.106249799218775,
+        "meanNormalized": 0.821249959843755,
+        "std": 0.46462895700886697,
+        "variance": 0.21588006769114756,
+        "lower": 3.6416208422099077,
+        "upper": 4.570878756227642,
+        "count": 3,
+        "pseudoAlpha": 9.600000000000001,
+        "pseudoBeta": 2.4,
+        "observationCount": 4,
+        "totalObservedQuality": 17.7
+      },
+      "timestamp": "2025-09-28T23:32:53.274Z"
+    },
+    {
+      "name": "V-Male Detroit Vintage",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=42.269215142856%2C-83.268896777462%20V-Male%20Detroit%20Vintage%2023902%20Van%20Born%20Rd%2C%20Dearborn%20Heights%2C%20MI%2048125",
+      "mqa": "N/A",
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "manual-drop",
+      "diff": null,
+      "zScore": null,
+      "currentUcb": null,
+      "remainingUcb": null,
+      "observationCount": null,
+      "posterior": {
+        "alpha": 3.280001,
+        "beta": 0.7200010000000002,
+        "mean": 4.0999992000004,
+        "meanNormalized": 0.81999984000008,
+        "std": 0.8590693899793715,
+        "variance": 0.7380002167995295,
+        "lower": 3.2409298100210284,
+        "upper": 4.959068589979771,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.82,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 9.860001,
+        "beta": 2.140001,
+        "mean": 4.108333065277822,
+        "meanNormalized": 0.8216666130555645,
+        "std": 0.5308385374940684,
+        "variance": 0.28178955288884144,
+        "lower": 3.5774945277837538,
+        "upper": 4.63917160277189,
+        "count": 2,
+        "pseudoAlpha": 6.32,
+        "pseudoBeta": 1.6799999999999997,
+        "observationCount": 4,
+        "totalObservedQuality": 17.7
+      },
+      "timestamp": "2025-09-28T23:32:56.069Z"
+    },
+    {
+      "name": "Value World Thrift",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=42.255786246719%2C-83.256431414123%20Value%20World%20Thrift%2022615%20Ecorse%20Rd%2C%20Taylor%2C%20MI%2048180",
+      "mqa": "N/A",
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "manual-drop",
+      "diff": null,
+      "zScore": null,
+      "currentUcb": null,
+      "remainingUcb": null,
+      "observationCount": null,
+      "posterior": {
+        "alpha": 3.1200010000000002,
+        "beta": 0.8800009999999999,
+        "mean": 3.89999930000035,
+        "meanNormalized": 0.77999986000007,
+        "std": 0.9262829204944277,
+        "variance": 0.8580000487996863,
+        "lower": 2.9737163795059223,
+        "upper": 4.826282220494778,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.78,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 6.740001,
+        "beta": 1.260001,
+        "mean": 4.2124995718751075,
+        "meanNormalized": 0.8424999143750215,
+        "std": 0.607119288950323,
+        "variance": 0.36859383101554577,
+        "lower": 3.6053802829247843,
+        "upper": 4.819618860825431,
+        "count": 1,
+        "pseudoAlpha": 3.2,
+        "pseudoBeta": 0.7999999999999998,
+        "observationCount": 4,
+        "totalObservedQuality": 17.7
+      },
+      "timestamp": "2025-09-28T23:32:59.016Z"
+    },
+    {
+      "name": "Motor City Antique Gallery",
+      "mapsUrl": "https://www.google.com/maps/search/?api=1&query=42.073186243077%2C-83.309260852639%20Motor%20City%20Antique%20Gallery%2013431%20Telegraph%20Rd%2C%20Flat%20Rock%2C%20MI%2048134",
+      "mqa": "N/A",
+      "mqaValue": null,
+      "decision": "Dropped",
+      "decisionReason": "manual-drop",
+      "diff": null,
+      "zScore": null,
+      "currentUcb": null,
+      "remainingUcb": null,
+      "observationCount": null,
+      "posterior": {
+        "alpha": 3.2000010000000003,
+        "beta": 0.8000009999999999,
+        "mean": 3.999999250000375,
+        "meanNormalized": 0.799999850000075,
+        "std": 0.8944272636719043,
+        "variance": 0.8000001299996102,
+        "lower": 3.1055719863284708,
+        "upper": 4.894426513672279,
+        "observationCount": 0,
+        "totalQuality": 0,
+        "lastObservation": null,
+        "priorNormalized": 0.8,
+        "pseudo": 4
+      },
+      "pool": {
+        "alpha": 3.540001,
+        "beta": 0.46000099999999994,
+        "mean": 4.424999037500481,
+        "meanNormalized": 0.8849998075000962,
+        "std": 0.713355127250256,
+        "variance": 0.5088755375742289,
+        "lower": 3.7116439102502246,
+        "upper": 5,
+        "count": 0,
+        "pseudoAlpha": 0,
+        "pseudoBeta": 0,
+        "observationCount": 4,
+        "totalObservedQuality": 17.7
+      },
+      "timestamp": "2025-09-28T23:33:01.607Z"
+    }
+  ],
+  "posteriorPool": {
+    "alpha": 3.540001,
+    "beta": 0.46000099999999994,
+    "mean": 4.424999037500481,
+    "meanNormalized": 0.8849998075000962,
+    "std": 0.713355127250256,
+    "variance": 0.5088755375742289,
+    "lower": 3.7116439102502246,
+    "upper": 5,
+    "count": 0,
+    "pseudoAlpha": 0,
+    "pseudoBeta": 0,
+    "observationCount": 4,
+    "totalObservedQuality": 17.7,
+    "observedAlpha": 3.54,
+    "observedBeta": 0.45999999999999996
+  },
+  "posteriorConfig": {
+    "priorStrength": 4,
+    "baseAlpha": 0.000001,
+    "baseBeta": 0.000001,
+    "credibleZ": 1,
+    "defaultScore": 3.5
+  }
+}
