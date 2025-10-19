@@ -11,6 +11,7 @@ Atlas sits upstream of Solver: **Atlas maps the landscape, Solver plans the jour
 | ID     | Title                       | Description                                                                 |
 |--------|-----------------------------|-----------------------------------------------------------------------------|
 | FR-1   | Store Scoring (Value–Yield) | Compute desk-estimated Value/Yield scores for each store using baselines, affluence, adjacency, and observations. |
+| FR-1a  | Posterior-Only Scoring (No Priors)    | Fit from observations only; predict to unvisited stores; emit credibility. |
 | FR-2   | Metro Anchor Identification | Group stores into metro-level anchors representing natural exploration areas. |
 | FR-3   | Sub-Cluster Detection       | Identify finer-grained clusters of stores within anchors (curated pockets). |
 | FR-4   | Explainability Trace        | Provide per-store explanations showing how final scores were derived.       |
@@ -42,6 +43,26 @@ Atlas computes desk-estimated **Value** and **Yield** scores for each store.
 - AC2: For unvisited stores, Value/Yield computed from baseline + affluence + adjacency.  
 - AC3: Scores always fall on a 1–5 scale.  
 - AC4: Composite JScore is optional, Solver can consume either 2D or 1D scores.  
+
+---
+
+## FR-1a: Posterior-Only Scoring (No Priors)
+
+**Description**  
+Atlas trains on observed visits (t, N, V) to produce posterior predictions for all stores **without** desk priors.
+
+**Inputs**  
+- Observations: StoreId, t, N, V (and optional affluence lookups for covariates).
+- Store catalog: id, type, lat/lon, ZIP.
+
+**Outputs**  
+- Per-store: `V_est`, `theta_est`, `Y_est`, `Cred`, `Method` (GLM|Hier|kNN|AnchorMean).
+
+**Acceptance Criteria**  
+- AC1: For visited stores, `V_est` and `Y_est` recover observed scores (within tolerance).  
+- AC2: For unvisited stores, predictions are produced with a non-empty `Method` and `Cred`.  
+- AC3: Y mapping uses the same ECDF window as the observations.  
+- AC4: Reproducible given the same observation set.
 
 ---
 

@@ -77,3 +77,8 @@ v
 - **User = navigator**: chooses where to play (metros, clusters, day params).  
 - **Solver = pathfinder**: orders chosen stores into optimal routes.  
 - **Observations = feedback**: make the whole system smarter over time.
+
+- **Feedback Loop**  
+  - With early trips, Atlas runs in **Posterior-Only** mode (learn from observed V,Y and generalize).  
+  - As priors are fit, switch to **Blended** mode with ω tuned by validation.  
+  - Mid-day updates: newly logged visits update posterior predictions and re-rank candidates.

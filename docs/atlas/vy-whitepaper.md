@@ -175,6 +175,9 @@ Use for ranking when you want a rate-adjusted quality scalar.
 
 **Contract:** Atlas shapes the *value surface*; Solver navigates it.
 
+### 9.1 Posterior-Only Inference
+In cold-start or “no-priors” phases, VY serves as a posterior predictor: models trained on observed visits (V, N, t) produce out-of-sample predictions for unvisited stores using affluence covariates and/or neighbor smoothing. Predicted θ is mapped to Y via the same ECDF as observations, preserving the operational 1–5 scale. Uncertainty is surfaced as a credibility score to guide exploitation vs exploration.
+
 ---
 
 ## 10. Assumptions, Limitations, Ethics

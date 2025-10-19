@@ -15,29 +15,57 @@ Together they form a connected workflow: Atlas charts, Solver routes.
 Atlas answers two key questions:
 
 1. **How promising is each store?**  
-   - Computes per-store **Value** (payoff per item) and **Yield** (hit rate / reliability).  
-   - Sources: baseline by store type, affluence signals, adjacency inference, and observed data.
+   - Computes per-store **Value** (payoff per item) and **Yield** (time-normalized hit rate).  
+   - Sources: type baselines, affluence signals, adjacency/neighbor smoothing, and observed data.
 
 2. **Where are the natural clusters?**  
-   - Groups stores into **metro anchors** and **sub-clusters** based on geography and observed/desk-estimated scores.  
+   - Groups stores into **metro anchors** and **sub-clusters** based on geography and Value/Yield signals.  
    - Anchors provide context for loop-style runs and for interpreting solver output.
+
+---
+
+## Modes
+
+Atlas exposes three explicit scoring modes:
+
+- **Prior-Only**  
+  Use **desk priors** only (type baselines + affluence model). Best for cold start when no observations exist.
+
+- **Posterior-Only**  
+  Fit **from observations** (V, N, t) and **predict to unvisited stores** via regularized models and/or neighbor smoothing. No desk priors are used. Outputs include a credibility score.
+
+- **Blended**  
+  Blend posterior predictions with priors via a shrinkage weight \( \omega \in [0,1] \):  
+  \( \widehat{E[V]} = \omega\,\widehat{E[V]_{\text{post}}} + (1-\omega)\,E[V]_{\text{prior}} \) and  
+  \( \widehat{E[\theta]} = \omega\,\widehat{E[\theta]_{\text{post}}} + (1-\omega)\,E[\theta]_{\text{prior}} \).
+
+> Projection to a 1-D score for Solver (when requested) uses the canonical \( \text{VYScore}_\lambda = \lambda V + (1-\lambda)Y \).
 
 ---
 
 ## Inputs
 
-- **Store list** (CSV/JSON): StoreId, type, lat/lon, optional metadata.  
-- **Affluence data** (CSV/GeoJSON): census or neighborhood-level signals (income, housing value, turnover).  
-- **Observations** (CSV/JSON): past visits with Value and Yield ratings.
+- **Store list** (CSV/JSON): `StoreId, Type, Lat, Lon, optional metadata (Name, Notes, JScore)`.  
+- **Affluence data** (CSV/GeoJSON): ZIP/ZCTA signals (income, high-income %, renters %, population), normalized per metro.  
+- **Observations** (CSV/JSON, optional): visit rows with `DwellMin (t), PurchasedItems (N), HaulLikert (H→V)`.  
+- **Config**: mode (`prior-only | posterior-only | blended`), lambda (harvest/balanced/explore), ECDF window (day/metro/trip/corpus).
 
 ---
 
 ## Outputs
 
-- **Scored stores**: per-store Value, Yield, composite score, and an explanation trace.  
-- **Anchors**: metro-level clusters with centroid, store count, and mean scores.  
-- **Clusters**: sub-groups of stores within anchors for downstream Solver runs.  
-- **Diagnostics**: correlation summaries, scatter plots of Value vs Yield, outlier detection.
+- **Scored stores** (always):  
+  - `StoreId, Value (V), Theta_est (items/45m), Yield (Y), ModeComposite (VYScore_λ optional)`  
+  - `Cred` (0–1 credibility / uncertainty proxy), `Method` (GLM|Hier|kNN|AnchorMean),  
+  - `SourceTrace` (baseline / affluence / adjacency / observed contributions and ECDF quantile).
+
+- **Anchors** (optional): metro-level clusters with `AnchorId, centroid, store count, mean Value, mean Yield`.
+
+- **Sub-clusters** (optional): `ClusterId, AnchorId, members, centroid, mean Value, mean Yield`.
+
+- **Diagnostics** (optional): correlation summaries, distributions, outlier detection.
+
+> Solver can consume either the 2-D V/Y fields with a projection parameter, or a pre-projected 1-D score.
 
 ---
 
@@ -54,9 +82,9 @@ This separation keeps Solver lean and deterministic, while allowing Atlas to evo
 
 ## Roadmap
 
-- **v0.1 (Prototype)**: Python implementation (pandas + geopandas). CLI for scoring and clustering, CSV/JSON I/O.  
-- **v0.2 (Integration)**: Feed Atlas outputs into Solver as alternative to JScore.  
-- **v0.3 (Expansion)**: Add richer affluence models, neighbor inference, and scenario comparisons.  
+- **v0.1 (Prototype)**: Python implementation (pandas + geopandas). CLI for scoring; CSV/JSON I/O.  
+- **v0.2 (Integration)**: Feed Atlas outputs into Solver as an alternative to JScore.  
+- **v0.3 (Expansion)**: Add richer affluence models, neighbor inference, and scenario comparisons.
 
 ---
 
