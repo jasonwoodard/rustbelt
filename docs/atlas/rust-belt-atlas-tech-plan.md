@@ -155,7 +155,7 @@ rustbelt-atlas score \
 
 * Implement scoring engine in Python (pandas, geopandas).
 * CLI: `score` command only.
-* Output: scored stores with Value, Yield, and explanation.
+* Output: scored stores with Value, Yield, and machine-captured trace fields to unblock later explainability UI.
 
 - Implement Posterior-Only pipeline:
   - Fit Yield GLM with offset; fallback to NegBin if overdispersed.
@@ -168,7 +168,7 @@ rustbelt-atlas score \
 ### Phase 2 (v0.2)
 
 * Add metro anchors (DBSCAN clustering).
-* Add explainability traces.
+* Promote explainability traces to user-facing outputs, leveraging the trace fields landed in Phase 1.
 * Introduce diagnostics (scatterplots, correlation tables).
 
 ### Phase 3 (v0.3)
