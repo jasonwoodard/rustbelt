@@ -144,4 +144,20 @@ J = 0.6 \times 3.75 + 0.4 \times 3.30 = 3.57
 
 ---
 
+## 10. Posterior-Only Prediction (No Priors)
+
+When affluence priors are unavailable or intentionally disabled, Atlas estimates scores solely from observations and propagates to unvisited stores.
+
+### Models
+- **Yield (rate θ)**: Poisson/NegBin GLM on counts N with offset log(t/t₀); predictors use normalized affluence features and type intercepts when available. If data are sparse, fall back to hierarchical partial pooling or k-NN smoothing over (Income_norm, Renters_norm, lat, lon, type).
+- **Value (V)**: Linear/OLS on V for MVP; upgrade to ordered logit as sample grows.
+
+### Mapping to Y
+Predict θ and map to Y via the same ECDF used for observed θ̂ in the chosen reference window.
+
+### Credibility
+Emit `Cred ∈ [0,1]` from prediction uncertainty (e.g., 1 − normalized SE). Low Cred should be surfaced to the user and/or down-weighted for Solver.
+
+---
+
 *Rust Belt Atlas maps the landscape; Rust Belt Solver plans the journey.*

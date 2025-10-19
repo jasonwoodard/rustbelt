@@ -76,6 +76,31 @@ rustbelt-atlas clusters \
 
 **Common flags**: `--min-anchor`, `--radius`, `--format` (csv/json/html), `--diagnostics`.
 
+## CLI Design (updated)
+
+# Posterior-only scoring (learn from observations; no priors)
+rustbelt-atlas score \
+  --stores data/stores.csv \
+  --observations data/observations.csv \
+  --mode posterior-only \
+  --ecdf-window metro \
+  --out out/scored-post.csv \
+  --explain out/posterior-explain.json
+
+# Blended scoring (when priors exist)
+rustbelt-atlas score \
+  --stores data/stores.csv \
+  --affluence data/affluence.csv \
+  --observations data/observations.csv \
+  --mode blended --omega 0.7 \
+  --out out/scored-blend.csv
+
+**New flags**
+- `--mode {posterior-only|prior-only|blended}`
+- `--omega <0..1>` shrinkage weight for blended mode
+- `--ecdf-window {day|metro|trip|corpus}`
+
+
 ---
 
 ## Data Schemas
@@ -131,6 +156,14 @@ rustbelt-atlas clusters \
 * Implement scoring engine in Python (pandas, geopandas).
 * CLI: `score` command only.
 * Output: scored stores with Value, Yield, and explanation.
+
+- Implement Posterior-Only pipeline:
+  - Fit Yield GLM with offset; fallback to NegBin if overdispersed.
+  - Fit Value OLS (MVP).
+  - If n too small: hierarchical pooling by type/anchor; otherwise k-NN smoothing.
+  - Compute ECDF on observed θ̂ and map predictions to Y.
+  - Emit Cred (e.g., 1 − normalized SE) and Method.
+
 
 ### Phase 2 (v0.2)
 
