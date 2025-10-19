@@ -157,7 +157,76 @@ rustbelt-atlas score \
 
 ---
 
+## Package & Directory Strategy
+
+### Objectives
+
+- Guarantee Atlas can be developed, tested, and released without any compile-time or runtime dependency on the existing Solver tooling.
+- Provide clear ownership boundaries so Atlas contributors do not need the Solver node toolchain, and vice versa.
+- Create space for the Python-first Atlas prototype while leaving a migration path to a TypeScript port once the modeling solidifies.
+
+### Proposed Repository Layout
+
+```
+/docs/
+/schema/                    # JSON/CSV contracts shared across projects (read-only dependencies)
+/packages/
+  atlas-python/             # Python package (Phase 1 focus)
+    pyproject.toml
+    src/atlas/
+      __init__.py
+      cli/
+      data/
+      scoring/
+      clustering/
+      explain/
+      diagnostics/
+      fixtures/
+    tests/
+  solver-cli/               # Existing TypeScript CLI moved from /src (no Atlas imports)
+    package.json
+    tsconfig.json
+    src/
+    tests/
+/tools/                     # Optional shared utilities (lint hooks, formatters) with language-specific subfolders
+```
+
+- **Atlas package**: published as `atlas-python` (internal), exposes `atlas.cli` entry points (`score`, `anchors`, `clusters`). Dependencies live in `pyproject.toml` so Node modules are not required.
+- **Solver package**: retains current functionality but relocated under `packages/solver-cli` with unchanged build scripts. Solver consumes Atlas outputs only via files in `/schema` (e.g., versioned CSV layout, JSON schema) and never imports Python code.
+- **Schema directory**: houses the versioned data contracts that mediate Atlas ↔ Solver exchange. Both sides depend on this directory **read-only**; no runtime linkage.
+- **Top-level tooling**: optional scripts (e.g., Makefile, CI) orchestrate `pip` and `npm` commands without mingling dependency graphs.
+
+### Enforcing Independence in Code
+
+- Distinct package managers (`pip` for Atlas, `npm` for Solver) and lockfiles stored beside each package prevent accidental cross-installation.
+- CI will run `pytest`/`ruff` for Atlas and `vitest`/`eslint` for Solver in separate jobs; any import attempt across the boundary will fail because the other language runtime is not installed in that job.
+- Shared artifacts are serialized files only. The Atlas CLI writes to `/out` (or configured path) using schemas defined in `/schema`. Solver integration tests read those fixtures but never import Atlas modules.
+- Introduce interface tests in Solver that use frozen Atlas output fixtures checked into `packages/atlas-python/fixtures/solver-contract/`. Updates require bumping the schema version and regenerating fixtures via the Atlas CLI.
+
+### Option Analysis
+
+| Option | Description | Pros | Cons |
+| --- | --- | --- | --- |
+| **A. Minimal movement** | Keep current Solver layout in `/src`, drop Atlas under `/atlas` | Lowest churn today; no path changes for Solver developers | Mixed toolchains at repo root; harder to communicate boundaries; risk of accidental imports as Solver evolves |
+| **B. Dedicated `/packages` monorepo (recommended)** | Relocate Solver to `/packages/solver-cli`; place Atlas prototype in `/packages/atlas-python`; share schemas via `/schema` | Clear ownership, isolated dependencies, mirrors common monorepo practices (npm/pip side-by-side), simplifies CI matrix | One-time refactor of Solver paths/build scripts; developers update import paths referencing compiled bundles |
+| **C. Separate repositories** | Split Atlas into its own repo | Absolute isolation | Adds release coordination overhead; loses shared Git history and shared schema folder |
+
+Option **B** balances isolation with maintainability. We absorb a one-time move of Solver code but keep a unified repo for change management and shared contracts.
+
+### Tooling & Automation Implications
+
+- Update root `package.json` scripts or introduce a top-level `Makefile` to forward to `pip`/`npm` tasks (`make atlas-test`, `make solver-build`).
+- Add `.pre-commit-config.yaml` limited to Atlas Python checks; Solver retains ESLint/Prettier via npm scripts.
+- Document environment setup in `docs/atlas/README.md`, specifying that Atlas contributors only need Python ≥3.11 and optional virtualenv tooling.
+- Create CI workflows: `ci-atlas.yml` (setup-python → install → lint/test) and `ci-solver.yml` (setup-node → install → lint/test). Shared schema updates trigger both workflows via a path filter on `/schema`.
+
 ## Implementation Plan
+
+### Phase 0 (Repo Preparation)
+
+* Introduce the `/packages` + `/schema` structure without altering Solver functionality.
+* Scaffold `packages/atlas-python` with `pyproject.toml`, `src/atlas/cli/__main__.py`, and placeholder modules for scoring/anchoring to unblock incremental commits.
+* Configure CI jobs (Python + Node) and update documentation to reference the new directory layout.
 
 ### Phase 1 (v0.1 Prototype)
 
@@ -187,8 +256,38 @@ rustbelt-atlas score \
 
 ### Phase 4 (Integration)
 
-* Port to TypeScript for Rust Belt repo integration.
-* Optional: merge Atlas outputs into Solver pipeline as pre-processing stage.
+* Evaluate TypeScript parity for Atlas logic once Python models stabilize; spin up `packages/atlas-ts` if parity is justified, generated from shared schema definitions.
+* Maintain Solver integration strictly through schema-driven file exchange; publish any reusable logic as independent libraries rather than direct package imports.
+* Optional: introduce orchestration scripts (e.g., `make run-all`) that call Atlas CLI then Solver CLI sequentially while preserving package isolation.
+
+---
+
+## Additional Technical Considerations Before Implementation
+
+### Data Validation & Contracts
+
+- Define JSON Schema files in `/schema/atlas/v1/` for `scored-stores`, `anchors`, and `clusters`, and use them both for Atlas output validation (via `jsonschema` in Python) and Solver ingestion tests (via TypeScript validators).
+- Version schemas (`v1`, `v1.1`, …) to allow non-breaking additions; Atlas exposes a `--schema-version` flag with default `latest`.
+
+### Configuration Management
+
+- Store CLI defaults in `atlas/config/defaults.yaml`, override via `--config` flag, and surface applied configuration in run metadata.
+- Provide an `.env` template for sensitive paths (e.g., census API tokens) and load them only within Atlas; no leakage to Solver environment variables.
+
+### Observability & Telemetry
+
+- Emit structured logs (JSONL) from Atlas CLI capturing dataset checksums, parameter choices, and timing for each stage; logs stored beside outputs for reproducibility.
+- Plan for optional Prometheus metrics if Atlas graduates to a service, but keep CLI instrumentation simple (`click` progress bars + final summary table).
+
+### Testing Enhancements
+
+- Expand golden fixtures covering edge-case metros (dense urban vs sparse rural) stored under `packages/atlas-python/fixtures/`.
+- Provide contract tests ensuring the Atlas CLI refuses to overwrite Solver fixture directories unless `--force` is specified, reducing accidental regression noise.
+
+### Documentation
+
+- Author `docs/atlas/README.md` with setup instructions, architectural diagrams, and CLI walkthroughs.
+- Cross-link Solver docs to the schema directory instead of Atlas internals, reinforcing the package boundary.
 
 ---
 
