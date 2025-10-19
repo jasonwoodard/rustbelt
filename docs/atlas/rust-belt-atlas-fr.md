@@ -171,9 +171,9 @@ Atlas provides validation and diagnostic outputs to support model refinement.
 
 ## Roadmap
 
-- **v0.1 (Prototype)**: Store scoring (FR-1), anchors (FR-2), explainability (FR-4).  
-- **v0.2**: Sub-clusters (FR-3), richer diagnostics (FR-6).  
-- **v0.3**: Affluence models + neighbor inference refinement, Solver integration (FR-5).  
+- **v0.1 (Prototype)**: Store scoring pipelines (FR-1, FR-1a) and trace field capture needed for downstream explainability.
+- **v0.2**: Metro anchors (FR-2), explainability (FR-4), richer diagnostics (FR-6) — explainability ships here because it depends on the trace fields stabilized in v0.1.
+- **v0.3**: Affluence models + neighbor inference refinement, sub-clusters (FR-3), Solver integration (FR-5).
 
 ---
 
