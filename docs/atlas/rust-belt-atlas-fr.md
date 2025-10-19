@@ -51,8 +51,8 @@ Atlas computes desk-estimated **Value** and **Yield** scores for each store.
 **Description**  
 Atlas trains on observed visits (t, N, V) to produce posterior predictions for all stores **without** desk priors.
 
-**Inputs**  
-- Observations: StoreId, t, N, V (and optional affluence lookups for covariates).
+**Inputs**
+- Observations: `StoreId, DateTime, DwellMin, PurchasedItems, HaulLikert` (+ optional covariates such as `ObserverId`, `Spend`, `Notes`, pre-joined affluence).
 - Store catalog: id, type, lat/lon, ZIP.
 
 **Outputs**  

@@ -87,6 +87,8 @@ rustbelt-atlas score \
   --out out/scored-post.csv \
   --explain out/posterior-explain.json
 
+> `observations.csv` must include `StoreId,DateTime,DwellMin,PurchasedItems,HaulLikert` with optional covariates such as `ObserverId`, `Spend`, or `Notes`. CLI validation rejects rows missing the required five columns and forwards optional fields to downstream modeling.
+
 # Blended scoring (when priors exist)
 rustbelt-atlas score \
   --stores data/stores.csv \
@@ -115,7 +117,13 @@ rustbelt-atlas score \
 
 ### Input: observations.csv
 
-| StoreId | Date | Value (1–5) | Yield (1–5) | Notes |
+| StoreId | DateTime | DwellMin | PurchasedItems | HaulLikert | ObserverId (opt) | Spend (opt) | Notes (opt) |
+
+**Example row**
+
+| StoreId | DateTime           | DwellMin | PurchasedItems | HaulLikert | ObserverId | Spend | Notes            |
+|---------|--------------------|----------|----------------|------------|------------|-------|------------------|
+| DT-014  | 2025-03-02T14:10Z  | 52       | 4              | 5          | J          | 86.25 | Found denim haul |
 
 ### Output: scored-stores.csv
 

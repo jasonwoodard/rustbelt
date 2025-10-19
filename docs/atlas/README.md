@@ -44,7 +44,7 @@ Atlas fuses these into a consistent, explainable V/Y view.
 
 - **Stores:** `StoreId, Type, Lat, Lon, Zip` (+ optional `Name, JScore`)
 - **Affluence (by ZIP/ZCTA):** `MedianIncome, PctHH_100kPlus, PctRenters, Population`
-- **Observations (optional):** `DwellMin, PurchasedItems, HaulLikert` (→ V/Y)
+- **Observations (optional):** `DwellMin, PurchasedItems, HaulLikert` (→ V/Y) plus optional covariates (`ObserverId`, `Spend`, qualitative notes).
 - **Config:** mode (`prior-only | posterior-only | blended`), ECDF window, λ
 
 ---

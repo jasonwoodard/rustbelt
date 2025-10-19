@@ -47,7 +47,7 @@ Atlas exposes three explicit scoring modes:
 
 - **Store list** (CSV/JSON): `StoreId, Type, Lat, Lon, optional metadata (Name, Notes, JScore)`.  
 - **Affluence data** (CSV/GeoJSON): ZIP/ZCTA signals (income, high-income %, renters %, population), normalized per metro.  
-- **Observations** (CSV/JSON, optional): visit rows with `DwellMin (t), PurchasedItems (N), HaulLikert (H→V)`.  
+- **Observations** (CSV/JSON, optional): visit rows with `DwellMin (t), PurchasedItems (N), HaulLikert (H→V)` plus optional covariates like `ObserverId`, `Spend`, or qualitative `Notes`.
 - **Config**: mode (`prior-only | posterior-only | blended`), lambda (harvest/balanced/explore), ECDF window (day/metro/trip/corpus).
 
 ---
