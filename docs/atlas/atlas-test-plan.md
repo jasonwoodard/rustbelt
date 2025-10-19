@@ -28,7 +28,7 @@ Out of scope: UI and route optimization (covered by Solver).
 - `zcta.csv` — `Zip,MedianIncome,PctHH_100kPlus,PctRenters,Population` (+ normalized variants if precomputed)
 
 **For Use Case #2**
-- `observations.csv` — `StoreId,DateTime,DwellMin,PurchasedItems,HaulLikert[, ObserverId]`
+- `observations.csv` — `StoreId,DateTime,DwellMin,PurchasedItems,HaulLikert` with optional columns (`ObserverId`, `Spend`, `Notes`, precomputed affluence covariates) preserved end-to-end.
 
 > Recommendation: Use one metro (e.g., Detroit) for fitting and a second (e.g., Ann Arbor) for hold-out sanity checks. Aim for ≥100 stores.
 
@@ -95,7 +95,7 @@ rustbelt-atlas score \
 ```
 
 **Acceptance Criteria (AC-PO1):**
-- **AC-PO1.1** For visited stores: `V ≈ HaulLikert` and `Y` consistent with `PurchasedItems` & `DwellMin` via ECDF.
+- **AC-PO1.1** For visited stores: `V ≈ HaulLikert` and `Y` consistent with `PurchasedItems` & `DwellMin` via ECDF; CLI validation rejects rows missing required observation fields before scoring.
 - **AC-PO1.2** For unvisited stores: `Method` is set (`GLM|Hier|kNN|AnchorMean`) and `Cred ∈ [0,1]`.
 - **AC-PO1.3** Determinism: same inputs → identical ranks and file hash.
 - **AC-PO1.4** Incremental learning: adding one new observation reorders a plausible **local** neighborhood of unvisited stores (document delta count).
