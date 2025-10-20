@@ -2,12 +2,23 @@
 
 Utility for planning store visits.
 
+> **Repository layout**
+>
+> - `packages/solver-cli/` – the existing TypeScript solver CLI.
+> - `packages/atlas-python/` – a Python workspace for the Atlas prototype.
+> - `schema/` – shared data contracts that mediate Atlas ⇄ Solver exchange.
+
+Solver and Atlas now live in language-specific packages to match the
+[Atlas technical plan](docs/atlas/rust-belt-atlas-tech-plan.md). Day-to-day
+solver development happens in `packages/solver-cli`.
+
 ## Getting Started
 
 Refer to the [Getting Started guide](docs/getting-started.md) for a full walkthrough, including validation tips powered by the [trip schema](docs/trip-schema.json), and skim the [Trip Schema Guide](docs/trip-schema-guide.md) for a quick reference to the required fields.
 
 1. **Install dependencies**
    ```sh
+   cd packages/solver-cli
    npm install
    ```
 2. **Build the CLI**

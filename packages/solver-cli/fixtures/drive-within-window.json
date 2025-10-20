@@ -1,0 +1,15 @@
+{
+  "config": {
+    "mph": 69.09409442795152,
+    "defaultDwellMin": 0
+  },
+  "days": [
+    {
+      "dayId": "D1",
+      "start": { "id": "S", "name": "start", "lat": 0, "lon": 0 },
+      "end": { "id": "E", "name": "end", "lat": 0, "lon": 1 },
+      "window": { "start": "00:00", "end": "02:00" }
+    }
+  ],
+  "stores": []
+}

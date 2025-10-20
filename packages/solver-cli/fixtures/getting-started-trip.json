@@ -1,0 +1,23 @@
+{
+  "config": {
+    "mph": 30,
+    "defaultDwellMin": 15
+  },
+  "days": [
+    {
+      "dayId": "day-1",
+      "start": { "id": "hotel", "lat": 41.5, "lon": -81.7 },
+      "end": { "id": "hotel", "lat": 41.5, "lon": -81.7 },
+      "window": { "start": "8:00", "end": "17:00" }
+    }
+  ],
+  "stores": [
+    {
+      "id": "store-1",
+      "name": "Coffee Stop",
+      "lat": 41.6,
+      "lon": -81.69,
+      "dwellMin": 15
+    }
+  ]
+}

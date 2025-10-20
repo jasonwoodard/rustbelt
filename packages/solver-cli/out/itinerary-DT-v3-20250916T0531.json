@@ -1,0 +1,316 @@
+{
+  "runTimestamp": "2025-09-16T05:31:13.490Z",
+  "runId": "DT-v3",
+  "runNote": "Monday, Detroit Core (pull ALL must visit)",
+  "days": [
+    {
+      "dayId": "Mon",
+      "stops": [
+        {
+          "id": "HCGs1",
+          "name": "Hollywood Casino Greektown",
+          "type": "start",
+          "arrive": "09:00",
+          "depart": "09:00",
+          "lat": 42.336873,
+          "lon": -83.0418499
+        },
+        {
+          "id": "RWBT",
+          "name": "Red White & Blue Thrift Store",
+          "type": "store",
+          "arrive": "09:31",
+          "depart": "10:01",
+          "lat": 42.572945446062,
+          "lon": -82.890151473912,
+          "address": "37545 Southbound Gratiot Ave, Clinton Township, MI 48036",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "HCGs1",
+            "toId": "RWBT",
+            "driveMin": 30.945564534961786,
+            "distanceMi": 18.051579312061044
+          },
+          "score": 4,
+          "tags": [
+            "Thrift"
+          ]
+        },
+        {
+          "id": "VWT-Eastpointe",
+          "name": "Value World Thrift",
+          "type": "store",
+          "arrive": "10:13",
+          "depart": "10:43",
+          "lat": 42.478985165724,
+          "lon": -82.926959459334,
+          "address": "24900 Kelly Rd, Eastpointe, MI 48021",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "RWBT",
+            "toId": "VWT-Eastpointe",
+            "driveMin": 11.583837736302721,
+            "distanceMi": 6.75723867950992
+          },
+          "score": 4.5,
+          "tags": [
+            "Thrift"
+          ]
+        },
+        {
+          "id": "VWT-Warren",
+          "name": "Value World Thrift",
+          "type": "store",
+          "arrive": "10:56",
+          "depart": "11:26",
+          "lat": 42.490817636058,
+          "lon": -83.083943979949,
+          "address": "2001 E 11 Mile Rd, Warren, MI 48092",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "VWT-Eastpointe",
+            "toId": "VWT-Warren",
+            "driveMin": 13.783936524793697,
+            "distanceMi": 8.04062963946299
+          },
+          "score": 4.1,
+          "tags": [
+            "Thrift"
+          ]
+        },
+        {
+          "id": "VogueVint",
+          "name": "Vogue Vintage",
+          "type": "store",
+          "arrive": "11:31",
+          "depart": "12:01",
+          "lat": 42.465465383937,
+          "lon": -83.12332615312,
+          "address": "2141 Hilton Rd, Ferndale, MI 48220",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "VWT-Warren",
+            "toId": "VogueVint",
+            "driveMin": 4.566576039401998,
+            "distanceMi": 2.6638360229844986
+          },
+          "score": 4,
+          "tags": [
+            "Thrift"
+          ]
+        },
+        {
+          "id": "VWT-OakPark",
+          "name": "Value World Thrift",
+          "type": "store",
+          "arrive": "12:06",
+          "depart": "12:36",
+          "lat": 42.457659382447,
+          "lon": -83.181801001668,
+          "address": "22130 Coolidge Hwy, Oak Park, MI 48237",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "VogueVint",
+            "toId": "VWT-OakPark",
+            "driveMin": 5.192626958830507,
+            "distanceMi": 3.0290323926511293
+          },
+          "score": 4,
+          "tags": [
+            "Thrift"
+          ]
+        },
+        {
+          "id": "OFA",
+          "name": "Odd Fellows Antiques",
+          "type": "store",
+          "arrive": "12:42",
+          "depart": "13:12",
+          "lat": 42.503092747942,
+          "lon": -83.191987481283,
+          "address": "3248 12 Mile Rd, Berkley, MI 48072",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "VWT-OakPark",
+            "toId": "OFA",
+            "driveMin": 5.454520729835105,
+            "distanceMi": 3.181803759070478
+          },
+          "score": 3.7,
+          "tags": [
+            "Antique"
+          ]
+        },
+        {
+          "id": "TSAFSWB",
+          "name": "The Salvation Army Family Store & Donation Center",
+          "type": "store",
+          "arrive": "13:30",
+          "depart": "13:60",
+          "lat": 42.60343091747,
+          "lon": -83.348784921158,
+          "address": "3232 Orchard Lake Rd, West Bloomfield Township, MI 48324",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "OFA",
+            "toId": "TSAFSWB",
+            "driveMin": 18.122418166630403,
+            "distanceMi": 10.57141059720107
+          },
+          "score": 3.6,
+          "tags": [
+            "Thrift"
+          ]
+        },
+        {
+          "id": "VWT-Southfield",
+          "name": "Value World Thrift",
+          "type": "store",
+          "arrive": "14:19",
+          "depart": "14:49",
+          "lat": 42.442742196635,
+          "lon": -83.295836478484,
+          "address": "25646 Eight Mile W, Southfield, MI 48033",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "TSAFSWB",
+            "toId": "VWT-Southfield",
+            "driveMin": 19.58630861078643,
+            "distanceMi": 11.425346689625416
+          },
+          "score": 4.5,
+          "tags": [
+            "Thrift"
+          ]
+        },
+        {
+          "id": "GSADL",
+          "name": "Goodwill Store and Donations: Livonia",
+          "type": "store",
+          "arrive": "14:58",
+          "depart": "15:28",
+          "lat": 42.37688631625,
+          "lon": -83.333492634022,
+          "address": "12651 Middlebelt Rd, Livonia, MI 48150",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "VWT-Southfield",
+            "toId": "GSADL",
+            "driveMin": 8.467102675516578,
+            "distanceMi": 4.939143227384671
+          },
+          "score": 3.8,
+          "tags": [
+            "Thrift"
+          ]
+        },
+        {
+          "id": "VMDV",
+          "name": "V-Male Detroit Vintage",
+          "type": "store",
+          "arrive": "15:42",
+          "depart": "16:12",
+          "lat": 42.269215142856,
+          "lon": -83.268896777462,
+          "address": "23902 Van Born Rd, Dearborn Heights, MI 48125",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "GSADL",
+            "toId": "VMDV",
+            "driveMin": 13.951660884734888,
+            "distanceMi": 8.138468849428685
+          },
+          "score": 4.1,
+          "tags": [
+            "Vintage"
+          ]
+        },
+        {
+          "id": "VWT-Taylor",
+          "name": "Value World Thrift",
+          "type": "store",
+          "arrive": "16:14",
+          "depart": "16:44",
+          "lat": 42.255786246719,
+          "lon": -83.256431414123,
+          "address": "22615 Ecorse Rd, Taylor, MI 48180",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "VMDV",
+            "toId": "VWT-Taylor",
+            "driveMin": 1.9297802408419824,
+            "distanceMi": 1.1257051404911564
+          },
+          "score": 3.9,
+          "tags": [
+            "Thrift"
+          ]
+        },
+        {
+          "id": "VWT-Southgate",
+          "name": "Value World Thrift",
+          "type": "store",
+          "arrive": "16:51",
+          "depart": "17:21",
+          "lat": 42.219891152932,
+          "lon": -83.193964111776,
+          "address": "12125 Dix Toledo Rd, Southgate, MI 48195",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "VWT-Taylor",
+            "toId": "VWT-Southgate",
+            "driveMin": 6.934328648700976,
+            "distanceMi": 4.04502504507557
+          },
+          "score": 3.8,
+          "tags": [
+            "Thrift"
+          ]
+        },
+        {
+          "id": "HCGe1",
+          "name": "Hollywood Casino Greektown",
+          "type": "end",
+          "arrive": "17:40",
+          "depart": "17:40",
+          "lat": 42.336873,
+          "lon": -83.0418499,
+          "legIn": {
+            "fromId": "VWT-Southgate",
+            "toId": "HCGe1",
+            "driveMin": 19.227700344915828,
+            "distanceMi": 11.216158534534234
+          }
+        }
+      ],
+      "metrics": {
+        "storeCount": 19,
+        "storesVisited": 12,
+        "visitedIds": [
+          "RWBT",
+          "VWT-Eastpointe",
+          "VWT-Warren",
+          "VogueVint",
+          "VWT-OakPark",
+          "OFA",
+          "TSAFSWB",
+          "VWT-Southfield",
+          "GSADL",
+          "VMDV",
+          "VWT-Taylor",
+          "VWT-Southgate"
+        ],
+        "totalScore": 48,
+        "scorePerStore": 4,
+        "scorePerMin": 0.0923527387597391,
+        "scorePerDriveMin": 0.3004763261593293,
+        "scorePerMile": 0.5151022734159929,
+        "totalDriveMin": 159.74636209625288,
+        "totalDwellMin": 360,
+        "slackMin": 20.253637903747176,
+        "totalDistanceMiles": 93.18537788948088,
+        "onTimeRisk": 0
+      }
+    }
+  ]
+}

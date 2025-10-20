@@ -1,0 +1,279 @@
+{
+  "runTimestamp": "2025-09-18T05:51:37.889Z",
+  "runId": "BU-v3",
+  "runNote": "Thursday, Cleveland to South of Buffalo AFTER USS Cod MOAR Speed. Remove ALL must visits",
+  "days": [
+    {
+      "dayId": "Thu",
+      "stops": [
+        {
+          "id": "DPHCDs",
+          "name": "Drury Plaza Hotel Cleveland Downtown",
+          "type": "start",
+          "arrive": "11:00",
+          "depart": "11:00",
+          "lat": 41.5022859,
+          "lon": -81.6944654
+        },
+        {
+          "id": "AU",
+          "name": "Antiques & Uniques",
+          "type": "store",
+          "arrive": "11:19",
+          "depart": "11:49",
+          "lat": 41.616224227171,
+          "lon": -81.460742434228,
+          "address": "30200 Euclid Ave, Wickliffe, OH 44092",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "DPHCDs",
+            "toId": "AU",
+            "driveMin": 19.229226217418592,
+            "distanceMi": 14.421919663063944
+          },
+          "score": 4.8,
+          "tags": [
+            "Antique"
+          ]
+        },
+        {
+          "id": "SBTL",
+          "name": "Shops By The Lake",
+          "type": "store",
+          "arrive": "12:10",
+          "depart": "12:40",
+          "lat": 41.748994881171,
+          "lon": -81.208780911127,
+          "address": "1871 N Ridge Rd, Painesville, OH 44077",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "AU",
+            "toId": "SBTL",
+            "driveMin": 21.21643183892518,
+            "distanceMi": 15.912323879193883
+          },
+          "score": 4,
+          "tags": [
+            "Vintage"
+          ]
+        },
+        {
+          "id": "FSW",
+          "name": "Fat Sally's Warehouse",
+          "type": "store",
+          "arrive": "13:11",
+          "depart": "13:41",
+          "lat": 41.893855805386,
+          "lon": -80.804068111485,
+          "address": "1569 Laird Dr, Ashtabula, OH 44004",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "SBTL",
+            "toId": "FSW",
+            "driveMin": 30.823999450519317,
+            "distanceMi": 23.117999587889486
+          },
+          "score": 4.1,
+          "tags": [
+            "Antique"
+          ]
+        },
+        {
+          "id": "RRAC",
+          "name": "Rcs & Randys Antiques Co-Op",
+          "type": "store",
+          "arrive": "15:36",
+          "depart": "16:06",
+          "lat": 42.489967125549,
+          "lon": -79.323415719901,
+          "address": "212 Lake Shore Dr E, Dunkirk, NY 14048",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "FSW",
+            "toId": "RRAC",
+            "driveMin": 115.01750789989885,
+            "distanceMi": 86.26313092492413
+          },
+          "score": 4,
+          "tags": [
+            "Antique"
+          ]
+        },
+        {
+          "id": "SAVERSB",
+          "name": "Savers",
+          "type": "store",
+          "arrive": "16:50",
+          "depart": "17:20",
+          "lat": 42.7853963,
+          "lon": -78.8107985,
+          "address": "3701 McKinley Pkwy, Buffalo, NY 14219",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "RRAC",
+            "toId": "SAVERSB",
+            "driveMin": 44.132528968390176,
+            "distanceMi": 33.09939672629263
+          },
+          "score": 4.8,
+          "tags": [
+            "Thrift"
+          ]
+        },
+        {
+          "id": "HRBe",
+          "name": "Hyatt Regency Buffalo / Hotel and Conference Center",
+          "type": "end",
+          "arrive": "17:31",
+          "depart": "17:31",
+          "lat": 42.8879852,
+          "lon": -78.8768433,
+          "legIn": {
+            "fromId": "SAVERSB",
+            "toId": "HRBe",
+            "driveMin": 10.451256211464308,
+            "distanceMi": 7.83844215859823
+          }
+        }
+      ],
+      "excluded": [
+        {
+          "id": "AAM",
+          "reason": "timeWindow",
+          "nearestAlternateId": "FSW"
+        },
+        {
+          "id": "BA",
+          "reason": "timeWindow",
+          "nearestAlternateId": "FSW"
+        },
+        {
+          "id": "CFAN",
+          "reason": "timeWindow",
+          "nearestAlternateId": "FSW"
+        },
+        {
+          "id": "CMT",
+          "reason": "timeWindow",
+          "nearestAlternateId": "FSW"
+        },
+        {
+          "id": "CSTAT",
+          "reason": "timeWindow",
+          "nearestAlternateId": "FSW"
+        },
+        {
+          "id": "CTS",
+          "reason": "timeWindow",
+          "nearestAlternateId": "FSW"
+        },
+        {
+          "id": "FKOE",
+          "reason": "timeWindow",
+          "nearestAlternateId": "FSW"
+        },
+        {
+          "id": "FKTS",
+          "reason": "timeWindow",
+          "nearestAlternateId": "FSW"
+        },
+        {
+          "id": "FNJ",
+          "reason": "timeWindow",
+          "nearestAlternateId": "FSW"
+        },
+        {
+          "id": "GSTS",
+          "reason": "timeWindow",
+          "nearestAlternateId": "FSW"
+        },
+        {
+          "id": "IAM",
+          "reason": "timeWindow",
+          "nearestAlternateId": "RRAC"
+        },
+        {
+          "id": "MB",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SBTL"
+        },
+        {
+          "id": "MSA",
+          "reason": "timeWindow",
+          "nearestAlternateId": "AU"
+        },
+        {
+          "id": "MTS",
+          "reason": "timeWindow",
+          "nearestAlternateId": "FSW"
+        },
+        {
+          "id": "OA",
+          "reason": "timeWindow",
+          "nearestAlternateId": "FSW"
+        },
+        {
+          "id": "RCTS",
+          "reason": "timeWindow",
+          "nearestAlternateId": "FSW"
+        },
+        {
+          "id": "RT",
+          "reason": "timeWindow",
+          "nearestAlternateId": "RRAC"
+        },
+        {
+          "id": "STA",
+          "reason": "timeWindow",
+          "nearestAlternateId": "AU"
+        },
+        {
+          "id": "TCS",
+          "reason": "timeWindow",
+          "nearestAlternateId": "FSW"
+        },
+        {
+          "id": "TGD",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SBTL"
+        },
+        {
+          "id": "TRVM",
+          "reason": "timeWindow",
+          "nearestAlternateId": "FSW"
+        },
+        {
+          "id": "TSYRS",
+          "reason": "timeWindow",
+          "nearestAlternateId": "AU"
+        },
+        {
+          "id": "WSAM",
+          "reason": "timeWindow",
+          "nearestAlternateId": "RRAC"
+        }
+      ],
+      "metrics": {
+        "storeCount": 27,
+        "storesVisited": 5,
+        "visitedIds": [
+          "AU",
+          "SBTL",
+          "FSW",
+          "RRAC",
+          "SAVERSB"
+        ],
+        "totalScore": 21.7,
+        "scorePerStore": 4.34,
+        "scorePerMin": 0.055517044608796806,
+        "scorePerDriveMin": 0.09008973455351042,
+        "scorePerMile": 0.12011964607134723,
+        "totalDriveMin": 240.87095058661643,
+        "totalDwellMin": 150,
+        "slackMin": 29.129049413383427,
+        "totalDistanceMiles": 180.65321293996232,
+        "onTimeRisk": 0
+      }
+    }
+  ]
+}

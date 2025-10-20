@@ -1,0 +1,336 @@
+{
+  "runTimestamp": "2025-09-18T06:10:20.739Z",
+  "runId": "RX-v1",
+  "runNote": "Buffalo in the AM, long run to Roxbury",
+  "days": [
+    {
+      "dayId": "Fri",
+      "stops": [
+        {
+          "id": "HRBs",
+          "name": "Hyatt Regency Buffalo / Hotel and Conference Center",
+          "type": "start",
+          "arrive": "10:00",
+          "depart": "10:00",
+          "lat": 42.8879852,
+          "lon": -78.8768433
+        },
+        {
+          "id": "ATSWS",
+          "name": "AMVETS Thrift Store West Seneca",
+          "type": "store",
+          "arrive": "10:08",
+          "depart": "10:38",
+          "lat": 42.828791050897,
+          "lon": -78.784309435252,
+          "address": "1900 Ridge Rd, West Seneca, NY 14224",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "HRBs",
+            "toId": "ATSWS",
+            "driveMin": 8.293827801817349,
+            "distanceMi": 6.220370851363012
+          },
+          "score": 4.1,
+          "tags": [
+            "Thrift"
+          ]
+        },
+        {
+          "id": "AB",
+          "name": "AMVETS Buffalo",
+          "type": "store",
+          "arrive": "10:51",
+          "depart": "11:21",
+          "lat": 42.945290339859,
+          "lon": -78.878246854094,
+          "address": "1833 Elmwood Ave, Buffalo, NY 14207",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "ATSWS",
+            "toId": "AB",
+            "driveMin": 12.465675417663176,
+            "distanceMi": 9.349256563247382
+          },
+          "score": 4.6,
+          "tags": [
+            "must-visit",
+            "Thrift"
+          ]
+        },
+        {
+          "id": "HTSHFB",
+          "name": "Hearts Thrift Store - Hearts for the Homeless Thrift Store (Buffalo)",
+          "type": "store",
+          "arrive": "11:23",
+          "depart": "11:53",
+          "lat": 42.952777142833,
+          "lon": -78.905501188492,
+          "address": "890 Tonawanda St, Buffalo, NY 14207",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "AB",
+            "toId": "HTSHFB",
+            "driveMin": 1.9629818777659207,
+            "distanceMi": 1.4722364083244406
+          },
+          "score": 4.3,
+          "tags": [
+            "Thrift"
+          ]
+        },
+        {
+          "id": "SAVERST",
+          "name": "Savers",
+          "type": "store",
+          "arrive": "11:59",
+          "depart": "12:29",
+          "lat": 42.981112399689,
+          "lon": -78.825751077632,
+          "address": "2309 Eggert Rd, Tonawanda Town, NY 14150",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "HTSHFB",
+            "toId": "SAVERST",
+            "driveMin": 5.97639016637379,
+            "distanceMi": 4.482292624780342
+          },
+          "score": 5,
+          "tags": [
+            "must-visit",
+            "Thrift"
+          ]
+        },
+        {
+          "id": "AWFM",
+          "name": "Antique World & Flea Market",
+          "type": "store",
+          "arrive": "12:46",
+          "depart": "13:16",
+          "lat": 42.983831250138,
+          "lon": -78.572300161758,
+          "address": "11111 Main St, Clarence, NY 14031",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "SAVERST",
+            "toId": "AWFM",
+            "driveMin": 17.083284483704013,
+            "distanceMi": 12.81246336277801
+          },
+          "score": 4.8,
+          "tags": [
+            "Antique"
+          ]
+        },
+        {
+          "id": "SAVERSR",
+          "name": "Savers",
+          "type": "store",
+          "arrive": "14:33",
+          "depart": "15:03",
+          "lat": 43.208852107704,
+          "lon": -77.460114345954,
+          "address": "980 Ridge Rd, Webster, NY 14580",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "AWFM",
+            "toId": "SAVERSR",
+            "driveMin": 77.63547989349723,
+            "distanceMi": 58.226609920122925
+          },
+          "score": 5,
+          "tags": [
+            "Thrift"
+          ]
+        },
+        {
+          "id": "GJE",
+          "name": "Grandma Jaree's Emporium",
+          "type": "store",
+          "arrive": "16:08",
+          "depart": "16:38",
+          "lat": 42.932716334904,
+          "lon": -76.572979661258,
+          "address": "25 McMaster St, Auburn, NY 13021",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "SAVERSR",
+            "toId": "GJE",
+            "driveMin": 64.89632364610115,
+            "distanceMi": 48.67224273457586
+          },
+          "score": 4.9,
+          "tags": [
+            "must-visit",
+            "Junk"
+          ]
+        },
+        {
+          "id": "ROXe",
+          "name": "Roxbury",
+          "type": "end",
+          "arrive": "19:07",
+          "depart": "19:07",
+          "lat": 42.2839,
+          "lon": -74.5651,
+          "legIn": {
+            "fromId": "GJE",
+            "toId": "ROXe",
+            "driveMin": 148.6809710095119,
+            "distanceMi": 111.51072825713393
+          }
+        }
+      ],
+      "excluded": [
+        {
+          "id": "2TAC",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SAVERST"
+        },
+        {
+          "id": "AFAC",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SAVERSR"
+        },
+        {
+          "id": "ATBR",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SAVERST"
+        },
+        {
+          "id": "BRV",
+          "reason": "timeWindow",
+          "nearestAlternateId": "AB"
+        },
+        {
+          "id": "CAOL",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SAVERSR"
+        },
+        {
+          "id": "CGAE",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SAVERST"
+        },
+        {
+          "id": "COO",
+          "reason": "timeWindow",
+          "nearestAlternateId": "AB"
+        },
+        {
+          "id": "EA",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SAVERSR"
+        },
+        {
+          "id": "FLTT",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SAVERSR"
+        },
+        {
+          "id": "FTVA",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SAVERST"
+        },
+        {
+          "id": "HA",
+          "reason": "timeWindow",
+          "nearestAlternateId": "AWFM"
+        },
+        {
+          "id": "HFHR",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SAVERSR"
+        },
+        {
+          "id": "HFHRN",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SAVERST"
+        },
+        {
+          "id": "HFHRS",
+          "reason": "timeWindow",
+          "nearestAlternateId": "ATSWS"
+        },
+        {
+          "id": "HTSHFT",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SAVERST"
+        },
+        {
+          "id": "LH",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SAVERSR"
+        },
+        {
+          "id": "OHVC",
+          "reason": "timeWindow",
+          "nearestAlternateId": "AB"
+        },
+        {
+          "id": "PLAM",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SAVERSR"
+        },
+        {
+          "id": "SA",
+          "reason": "timeWindow",
+          "nearestAlternateId": "AB"
+        },
+        {
+          "id": "SAT",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SAVERSR"
+        },
+        {
+          "id": "SCBAC",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SAVERST"
+        },
+        {
+          "id": "SDDS",
+          "reason": "timeWindow",
+          "nearestAlternateId": "AB"
+        },
+        {
+          "id": "SLADD",
+          "reason": "timeWindow",
+          "nearestAlternateId": "ATSWS"
+        },
+        {
+          "id": "STR",
+          "reason": "timeWindow",
+          "nearestAlternateId": "AB"
+        },
+        {
+          "id": "UVM",
+          "reason": "timeWindow",
+          "nearestAlternateId": "SAVERSR"
+        }
+      ],
+      "metrics": {
+        "storeCount": 29,
+        "storesVisited": 7,
+        "visitedIds": [
+          "ATSWS",
+          "AB",
+          "HTSHFB",
+          "SAVERST",
+          "AWFM",
+          "SAVERSR",
+          "GJE"
+        ],
+        "totalScore": 32.7,
+        "scorePerStore": 4.671428571428572,
+        "scorePerMin": 0.05978117519874288,
+        "scorePerDriveMin": 0.09703409954297933,
+        "scorePerMile": 0.1293787993906391,
+        "totalDriveMin": 336.9949342964345,
+        "totalDwellMin": 210,
+        "slackMin": 53.00506570356538,
+        "totalDistanceMiles": 252.7462007223259,
+        "onTimeRisk": 0
+      }
+    }
+  ]
+}

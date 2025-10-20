@@ -1,0 +1,190 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`solveDay > produces stable itinerary output (FR-31) 1`] = `
+{
+  "days": [
+    {
+      "dayId": "D1",
+      "excluded": [],
+      "metrics": {
+        "onTimeRisk": 0,
+        "scorePerDriveMin": 0,
+        "scorePerMile": 0,
+        "scorePerMin": 0,
+        "scorePerStore": 0,
+        "slackMin": 748.0590557204848,
+        "storeCount": 3,
+        "storesVisited": 3,
+        "totalDistanceMiles": 690.9409442795152,
+        "totalDriveMin": 690.9409442795152,
+        "totalDwellMin": 0,
+        "totalScore": 0,
+        "visitedIds": [
+          "A",
+          "B",
+          "C",
+        ],
+      },
+      "stops": [
+        {
+          "arrive": "00:00",
+          "depart": "00:00",
+          "id": "S",
+          "lat": 0,
+          "lon": 0,
+          "name": "start",
+          "type": "start",
+        },
+        {
+          "arrive": "02:18",
+          "depart": "02:18",
+          "dwellMin": 0,
+          "id": "A",
+          "lat": 2,
+          "legIn": {
+            "distanceMi": 138.18818885590304,
+            "driveMin": 138.18818885590304,
+            "fromId": "S",
+            "toId": "A",
+          },
+          "lon": 0,
+          "name": "A",
+          "type": "store",
+        },
+        {
+          "arrive": "05:45",
+          "depart": "05:45",
+          "dwellMin": 0,
+          "id": "B",
+          "lat": 5,
+          "legIn": {
+            "distanceMi": 207.28228328385455,
+            "driveMin": 207.28228328385455,
+            "fromId": "A",
+            "toId": "B",
+          },
+          "lon": 0,
+          "name": "B",
+          "type": "store",
+        },
+        {
+          "arrive": "09:13",
+          "depart": "09:13",
+          "dwellMin": 0,
+          "id": "C",
+          "lat": 8,
+          "legIn": {
+            "distanceMi": 207.28228328385458,
+            "driveMin": 207.28228328385458,
+            "fromId": "B",
+            "toId": "C",
+          },
+          "lon": 0,
+          "name": "C",
+          "type": "store",
+        },
+        {
+          "arrive": "11:31",
+          "depart": "11:31",
+          "id": "E",
+          "lat": 10,
+          "legIn": {
+            "distanceMi": 138.188188855903,
+            "driveMin": 138.188188855903,
+            "fromId": "C",
+            "toId": "E",
+          },
+          "lon": 0,
+          "name": "end",
+          "type": "end",
+        },
+      ],
+    },
+  ],
+}
+`;
+
+exports[`solveDay > reports constraint metadata when caps are binding 1`] = `
+{
+  "days": [
+    {
+      "dayId": "D1",
+      "excluded": [
+        {
+          "id": "A",
+          "nearestAlternateId": "B",
+          "reason": "maxStops",
+        },
+        {
+          "id": "C",
+          "nearestAlternateId": "B",
+          "reason": "maxStops",
+        },
+      ],
+      "metrics": {
+        "bindingConstraints": [
+          "maxDriveTime",
+          "maxStops",
+        ],
+        "onTimeRisk": 0,
+        "scorePerDriveMin": 0,
+        "scorePerMile": 0,
+        "scorePerMin": 0,
+        "scorePerStore": 0,
+        "slackMin": 748.0590557204848,
+        "storeCount": 3,
+        "storesVisited": 1,
+        "totalDistanceMiles": 690.9409442795152,
+        "totalDriveMin": 690.9409442795152,
+        "totalDwellMin": 0,
+        "totalScore": 0,
+        "visitedIds": [
+          "B",
+        ],
+      },
+      "stops": [
+        {
+          "arrive": "00:00",
+          "depart": "00:00",
+          "id": "S",
+          "lat": 0,
+          "lon": 0,
+          "name": "start",
+          "type": "start",
+        },
+        {
+          "arrive": "05:45",
+          "depart": "05:45",
+          "dwellMin": 0,
+          "id": "B",
+          "lat": 5,
+          "legIn": {
+            "distanceMi": 345.4704721397576,
+            "driveMin": 345.4704721397576,
+            "fromId": "S",
+            "toId": "B",
+          },
+          "lon": 0,
+          "name": "B",
+          "type": "store",
+        },
+        {
+          "arrive": "11:31",
+          "depart": "11:31",
+          "id": "E",
+          "lat": 10,
+          "legIn": {
+            "distanceMi": 345.4704721397576,
+            "driveMin": 345.4704721397576,
+            "fromId": "B",
+            "toId": "E",
+          },
+          "lon": 0,
+          "name": "end",
+          "type": "end",
+        },
+      ],
+    },
+  ],
+}
+`;

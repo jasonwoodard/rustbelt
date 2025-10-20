@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "atlas-python"
+version = "0.1.0"
+description = "Rust Belt Atlas prototype CLI and scoring engine"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+  {name = "Rust Belt Team"}
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0"
+]
+
+[project.scripts]
+rustbelt-atlas = "atlas.cli.__main__:main"
