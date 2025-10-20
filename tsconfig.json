@@ -1,15 +1,7 @@
 {
-  "compilerOptions": {
-    "target": "ES2019",
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "outDir": "dist",
-    "sourceMap": true
-  },
-  "include": ["src"]
+  "files": [],
+  "references": [
+    { "path": "./packages/solver-cli/tsconfig.json" }
+  ]
 }
  

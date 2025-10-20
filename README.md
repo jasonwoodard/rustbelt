@@ -55,6 +55,7 @@ Refer to the [Getting Started guide](docs/getting-started.md) for a full walkthr
    ```
 4. **Run a solve**
    ```sh
+   # from packages/solver-cli
    npx tsx src/index.ts solve-day --trip fixtures/getting-started-trip.json --day day-1
    ```
    After building you can also run:
@@ -113,7 +114,7 @@ parsing the `<ExtendedData>` entries.
 ## HTML Templates
 
 HTML itineraries are rendered with [Mustache](https://mustache.github.io/) templates.
-The default template is `src/io/templates/itinerary.mustache` which includes
+Within `packages/solver-cli` the default template is `src/io/templates/itinerary.mustache`, which includes
 a `stop` partial for each stop row.
 
 You can customize the HTML output by providing your own template or partials
@@ -121,7 +122,7 @@ to `emitHtml`:
 
 ```ts
 import { readFileSync } from 'fs';
-import { emitHtml } from './src/io/emitHtml';
+import { emitHtml } from './packages/solver-cli/src/io/emitHtml';
 const template = readFileSync('myTemplate.mustache', 'utf8');
 const runTs = new Date().toISOString();
 const html = emitHtml(days, runTs, { template });

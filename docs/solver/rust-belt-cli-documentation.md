@@ -20,7 +20,7 @@ sources or from the compiled JavaScript.
 
 ```sh
 npm install
-npx tsx src/index.ts --help    # run from source
+npx tsx src/index.ts --help    # run from source (inside packages/solver-cli)
 # or
 npm run build
 node dist/index.js --help      # run after build
