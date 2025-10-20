@@ -121,6 +121,7 @@ def test_prior_score_result_trace_contains_expected_keys() -> None:
     result = compute_prior_score("Thrift")
     trace = result.to_trace()
 
-    assert trace["value"] == result.value
-    assert "baseline_value" in trace
-    assert "posterior_value_override" in trace
+    assert trace["scores.value"] == result.value
+    assert trace["baseline.value"] == result.baseline_value
+    assert trace["affluence.income"] == result.income_contribution
+    assert trace["model.parameters_hash"]
