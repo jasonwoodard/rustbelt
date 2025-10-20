@@ -1,0 +1,5 @@
+StoreId,Name,Type,Lat,Lon,GeoId,Metro
+SR-001,Country Exchange,Thrift,41.801,-84.124,G26001,Metro-Rural
+SR-002,Depot Vintage,Vintage,41.923,-84.256,G26005,Metro-Rural
+SR-003,Old Barn Finds,Flea/Surplus,42.015,-84.392,G26009,Metro-Rural
+SR-004,Hearthside Antiques,Antique,42.087,-84.511,G26011,Metro-Rural

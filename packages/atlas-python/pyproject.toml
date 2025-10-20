@@ -24,3 +24,8 @@ dev = [
 
 [project.scripts]
 rustbelt-atlas = "atlas.cli.__main__:main"
+
+[tool.pytest.ini_options]
+markers = [
+    "integration: end-to-end CLI tests",
+]
