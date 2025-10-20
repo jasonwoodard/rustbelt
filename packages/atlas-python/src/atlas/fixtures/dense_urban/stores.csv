@@ -1,0 +1,6 @@
+StoreId,Name,Type,Lat,Lon,GeoId,Metro,MedianIncomeNorm,Pct100kHHNorm,PctRenterNorm
+DU-001,River Town Thrift,Thrift,42.331,-83.045,G26163,Metro-Dense,0.75,0.65,0.4
+DU-002,Midtown Vintage,Vintage,42.36,-83.065,G26163,Metro-Dense,0.88,0.72,0.55
+DU-003,Upcycle Collective,Antique,42.347,-83.052,G26163,Metro-Dense,0.92,0.8,0.35
+DU-004,Eastern Flea,Flea/Surplus,42.371,-83.03,G26165,Metro-Dense,0.7,0.55,0.6
+DU-005,Warehouse Finds,Thrift,42.389,-83.02,G26165,Metro-Dense,0.62,0.48,0.45

@@ -1,0 +1,3 @@
+GeoId,MedianIncome,Pct100kHH,Education,HomeValue,Turnover,Metro,County
+G26163,72000,0.32,0.45,215000,0.48,Metro-Dense,Wayne
+G26165,63000,0.24,0.38,189000,0.52,Metro-Dense,Macomb
