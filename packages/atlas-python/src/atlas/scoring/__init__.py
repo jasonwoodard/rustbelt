@@ -1,5 +1,6 @@
 """Scoring utilities for the Atlas project."""
 
+from .posterior import PosteriorPipeline, PosteriorPrediction
 from .prior import (
     PriorScoreResult,
     clamp_score,
@@ -10,6 +11,8 @@ from .prior import (
 )
 
 __all__ = [
+    "PosteriorPipeline",
+    "PosteriorPrediction",
     "PriorScoreResult",
     "clamp_score",
     "compute_prior_score",
