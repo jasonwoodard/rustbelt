@@ -29,6 +29,7 @@ import numpy as np
 import pandas as pd
 
 from .prior import clamp_score
+from ..explain import TraceRecord, hash_payload
 
 
 DEFAULT_WINDOW = "corpus"
@@ -405,6 +406,7 @@ class PosteriorPipeline:
         self.store_summary_: pd.DataFrame | None = None
         self.yield_model_: _GLMResult | None = None
         self.value_model_: _LinearModelResult | None = None
+        self.trace_records_: dict[str, TraceRecord] | None = None
 
     def fit(
         self,
@@ -512,6 +514,10 @@ class PosteriorPipeline:
         stores = stores.copy()
         stores.set_index("StoreId", inplace=True, drop=False)
 
+        raw_features = (
+            stores[self.feature_columns_].copy() if self.feature_columns_ is not None else pd.DataFrame(index=stores.index)
+        )
+
         if self.feature_columns_ is None or self.feature_stats_ is None:
             raise RuntimeError("Pipeline not fitted")
 
@@ -567,6 +573,9 @@ class PosteriorPipeline:
                 theta_uncertainty[idx] = se_theta
                 value_uncertainty[idx] = se_value
 
+        theta_before_knn = theta_final.copy()
+        value_before_knn = value_final.copy()
+
         if "kNN" in methods:
             theta_final, value_final = _knn_smooth_sparse_predictions(
                 stores,
@@ -576,6 +585,8 @@ class PosteriorPipeline:
                 k=self.knn_k,
                 smoothing_factor=self.knn_smoothing_factor,
             )
+        theta_adjacency = theta_final - theta_before_knn
+        value_adjacency = value_final - value_before_knn
 
         # Map theta to the 1–5 Yield scale via the persisted ECDF.
         quantiles = []
@@ -598,6 +609,23 @@ class PosteriorPipeline:
             if method == "kNN":
                 credibility[idx] *= 0.8
 
+        model_payload = {
+            "feature_columns": self.feature_columns_,
+            "min_samples_glm": self.min_samples_glm,
+            "knn_k": self.knn_k,
+            "knn_smoothing_factor": self.knn_smoothing_factor,
+        }
+
+        if self.yield_model_ is not None:
+            model_payload["yield_beta"] = self.yield_model_.beta.tolist()
+            model_payload["yield_family"] = self.yield_model_.family
+        if self.value_model_ is not None:
+            model_payload["value_beta"] = self.value_model_.beta.tolist()
+
+        parameter_hash = hash_payload(model_payload)
+
+        traces: dict[str, TraceRecord] = {}
+
         predictions = [
             PosteriorPrediction(
                 store_id=str(store_id),
@@ -610,6 +638,63 @@ class PosteriorPipeline:
             ).to_dict()
             for idx, store_id in enumerate(stores.index)
         ]
+
+        for idx, store_id in enumerate(stores.index):
+            summary_row = summary.iloc[idx]
+            observations_section = {
+                "visits": float(summary_row.get("visits", 0.0)),
+                "dwell_total": float(summary_row.get("dwell_total", 0.0)),
+                "items_total": float(summary_row.get("items_total", 0.0)),
+                "value_mean": float(summary_row.get("value_mean", 0.0)),
+                "theta_observed": float(summary_row.get("theta_mean", 0.0)),
+                "method": methods[idx],
+                "theta_uncertainty": float(theta_se[idx]),
+                "value_uncertainty": float(value_se[idx]),
+            }
+
+            baseline_section = {
+                "theta_prediction": float(theta_pred[idx]),
+                "value_prediction": float(value_pred[idx]),
+            }
+
+            adjacency_section = {
+                "theta": float(theta_adjacency[idx]),
+                "value": float(value_adjacency[idx]),
+            }
+
+            affluence_section: dict[str, float] = {}
+            if not raw_features.empty:
+                for column in raw_features.columns:
+                    affluence_section[column] = float(raw_features.iloc[idx][column])
+
+            scores_section = {
+                "theta_final": float(theta_final[idx]),
+                "yield_final": float(yield_scores[idx]),
+                "value_final": float(value_final[idx]),
+                "credibility": float(credibility[idx]),
+                "ecdf_quantile": float(quantiles[idx]),
+            }
+
+            model_section = {
+                "parameters_hash": parameter_hash,
+                "yield_family": self.yield_model_.family if self.yield_model_ else None,
+                "min_samples_glm": self.min_samples_glm,
+                "knn_k": self.knn_k,
+                "knn_smoothing_factor": self.knn_smoothing_factor,
+            }
+
+            traces[str(store_id)] = TraceRecord(
+                store_id=str(store_id),
+                stage="posterior",
+                baseline=baseline_section,
+                affluence=affluence_section,
+                adjacency=adjacency_section,
+                observations=observations_section,
+                model=model_section,
+                scores=scores_section,
+            )
+
+        self.trace_records_ = traces
 
         return pd.DataFrame(predictions)
 

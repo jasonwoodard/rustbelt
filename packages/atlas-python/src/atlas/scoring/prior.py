@@ -8,6 +8,8 @@ from typing import Dict
 import numpy as np
 import pandas as pd
 
+from ..explain import TraceRecord, hash_payload
+
 
 Score = float
 
@@ -85,8 +87,13 @@ class PriorScoreResult:
     posterior_value_override: Score | None = None
     posterior_yield_override: Score | None = None
 
+    trace: TraceRecord | None = None
+
     def to_trace(self) -> Dict[str, float | None]:
         """Return a dictionary suitable for structured logging."""
+
+        if self.trace is not None:
+            return self.trace.to_dict()
 
         return {
             "value": self.value,
@@ -171,6 +178,51 @@ def compute_prior_score(
     if posterior_overrides is not None:
         posterior_value_override, posterior_yield_override = posterior_overrides
 
+    trace_payload = {
+        "baseline": {
+            "value": baseline.value,
+            "yield": baseline.yield_score,
+        },
+        "coefficients": {
+            "alpha_income": coeffs.alpha_income,
+            "alpha_high_income": coeffs.alpha_high_income,
+            "beta_renter": coeffs.beta_renter,
+        },
+        "adjacency": adjacency_adjustment,
+        "lambda_weight": lambda_weight,
+        "posterior_overrides": posterior_overrides,
+    }
+
+    trace = TraceRecord(
+        store_id=store_type,
+        stage="prior",
+        baseline={
+            "value": baseline.value,
+            "yield": baseline.yield_score,
+        },
+        affluence={
+            "income": income_contribution,
+            "high_income": high_income_contribution,
+            "renter": renter_contribution,
+        },
+        adjacency={
+            "value": adjacency_value_adjustment,
+            "yield": adjacency_yield_adjustment,
+        },
+        observations={
+            "lambda_weight": lambda_weight,
+        },
+        model={
+            "parameters_hash": hash_payload(trace_payload),
+            "posterior_overrides_present": posterior_overrides is not None,
+        },
+        scores={
+            "value": value,
+            "yield": yield_score,
+            "composite": composite,
+        },
+    )
+
     return PriorScoreResult(
         value=value,
         yield_score=yield_score,
@@ -184,6 +236,7 @@ def compute_prior_score(
         adjacency_yield_adjustment=adjacency_yield_adjustment,
         posterior_value_override=posterior_value_override,
         posterior_yield_override=posterior_yield_override,
+        trace=trace,
     )
 
 

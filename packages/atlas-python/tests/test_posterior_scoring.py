@@ -6,6 +6,7 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import pytest
 
 from atlas.scoring import PosteriorPipeline
 
@@ -74,6 +75,18 @@ def test_posterior_pipeline_recovers_observed_scores(tmp_path: Path) -> None:
     assert set(predictions.columns) == {"StoreId", "Theta", "Yield", "Value", "Cred", "Method", "ECDF_q"}
     assert (predictions["Cred"] > 0.0).all()
     assert (predictions["Yield"].between(1.0, 5.0)).all()
+
+    traces = pipeline.trace_records_
+    assert traces is not None
+    assert set(traces.keys()) == set(predictions["StoreId"])
+    for store_id, trace in traces.items():
+        trace_row = trace.to_dict()
+        assert trace_row["scores.theta_final"] == pytest.approx(
+            predictions.loc[predictions["StoreId"] == store_id, "Theta"].iloc[0]
+        )
+        assert "baseline.theta_prediction" in trace_row
+        assert "observations.visits" in trace_row
+        assert "model.parameters_hash" in trace_row
 
     summary = pipeline.store_summary_
     assert summary is not None
