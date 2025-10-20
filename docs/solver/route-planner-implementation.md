@@ -296,7 +296,7 @@ FR-16 (save/compare scenarios), FR-20 (why excluded \+ next-best).
 
   index.ts            \# CLI entry
 
-/tests
+/packages/solver-cli/tests
 
   fixtures/           \# v0.1 synthetic cases
 
@@ -731,7 +731,7 @@ node dist/index.js \\
 
 index.ts               // CLI router
 
-/tests
+/packages/solver-cli/tests
 
   fixtures/\*\*          // Synthetic cases
 
@@ -1049,14 +1049,14 @@ If metric is required later, gate it behind a single `units` flag and convert **
 
 ## C. Implement First (file order)
 
-1. `/src/distance.ts` — `haversineMiles`, `minutesAtMph`, `buildMatrix()`
-2. `/src/types.ts` — types in §6.2 (imperial-only)
-3. `/src/schedule.ts` — `computeTimeline`, `isFeasible`, `slackMin`
-4. `/src/heuristics.ts` — seed → greedy insert (min feasible Δtime) → 2-opt/relocate; seeded tie-breaks
-5. `/src/io/parse.ts` — `parseTrip`, `parseLocation` (lat/lon | Plus Code | URL `@lat,lon`), validation & dedupe  
-6. `/src/io/emit.ts` — JSON \+ optional Markdown summary with per-day metrics; `emitHtml.ts` for HTML, `emitKml.ts` for KML, `emitCsv.ts` for CSV
-7. `/src/app/solveDay.ts` — orchestrate a single day solve  
-8. `/src/index.ts` — CLI entry (Commander): flags below
+1. `/packages/solver-cli/src/distance.ts` — `haversineMiles`, `minutesAtMph`, `buildMatrix()`
+2. `/packages/solver-cli/src/types.ts` — types in §6.2 (imperial-only)
+3. `/packages/solver-cli/src/schedule.ts` — `computeTimeline`, `isFeasible`, `slackMin`
+4. `/packages/solver-cli/src/heuristics.ts` — seed → greedy insert (min feasible Δtime) → 2-opt/relocate; seeded tie-breaks
+5. `/packages/solver-cli/src/io/parse.ts` — `parseTrip`, `parseLocation` (lat/lon | Plus Code | URL `@lat,lon`), validation & dedupe
+6. `/packages/solver-cli/src/io/emit.ts` — JSON \+ optional Markdown summary with per-day metrics; `emitHtml.ts` for HTML, `emitKml.ts` for KML, `emitCsv.ts` for CSV
+7. `/packages/solver-cli/src/app/solveDay.ts` — orchestrate a single day solve
+8. `/packages/solver-cli/src/index.ts` — CLI entry (Commander): flags below
 
 ## D. CLI (v0.1)
 

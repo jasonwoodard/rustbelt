@@ -61,7 +61,8 @@ Use your preferred JSON Schema validator with [`docs/trip-schema.json`](trip-sch
 Execute the CLI with the `solve-day` command, passing the day identifier from your trip file:
 
 ```sh
-npx tsx src/index.ts solve-day --trip fixtures/getting-started-trip.json --day day-1
+   # from packages/solver-cli
+   npx tsx src/index.ts solve-day --trip fixtures/getting-started-trip.json --day day-1
 ```
 
 After building, you can also invoke the compiled bundle:
