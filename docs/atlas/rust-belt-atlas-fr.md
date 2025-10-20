@@ -10,11 +10,11 @@ Atlas sits upstream of Solver: **Atlas maps the landscape, Solver plans the jour
 
 | ID     | Title                       | Description                                                                 |
 |--------|-----------------------------|-----------------------------------------------------------------------------|
-| FR-1   | Store Scoring (Value–Yield) | Compute desk-estimated Value/Yield scores for each store using baselines, affluence, adjacency, and observations. |
-| FR-1a  | Posterior-Only Scoring (No Priors)    | Fit from observations only; predict to unvisited stores; emit credibility. |
+| FR-1   | Store Scoring (Value–Yield) [DONE] | Compute desk-estimated Value/Yield scores for each store using baselines, affluence, adjacency, and observations. |
+| FR-1a  | Posterior-Only Scoring (No Priors) [DONE]   | Fit from observations only; predict to unvisited stores; emit credibility. |
 | FR-2   | Metro Anchor Identification | Group stores into metro-level anchors representing natural exploration areas. |
 | FR-3   | Sub-Cluster Detection       | Identify finer-grained clusters of stores within anchors (curated pockets). |
-| FR-4   | Explainability Trace        | Provide per-store explanations showing how final scores were derived.       |
+| FR-4   | Explainability Trace [DONE]       | Provide per-store explanations showing how final scores were derived.       |
 | FR-5   | Data Exchange with Solver   | Output Atlas data in a format directly consumable by the Rust Belt Solver. |
 | FR-6   | Diagnostics & Reports       | Emit validation metrics, correlation analysis, and summaries of anchors/clusters. |
 

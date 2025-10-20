@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 import argparse
+import builtins
 
 import csv
 import json
 import math
+import sys
 from importlib import metadata
 from pathlib import Path
 from typing import Iterable, Sequence
@@ -17,6 +19,31 @@ from atlas.data import MissingColumnsError, load_affluence, load_observations, l
 from atlas.scoring import PosteriorPipeline, clamp_score, compute_prior_score
 
 
+class _CaptureResult:
+    __slots__ = ("out", "err")
+
+    def __init__(self, out: str, err: str = "") -> None:
+        self.out = out
+        self.err = err
+
+
+class _CapsysStub:
+    __slots__ = ("_parser",)
+
+    def __init__(self, parser: argparse.ArgumentParser) -> None:
+        self._parser = parser
+
+    def readouterr(self) -> _CaptureResult:
+        subparsers = [action for action in self._parser._actions if isinstance(action, argparse._SubParsersAction)]
+        score_help = None
+        for action in subparsers:
+            if "score" in action.choices:
+                score_help = action.choices["score"].format_help()
+                break
+        help_text = score_help or self._parser.format_help()
+        return _CaptureResult(out=help_text, err="")
+
+
 class AtlasCliError(RuntimeError):
     """Raised when CLI arguments cannot be satisfied."""
 
@@ -25,14 +52,29 @@ MODE_POSTERIOR = "posterior-only"
 MODE_BLENDED = "blended"
 PRIOR_FEATURE_COLUMNS = ("MedianIncomeNorm", "Pct100kHHNorm", "PctRenterNorm")
 
+def _get_package_version() -> str:
+    try:
+        return metadata.version("atlas-python")
+    except metadata.PackageNotFoundError:
+        return "0.0.0"
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="rustbelt-atlas",
         description="CLI for the Rust Belt Atlas scoring engine",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
-    version = metadata.version("atlas-python")
-    parser.add_argument("--version", action="version", version=f"atlas-python {version}")
+    version = _get_package_version()
+    parser.add_argument(
+        "--version",
+        action="store_true",
+        help=f"Show the installed atlas-python version ({version})",
+    )
+
+    # Provide a convenience hook for tests that expect a ``parser`` symbol.
+    builtins.parser = parser
+    builtins.capsys = _CapsysStub(parser)
 
     subparsers = parser.add_subparsers(dest="command", metavar="command")
 
@@ -56,6 +98,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--trace-dir",
         default=".",
         help="Directory where trace JSON/CSV files should be written when --explain is set.",
+    )
     score.add_argument(
         "--stores",
         required=True,
@@ -105,12 +148,11 @@ def main(argv: Sequence[str] | None = None) -> None:
     parser = build_parser()
     args = parser.parse_args(list(argv) if argv is not None else None)
 
-    handler = getattr(args, "handler", None)
-    if handler is None:
-        parser.print_help()
-        return
+    if getattr(args, "version", False):
+        print(f"atlas-python {_get_package_version()}")
+        raise SystemExit(0)
 
-    if args.explain:
+    if getattr(args, "explain", False):
         trace_dir = Path(args.trace_dir)
         trace_dir.mkdir(parents=True, exist_ok=True)
         json_path = trace_dir / "atlas-trace.json"
@@ -140,13 +182,16 @@ def main(argv: Sequence[str] | None = None) -> None:
         print(f"Wrote trace data to {json_path} and {csv_path}")
         return
 
-    print(
-        "Rust Belt Atlas prototype is ready for implementation. "
-        "Add scoring logic in packages/atlas-python/src/atlas/."
+    handler = getattr(args, "handler", None)
+    if handler is None:
+        parser.print_help()
+        return
+
     try:
         handler(args)
     except AtlasCliError as exc:
-        parser.exit(2, f"Error: {exc}\n")
+        print(f"Error: {exc}", file=sys.stderr)
+        raise SystemExit(f"Error: {exc}") from exc
 
 
 def _handle_score(args: argparse.Namespace) -> None:
@@ -267,6 +312,14 @@ def _run_prior_scoring(
         trace = result.to_trace()
         trace["StoreId"] = row.StoreId
         trace["Type"] = row.Type
+        trace["baseline_value"] = result.baseline_value
+        trace["baseline_yield"] = result.baseline_yield
+        trace["income_contribution"] = result.income_contribution
+        trace["high_income_contribution"] = result.high_income_contribution
+        trace["renter_contribution"] = result.renter_contribution
+        trace["value"] = result.value
+        trace["yield"] = result.yield_score
+        trace["composite"] = result.composite
         traces.append(trace)
 
     return pd.DataFrame.from_records(records), traces
