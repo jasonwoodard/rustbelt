@@ -1,0 +1,274 @@
+{
+  "runTimestamp": "2025-09-16T02:22:07.010Z",
+  "runId": "AA-v2",
+  "runNote": "Ann Arbor TS far point",
+  "days": [
+    {
+      "dayId": "Mon",
+      "stops": [
+        {
+          "id": "HCGs1",
+          "name": "Hollywood Casino Greektown",
+          "type": "start",
+          "arrive": "09:00",
+          "depart": "09:00",
+          "lat": 42.336873,
+          "lon": -83.0418499
+        },
+        {
+          "id": "TSAFSCT",
+          "name": "The Salvation Army Family Store & Donation Center",
+          "type": "store",
+          "arrive": "09:37",
+          "depart": "10:07",
+          "lat": 42.351439786378,
+          "lon": -83.469170034323,
+          "address": "43403 Joy Rd, Canton Township, MI 48187",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "HCGs1",
+            "toId": "TSAFSCT",
+            "driveMin": 37.44974112103469,
+            "distanceMi": 21.84568232060357
+          },
+          "score": 3.7,
+          "tags": [
+            "Thrift"
+          ]
+        },
+        {
+          "id": "VWT9",
+          "name": "Value World Thrift",
+          "type": "store",
+          "arrive": "10:23",
+          "depart": "10:53",
+          "lat": 42.245572221237,
+          "lon": -83.582547913813,
+          "address": "1410 E Michigan Ave, Ypsilanti, MI 48198",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "TSAFSCT",
+            "toId": "VWT9",
+            "driveMin": 15.997101359225267,
+            "distanceMi": 9.331642459548073
+          },
+          "score": 4,
+          "tags": [
+            "Thrift"
+          ]
+        },
+        {
+          "id": "RAGS",
+          "name": "Ragstock",
+          "type": "store",
+          "arrive": "11:08",
+          "depart": "11:38",
+          "lat": 42.279535758164,
+          "lon": -83.7453166195,
+          "address": "337 E Liberty St, Ann Arbor, MI 48104",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "VWT9",
+            "toId": "RAGS",
+            "driveMin": 14.824445489901525,
+            "distanceMi": 8.647593202442556
+          },
+          "score": 4,
+          "tags": [
+            "Vintage"
+          ]
+        },
+        {
+          "id": "TS",
+          "name": "The ShareHouse",
+          "type": "store",
+          "arrive": "11:46",
+          "depart": "12:16",
+          "lat": 42.28746620984,
+          "lon": -83.830718044144,
+          "address": "5161 Jackson Rd, Ann Arbor, MI 48103",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "RAGS",
+            "toId": "TS",
+            "driveMin": 7.542452050594691,
+            "distanceMi": 4.399763696180236
+          },
+          "score": 5,
+          "tags": [
+            "must-visit",
+            "Thrift"
+          ]
+        },
+        {
+          "id": "TSAFS",
+          "name": "The Salvation Army Family Store & Donation Center",
+          "type": "store",
+          "arrive": "12:24",
+          "depart": "12:54",
+          "lat": 42.261142020686,
+          "lon": -83.740301350218,
+          "address": "1621 S State St, Ann Arbor, MI 48104",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "TS",
+            "toId": "TSAFS",
+            "driveMin": 8.515737374874147,
+            "distanceMi": 4.967513468676586
+          },
+          "score": 3.7,
+          "tags": [
+            "Thrift"
+          ]
+        },
+        {
+          "id": "AATS",
+          "name": "Ann Arbor Thrift Shop",
+          "type": "store",
+          "arrive": "12:59",
+          "depart": "13:29",
+          "lat": 42.255689991053,
+          "lon": -83.690434090721,
+          "address": "3500 Washtenaw Ave K, Ann Arbor, MI 48104",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "TSAFS",
+            "toId": "AATS",
+            "driveMin": 4.419049667099438,
+            "distanceMi": 2.5777789724746722
+          },
+          "score": 3.5,
+          "tags": [
+            "Thrift"
+          ]
+        },
+        {
+          "id": "SCR",
+          "name": "SCRAP Creative Reuse",
+          "type": "store",
+          "arrive": "13:30",
+          "depart": "14:00",
+          "lat": 42.252675241419,
+          "lon": -83.673510381064,
+          "address": "4567 Washtenaw Ave, Ann Arbor, MI 48108",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "AATS",
+            "toId": "SCR",
+            "driveMin": 1.5260810702852947,
+            "distanceMi": 0.8902139576664219
+          },
+          "score": 3.8,
+          "tags": [
+            "Thrift"
+          ]
+        },
+        {
+          "id": "TBIN",
+          "name": "The Barn in Northville",
+          "type": "store",
+          "arrive": "14:26",
+          "depart": "14:56",
+          "lat": 42.436301752318,
+          "lon": -83.519719175565,
+          "address": "48120 Eight Mile W, Northville, MI 48167",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "SCR",
+            "toId": "TBIN",
+            "driveMin": 25.579935309114163,
+            "distanceMi": 14.921628930316595
+          },
+          "score": 3.8,
+          "tags": [
+            "Antique"
+          ]
+        },
+        {
+          "id": "TPCAA",
+          "name": "Town Peddler Craft and Antique Mall",
+          "type": "store",
+          "arrive": "15:10",
+          "depart": "15:40",
+          "lat": 42.367865594867,
+          "lon": -83.391025127892,
+          "address": "35323 Plymouth Rd, Livonia, MI 48150",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "TBIN",
+            "toId": "TPCAA",
+            "driveMin": 13.871211417514735,
+            "distanceMi": 8.091539993550262
+          },
+          "score": 4,
+          "tags": [
+            "must-visit",
+            "Antique"
+          ]
+        },
+        {
+          "id": "VWT-Westland",
+          "name": "Value World Thrift",
+          "type": "store",
+          "arrive": "15:43",
+          "depart": "16:13",
+          "lat": 42.343181412273,
+          "lon": -83.388254959552,
+          "address": "35300 Central City Pkwy, Westland, MI 48185",
+          "dwellMin": 30,
+          "legIn": {
+            "fromId": "TPCAA",
+            "toId": "VWT-Westland",
+            "driveMin": 2.9338049058073223,
+            "distanceMi": 1.7113861950542713
+          },
+          "score": 4,
+          "tags": [
+            "Thrift"
+          ]
+        },
+        {
+          "id": "HCGe1",
+          "name": "Hollywood Casino Greektown",
+          "type": "end",
+          "arrive": "16:43",
+          "depart": "16:43",
+          "lat": 42.336873,
+          "lon": -83.0418499,
+          "legIn": {
+            "fromId": "VWT-Westland",
+            "toId": "HCGe1",
+            "driveMin": 30.33742564206288,
+            "distanceMi": 17.696831624536678
+          }
+        }
+      ],
+      "metrics": {
+        "storeCount": 16,
+        "storesVisited": 10,
+        "visitedIds": [
+          "TSAFSCT",
+          "VWT9",
+          "RAGS",
+          "TS",
+          "TSAFS",
+          "AATS",
+          "SCR",
+          "TBIN",
+          "TPCAA",
+          "VWT-Westland"
+        ],
+        "totalScore": 39.5,
+        "scorePerStore": 3.95,
+        "scorePerMin": 0.08531373042360836,
+        "scorePerDriveMin": 0.24233577020608535,
+        "scorePerMile": 0.4154327489247177,
+        "totalDriveMin": 162.99698540751416,
+        "totalDwellMin": 300,
+        "slackMin": 17.003014592486124,
+        "totalDistanceMiles": 95.08157482104994,
+        "onTimeRisk": 0
+      }
+    }
+  ]
+}

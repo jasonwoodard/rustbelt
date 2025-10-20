@@ -1,0 +1,2 @@
+"""Atlas package placeholder module."""
+
