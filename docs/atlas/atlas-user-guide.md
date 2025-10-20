@@ -41,6 +41,57 @@ You can sort by V, Y, or combine them (see “Modes” below).
 
 ---
 
+## Quickstart: run Atlas v0.1 with sample data
+
+1. **Install the prototype** (once per machine):
+   ```bash
+   cd packages/atlas-python
+   python -m venv .venv
+   source .venv/bin/activate
+   pip install -e .[dev]
+   ```
+2. **Clone the sample metro**: the repository already ships with synthetic fixtures under `packages/atlas-python/src/atlas/fixtures/`. Use the `dense_urban` folder for a high-signal dataset.
+3. **Score with desk priors** to baseline Value/Yield before any visits:
+   ```bash
+   rustbelt-atlas score \
+     --mode prior-only \
+     --stores packages/atlas-python/src/atlas/fixtures/dense_urban/stores.csv \
+     --affluence packages/atlas-python/src/atlas/fixtures/dense_urban/affluence.csv \
+     --output out/dense_prior.csv \
+     --trace-out out/dense_prior_trace.json
+   ```
+   Check the CSV to see 1–5 Value/Yield scores and the JSONL trace to understand how the prior was assembled (baseline + affluence).
+4. **Fit the posterior** once you have visit notes:
+   ```bash
+   rustbelt-atlas score \
+     --mode posterior-only \
+     --stores packages/atlas-python/src/atlas/fixtures/dense_urban/stores.csv \
+     --observations packages/atlas-python/src/atlas/fixtures/dense_urban/observations.csv \
+     --ecdf-window Metro \
+     --posterior-trace out/dense_posterior_diagnostics.parquet \
+     --output out/dense_posterior.csv
+   ```
+   Confirm the visited stores recover their observed Value/Yield (FR-1a AC1) and that unvisited stores still receive predictions with method + credibility fields (FR-1a AC2).
+5. **Blend** the two perspectives when you are ready to route:
+   ```bash
+   rustbelt-atlas score \
+     --mode blended \
+     --stores packages/atlas-python/src/atlas/fixtures/dense_urban/stores.csv \
+     --affluence packages/atlas-python/src/atlas/fixtures/dense_urban/affluence.csv \
+     --observations packages/atlas-python/src/atlas/fixtures/dense_urban/observations.csv \
+     --lambda 0.6 \
+     --output out/dense_blended.csv
+   ```
+   The blended file keeps posterior means for visited stores while filling gaps with priors and recomputing the λ-weighted composite score.
+6. **Inspect the outputs**:
+   - `out/*.csv`: Value/Yield (and optional Composite) per store.
+   - `out/*.json` or `out/*.parquet`: Trace files you can attach to QA reports or demos.
+   - Re-run with `--explain` for a lightweight sample trace (`atlas-trace.json` / `atlas-trace.csv`).
+
+Re-run the commands with the `sparse_rural` fixtures to see how the engine behaves with minimal observations and heavier reliance on priors.
+
+---
+
 ## Minimal data to record after each store
 
 Answer **three questions**:
