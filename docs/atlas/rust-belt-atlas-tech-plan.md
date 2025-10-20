@@ -59,8 +59,11 @@ rustbelt-atlas score \
   --stores data/stores.csv \
   --affluence data/affluence.csv \
   --observations data/observations.csv \
-  --out out/scored-stores.csv \
-  --explain out/scored-explain.json
+  --mode blended \
+  --lambda 0.6 \
+  --output out/scored-stores.csv \
+  --trace-out out/prior-trace.jsonl \
+  --posterior-trace out/posterior-diagnostics.csv
 
 # Build metro anchors
 rustbelt-atlas anchors \
@@ -84,8 +87,8 @@ rustbelt-atlas score \
   --observations data/observations.csv \
   --mode posterior-only \
   --ecdf-window metro \
-  --out out/scored-post.csv \
-  --explain out/posterior-explain.json
+  --output out/scored-post.csv \
+  --posterior-trace out/posterior-diagnostics.csv
 
 > `observations.csv` must include `StoreId,DateTime,DwellMin,PurchasedItems,HaulLikert` with optional covariates such as `ObserverId`, `Spend`, or `Notes`. CLI validation rejects rows missing the required five columns and forwards optional fields to downstream modeling.
 
@@ -94,13 +97,18 @@ rustbelt-atlas score \
   --stores data/stores.csv \
   --affluence data/affluence.csv \
   --observations data/observations.csv \
-  --mode blended --omega 0.7 \
-  --out out/scored-blend.csv
+  --mode blended --lambda 0.7 \
+  --output out/scored-blend.csv
 
 **New flags**
 - `--mode {posterior-only|prior-only|blended}`
-- `--omega <0..1>` shrinkage weight for blended mode
+- `--lambda <0..1>` shrinkage weight for blended mode
+- `--output <path>` destination for scored stores (CSV/JSON)
+- `--trace-out <path>` JSONL prior trace output (optional)
+- `--posterior-trace <path>` posterior diagnostics snapshot (optional)
 - `--ecdf-window {day|metro|trip|corpus}`
+- `--ecdf-cache <path>` persist ECDF reference for reproducibility
+- `--explain/--trace-dir` generate a lightweight sample trace (documentation aid)
 
 
 ---

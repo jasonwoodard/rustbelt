@@ -529,7 +529,9 @@ class PosteriorPipeline:
         theta_pred, theta_se = self._predict_theta(stores)
         value_pred, value_se = self._predict_value(stores)
 
-        summary = self.store_summary_.reindex(stores.index, fill_value=0.0)
+        summary = self.store_summary_.reindex(stores.index).fillna(0.0)
+        numeric_columns = summary.select_dtypes(include=[np.number]).columns
+        summary.loc[:, numeric_columns] = summary.loc[:, numeric_columns].astype(float)
 
         visits = summary["visits"].to_numpy(dtype=float)
         observed_theta = summary["theta_mean"].to_numpy(dtype=float)
