@@ -26,7 +26,7 @@ export const program = new Command();
 
 program
   .name('rustbelt')
-  .description('CLI for ...')
+  .description('Multi-day thrift route planner CLI')
   .version('0.1.0')
   .showHelpAfterError();
 
