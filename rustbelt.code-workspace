@@ -1,0 +1,12 @@
+{
+  "folders": [
+    { "path": "packages/solver-cli" },
+    { "path": "packages/atlas-python" }
+  ],
+  "settings": {
+    "files.exclude": {
+      "node_modules": true,
+      "**/__pycache__": true
+    }
+  }
+}
