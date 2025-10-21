@@ -61,9 +61,9 @@ This later stop arrives at 17:11 after a 56‑minute drive. The high `score` of 
 
 ### Example: Break stop (`BREAK_ID`)
 
-When a break window is requested, the itinerary includes a pseudo-stop with
-the special ID `__break__`. The entry records the local arrival and departure
-times just like a store, making it clear when the downtime occurs:
+When the day specifies a `breakWindow`, the itinerary includes a pseudo-stop
+with the special ID `__break__`. The entry records the local arrival and
+departure times just like a store, making it clear when the downtime occurs:
 
 ```json
 {
