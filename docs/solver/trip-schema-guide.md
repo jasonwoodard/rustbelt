@@ -76,6 +76,24 @@ An **anchor** must include an `id` plus either `lat`/`lon` or `location`. Option
 | `riskThresholdMin` | number | Slack threshold (minutes) specific to the day. |
 | `dayOfWeek` | string | Day name (`Monday`–`Sunday`) used to evaluate `store.openHours`. |
 
+#### Declaring a break window
+
+Add a `breakWindow` object when the day must include protected downtime. Both
+`start` and `end` accept `HH:mm` strings (leading zero optional) that mirror the
+day's overall `window`. The solver inserts a pseudo-stop inside that range and
+marks it with the special ID `__break__`.
+
+```json
+{
+  "dayId": "day-1",
+  "window": { "start": "8:30", "end": "17:30" },
+  "breakWindow": { "start": "12:00", "end": "12:30" }
+}
+```
+
+Until the CLI grows an override flag, update the trip JSON directly to adjust or
+remove breaks.
+
 <details>
 <summary>Example day</summary>
 
