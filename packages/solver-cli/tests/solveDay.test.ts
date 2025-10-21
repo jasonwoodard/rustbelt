@@ -5,7 +5,7 @@ import { dirname, join } from 'node:path';
 import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { parseTrip } from '../src/io/parse';
 import { computeTimeline } from '../src/schedule';
-import type { Store } from '../src/types';
+import { BREAK_ID, type Store } from '../src/types';
 import { hhmmToMin } from '../src/time';
 import { tmpdir } from 'node:os';
 
@@ -22,6 +22,18 @@ describe('solveDay', () => {
     expect(ids).toEqual(['S', 'A', 'B', 'C', 'E']);
     expect(data.days[0].metrics.storesVisited).toBe(3);
     expect(data.days[0].metrics.totalScore).toBe(0);
+  });
+
+  it('inserts a break stop when a breakWindow is provided', () => {
+    const tripPath = join(__dirname, '../fixtures/break-window-trip.json');
+    const result = solveDay({ tripPath, dayId: 'D1' });
+    const data = JSON.parse(result.json);
+    const day = data.days[0];
+    const breakStop = day.stops.find((s: { id: string }) => s.id === BREAK_ID);
+    expect(breakStop).toBeDefined();
+    expect(breakStop.type).toBe('break');
+    expect(breakStop.arrive).toBe('12:00');
+    expect(breakStop.depart).toBe('12:30');
   });
 
   it('includes runId and runNote when provided', () => {

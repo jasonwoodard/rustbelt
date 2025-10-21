@@ -158,11 +158,14 @@ FR-16 (save/compare scenarios), FR-20 (why excluded \+ next-best).
 
 3. **Day Solver (per day)**  
      
-   - **Selector \+ Sequencer** that:  
-     - Honors must-visits (seed route)  
-     - Greedy/insertion heuristic, then local search (2-opt/Or-opt)  
-     - Feasibility checks (end-of-day reachability)  
-     - Tie-breakers (more end slack → shorter drive → median score)  
+   - **Selector \+ Sequencer** that:
+     - Honors must-visits (seed route)
+     - Greedy/insertion heuristic, then local search (2-opt/Or-opt)
+     - Feasibility checks (end-of-day reachability)
+     - Tie-breakers (more end slack → shorter drive → median score)
+     - Seeds a synthetic `__break__` stop anchored to the start location when a
+       `breakWindow` is provided so the break survives filtering and remains a
+       must-visit during heuristics
    - Returns `ItineraryDay` with stops, times, metrics
 
    
