@@ -162,6 +162,18 @@ export function solveCommon(opts: SolveCommonOptions): SolveCommonResult {
     });
   }
 
+  const startCoord = opts.startCoord ?? day.start.coord;
+
+  if (day.breakWindow) {
+    // The heuristics expect must-visit IDs to have entries in the store map so
+    // seed a synthetic break location anchored to the day's start point.
+    stores[BREAK_ID] = {
+      id: BREAK_ID,
+      name: 'Break',
+      coord: startCoord,
+    };
+  }
+
   let mustVisitIds: ID[] | undefined = day.mustVisitIds?.filter((id) =>
     candidateIds.includes(id),
   );
@@ -179,10 +191,10 @@ export function solveCommon(opts: SolveCommonOptions): SolveCommonResult {
   let locks = (opts.locks ?? day.locks)?.filter((l) => candidateIds.includes(l.storeId));
 
   if (day.breakWindow) {
-    mustVisitIds = [...(mustVisitIds ?? []), BREAK_ID];
+    mustVisitIds = [...new Set([...(mustVisitIds ?? []), BREAK_ID])];
   }
 
-  const start = { ...day.start, coord: opts.startCoord ?? day.start.coord };
+  const start = { ...day.start, coord: startCoord };
   const window = { start: opts.windowStart ?? day.window.start, end: day.window.end };
 
   const baseCtx: ScheduleCtx = {
@@ -214,7 +226,9 @@ export function solveCommon(opts: SolveCommonOptions): SolveCommonResult {
     }
     candidateIds = filtered;
     const filteredSet = new Set(filtered);
-    mustVisitIds = mustVisitIds?.filter((id) => filteredSet.has(id));
+    mustVisitIds = mustVisitIds?.filter(
+      (id) => id === BREAK_ID || filteredSet.has(id),
+    );
     locks = locks?.filter((l) => filteredSet.has(l.storeId));
   }
 
