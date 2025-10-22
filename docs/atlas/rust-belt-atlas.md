@@ -34,10 +34,12 @@ Atlas exposes three explicit scoring modes:
 - **Posterior-Only**  
   Fit **from observations** (V, N, t) and **predict to unvisited stores** via regularized models and/or neighbor smoothing. No desk priors are used. Outputs include a credibility score.
 
-- **Blended**  
-  Blend posterior predictions with priors via a shrinkage weight \( \omega \in [0,1] \):  
-  \( \widehat{E[V]} = \omega\,\widehat{E[V]_{\text{post}}} + (1-\omega)\,E[V]_{\text{prior}} \) and  
+- **Blended**
+  Blend posterior predictions with priors via a shrinkage weight \( \omega \in [0,1] \):
+  \( \widehat{E[V]} = \omega\,\widehat{E[V]_{\text{post}}} + (1-\omega)\,E[V]_{\text{prior}} \) and
   \( \widehat{E[\theta]} = \omega\,\widehat{E[\theta]_{\text{post}}} + (1-\omega)\,E[\theta]_{\text{prior}} \).
+
+  Atlas records the configured or adaptive \( \omega \) together with its prior/posterior components for later auditing and diagnostics.
 
 > Projection to a 1-D score for Solver (when requested) uses the canonical \( \text{VYScore}_\lambda = \lambda V + (1-\lambda)Y \).
 
@@ -54,9 +56,10 @@ Atlas exposes three explicit scoring modes:
 
 ## Outputs
 
-- **Scored stores** (always):  
-  - `StoreId, Value (V), Theta_est (items/45m), Yield (Y), ModeComposite (VYScore_λ optional)`  
-  - `Cred` (0–1 credibility / uncertainty proxy), `Method` (GLM|Hier|kNN|AnchorMean),  
+- **Scored stores** (always):
+  - `StoreId, Value (V), Theta_est (items/45m), Yield (Y), ModeComposite (VYScore_λ optional)`
+  - `Cred` (0–1 credibility / uncertainty proxy), `Method` (GLM|Hier|kNN|AnchorMean),
+  - `Omega`, `Value_prior`, `Value_post`, `Yield_prior`, `Yield_post` whenever blending is active,
   - `SourceTrace` (baseline / affluence / adjacency / observed contributions and ECDF quantile).
 
 - **Anchors** (optional): metro-level clusters with `AnchorId, centroid, store count, mean Value, mean Yield`.
@@ -82,7 +85,7 @@ This separation keeps Solver lean and deterministic, while allowing Atlas to evo
 
 ## Roadmap
 
-- **v0.1 (Prototype)**: Python implementation (pandas + geopandas). CLI for scoring; CSV/JSON I/O.  
+- **v0.1 (Prototype)**: Python implementation (pandas + geopandas). CLI for scoring; CSV/JSON I/O; expose blend weight & provenance fields (FR-1b).
 - **v0.2 (Integration)**: Feed Atlas outputs into Solver as an alternative to JScore.  
 - **v0.3 (Expansion)**: Add richer affluence models, neighbor inference, and scenario comparisons.
 

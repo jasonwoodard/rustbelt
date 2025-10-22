@@ -25,12 +25,13 @@ Atlas outputs are consumed by the Rust Belt Solver.
   - Affluence data (ACS census, turnover, housing, retail density).  
   - Observations (Value–Yield, notes, dates).  
 
-- **Scoring Engine**  
-  - Baseline priors by store type.  
-  - Affluence adjustments (boost/dampen Value/Yield).  
-  - Adjacency inference (smooth toward neighbor means).  
-  - Observed override (posterior mean from trip data).  
-  - Output: per-store Value, Yield, Composite JScore.  
+- **Scoring Engine**
+  - Baseline priors by store type.
+  - Affluence adjustments (boost/dampen Value/Yield).
+  - Adjacency inference (smooth toward neighbor means).
+  - Observed override (posterior mean from trip data).
+  - Blend manager exposing \( \omega \), prior, and posterior components for Value/Yield in outputs and diagnostics.
+  - Output: per-store Value, Yield, Composite JScore.
 
 - **Anchor Detection**  
   - Algorithm: DBSCAN/HDBSCAN on lat/lon (minPts=3–5).  
@@ -110,6 +111,8 @@ rustbelt-atlas score \
 - `--ecdf-cache <path>` persist ECDF reference for reproducibility
 - `--explain/--trace-dir` generate a lightweight sample trace (documentation aid)
 
+All scoring modes write blend metadata (`omega`, prior/posterior Value & Yield) when relevant so analysts can audit the provenance of each score.
+
 
 ---
 
@@ -135,7 +138,9 @@ rustbelt-atlas score \
 
 ### Output: scored-stores.csv
 
-| StoreId | Value | Yield | Composite | AnchorId | ClusterId | SourceTrace |
+| StoreId | Value | Yield | Composite | Omega | Value_prior | Value_post | Yield_prior | Yield_post | AnchorId | ClusterId | SourceTrace |
+
+> `Omega` and the prior/posterior columns are populated for blended runs and may be null otherwise; Solver consumption remains compatible by ignoring the optional fields.
 
 ### Output: anchors.json
 

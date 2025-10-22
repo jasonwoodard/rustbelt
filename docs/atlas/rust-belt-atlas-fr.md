@@ -12,6 +12,7 @@ Atlas sits upstream of Solver: **Atlas maps the landscape, Solver plans the jour
 |--------|-----------------------------|-----------------------------------------------------------------------------|
 | FR-1   | Store Scoring (Value–Yield) [DONE] | Compute desk-estimated Value/Yield scores for each store using baselines, affluence, adjacency, and observations. |
 | FR-1a  | Posterior-Only Scoring (No Priors) [DONE]   | Fit from observations only; predict to unvisited stores; emit credibility. |
+| FR-1b  | Blending Weight and Provenance [PLANNED] | Emit per-store blend weights and provenance for Value/Yield priors and posteriors. |
 | FR-2   | Metro Anchor Identification | Group stores into metro-level anchors representing natural exploration areas. |
 | FR-3   | Sub-Cluster Detection       | Identify finer-grained clusters of stores within anchors (curated pockets). |
 | FR-4   | Explainability Trace [DONE]       | Provide per-store explanations showing how final scores were derived.       |
@@ -68,7 +69,7 @@ Atlas trains on observed visits (t, N, V) to produce posterior predictions for a
 
 ### FR-1b: Blending Weight and Provenance
 
-**Description**  
+**Description**
 Atlas shall compute and emit the blending weight ω used to combine prior and posterior estimates per store.
 
 **Acceptance Criteria**
@@ -77,8 +78,14 @@ Atlas shall compute and emit the blending weight ω used to combine prior and po
 - AC3: When `mode=blended`, ω reflects the configured value or adaptive function.
 - AC4: Output includes prior, posterior, and blended components for both Value and Yield.
 
-**Rationale**  
+**Rationale**
 This enables transparent auditing of how strongly each model influenced the blended outcome and supports debugging score movements across runs.
+
+**Feasibility Assessment**
+- **Data availability**: All inputs (prior estimates, posterior predictions, configured ω) are already present in the scoring pipeline, so no new upstream data contracts are required.
+- **Engineering scope**: Requires augmenting the scoring output schema to persist `omega`, `Value_prior`, `Value_post`, `Yield_prior`, and `Yield_post`, plus CLI/logging hooks to expose ω in diagnostics. Changes are localized to the scoring engine and existing trace/diagnostics emitters.
+- **Operational impact**: Adds transparency for analysts with no effect on Solver contracts when ω/trace fields are optional. Feature can ship behind a schema version guard.
+- **Risk**: Low. Implementation relies on already-computed components and deterministic configuration, making this feasible for the v0.1 prototype timeline.
 
 ---
 
@@ -187,7 +194,7 @@ Atlas provides validation and diagnostic outputs to support model refinement.
 
 ## Roadmap
 
-- **v0.1 (Prototype)**: Store scoring pipelines (FR-1, FR-1a) and trace field capture needed for downstream explainability.
+- **v0.1 (Prototype)**: Store scoring pipelines (FR-1, FR-1a), blend weight provenance (FR-1b), and trace field capture needed for downstream explainability.
 - **v0.2**: Metro anchors (FR-2), explainability (FR-4), richer diagnostics (FR-6) — explainability ships here because it depends on the trace fields stabilized in v0.1.
 - **v0.3**: Affluence models + neighbor inference refinement, sub-clusters (FR-3), Solver integration (FR-5).
 
