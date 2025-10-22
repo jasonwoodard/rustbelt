@@ -66,6 +66,22 @@ Atlas trains on observed visits (t, N, V) to produce posterior predictions for a
 
 ---
 
+### FR-1b: Blending Weight and Provenance
+
+**Description**  
+Atlas shall compute and emit the blending weight ω used to combine prior and posterior estimates per store.
+
+**Acceptance Criteria**
+- AC1: ω ∈ [0,1] and logged globally and/or per store.
+- AC2: When `mode=prior-only`, ω=0.0; when `mode=posterior-only`, ω=1.0.
+- AC3: When `mode=blended`, ω reflects the configured value or adaptive function.
+- AC4: Output includes prior, posterior, and blended components for both Value and Yield.
+
+**Rationale**  
+This enables transparent auditing of how strongly each model influenced the blended outcome and supports debugging score movements across runs.
+
+---
+
 ## FR-2: Metro Anchor Identification
 
 **Description**  
