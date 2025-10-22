@@ -3,8 +3,6 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from atlas.cli.__main__ import build_parser, main
-
 import pandas as pd
 import pytest
 
@@ -119,6 +117,8 @@ def test_score_cli_blended_mode(tmp_path: Path) -> None:
     affluence.to_csv(affluence_path, index=False)
     observations.to_csv(observations_path, index=False)
 
+    omega = 0.25
+
     main(
         [
             "score",
@@ -142,22 +142,91 @@ def test_score_cli_blended_mode(tmp_path: Path) -> None:
             str(ecdf_cache),
             "--lambda",
             "0.6",
+            "--omega",
+            str(omega),
         ]
     )
 
     scores = pd.read_csv(output_path)
-    assert {"StoreId", "Value", "Yield", "Composite"}.issubset(scores.columns)
+    assert {"StoreId", "Value", "Yield", "Composite", "Omega"}.issubset(scores.columns)
+    assert {"ValuePrior", "YieldPrior", "ValuePosterior", "YieldPosterior"}.issubset(scores.columns)
     assert not scores.empty
+
+    indexed = scores.set_index("StoreId")
+    blended_store = indexed.loc["S1"]
+    assert blended_store["Omega"] == pytest.approx(omega)
+
+    expected_value = (1 - omega) * blended_store["ValuePrior"] + omega * blended_store["ValuePosterior"]
+    expected_yield = (1 - omega) * blended_store["YieldPrior"] + omega * blended_store["YieldPosterior"]
+    assert blended_store["Value"] == pytest.approx(expected_value)
+    assert blended_store["Yield"] == pytest.approx(expected_yield)
+
+    expected_composite = max(1.0, min(5.0, (0.6 * blended_store["Value"]) + (0.4 * blended_store["Yield"])))
+    assert blended_store["Composite"] == pytest.approx(expected_composite)
+
+    blended_mask = indexed["ValuePosterior"].notna() & indexed["YieldPosterior"].notna()
+    if blended_mask.any():
+        expected = [omega] * int(blended_mask.sum())
+        assert indexed.loc[blended_mask, "Omega"].tolist() == pytest.approx(expected)
+
+    prior_only_mask = ~indexed["ValuePosterior"].notna()
+    if prior_only_mask.any():
+        zeros = [0.0] * int(prior_only_mask.sum())
+        assert indexed.loc[prior_only_mask, "Omega"].tolist() == pytest.approx(zeros)
 
     trace_lines = trace_path.read_text(encoding="utf-8").strip().splitlines()
     assert trace_lines
-    first_trace = json.loads(trace_lines[0])
+    records = [json.loads(line) for line in trace_lines]
+    first_trace = records[0]
     assert "StoreId" in first_trace
     assert "value" in first_trace
+
+    blend_trace = next(record for record in records if record.get("stage") == "blend" and record.get("store_id") == "S1")
+    assert blend_trace["observations.omega"] == pytest.approx(omega)
+    assert blend_trace["scores.value_prior"] == pytest.approx(blended_store["ValuePrior"])
+    assert blend_trace["scores.value_posterior"] == pytest.approx(blended_store["ValuePosterior"])
+    assert blend_trace["scores.yield_prior"] == pytest.approx(blended_store["YieldPrior"])
+    assert blend_trace["scores.yield_posterior"] == pytest.approx(blended_store["YieldPosterior"])
 
     posterior_df = pd.read_csv(posterior_trace)
     assert {"StoreId", "Theta", "Yield", "Value"}.issubset(posterior_df.columns)
     assert ecdf_cache.exists()
+
+
+def test_score_rejects_invalid_omega(tmp_path: Path) -> None:
+    stores_path = tmp_path / "stores.csv"
+    output_path = tmp_path / "scores.csv"
+
+    stores = pd.DataFrame(
+        {
+            "StoreId": ["S1"],
+            "Name": ["Store 1"],
+            "Type": ["Thrift"],
+            "Lat": [42.0],
+            "Lon": [-83.0],
+            "MedianIncomeNorm": [0.5],
+            "Pct100kHHNorm": [0.4],
+            "PctRenterNorm": [0.3],
+        }
+    )
+    stores.to_csv(stores_path, index=False)
+
+    with pytest.raises(SystemExit) as excinfo:
+        main(
+            [
+                "score",
+                "--mode",
+                MODE_PRIOR,
+                "--stores",
+                str(stores_path),
+                "--output",
+                str(output_path),
+                "--omega",
+                "1.5",
+            ]
+        )
+
+    assert "ω" in str(excinfo.value)
 
 
 def test_prior_mode_requires_normalised_columns(tmp_path: Path) -> None:
