@@ -15,6 +15,7 @@ from typing import Iterable, Sequence
 
 import pandas as pd
 
+from atlas.explain import TraceRecord
 from atlas.data import MissingColumnsError, load_affluence, load_observations, load_stores
 from atlas.scoring import PosteriorPipeline, clamp_score, compute_prior_score
 
@@ -132,6 +133,13 @@ def build_parser() -> argparse.ArgumentParser:
         help="λ weight for the composite score J = λ·Value + (1-λ)·Yield",
     )
     score.add_argument(
+        "--omega",
+        dest="omega",
+        type=float,
+        default=0.5,
+        help="ω weight for blending posterior and prior scores",
+    )
+    score.add_argument(
         "--ecdf-window",
         help="Store column used to segment ECDF windows (posterior modes)",
     )
@@ -199,6 +207,12 @@ def _handle_score(args: argparse.Namespace) -> None:
     if lambda_weight is not None and not (0.0 <= lambda_weight <= 1.0):
         raise AtlasCliError("λ must be between 0 and 1 inclusive")
 
+    omega = args.omega
+    if omega is None:
+        omega = 0.5
+    if not (0.0 <= omega <= 1.0):
+        raise AtlasCliError("ω must be between 0 and 1 inclusive")
+
     stores = _load_dataset(load_stores, args.stores, "stores")
     affluence = None
     if args.affluence:
@@ -236,7 +250,7 @@ def _handle_score(args: argparse.Namespace) -> None:
             ecdf_cache=args.ecdf_cache,
         )
 
-    prior_trace: list[dict[str, object]] = []
+    trace_records: list[dict[str, object]] = []
     prior_scores: pd.DataFrame | None = None
     if args.mode in {MODE_PRIOR, MODE_BLENDED}:
         overrides = None
@@ -250,21 +264,24 @@ def _handle_score(args: argparse.Namespace) -> None:
             lambda_weight=lambda_weight,
             posterior_overrides=overrides,
         )
+        trace_records.extend(prior_trace)
 
-    if args.mode == MODE_PRIOR:
-        output = prior_scores
-    elif args.mode == MODE_POSTERIOR:
-        output = posterior_predictions
-    else:
-        output = _blend_scores(prior_scores, posterior_predictions, lambda_weight)
+    output = _blend_scores(
+        prior_scores if args.mode in {MODE_PRIOR, MODE_BLENDED} else None,
+        posterior_predictions if args.mode in {MODE_POSTERIOR, MODE_BLENDED} else None,
+        lambda_weight,
+        omega,
+    )
+
+    trace_records.extend(_build_blend_trace_records(output, lambda_weight=lambda_weight))
 
     if output is None:
         raise AtlasCliError("No scores were produced – check input datasets")
 
     _write_table(output, Path(args.output))
 
-    if args.trace_out and prior_trace:
-        _write_trace(prior_trace, Path(args.trace_out))
+    if args.trace_out and trace_records:
+        _write_trace(trace_records, Path(args.trace_out))
 
     if args.posterior_trace and posterior_pipeline is not None:
         trace_path = Path(args.posterior_trace)
@@ -348,7 +365,11 @@ def _blend_scores(
     prior: pd.DataFrame | None,
     posterior: pd.DataFrame | None,
     lambda_weight: float | None,
-) -> pd.DataFrame:
+    omega: float,
+) -> pd.DataFrame | None:
+    if prior is None and posterior is None:
+        return None
+
     prior = prior.copy() if prior is not None else pd.DataFrame(columns=["StoreId"])
     posterior = posterior.copy() if posterior is not None else pd.DataFrame(columns=["StoreId"])
 
@@ -366,29 +387,118 @@ def _blend_scores(
         }
     )
 
-    merged = pd.merge(prior, posterior, on="StoreId", how="outer")
+    merged = pd.merge(prior, posterior, on="StoreId", how="outer").copy()
 
-    merged["Value"] = merged["ValuePosterior"].combine_first(merged["ValuePrior"])
-    merged["Yield"] = merged["YieldPosterior"].combine_first(merged["YieldPrior"])
+    for column in ("ValuePrior", "YieldPrior", "CompositePrior", "ValuePosterior", "YieldPosterior"):
+        if column not in merged.columns:
+            merged[column] = float("nan")
+
+    value_prior_present = merged["ValuePrior"].notna()
+    value_posterior_present = merged["ValuePosterior"].notna()
+    yield_prior_present = merged["YieldPrior"].notna()
+    yield_posterior_present = merged["YieldPosterior"].notna()
+
+    has_prior = value_prior_present | yield_prior_present
+    has_posterior = value_posterior_present | yield_posterior_present
+
+    merged["Omega"] = float("nan")
+    merged.loc[has_prior & has_posterior, "Omega"] = float(omega)
+    merged.loc[has_prior & ~has_posterior, "Omega"] = 0.0
+    merged.loc[has_posterior & ~has_prior, "Omega"] = 1.0
+
+    both_value = value_prior_present & value_posterior_present
+    merged["Value"] = float("nan")
+    merged.loc[both_value, "Value"] = (
+        (1.0 - float(omega)) * merged.loc[both_value, "ValuePrior"].astype(float)
+        + float(omega) * merged.loc[both_value, "ValuePosterior"].astype(float)
+    )
+    merged.loc[~value_posterior_present & value_prior_present, "Value"] = merged.loc[
+        ~value_posterior_present & value_prior_present, "ValuePrior"
+    ].astype(float)
+    merged.loc[value_posterior_present & ~value_prior_present, "Value"] = merged.loc[
+        value_posterior_present & ~value_prior_present, "ValuePosterior"
+    ].astype(float)
+
+    both_yield = yield_prior_present & yield_posterior_present
+    merged["Yield"] = float("nan")
+    merged.loc[both_yield, "Yield"] = (
+        (1.0 - float(omega)) * merged.loc[both_yield, "YieldPrior"].astype(float)
+        + float(omega) * merged.loc[both_yield, "YieldPosterior"].astype(float)
+    )
+    merged.loc[~yield_posterior_present & yield_prior_present, "Yield"] = merged.loc[
+        ~yield_posterior_present & yield_prior_present, "YieldPrior"
+    ].astype(float)
+    merged.loc[yield_posterior_present & ~yield_prior_present, "Yield"] = merged.loc[
+        yield_posterior_present & ~yield_prior_present, "YieldPosterior"
+    ].astype(float)
 
     if lambda_weight is not None:
-        merged["Composite"] = merged.apply(
-            lambda row: _composite_from_row(row, lambda_weight),
-            axis=1,
-        )
+        merged["Composite"] = float("nan")
+        value_available = merged["Value"].notna()
+        yield_available = merged["Yield"].notna()
+        valid = value_available & yield_available
+        if valid.any():
+            composites = (
+                lambda_weight * merged.loc[valid, "Value"].astype(float)
+                + (1.0 - lambda_weight) * merged.loc[valid, "Yield"].astype(float)
+            )
+            merged.loc[valid, "Composite"] = composites.apply(lambda score: clamp_score(float(score)))
     else:
         merged["Composite"] = merged.get("CompositePrior")
 
     return merged
 
 
-def _composite_from_row(row: pd.Series, lambda_weight: float) -> float | None:
-    value = row.get("Value")
-    yield_score = row.get("Yield")
-    if pd.isna(value) or pd.isna(yield_score):
-        composite = row.get("CompositePrior")
-        return None if pd.isna(composite) else float(composite)
-    return clamp_score(lambda_weight * float(value) + (1.0 - lambda_weight) * float(yield_score))
+def _build_blend_trace_records(
+    frame: pd.DataFrame | None,
+    *,
+    lambda_weight: float | None,
+) -> list[dict[str, object]]:
+    if frame is None or frame.empty:
+        return []
+
+    traces: list[dict[str, object]] = []
+    for row in frame.itertuples(index=False):
+        store_id = str(getattr(row, "StoreId"))
+        omega_value = _to_optional_float(getattr(row, "Omega", None))
+
+        trace = TraceRecord(
+            store_id=store_id,
+            stage="blend",
+            observations={"omega": omega_value},
+            model={"lambda_weight": lambda_weight},
+            scores={
+                "value_prior": _to_optional_float(getattr(row, "ValuePrior", None)),
+                "value_posterior": _to_optional_float(getattr(row, "ValuePosterior", None)),
+                "value_final": _to_optional_float(getattr(row, "Value", None)),
+                "value": _to_optional_float(getattr(row, "Value", None)),
+                "yield_prior": _to_optional_float(getattr(row, "YieldPrior", None)),
+                "yield_posterior": _to_optional_float(getattr(row, "YieldPosterior", None)),
+                "yield_final": _to_optional_float(getattr(row, "Yield", None)),
+                "yield": _to_optional_float(getattr(row, "Yield", None)),
+                "composite_prior": _to_optional_float(getattr(row, "CompositePrior", None)),
+                "composite_final": _to_optional_float(getattr(row, "Composite", None)),
+                "composite": _to_optional_float(getattr(row, "Composite", None)),
+            },
+        )
+
+        record = trace.to_dict()
+        record["StoreId"] = store_id
+        record["Omega"] = omega_value
+        traces.append(record)
+
+    return traces
+
+
+def _to_optional_float(value: object) -> float | None:
+    if value is None:
+        return None
+    if pd.isna(value):
+        return None
+    try:
+        return float(value)
+    except (TypeError, ValueError):  # pragma: no cover - defensive
+        return None
 
 
 def _attach_affluence_features(stores: pd.DataFrame, affluence: pd.DataFrame) -> pd.DataFrame:
