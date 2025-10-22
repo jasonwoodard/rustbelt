@@ -1,202 +1,173 @@
-# Rust Belt Atlas – Functional Requirements (v0.1 Draft)
+# Rust Belt Atlas – Functional Requirements (v0.1 Implementation Status)
 
-Rust Belt Atlas is the **scoring and clustering engine** for the Rust Belt project.  
-It provides per-store Value/Yield scores, metro anchors, and store clusters to be consumed by the Rust Belt Solver.  
+Rust Belt Atlas is the **scoring and clustering engine** for the Rust Belt project.
+It provides per-store Value/Yield scores, metro anchors, and store clusters to be consumed by the Rust Belt Solver.
 Atlas sits upstream of Solver: **Atlas maps the landscape, Solver plans the journey.**
+
+---
+
+## Assessment of v0.1
+
+The Python prototype under `packages/atlas-python/` delivers a fully working scoring CLI with prior, posterior, and blended modes, blend provenance, and trace/diagnostic exports. Prior and posterior pipelines are unit-tested end to end, and the CLI enforces the expected data contracts. Anchor detection, sub-clusters, and the richer diagnostics package remain stubs, so the original v0.1 scope is only partially complete.
+
+*Delivered capabilities*
+- `rustbelt-atlas score` covers prior-only, posterior-only, and blended runs, enforces the affluence feature contract, and writes CSV/JSON outputs with optional λ and ω parameters.
+- Prior scoring composes desk baselines with affluence adjustments, optional composite scores, and adjacency smoothing helpers for analysts who want spatial blending.
+- Posterior scoring fits Poisson/NegBin GLMs with per-store fallbacks, ECDF-based Yield mapping, optional ECDF caching, and spatial kNN smoothing for unvisited stores.
+- Output records include prior/posterior components, ω provenance, and trace rows that explain each store’s prior and blend contributions when `--trace-out` is used. Posterior diagnostics can be persisted via `--posterior-trace` for further analysis.
+
+*Deferred or partial items*
+- Metro anchors, sub-clusters, and diagnostics modules are placeholders with no executable implementation yet.
+- Posterior trace records are captured in-memory but not yet exported alongside prior/blend traces, so explainability is partial for posterior mode.
 
 ---
 
 ## FR Index
 
-| ID     | Title                       | Description                                                                 |
-|--------|-----------------------------|-----------------------------------------------------------------------------|
-| FR-1   | Store Scoring (Value–Yield) [DONE] | Compute desk-estimated Value/Yield scores for each store using baselines, affluence, adjacency, and observations. |
-| FR-1a  | Posterior-Only Scoring (No Priors) [DONE]   | Fit from observations only; predict to unvisited stores; emit credibility. |
-| FR-1b  | Blending Weight and Provenance [PLANNED] | Emit per-store blend weights and provenance for Value/Yield priors and posteriors. |
-| FR-2   | Metro Anchor Identification | Group stores into metro-level anchors representing natural exploration areas. |
-| FR-3   | Sub-Cluster Detection       | Identify finer-grained clusters of stores within anchors (curated pockets). |
-| FR-4   | Explainability Trace [DONE]       | Provide per-store explanations showing how final scores were derived.       |
-| FR-5   | Data Exchange with Solver   | Output Atlas data in a format directly consumable by the Rust Belt Solver. |
-| FR-6   | Diagnostics & Reports       | Emit validation metrics, correlation analysis, and summaries of anchors/clusters. |
+| ID   | Title                          | Status     | Notes |
+|------|--------------------------------|------------|-------|
+| FR-1 | Store Scoring (Value–Yield)    | Delivered  | CLI enforces affluence inputs; prior scoring matches spec with optional λ and adjacency helper. |
+| FR-1a | Posterior-Only Scoring        | Delivered  | GLM + hierarchical + kNN pipeline with ECDF Yield mapping and diagnostics export. |
+| FR-1b | Blending Weight & Provenance  | Delivered  | Outputs ω, prior/posterior components, and blend traces; defaults configurable. |
+| FR-2 | Metro Anchor Identification    | Deferred   | No anchor command or implementation in repository. |
+| FR-3 | Sub-Cluster Detection          | Deferred   | Dependent on anchor work; module is empty. |
+| FR-4 | Explainability Trace           | Partial    | Prior/blend traces shipped; posterior traces kept in memory only. |
+| FR-5 | Data Exchange with Solver      | Partial    | CSV/JSON outputs align with Solver expectations but no direct integration tests or schema versioning yet. |
+| FR-6 | Diagnostics & Reports          | Deferred   | Diagnostics package placeholder with no emitters. |
 
 ---
 
 ## FR-1: Store Scoring (Value–Yield)
+**Status: Delivered in v0.1**
 
-**Description**  
-Atlas computes desk-estimated **Value** and **Yield** scores for each store.  
+**Description**
+Atlas computes desk-estimated **Value** and **Yield** scores for each store by combining store-type baselines, affluence signals, and optional adjacency adjustments.
 
-- **Value** = payoff per item (rarity, quality, satisfaction).  
-- **Yield** = reliability / hit rate (how often items are found, volume per visit).  
+**Implementation highlights**
+- Baselines and affluence coefficients are hard-coded for the supported store types (`Thrift`, `Antique`, `Vintage`, `Flea/Surplus`, `Unknown`).
+- `compute_prior_score` composes baseline + affluence + adjacency (when provided), clamps to the 1–5 scale, and optionally produces a composite score `λ·Value + (1-λ)·Yield`.
+- CLI prior/blended runs require the normalised affluence columns (`MedianIncomeNorm`, `Pct100kHHNorm`, `PctRenterNorm`) or derive them from an affluence join, ensuring deterministic inputs.
+- `knn_adjacency_smoothing` is available for analysts to smooth Value/Yield with nearby stores, though it is not yet wired into the CLI path.
 
-**Inputs**  
-- Store type baseline priors (e.g., Thrift baseline vs Antique baseline).  
-- Affluence signals (census income, turnover, housing value, retail density).  
-- Adjacency to observed stores (local smoothing).  
-- Past observations (posterior mean Value/Yield).  
+**Acceptance Criteria coverage**
+- AC1: Prior scores are deterministic per store type and affluence inputs; posterior overrides are recorded for downstream blending.
+- AC2: Stores without observations rely solely on priors; adjacency helper can be applied manually if desired.
+- AC3: Value/Yield/composite are clamped to `[1,5]`.
+- AC4: CLI accepts optional `--lambda` to publish the composite column for Solver consumption.
 
-**Outputs**  
-- Per-store: `StoreId, Value, Yield, CompositeScore`.  
-- Optional composite JScore = λ·Value + (1–λ)·Yield.  
-
-**Acceptance Criteria**  
-- AC1: For any store with observations, posterior mean overrides desk priors.  
-- AC2: For unvisited stores, Value/Yield computed from baseline + affluence + adjacency.  
-- AC3: Scores always fall on a 1–5 scale.  
-- AC4: Composite JScore is optional, Solver can consume either 2D or 1D scores.  
+**Gaps**
+- Spatial smoothing is exposed as a helper but still needs first-class CLI plumbing if adjacency should be default behaviour.
 
 ---
 
 ## FR-1a: Posterior-Only Scoring (No Priors)
+**Status: Delivered in v0.1**
 
-**Description**  
-Atlas trains on observed visits (t, N, V) to produce posterior predictions for all stores **without** desk priors.
+**Description**
+Atlas trains on observation logs to recover posterior Value/Yield estimates for all stores, falling back gracefully when data are sparse.
 
-**Inputs**
-- Observations: `StoreId, DateTime, DwellMin, PurchasedItems, HaulLikert` (+ optional covariates such as `ObserverId`, `Spend`, `Notes`, pre-joined affluence).
-- Store catalog: id, type, lat/lon, ZIP.
+**Implementation highlights**
+- `_summarise_observations` aggregates dwell time, purchases, and Value to compute store-level statistics.
+- `_solve_glm` fits Poisson/NegBin GLMs on θ (items per 45 minutes) with IRLS; `_solve_linear_model` estimates Value via weighted least squares.
+- `PosteriorPipeline.predict` blends GLM, hierarchical, and kNN outputs, maps θ to Yield via a persisted ECDF, clamps Value to `[1,5]`, and computes a credibility score.
+- CLI requires `--observations` in posterior/blended modes and can persist ECDF caches and diagnostics snapshots via `--posterior-trace` and `--ecdf-cache`.
 
-**Outputs**  
-- Per-store: `V_est`, `theta_est`, `Y_est`, `Cred`, `Method` (GLM|Hier|kNN|AnchorMean).
+**Acceptance Criteria coverage**
+- AC1: Visited stores recover observed θ and Value when sample counts allow (GLM/Hier branches).
+- AC2: Unvisited stores receive kNN-smoothed predictions with non-empty `Method` and credibility fields.
+- AC3: Yield mapping reuses the ECDF window logic and clamps to `[1,5]`.
+- AC4: Pipeline is deterministic for a given dataset; ECDF caches ensure reproducibility when configured.
 
-**Acceptance Criteria**  
-- AC1: For visited stores, `V_est` and `Y_est` recover observed scores (within tolerance).  
-- AC2: For unvisited stores, predictions are produced with a non-empty `Method` and `Cred`.  
-- AC3: Y mapping uses the same ECDF window as the observations.  
-- AC4: Reproducible given the same observation set.
+**Gaps**
+- Posterior trace records are generated but not yet exported alongside prior traces (see FR-4).
 
 ---
 
-### FR-1b: Blending Weight and Provenance
+## FR-1b: Blending Weight and Provenance
+**Status: Delivered in v0.1**
 
 **Description**
-Atlas shall compute and emit the blending weight ω used to combine prior and posterior estimates per store.
+Atlas emits the blending weight ω and keeps the prior/posterior components visible in outputs and traces.
 
-**Acceptance Criteria**
-- AC1: ω ∈ [0,1] and logged globally and/or per store.
-- AC2: When `mode=prior-only`, ω=0.0; when `mode=posterior-only`, ω=1.0.
-- AC3: When `mode=blended`, ω reflects the configured value or adaptive function.
-- AC4: Output includes prior, posterior, and blended components for both Value and Yield.
+**Implementation highlights**
+- `_blend_scores` merges prior and posterior frames, injects ω per store, recomputes the composite score when λ is set, and defaults ω to 0/1 when only one source is available.
+- `_build_blend_trace_records` produces per-store trace rows capturing ω, prior/posterior values, and final scores for auditing.
+- CLI writes these traces to JSONL when `--trace-out` is supplied; tests validate the provenance columns and ω semantics.
 
-**Rationale**
-This enables transparent auditing of how strongly each model influenced the blended outcome and supports debugging score movements across runs.
-
-**Feasibility Assessment**
-- **Data availability**: All inputs (prior estimates, posterior predictions, configured ω) are already present in the scoring pipeline, so no new upstream data contracts are required.
-- **Engineering scope**: Requires augmenting the scoring output schema to persist `omega`, `Value_prior`, `Value_post`, `Yield_prior`, and `Yield_post`, plus CLI/logging hooks to expose ω in diagnostics. Changes are localized to the scoring engine and existing trace/diagnostics emitters.
-- **Operational impact**: Adds transparency for analysts with no effect on Solver contracts when ω/trace fields are optional. Feature can ship behind a schema version guard.
-- **Risk**: Low. Implementation relies on already-computed components and deterministic configuration, making this feasible for the v0.1 prototype timeline.
+**Acceptance Criteria coverage**
+- AC1: ω ∈ [0,1] enforced via CLI validation and merge logic.
+- AC2: Prior-only runs emit ω=0; posterior-only runs emit ω=1.
+- AC3: Blended runs respect CLI-supplied ω for stores with both sources.
+- AC4: Outputs retain prior/posterior components and the final blend, satisfying transparency goals.
 
 ---
 
 ## FR-2: Metro Anchor Identification
+**Status: Deferred**
 
-**Description**  
-Atlas groups stores into **metro anchors** representing natural exploration areas.  
+There is no implementation for metro anchors in the prototype. The `atlas.clustering` module is a placeholder, and the CLI exposes no `anchors` command yet.
 
-**Inputs**  
-- Store list with lat/lon and scores.  
-
-**Outputs**  
-- Anchor list with `AnchorId, centroid(lat/lon), store count, mean Value, mean Yield`.  
-
-**Acceptance Criteria**  
-- AC1: Anchors contain ≥3 stores by default (configurable).  
-- AC2: Anchors must be spatially coherent (stores within threshold distance R).  
-- AC3: Every store is assigned to exactly one anchor.  
-- AC4: Anchor scores reported as averages of member stores.  
+**Next steps**
+- Implement anchor detection (e.g., DBSCAN/HDBSCAN over lat/lon) with configurable parameters.
+- Define output schema and wire a CLI subcommand that emits anchors for downstream Solver use.
 
 ---
 
 ## FR-3: Sub-Cluster Detection
+**Status: Deferred**
 
-**Description**  
-Within each anchor, Atlas identifies finer-grained **clusters** of stores that represent curated pockets.  
-
-**Inputs**  
-- Anchor assignments.  
-- Store lat/lon, Value/Yield scores.  
-
-**Outputs**  
-- Cluster list with `ClusterId, AnchorId, store membership, centroid`.  
-
-**Acceptance Criteria**  
-- AC1: Clusters must be subsets of a single anchor.  
-- AC2: Clustering method uses distance + score similarity (configurable algorithm, e.g., DBSCAN).  
-- AC3: Every store is assigned to exactly one cluster.  
-- AC4: Clusters report centroid and average Value/Yield.  
+Sub-clusters depend on anchor detection and likewise have no executable code in the repository. Future work should extend the clustering module once anchors exist.
 
 ---
 
 ## FR-4: Explainability Trace
+**Status: Partial in v0.1**
 
-**Description**  
-Atlas generates a human-readable explanation for how each store’s scores were derived.  
+**Delivered**
+- `--trace-out` records prior contributions (baseline, affluence, adjacency, posterior overrides) plus blend provenance per store in JSONL form for reproducible audits.
+- `TraceRecord` utilities provide consistent flattening/hashing for trace payloads used across scoring stages.
 
-**Inputs**  
-- Baseline priors, affluence adjustments, adjacency adjustments, observations.  
-
-**Outputs**  
-- Per-store JSON/CSV explanation record.  
-- Example:  
-
-
-**Acceptance Criteria**  
-- AC1: Every store has an explanation trace.  
-- AC2: Trace lists all contributing factors (baseline, affluence, adjacency, observed).  
-- AC3: Trace must be reproducible — rerunning Atlas with same data yields same explanation.  
+**Remaining gaps**
+- Posterior traces are built inside `PosteriorPipeline` but never exported, so analysts cannot yet inspect GLM vs hierarchical contributions without instrumenting Python directly.
+- A consolidated explainability artifact (single CSV/JSON per run) would simplify Solver-facing auditing once posterior traces are exposed.
 
 ---
 
 ## FR-5: Data Exchange with Solver
+**Status: Partial in v0.1**
 
-**Description**  
-Atlas outputs data in a format consumable by the Rust Belt Solver.  
+**Delivered**
+- CLI writes CSV/JSON outputs with Value, Yield, Composite, ω, and provenance columns suitable for Solver ingestion.
+- Posterior diagnostics can be persisted to CSV/Parquet for validation alongside scored stores.
 
-**Inputs**  
-- Scored stores, anchors, clusters.  
-
-**Outputs**  
-- CSV/JSON candidate sets with scores and cluster/anchor context.  
-
-**Acceptance Criteria**  
-- AC1: Solver can run using Atlas outputs without schema modification.  
-- AC2: Output schema documented and versioned.  
-- AC3: Candidate sets may be reduced in size (but always ≥ expected number of daily stops).  
+**Remaining gaps**
+- No automated contract tests exist with the Solver repository, and schema versioning is not yet formalised. Coordinated integration tests should be added before declaring the data contract stable.
 
 ---
 
 ## FR-6: Diagnostics & Reports
+**Status: Deferred**
 
-**Description**  
-Atlas provides validation and diagnostic outputs to support model refinement.  
+The diagnostics module is currently a stub; no correlation analyses, distribution reports, or outlier detection are emitted in the prototype.
 
-**Outputs**  
-- Correlation between affluence signals and observed scores.  
-- Distribution plots of Value vs Yield.  
-- Anchor summaries (store counts, mean scores).  
-- Outlier detection (stores far from cluster/anchor mean).  
-
-**Acceptance Criteria**  
-- AC1: Diagnostics can be emitted in JSON or HTML report form.  
-- AC2: Reports highlight discrepancies (e.g., affluence predicted high Value but observed low).  
-- AC3: Reports summarize anchor/cluster properties (count, means, spread).  
+**Next steps**
+- Implement JSON/HTML report generation that summarises affluence correlations, Value/Yield distributions, and anchor/cluster stats once those features exist.
 
 ---
 
 ## Out of Scope (v0.1)
 
-- Route optimization (Solver responsibility).  
-- Run shape filtering (Loop vs Haul) — flagged for Solver extension.  
-- Mid-day re-optimization — Solver responsibility.  
+- Route optimisation (Solver responsibility).
+- Run shape filtering (Loop vs Haul) — flagged for Solver extension.
+- Mid-day re-optimisation — Solver responsibility.
 
 ---
 
 ## Roadmap
 
-- **v0.1 (Prototype)**: Store scoring pipelines (FR-1, FR-1a), blend weight provenance (FR-1b), and trace field capture needed for downstream explainability.
-- **v0.2**: Metro anchors (FR-2), explainability (FR-4), richer diagnostics (FR-6) — explainability ships here because it depends on the trace fields stabilized in v0.1.
-- **v0.3**: Affluence models + neighbor inference refinement, sub-clusters (FR-3), Solver integration (FR-5).
+- **v0.1 (Prototype, delivered)**: Prior/posterior/blended scoring pipelines, ω provenance, trace exports, and ECDF caching.
+- **v0.2 (Next)**: Ship metro anchors and sub-clusters, surface posterior traces in explainability outputs, and stand up initial diagnostics/reporting.
+- **v0.3+**: Harden Solver integration tests, add affluence model calibration and automated anchor/cluster QA dashboards.
 
 ---
 
