@@ -17,7 +17,9 @@ PACKAGE_ROOT = Path(__file__).resolve().parents[1]
 SRC_PATH = PACKAGE_ROOT / "src"
 
 
-def _run_cli(tmp_path: Path, arguments: list[str]) -> subprocess.CompletedProcess[str]:
+def _run_cli(
+    tmp_path: Path, arguments: list[str], *, command: str = "score"
+) -> subprocess.CompletedProcess[str]:
     env = os.environ.copy()
     pythonpath = str(SRC_PATH)
     if existing := env.get("PYTHONPATH"):
@@ -25,7 +27,7 @@ def _run_cli(tmp_path: Path, arguments: list[str]) -> subprocess.CompletedProces
     env["PYTHONPATH"] = pythonpath
 
     result = subprocess.run(
-        [sys.executable, "-m", "atlas.cli", "score", *arguments],
+        [sys.executable, "-m", "atlas.cli", command, *arguments],
         cwd=PACKAGE_ROOT,
         env=env,
         capture_output=True,
@@ -80,10 +82,14 @@ def test_cli_prior_dense_urban_fixture(tmp_path: Path) -> None:
         atol=1e-9,
     )
 
-    trace_lines = trace.read_text(encoding="utf-8").strip().splitlines()
-    assert len(trace_lines) == len(frame)
-    first_record = json.loads(trace_lines[0])
-    assert {"baseline_value", "baseline_yield", "income_contribution"} <= set(first_record)
+    trace_lines = [line for line in trace.read_text(encoding="utf-8").splitlines() if line]
+    assert len(trace_lines) == len(frame) * 2
+    records = [json.loads(line) for line in trace_lines]
+    stages = [record["stage"] for record in records]
+    assert stages.count("prior") == len(frame)
+    assert stages.count("blend") == len(frame)
+    first_prior = next(record for record in records if record["stage"] == "prior")
+    assert {"baseline_value", "baseline_yield", "income_contribution"} <= set(first_prior)
 
     expected_composites = np.array([3.035, 3.0685, 3.2625, 3.35, 3.353])
     np.testing.assert_allclose(
@@ -155,16 +161,122 @@ def test_cli_blended_sparse_rural_fixture(tmp_path: Path) -> None:
         rtol=0.0,
     )
 
-    trace_lines = trace.read_text(encoding="utf-8").strip().splitlines()
-    assert len(trace_lines) == len(frame)
+    trace_lines = [line for line in trace.read_text(encoding="utf-8").splitlines() if line]
+    records = [json.loads(line) for line in trace_lines]
+    stages = [record["stage"] for record in records]
+    assert stages.count("prior") == len(frame)
+    assert stages.count("blend") == len(frame)
 
     posterior_df = pd.read_csv(posterior_trace)
     assert {"StoreId", "Theta", "Yield", "Value", "Cred", "Method"} <= set(posterior_df.columns)
 
-    expected_composites = np.array([2.52, 3.56, 3.56, 3.92])
+    expected_composites = np.array([2.7, 3.243333333333333, 3.343333333333333, 3.43])
     np.testing.assert_allclose(
         np.sort(frame["Composite"].to_numpy()),
         expected_composites,
         atol=1e-6,
         rtol=0.0,
     )
+
+
+@pytest.mark.integration
+def test_cli_anchors_detects_clusters(tmp_path: Path) -> None:
+    stores = fixture_path("dense_urban", "stores")
+    anchors_output = tmp_path / "anchors.csv"
+    assignments_output = tmp_path / "assignments.csv"
+    metrics_output = tmp_path / "metrics.json"
+
+    _run_cli(
+        tmp_path,
+        [
+            "--stores",
+            str(stores),
+            "--output",
+            str(anchors_output),
+            "--store-assignments",
+            str(assignments_output),
+            "--metrics",
+            str(metrics_output),
+            "--algorithm",
+            "dbscan",
+            "--eps",
+            "0.03",
+            "--min-samples",
+            "2",
+            "--metric",
+            "euclidean",
+            "--id-prefix",
+            "metro-anchor",
+        ],
+        command="anchors",
+    )
+
+    anchors_df = pd.read_csv(anchors_output)
+    assert {"anchor_id", "store_count", "centroid_lat", "centroid_lon"} <= set(anchors_df.columns)
+    assert len(anchors_df) == 2
+    assert set(anchors_df["anchor_id"]) == {"metro-anchor-001", "metro-anchor-002"}
+
+    assignments_df = pd.read_csv(assignments_output)
+    assert {"StoreId", "anchor_id"} <= set(assignments_df.columns)
+    assert len(assignments_df) == 5
+    assert assignments_df["anchor_id"].isin(anchors_df["anchor_id"]).all()
+
+    metrics = json.loads(metrics_output.read_text(encoding="utf-8"))
+    assert metrics["algorithm"] == "dbscan"
+    assert metrics["num_anchors"] == 2
+    assert metrics["noise_points"] == 0
+
+
+@pytest.mark.integration
+def test_cli_subclusters_materialises_hierarchy(tmp_path: Path) -> None:
+    spec_path = tmp_path / "subclusters.json"
+    spec = [
+        {
+            "key": "root",
+            "store_ids": ["DU-001", "DU-002", "DU-003"],
+        },
+        {
+            "key": "child-a",
+            "parent_key": "root",
+            "store_ids": ["DU-001"],
+            "metadata": {"score": 0.8},
+        },
+        {
+            "key": "child-b",
+            "parent_key": "root",
+            "store_ids": ["DU-002", "DU-003"],
+            "metadata": {"score": 0.5},
+        },
+    ]
+    spec_path.write_text(json.dumps(spec, indent=2), encoding="utf-8")
+
+    output = tmp_path / "subclusters.jsonl"
+
+    _run_cli(
+        tmp_path,
+        [
+            "--anchor-id",
+            "metro-anchor-001",
+            "--spec",
+            str(spec_path),
+            "--output",
+            str(output),
+            "--id-prefix",
+            "metro-anchor-001-sc",
+        ],
+        command="subclusters",
+    )
+
+    records = [json.loads(line) for line in output.read_text(encoding="utf-8").splitlines() if line]
+    assert len(records) == len(spec)
+    assert {record["anchor_id"] for record in records} == {"metro-anchor-001"}
+
+    root_record = records[0]
+    assert root_record["lineage"] == "001"
+    assert root_record["parent_subcluster_id"] is None
+    assert root_record["store_count"] == 3
+
+    child_records = records[1:]
+    assert {child["parent_subcluster_id"] for child in child_records} == {root_record["subcluster_id"]}
+    assert {child["lineage"] for child in child_records} == {"001.001", "001.002"}
+    assert any(child["metadata"].get("score") == 0.8 for child in child_records)
