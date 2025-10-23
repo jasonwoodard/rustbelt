@@ -15,8 +15,18 @@ from typing import Iterable, Sequence
 
 import pandas as pd
 
-from atlas.explain import TraceRecord
+from atlas.clustering import (
+    AnchorClusteringError,
+    AnchorDetectionParameters,
+    detect_anchors,
+)
+from atlas.clustering.subclusters import (
+    SubClusterNodeSpec,
+    SubClusterTopologyError,
+    build_subcluster_hierarchy,
+)
 from atlas.data import MissingColumnsError, load_affluence, load_observations, load_stores
+from atlas.explain import TraceRecord
 from atlas.scoring import PosteriorPipeline, clamp_score, compute_prior_score
 
 
@@ -148,6 +158,114 @@ def build_parser() -> argparse.ArgumentParser:
         help="Optional parquet file to cache the ECDF reference",
     )
     score.set_defaults(handler=_handle_score)
+
+    anchors = subparsers.add_parser(
+        "anchors",
+        help="Detect metro anchors from a stores dataset",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    anchors.add_argument(
+        "--stores",
+        required=True,
+        help="Path to the stores dataset (CSV or JSON)",
+    )
+    anchors.add_argument(
+        "--output",
+        required=True,
+        help="Destination for anchor metadata (CSV or JSON lines)",
+    )
+    anchors.add_argument(
+        "--store-assignments",
+        help="Optional path to persist store-to-anchor assignments (CSV or JSON lines)",
+    )
+    anchors.add_argument(
+        "--metrics",
+        help="Optional path to persist clustering metrics (JSON)",
+    )
+    anchors.add_argument(
+        "--algorithm",
+        choices=["dbscan", "hdbscan"],
+        default="dbscan",
+        help="Clustering algorithm to use",
+    )
+    anchors.add_argument(
+        "--eps",
+        type=float,
+        default=0.5,
+        help="Neighbourhood radius (kilometres for haversine metric)",
+    )
+    anchors.add_argument(
+        "--min-samples",
+        type=int,
+        default=5,
+        help="Minimum number of stores to form a cluster",
+    )
+    anchors.add_argument(
+        "--metric",
+        choices=["euclidean", "manhattan", "haversine"],
+        default="haversine",
+        help="Distance metric for clustering",
+    )
+    anchors.add_argument(
+        "--min-cluster-size",
+        type=int,
+        help="Minimum cluster size for HDBSCAN",
+    )
+    anchors.add_argument(
+        "--cluster-selection-epsilon",
+        type=float,
+        help="Cluster selection epsilon for HDBSCAN",
+    )
+    anchors.add_argument(
+        "--store-id-column",
+        default="StoreId",
+        help="Column containing unique store identifiers",
+    )
+    anchors.add_argument(
+        "--lat-column",
+        default="Lat",
+        help="Latitude column name",
+    )
+    anchors.add_argument(
+        "--lon-column",
+        default="Lon",
+        help="Longitude column name",
+    )
+    anchors.add_argument(
+        "--metro-id",
+        help="Optional metro identifier recorded with clustering metrics",
+    )
+    anchors.add_argument(
+        "--id-prefix",
+        help="Prefix for generated anchor identifiers",
+    )
+    anchors.set_defaults(handler=_handle_anchors)
+
+    subclusters = subparsers.add_parser(
+        "subclusters",
+        help="Build a sub-cluster hierarchy for an anchor",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    subclusters.add_argument(
+        "--anchor-id",
+        required=True,
+        help="Anchor identifier that owns the hierarchy",
+    )
+    subclusters.add_argument(
+        "--spec",
+        required=True,
+        help="Path to a JSON file describing sub-cluster node specifications",
+    )
+    subclusters.add_argument(
+        "--output",
+        required=True,
+        help="Destination for materialised sub-clusters (CSV or JSON lines)",
+    )
+    subclusters.add_argument(
+        "--id-prefix",
+        help="Override the identifier prefix; defaults to the anchor id",
+    )
+    subclusters.set_defaults(handler=_handle_subclusters)
 
     return parser
 
@@ -291,6 +409,55 @@ def _handle_score(args: argparse.Namespace) -> None:
             summary = posterior_pipeline.store_summary_
             if summary is not None:
                 _write_table(summary.reset_index(), trace_path)
+
+
+def _handle_anchors(args: argparse.Namespace) -> None:
+    stores = _load_dataset(load_stores, args.stores, "stores")
+
+    params = AnchorDetectionParameters(
+        algorithm=args.algorithm,
+        eps=args.eps,
+        min_samples=args.min_samples,
+        metric=args.metric,
+        min_cluster_size=args.min_cluster_size,
+        cluster_selection_epsilon=args.cluster_selection_epsilon,
+        store_id_column=args.store_id_column,
+        lat_column=args.lat_column,
+        lon_column=args.lon_column,
+        metro_id=args.metro_id,
+        id_prefix=args.id_prefix,
+    )
+
+    try:
+        result = detect_anchors(stores, params)
+    except AnchorClusteringError as exc:
+        raise AtlasCliError(str(exc)) from exc
+
+    anchors_frame = result.to_frame()
+    _write_table(anchors_frame, Path(args.output))
+
+    if args.store_assignments:
+        assignments = result.store_assignments.reset_index()
+        _write_table(assignments, Path(args.store_assignments))
+
+    if args.metrics:
+        _write_json(result.metrics, Path(args.metrics))
+
+
+def _handle_subclusters(args: argparse.Namespace) -> None:
+    specs = _load_subcluster_specifications(Path(args.spec))
+
+    try:
+        hierarchy = build_subcluster_hierarchy(
+            args.anchor_id,
+            specs,
+            id_prefix=args.id_prefix,
+        )
+    except (SubClusterTopologyError, ValueError) as exc:
+        raise AtlasCliError(str(exc)) from exc
+
+    frame = hierarchy.to_frame()
+    _write_table(frame, Path(args.output))
 
 
 def _run_prior_scoring(
@@ -582,6 +749,15 @@ def _write_table(frame: pd.DataFrame, path: Path) -> None:
         raise AtlasCliError(f"Failed to write output to '{path}': {exc}")
 
 
+def _write_json(data: dict[str, object], path: Path) -> None:
+    path = path.expanduser().resolve()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        path.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    except OSError as exc:  # pragma: no cover - unlikely in tests
+        raise AtlasCliError(f"Failed to write JSON output to '{path}': {exc}")
+
+
 def _write_trace(records: Iterable[dict[str, object]], path: Path) -> None:
     path = path.expanduser().resolve()
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -602,6 +778,73 @@ def _load_dataset(loader, location: str, label: str) -> pd.DataFrame:
         raise AtlasCliError(str(exc)) from exc
     except ValueError as exc:
         raise AtlasCliError(str(exc)) from exc
+
+
+def _load_subcluster_specifications(path: Path) -> list[SubClusterNodeSpec]:
+    try:
+        raw = path.read_text(encoding="utf-8").strip()
+    except FileNotFoundError as exc:
+        raise AtlasCliError(f"Sub-cluster specification file '{path}' was not found") from exc
+
+    if not raw:
+        return []
+
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError as exc:
+        raise AtlasCliError(f"Failed to parse sub-cluster specification JSON: {exc}") from exc
+
+    if isinstance(data, dict):
+        for key in ("nodes", "specs", "subclusters"):
+            if key in data:
+                data = data[key]
+                break
+        else:
+            raise AtlasCliError(
+                "Sub-cluster specification JSON must be a list or contain a 'nodes' array"
+            )
+
+    if not isinstance(data, list):
+        raise AtlasCliError("Sub-cluster specification JSON must be a list of node objects")
+
+    specs: list[SubClusterNodeSpec] = []
+    for index, entry in enumerate(data):
+        if not isinstance(entry, dict):
+            raise AtlasCliError(f"Sub-cluster specification at index {index} must be an object")
+        if "key" not in entry:
+            raise AtlasCliError(f"Sub-cluster specification at index {index} is missing 'key'")
+        if "store_ids" not in entry:
+            raise AtlasCliError(
+                f"Sub-cluster specification at index {index} is missing 'store_ids'"
+            )
+
+        store_ids = entry["store_ids"]
+        if isinstance(store_ids, (str, bytes)) or not isinstance(store_ids, Sequence):
+            raise AtlasCliError(
+                f"Sub-cluster specification at index {index} must provide 'store_ids' as a sequence"
+            )
+
+        parent_key = entry.get("parent_key")
+        if parent_key is not None:
+            parent_key = str(parent_key)
+
+        metadata = entry.get("metadata") or {}
+
+        try:
+            spec = SubClusterNodeSpec(
+                key=str(entry["key"]),
+                parent_key=parent_key,
+                store_ids=store_ids,
+                centroid_lat=entry.get("centroid_lat"),
+                centroid_lon=entry.get("centroid_lon"),
+                metadata=metadata,
+            )
+        except (TypeError, ValueError) as exc:
+            raise AtlasCliError(f"Invalid sub-cluster specification at index {index}: {exc}") from exc
+
+        specs.append(spec)
+
+    return specs
 
 
 if __name__ == "__main__":  # pragma: no cover - CLI entry point
