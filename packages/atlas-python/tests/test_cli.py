@@ -6,7 +6,14 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from atlas.cli.__main__ import MODE_BLENDED, MODE_POSTERIOR, MODE_PRIOR, build_parser, main
+from atlas.cli.__main__ import (
+    MODE_BLENDED,
+    MODE_POSTERIOR,
+    MODE_PRIOR,
+    build_parser,
+    main,
+    _handle_score,
+)
 from atlas.explain.trace import TRACE_SCHEMA_VERSION
 
 
@@ -44,6 +51,46 @@ def test_version_flag_reports_package_version(capsys: pytest.CaptureFixture[str]
         main(["--version"])
     captured = capsys.readouterr()
     assert "atlas-python" in captured.out.strip()
+
+
+def test_score_parser_trace_defaults() -> None:
+    parser = build_parser()
+    args = parser.parse_args([
+        "score",
+        "--mode",
+        MODE_PRIOR,
+        "--stores",
+        "stores.csv",
+        "--output",
+        "scores.csv",
+    ])
+
+    assert args.trace_format == "jsonl"
+    assert args.posterior_trace_format == "csv"
+    assert args.include_prior_trace is True
+    assert args.include_posterior_trace is True
+    assert args.include_blend_trace is True
+
+
+def test_score_parser_trace_toggles() -> None:
+    parser = build_parser()
+    args = parser.parse_args(
+        [
+            "score",
+            "--mode",
+            MODE_PRIOR,
+            "--stores",
+            "stores.csv",
+            "--output",
+            "scores.csv",
+            "--trace-format",
+            "csv",
+            "--no-include-posterior-trace",
+        ]
+    )
+
+    assert args.trace_format == "csv"
+    assert args.include_posterior_trace is False
 
 
 def test_score_requires_observations_for_posterior(tmp_path: Path) -> None:
@@ -195,6 +242,119 @@ def test_score_cli_blended_mode(tmp_path: Path) -> None:
     assert ecdf_cache.exists()
 
 
+def test_handle_score_honours_trace_flags(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    parser = build_parser()
+    args = parser.parse_args(
+        [
+            "score",
+            "--mode",
+            MODE_BLENDED,
+            "--stores",
+            "stores.csv",
+            "--observations",
+            "observations.csv",
+            "--output",
+            str(tmp_path / "scores.csv"),
+            "--trace-out",
+            str(tmp_path / "combined.csv"),
+            "--posterior-trace",
+            str(tmp_path / "posterior.jsonl"),
+            "--trace-format",
+            "csv",
+            "--posterior-trace-format",
+            "jsonl",
+            "--no-include-prior-trace",
+        ]
+    )
+
+    stores_df = pd.DataFrame(
+        {
+            "StoreId": ["S1"],
+            "Type": ["Thrift"],
+            "MedianIncomeNorm": [0.5],
+            "Pct100kHHNorm": [0.4],
+            "PctRenterNorm": [0.3],
+        }
+    )
+
+    observations_df = pd.DataFrame({"StoreId": ["S1"], "Value": [1.0]})
+
+    def fake_load_dataset(loader, location: str, label: str) -> pd.DataFrame:
+        if label == "stores":
+            return stores_df
+        if label == "observations":
+            return observations_df
+        raise AssertionError(f"Unexpected label: {label}")
+
+    monkeypatch.setattr("atlas.cli.__main__._load_dataset", fake_load_dataset)
+
+    def fake_run_posterior_pipeline(*args, **kwargs):
+        predictions = pd.DataFrame(
+            {"StoreId": ["S1"], "Value": [1.5], "Yield": [2.0]}
+        )
+        trace_rows = [
+            {
+                "stage": "posterior",
+                "store_id": "S1",
+                "metadata.schema_version": TRACE_SCHEMA_VERSION,
+            }
+        ]
+        return object(), predictions, trace_rows
+
+    monkeypatch.setattr(
+        "atlas.cli.__main__._run_posterior_pipeline",
+        fake_run_posterior_pipeline,
+    )
+
+    def fake_run_prior_scoring(*args, **kwargs):
+        frame = pd.DataFrame(
+            {
+                "StoreId": ["S1"],
+                "Value": [1.0],
+                "Yield": [1.2],
+                "Composite": [1.1],
+            }
+        )
+        trace = [
+            {
+                "stage": "prior",
+                "store_id": "S1",
+                "metadata.schema_version": TRACE_SCHEMA_VERSION,
+            }
+        ]
+        return frame, trace
+
+    monkeypatch.setattr("atlas.cli.__main__._run_prior_scoring", fake_run_prior_scoring)
+
+    trace_calls: list[dict[str, object]] = []
+
+    def fake_write_trace(records, path, *, format_hint):
+        trace_calls.append(
+            {
+                "path": Path(path),
+                "format": format_hint,
+                "records": list(records),
+            }
+        )
+
+    monkeypatch.setattr("atlas.cli.__main__._write_trace", fake_write_trace)
+    monkeypatch.setattr("atlas.cli.__main__._write_table", lambda frame, path: None)
+
+    _handle_score(args)
+
+    assert len(trace_calls) == 2
+    combined_call = next(call for call in trace_calls if call["path"].name == "combined.csv")
+    posterior_call = next(call for call in trace_calls if call["path"].name == "posterior.jsonl")
+
+    assert combined_call["format"] == "csv"
+    assert {record["stage"] for record in combined_call["records"]} == {"posterior", "blend"}
+    assert all(
+        record["metadata.schema_version"] == TRACE_SCHEMA_VERSION
+        for record in combined_call["records"]
+    )
+
+    assert posterior_call["format"] == "jsonl"
+    assert {record["stage"] for record in posterior_call["records"]} == {"posterior"}
 def test_score_rejects_invalid_omega(tmp_path: Path) -> None:
     stores_path = tmp_path / "stores.csv"
     output_path = tmp_path / "scores.csv"

@@ -130,11 +130,41 @@ def build_parser() -> argparse.ArgumentParser:
     )
     score.add_argument(
         "--trace-out",
-        help="Optional JSONL trace file for prior calculations",
+        help="Optional trace file for combined prior/posterior/blend diagnostics",
+    )
+    score.add_argument(
+        "--trace-format",
+        choices=["jsonl", "csv"],
+        default="jsonl",
+        help="Format used when writing combined trace outputs",
+    )
+    score.add_argument(
+        "--posterior-trace-format",
+        choices=["jsonl", "csv"],
+        default="csv",
+        help="Format used when writing posterior-only trace outputs",
+    )
+    score.add_argument(
+        "--include-prior-trace",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="Include prior stage rows when emitting --trace-out",
+    )
+    score.add_argument(
+        "--include-posterior-trace",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="Include posterior stage rows when emitting --trace-out",
+    )
+    score.add_argument(
+        "--include-blend-trace",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="Include blend stage rows when emitting --trace-out",
     )
     score.add_argument(
         "--posterior-trace",
-        help="Optional path to persist posterior diagnostics (CSV/JSONL)",
+        help="Optional path to persist posterior-only diagnostics",
     )
     score.add_argument(
         "--lambda",
@@ -360,6 +390,7 @@ def _handle_score(args: argparse.Namespace) -> None:
 
     posterior_predictions: pd.DataFrame | None = None
     posterior_trace_rows: list[dict[str, object]] = []
+    prior_trace_rows: list[dict[str, object]] = []
     if args.mode in {MODE_POSTERIOR, MODE_BLENDED}:
         _, posterior_predictions, posterior_trace_rows = _run_posterior_pipeline(
             stores,
@@ -368,7 +399,6 @@ def _handle_score(args: argparse.Namespace) -> None:
             ecdf_cache=args.ecdf_cache,
         )
 
-    trace_records: list[dict[str, object]] = []
     prior_scores: pd.DataFrame | None = None
     if args.mode in {MODE_PRIOR, MODE_BLENDED}:
         overrides = None
@@ -377,12 +407,11 @@ def _handle_score(args: argparse.Namespace) -> None:
                 row.StoreId: (float(row.Value), float(row.Yield))
                 for row in posterior_predictions.itertuples()
             }
-        prior_scores, prior_trace = _run_prior_scoring(
+        prior_scores, prior_trace_rows = _run_prior_scoring(
             stores,
             lambda_weight=lambda_weight,
             posterior_overrides=overrides,
         )
-        trace_records.extend(prior_trace)
 
     output = _blend_scores(
         prior_scores if args.mode in {MODE_PRIOR, MODE_BLENDED} else None,
@@ -391,21 +420,34 @@ def _handle_score(args: argparse.Namespace) -> None:
         omega,
     )
 
-    if posterior_trace_rows:
-        trace_records.extend(posterior_trace_rows)
-
-    trace_records.extend(_build_blend_trace_records(output, lambda_weight=lambda_weight))
+    blend_trace_rows = _build_blend_trace_records(output, lambda_weight=lambda_weight)
 
     if output is None:
         raise AtlasCliError("No scores were produced – check input datasets")
 
     _write_table(output, Path(args.output))
 
-    if args.trace_out and trace_records:
-        _write_trace(trace_records, Path(args.trace_out))
+    combined_trace_rows: list[dict[str, object]] = []
+    if args.include_prior_trace:
+        combined_trace_rows.extend(prior_trace_rows)
+    if args.include_posterior_trace:
+        combined_trace_rows.extend(posterior_trace_rows)
+    if args.include_blend_trace:
+        combined_trace_rows.extend(blend_trace_rows)
+
+    if args.trace_out and combined_trace_rows:
+        _write_trace(
+            combined_trace_rows,
+            Path(args.trace_out),
+            format_hint=args.trace_format,
+        )
 
     if args.posterior_trace and posterior_trace_rows:
-        _write_posterior_trace(posterior_trace_rows, Path(args.posterior_trace))
+        _write_trace(
+            posterior_trace_rows,
+            Path(args.posterior_trace),
+            format_hint=args.posterior_trace_format,
+        )
 
 
 def _handle_anchors(args: argparse.Namespace) -> None:
@@ -740,38 +782,29 @@ def _write_json(data: dict[str, object], path: Path) -> None:
         raise AtlasCliError(f"Failed to write JSON output to '{path}': {exc}")
 
 
-def _write_trace_table(records: Sequence[dict[str, object]], path: Path) -> None:
-    records_list = list(records)
-    frame = pd.DataFrame.from_records(records_list)
-    _write_table(frame, path)
-
-
-def _write_trace(records: Iterable[dict[str, object]], path: Path) -> None:
-    path = path.expanduser().resolve()
-    path.parent.mkdir(parents=True, exist_ok=True)
+def _write_trace(
+    records: Iterable[dict[str, object]],
+    path: Path,
+    *,
+    format_hint: str,
+) -> None:
     materialised = list(records)
-    suffix = path.suffix.lower()
-    try:
-        if suffix not in {".json", ".jsonl", ".ndjson"}:
-            _write_trace_table(materialised, path)
-            return
-
-        with path.open("w", encoding="utf-8") as handle:
-            for record in materialised:
-                handle.write(json.dumps(record, sort_keys=True) + "\n")
-    except OSError as exc:  # pragma: no cover - unlikely in tests
-        raise AtlasCliError(f"Failed to write trace output to '{path}': {exc}")
-
-
-def _write_posterior_trace(records: Sequence[dict[str, object]], path: Path) -> None:
-    if not records:
+    if not materialised:
         return
 
-    suffix = path.suffix.lower()
-    if suffix in {".json", ".jsonl", ".ndjson"}:
-        _write_trace(records, path)
-    else:
-        _write_trace_table(records, path)
+    path = path.expanduser().resolve()
+    path.parent.mkdir(parents=True, exist_ok=True)
+
+    try:
+        if format_hint == "csv":
+            frame = pd.DataFrame.from_records(materialised)
+            frame.to_csv(path, index=False)
+        else:
+            with path.open("w", encoding="utf-8") as handle:
+                for record in materialised:
+                    handle.write(json.dumps(record, sort_keys=True) + "\n")
+    except OSError as exc:  # pragma: no cover - unlikely in tests
+        raise AtlasCliError(f"Failed to write trace output to '{path}': {exc}")
 
 
 def _load_dataset(loader, location: str, label: str) -> pd.DataFrame:
