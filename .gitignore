@@ -20,3 +20,18 @@ Thumbs.db
 .vscode/launch.local.json
 
 prototypes/
+
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments (optional but recommended)
+.venv/
+venv/
+
+# Python packaging metadata
+*.egg-info/
+*.egg
+
