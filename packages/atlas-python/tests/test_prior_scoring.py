@@ -6,6 +6,7 @@ import math
 
 import pandas as pd
 
+from atlas.explain.trace import TRACE_SCHEMA_VERSION
 from atlas.scoring import (
     clamp_score,
     compute_prior_score,
@@ -118,9 +119,12 @@ def test_knn_adjacency_smoothing_handles_small_sample() -> None:
 
 
 def test_prior_score_result_trace_contains_expected_keys() -> None:
-    result = compute_prior_score("Thrift")
+    result = compute_prior_score("Thrift", store_id="store-123")
     trace = result.to_trace()
 
+    assert trace["store_id"] == "store-123"
+    assert trace["metadata.schema_version"] == TRACE_SCHEMA_VERSION
+    assert trace["metadata.store_type"] == "Thrift"
     assert trace["scores.value"] == result.value
     assert trace["baseline.value"] == result.baseline_value
     assert trace["affluence.income"] == result.income_contribution

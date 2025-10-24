@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rustbelt.atlas/schema/atlas/v1/trace.schema.json",
+  "title": "Atlas Trace Record",
+  "description": "Flattened trace payload emitted by Atlas scoring stages.",
+  "type": "object",
+  "required": [
+    "store_id",
+    "stage",
+    "metadata.schema_version"
+  ],
+  "properties": {
+    "store_id": {
+      "type": "string",
+      "description": "Canonical identifier for the store associated with the trace record.",
+      "minLength": 1
+    },
+    "stage": {
+      "type": "string",
+      "enum": [
+        "prior",
+        "posterior",
+        "blend"
+      ],
+      "description": "Pipeline stage that produced the trace record."
+    },
+    "metadata.schema_version": {
+      "type": "string",
+      "const": "v1",
+      "description": "Schema version associated with the trace payload."
+    }
+  },
+  "patternProperties": {
+    "^(metadata|baseline|affluence|adjacency|observations|model|scores)\\.[A-Za-z0-9_.-]+$": {
+      "type": [
+        "string",
+        "number",
+        "integer",
+        "boolean",
+        "null"
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {"stage": {"const": "prior"}}
+      },
+      "then": {
+        "required": [
+          "scores.value",
+          "scores.yield"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {"stage": {"const": "posterior"}}
+      },
+      "then": {
+        "required": [
+          "scores.value_final",
+          "scores.yield_final",
+          "scores.theta_final"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {"stage": {"const": "blend"}}
+      },
+      "then": {
+        "required": [
+          "scores.value_prior",
+          "scores.value_posterior",
+          "scores.value_final",
+          "scores.yield_prior",
+          "scores.yield_posterior",
+          "scores.yield_final",
+          "scores.composite_final"
+        ]
+      }
+    }
+  ]
+}

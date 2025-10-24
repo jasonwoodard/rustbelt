@@ -62,6 +62,13 @@ Per store:
 Optional:
 - Anchors & clusters (centroids, stats)
 
+### Trace schema & versioning
+
+- Atlas emits structured trace rows for each scoring stage (`prior`, `posterior`, `blend`).
+- The flattened payload is versioned via `TRACE_SCHEMA_VERSION` (`packages/atlas-python/src/atlas/explain/trace.py`).
+- JSON Schema + canonical examples live at `schema/atlas/v1/trace.schema.json` and `schema/atlas/v1/trace-record.example.json`.
+- Tests validate trace rows against the schema; bump the version when making breaking changes and update the docs/examples.
+
 ---
 
 ## Modes (pick one)

@@ -7,6 +7,7 @@ import pandas as pd
 import pytest
 
 from atlas.cli.__main__ import MODE_BLENDED, MODE_POSTERIOR, MODE_PRIOR, build_parser, main
+from atlas.explain.trace import TRACE_SCHEMA_VERSION
 
 
 def test_parser_displays_help(capsys: pytest.CaptureFixture[str]) -> None:
@@ -178,8 +179,9 @@ def test_score_cli_blended_mode(tmp_path: Path) -> None:
     assert trace_lines
     records = [json.loads(line) for line in trace_lines]
     first_trace = records[0]
-    assert "StoreId" in first_trace
-    assert "value" in first_trace
+    assert first_trace["metadata.schema_version"] == TRACE_SCHEMA_VERSION
+    assert "store_id" in first_trace
+    assert "scores.value" in first_trace or "scores.value_final" in first_trace
 
     blend_trace = next(record for record in records if record.get("stage") == "blend" and record.get("store_id") == "S1")
     assert blend_trace["observations.omega"] == pytest.approx(omega)

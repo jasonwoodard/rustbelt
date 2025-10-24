@@ -704,10 +704,8 @@ class PosteriorPipeline:
         """Yield flattened trace payloads for the most recent predictions."""
 
         traces = self.trace_records_ or {}
-        for store_id, record in traces.items():
-            payload = record.to_dict()
-            payload.setdefault("store_id", str(store_id))
-            yield payload
+        for record in traces.values():
+            yield record.to_dict()
 
     def trace_records_frame(self) -> pd.DataFrame:
         """Return trace payloads as a :class:`pandas.DataFrame`."""

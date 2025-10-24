@@ -57,18 +57,30 @@ def hash_payload(payload: Any) -> str:
     return hashlib.sha256(encoded.encode("utf-8")).hexdigest()
 
 
+TRACE_SCHEMA_VERSION = "v1"
+
+
 @dataclass(slots=True)
 class TraceRecord:
     """Structured trace capturing the intermediate scoring contributions."""
 
     store_id: str
     stage: str
+    metadata: dict[str, Any] = field(default_factory=dict)
     baseline: dict[str, Any] = field(default_factory=dict)
     affluence: dict[str, Any] = field(default_factory=dict)
     adjacency: dict[str, Any] = field(default_factory=dict)
     observations: dict[str, Any] = field(default_factory=dict)
     model: dict[str, Any] = field(default_factory=dict)
     scores: dict[str, Any] = field(default_factory=dict)
+
+    def __post_init__(self) -> None:
+        self.store_id = str(self.store_id)
+        self.stage = str(self.stage)
+
+        metadata = dict(self.metadata)
+        metadata.setdefault("schema_version", TRACE_SCHEMA_VERSION)
+        self.metadata = metadata
 
     def to_dict(self) -> dict[str, Any]:
         """Return a flattened dictionary suitable for JSON/CSV output."""
@@ -79,6 +91,7 @@ class TraceRecord:
         }
 
         for section_name, section in (
+            ("metadata", self.metadata),
             ("baseline", self.baseline),
             ("affluence", self.affluence),
             ("adjacency", self.adjacency),
@@ -86,6 +99,8 @@ class TraceRecord:
             ("model", self.model),
             ("scores", self.scores),
         ):
+            if not section:
+                continue
             for key, value in section.items():
                 flattened[f"{section_name}.{key}"] = value
 
@@ -100,5 +115,5 @@ def ensure_sequence(value: Sequence[TraceRecord] | TraceRecord) -> list[TraceRec
     return list(value)
 
 
-__all__ = ["TraceRecord", "ensure_sequence", "hash_payload"]
+__all__ = ["TRACE_SCHEMA_VERSION", "TraceRecord", "ensure_sequence", "hash_payload"]
 
