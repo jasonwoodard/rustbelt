@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rustbelt.atlas/schema/atlas/v1/anchor.schema.json",
+  "$comment": "Atlas schema version v1",
+  "title": "Atlas Anchor Record",
+  "description": "Derived metro anchor metadata emitted by the Atlas CLI anchors command.",
+  "type": "object",
+  "required": [
+    "anchor_id",
+    "cluster_label",
+    "centroid_lat",
+    "centroid_lon",
+    "store_count",
+    "store_ids"
+  ],
+  "properties": {
+    "anchor_id": {
+      "type": "string",
+      "description": "Stable identifier assigned to the anchor cluster.",
+      "minLength": 1
+    },
+    "cluster_label": {
+      "type": "integer",
+      "description": "Cluster label produced by the underlying DBSCAN/HDBSCAN algorithm (noise = -1)."
+    },
+    "centroid_lat": {
+      "type": "number",
+      "description": "Latitude for the anchor centroid in decimal degrees.",
+      "minimum": -90,
+      "maximum": 90
+    },
+    "centroid_lon": {
+      "type": "number",
+      "description": "Longitude for the anchor centroid in decimal degrees.",
+      "minimum": -180,
+      "maximum": 180
+    },
+    "store_count": {
+      "type": "integer",
+      "description": "Number of stores assigned to the anchor.",
+      "minimum": 1
+    },
+    "store_ids": {
+      "type": "array",
+      "description": "Store identifiers assigned to the anchor cluster.",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    }
+  },
+  "additionalProperties": false
+}
