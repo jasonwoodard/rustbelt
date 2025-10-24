@@ -238,8 +238,148 @@ def test_score_cli_blended_mode(tmp_path: Path) -> None:
     assert blend_trace["scores.yield_posterior"] == pytest.approx(blended_store["YieldPosterior"])
 
     posterior_df = pd.read_csv(posterior_trace)
-    assert {"StoreId", "Theta", "Yield", "Value"}.issubset(posterior_df.columns)
+    assert {
+        "store_id",
+        "scores.theta_final",
+        "scores.yield_final",
+        "scores.value_final",
+    }.issubset(posterior_df.columns)
     assert ecdf_cache.exists()
+
+
+def test_score_cli_rejects_invalid_schema(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    stores_path = tmp_path / "stores.csv"
+    output_path = tmp_path / "scores.csv"
+
+    stores = pd.DataFrame(
+        {
+            "StoreId": ["S1"],
+            "Name": ["Store 1"],
+            "Type": ["Thrift"],
+            "Lat": [42.0],
+            "Lon": [-83.0],
+            "MedianIncomeNorm": [0.5],
+            "Pct100kHHNorm": [0.4],
+            "PctRenterNorm": [0.3],
+        }
+    )
+    stores.to_csv(stores_path, index=False)
+
+    def fake_blend(*_args, **_kwargs) -> pd.DataFrame:
+        return pd.DataFrame(
+            {
+                "StoreId": ["S1"],
+                "Value": [6.5],
+                "Yield": [3.0],
+                "Omega": [0.5],
+            }
+        )
+
+    monkeypatch.setattr("atlas.cli.__main__._blend_scores", fake_blend)
+
+    with pytest.raises(SystemExit, match="schema validation"):
+        main(
+            [
+                "score",
+                "--mode",
+                MODE_PRIOR,
+                "--stores",
+                str(stores_path),
+                "--output",
+                str(output_path),
+                "--no-diagnostics",
+            ]
+        )
+
+    assert not output_path.exists()
+
+
+def test_anchors_cli_rejects_invalid_schema(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    stores_path = tmp_path / "stores.csv"
+    output_path = tmp_path / "anchors.csv"
+
+    stores = pd.DataFrame(
+        {
+            "StoreId": ["S1"],
+            "Name": ["Store 1"],
+            "Type": ["Thrift"],
+            "Lat": [42.0],
+            "Lon": [-83.0],
+        }
+    )
+    stores.to_csv(stores_path, index=False)
+
+    class StubAnchorResult:
+        def to_frame(self) -> pd.DataFrame:
+            return pd.DataFrame(
+                {
+                    "anchor_id": ["anchor-1"],
+                    "cluster_label": [0],
+                    "centroid_lat": [120.0],
+                    "centroid_lon": [-83.0],
+                    "store_count": [1],
+                    "store_ids": [["S1"]],
+                }
+            )
+
+    monkeypatch.setattr("atlas.cli.__main__.detect_anchors", lambda *_args, **_kwargs: StubAnchorResult())
+
+    with pytest.raises(SystemExit, match="schema validation"):
+        main(
+            [
+                "anchors",
+                "--stores",
+                str(stores_path),
+                "--output",
+                str(output_path),
+            ]
+        )
+
+    assert not output_path.exists()
+
+
+def test_subclusters_cli_rejects_invalid_schema(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    spec_path = tmp_path / "spec.json"
+    output_path = tmp_path / "subclusters.csv"
+
+    spec_path.write_text(json.dumps([{"key": "root", "store_ids": ["S1"]}]))
+
+    class StubHierarchy:
+        def to_frame(self) -> pd.DataFrame:
+            return pd.DataFrame(
+                {
+                    "anchor_id": ["anchor-1"],
+                    "subcluster_id": ["anchor-1-001"],
+                    "parent_subcluster_id": [None],
+                    "lineage": ["001"],
+                    "depth": [0],
+                    "store_count": [1],
+                    "store_ids": [["S1"]],
+                    "centroid_lat": [None],
+                    "centroid_lon": [None],
+                    "metadata": [{}],
+                }
+            )
+
+    monkeypatch.setattr(
+        "atlas.cli.__main__.build_subcluster_hierarchy",
+        lambda *_args, **_kwargs: StubHierarchy(),
+    )
+
+    with pytest.raises(SystemExit, match="schema validation"):
+        main(
+            [
+                "subclusters",
+                "--anchor-id",
+                "anchor-1",
+                "--spec",
+                str(spec_path),
+                "--output",
+                str(output_path),
+            ]
+        )
+
+    assert not output_path.exists()
 
 
 def test_handle_score_honours_trace_flags(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:

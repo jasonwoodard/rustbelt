@@ -12,6 +12,7 @@ authors = [
   {name = "Rust Belt Team"}
 ]
 dependencies = [
+  "jsonschema>=4.21",
   "numpy>=1.26",
   "pandas>=2.1",
   "pyarrow>=14",
