@@ -25,6 +25,7 @@ from atlas.clustering.subclusters import (
     SubClusterTopologyError,
     build_subcluster_hierarchy,
 )
+from atlas.cli.schema_validation import SchemaValidationError, SchemaValidator
 from atlas.data import MissingColumnsError, load_affluence, load_observations, load_stores
 from atlas.explain import TraceRecord
 from atlas.diagnostics import (
@@ -71,6 +72,9 @@ MODE_PRIOR = "prior-only"
 MODE_POSTERIOR = "posterior-only"
 MODE_BLENDED = "blended"
 PRIOR_FEATURE_COLUMNS = ("MedianIncomeNorm", "Pct100kHHNorm", "PctRenterNorm")
+
+
+_SCHEMA_VALIDATOR = SchemaValidator()
 
 def _get_package_version() -> str:
     try:
@@ -451,6 +455,7 @@ def _handle_score(args: argparse.Namespace) -> None:
     if output is None:
         raise AtlasCliError("No scores were produced – check input datasets")
 
+    _validate_scores_output(output)
     _write_table(output, Path(args.output))
 
     combined_trace_rows: list[dict[str, object]] = []
@@ -515,6 +520,7 @@ def _handle_anchors(args: argparse.Namespace) -> None:
         raise AtlasCliError(str(exc)) from exc
 
     anchors_frame = result.to_frame()
+    _validate_anchor_output(anchors_frame)
     _write_table(anchors_frame, Path(args.output))
 
     if args.store_assignments:
@@ -538,6 +544,7 @@ def _handle_subclusters(args: argparse.Namespace) -> None:
         raise AtlasCliError(str(exc)) from exc
 
     frame = hierarchy.to_frame()
+    _validate_subcluster_output(frame)
     _write_table(frame, Path(args.output))
 
 
@@ -799,6 +806,39 @@ def _normalise_to_unit_interval(series: pd.Series) -> pd.Series:
         return pd.Series(0.5, index=series.index, dtype=float)
     normalised = (series - minimum) / (maximum - minimum)
     return normalised.fillna(0.0).clip(0.0, 1.0)
+
+
+def _validate_scores_output(frame: pd.DataFrame) -> None:
+    try:
+        _SCHEMA_VALIDATOR.validate_frame(
+            "score",
+            frame,
+            string_fields=("StoreId",),
+        )
+    except SchemaValidationError as exc:
+        raise AtlasCliError(f"Score output failed schema validation: {exc}") from exc
+
+
+def _validate_anchor_output(frame: pd.DataFrame) -> None:
+    try:
+        _SCHEMA_VALIDATOR.validate_frame(
+            "anchor",
+            frame,
+            string_fields=("anchor_id",),
+        )
+    except SchemaValidationError as exc:
+        raise AtlasCliError(f"Anchor output failed schema validation: {exc}") from exc
+
+
+def _validate_subcluster_output(frame: pd.DataFrame) -> None:
+    try:
+        _SCHEMA_VALIDATOR.validate_frame(
+            "cluster",
+            frame,
+            string_fields=("anchor_id", "subcluster_id", "parent_subcluster_id", "lineage"),
+        )
+    except SchemaValidationError as exc:
+        raise AtlasCliError(f"Sub-cluster output failed schema validation: {exc}") from exc
 
 
 def _write_table(frame: pd.DataFrame, path: Path) -> None:
