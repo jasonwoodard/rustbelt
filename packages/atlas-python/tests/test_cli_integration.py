@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
+from atlas.explain.trace import TRACE_SCHEMA_VERSION
 from atlas.fixtures import fixture_path
 
 
@@ -89,7 +90,11 @@ def test_cli_prior_dense_urban_fixture(tmp_path: Path) -> None:
     assert stages.count("prior") == len(frame)
     assert stages.count("blend") == len(frame)
     first_prior = next(record for record in records if record["stage"] == "prior")
-    assert {"baseline_value", "baseline_yield", "income_contribution"} <= set(first_prior)
+    assert first_prior["metadata.schema_version"] == TRACE_SCHEMA_VERSION
+    assert "baseline.value" in first_prior
+    assert "affluence.income" in first_prior
+    assert "scores.value" in first_prior
+    assert "store_id" in first_prior
 
     expected_composites = np.array([3.035, 3.0685, 3.2625, 3.35, 3.353])
     np.testing.assert_allclose(
@@ -167,6 +172,7 @@ def test_cli_blended_sparse_rural_fixture(tmp_path: Path) -> None:
     assert stages.count("prior") == len(frame)
     assert stages.count("posterior") == len(frame)
     assert stages.count("blend") == len(frame)
+    assert all(record["metadata.schema_version"] == TRACE_SCHEMA_VERSION for record in records)
 
     posterior_df = pd.read_csv(posterior_trace)
     assert not posterior_df.empty

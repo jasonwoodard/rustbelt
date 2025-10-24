@@ -114,6 +114,7 @@ class PriorScoreResult:
 def compute_prior_score(
     store_type: str,
     *,
+    store_id: str | None = None,
     median_income_norm: float = 0.0,
     pct_hh_100k_norm: float = 0.0,
     pct_renter_norm: float = 0.0,
@@ -128,6 +129,9 @@ def compute_prior_score(
     ----------
     store_type:
         The normalized store type label (e.g., ``"Thrift"``).
+    store_id:
+        Optional canonical identifier for the store. Defaults to ``store_type``
+        when omitted to preserve backwards compatibility with older callers.
     median_income_norm, pct_hh_100k_norm, pct_renter_norm:
         Normalized affluence inputs from the spec (0–1 range recommended).
     lambda_weight:
@@ -193,9 +197,14 @@ def compute_prior_score(
         "posterior_overrides": posterior_overrides,
     }
 
+    canonical_store_id = store_id if store_id is not None else store_type
+
     trace = TraceRecord(
-        store_id=store_type,
+        store_id=canonical_store_id,
         stage="prior",
+        metadata={
+            "store_type": store_type,
+        },
         baseline={
             "value": baseline.value,
             "yield": baseline.yield_score,

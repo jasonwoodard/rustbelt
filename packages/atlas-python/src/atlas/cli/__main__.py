@@ -475,6 +475,7 @@ def _run_prior_scoring(
 
         result = compute_prior_score(
             row.Type,
+            store_id=str(row.StoreId),
             median_income_norm=float(getattr(row, "MedianIncomeNorm", 0.0) or 0.0),
             pct_hh_100k_norm=float(getattr(row, "Pct100kHHNorm", 0.0) or 0.0),
             pct_renter_norm=float(getattr(row, "PctRenterNorm", 0.0) or 0.0),
@@ -490,18 +491,7 @@ def _run_prior_scoring(
                 "Composite": result.composite,
             }
         )
-        trace = result.to_trace()
-        trace["StoreId"] = row.StoreId
-        trace["Type"] = row.Type
-        trace["baseline_value"] = result.baseline_value
-        trace["baseline_yield"] = result.baseline_yield
-        trace["income_contribution"] = result.income_contribution
-        trace["high_income_contribution"] = result.high_income_contribution
-        trace["renter_contribution"] = result.renter_contribution
-        trace["value"] = result.value
-        trace["yield"] = result.yield_score
-        trace["composite"] = result.composite
-        traces.append(trace)
+        traces.append(result.to_trace())
 
     return pd.DataFrame.from_records(records), traces
 
@@ -636,21 +626,15 @@ def _build_blend_trace_records(
                 "value_prior": _to_optional_float(getattr(row, "ValuePrior", None)),
                 "value_posterior": _to_optional_float(getattr(row, "ValuePosterior", None)),
                 "value_final": _to_optional_float(getattr(row, "Value", None)),
-                "value": _to_optional_float(getattr(row, "Value", None)),
                 "yield_prior": _to_optional_float(getattr(row, "YieldPrior", None)),
                 "yield_posterior": _to_optional_float(getattr(row, "YieldPosterior", None)),
                 "yield_final": _to_optional_float(getattr(row, "Yield", None)),
-                "yield": _to_optional_float(getattr(row, "Yield", None)),
                 "composite_prior": _to_optional_float(getattr(row, "CompositePrior", None)),
                 "composite_final": _to_optional_float(getattr(row, "Composite", None)),
-                "composite": _to_optional_float(getattr(row, "Composite", None)),
             },
         )
 
-        record = trace.to_dict()
-        record["StoreId"] = store_id
-        record["Omega"] = omega_value
-        traces.append(record)
+        traces.append(trace.to_dict())
 
     return traces
 
