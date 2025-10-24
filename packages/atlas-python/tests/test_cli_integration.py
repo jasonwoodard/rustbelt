@@ -165,10 +165,23 @@ def test_cli_blended_sparse_rural_fixture(tmp_path: Path) -> None:
     records = [json.loads(line) for line in trace_lines]
     stages = [record["stage"] for record in records]
     assert stages.count("prior") == len(frame)
+    assert stages.count("posterior") == len(frame)
     assert stages.count("blend") == len(frame)
 
     posterior_df = pd.read_csv(posterior_trace)
-    assert {"StoreId", "Theta", "Yield", "Value", "Cred", "Method"} <= set(posterior_df.columns)
+    assert not posterior_df.empty
+    assert {"store_id", "stage", "baseline.theta_prediction", "observations.visits"} <= set(posterior_df.columns)
+    assert {"scores.theta_final", "scores.yield_final", "scores.value_final"} <= set(posterior_df.columns)
+    assert set(posterior_df["stage"]) == {"posterior"}
+    assert set(posterior_df["store_id"]) == set(frame["StoreId"])
+
+    merged = frame.merge(posterior_df, left_on="StoreId", right_on="store_id")
+    np.testing.assert_allclose(
+        merged["scores.yield_final"].to_numpy(dtype=float),
+        merged["YieldPosterior"].to_numpy(dtype=float),
+        atol=1e-6,
+        rtol=0.0,
+    )
 
     expected_composites = np.array([2.7, 3.243333333333333, 3.343333333333333, 3.43])
     np.testing.assert_allclose(

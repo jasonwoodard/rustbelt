@@ -23,7 +23,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Sequence
+from typing import Iterator, Sequence
 
 import numpy as np
 import pandas as pd
@@ -699,6 +699,23 @@ class PosteriorPipeline:
         self.trace_records_ = traces
 
         return pd.DataFrame(predictions)
+
+    def iter_traces(self) -> Iterator[dict[str, object]]:
+        """Yield flattened trace payloads for the most recent predictions."""
+
+        traces = self.trace_records_ or {}
+        for store_id, record in traces.items():
+            payload = record.to_dict()
+            payload.setdefault("store_id", str(store_id))
+            yield payload
+
+    def trace_records_frame(self) -> pd.DataFrame:
+        """Return trace payloads as a :class:`pandas.DataFrame`."""
+
+        rows = list(self.iter_traces())
+        if not rows:
+            return pd.DataFrame()
+        return pd.DataFrame(rows)
 
 
 __all__ = [
