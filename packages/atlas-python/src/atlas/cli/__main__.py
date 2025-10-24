@@ -27,6 +27,15 @@ from atlas.clustering.subclusters import (
 )
 from atlas.data import MissingColumnsError, load_affluence, load_observations, load_stores
 from atlas.explain import TraceRecord
+from atlas.diagnostics import (
+    DIAGNOSTICS_VERSION,
+    compute_correlation_table,
+    generate_qa_signals,
+    summarize_distributions,
+    write_html,
+    write_json,
+    write_parquet,
+)
 from atlas.scoring import PosteriorPipeline, clamp_score, compute_prior_score
 
 
@@ -187,7 +196,17 @@ def build_parser() -> argparse.ArgumentParser:
         "--ecdf-cache",
         help="Optional parquet file to cache the ECDF reference",
     )
-    score.set_defaults(handler=_handle_score)
+    score.add_argument(
+        "--diagnostics-dir",
+        help="Directory where diagnostics artifacts will be written (defaults to the score output directory)",
+    )
+    score.add_argument(
+        "--no-diagnostics",
+        action="store_false",
+        dest="diagnostics",
+        help="Disable diagnostics sidecar outputs",
+    )
+    score.set_defaults(handler=_handle_score, diagnostics=True)
 
     anchors = subparsers.add_parser(
         "anchors",
@@ -361,11 +380,18 @@ def _handle_score(args: argparse.Namespace) -> None:
     if not (0.0 <= omega <= 1.0):
         raise AtlasCliError("ω must be between 0 and 1 inclusive")
 
+    diagnostics_enabled = getattr(args, "diagnostics", True)
+    anchor_assignments_info: tuple[pd.DataFrame | None, Path | None] = (None, None)
+    subclusters_info: tuple[pd.DataFrame | None, Path | None] = (None, None)
+
     stores = _load_dataset(load_stores, args.stores, "stores")
     affluence = None
     if args.affluence:
         affluence = _load_dataset(load_affluence, args.affluence, "affluence")
         stores = _attach_affluence_features(stores, affluence)
+
+    if diagnostics_enabled:
+        anchor_assignments_info, subclusters_info = _load_related_artifacts(args.stores)
 
     stores = stores.copy()
     stores["StoreId"] = stores["StoreId"].astype(str)
@@ -447,6 +473,22 @@ def _handle_score(args: argparse.Namespace) -> None:
             posterior_trace_rows,
             Path(args.posterior_trace),
             format_hint=args.posterior_trace_format,
+        )
+
+    if diagnostics_enabled:
+        diagnostics_dir = Path(args.diagnostics_dir).expanduser().resolve() if args.diagnostics_dir else Path(args.output).expanduser().resolve().parent
+        _emit_diagnostics(
+            args,
+            scores=output,
+            stores=stores,
+            posterior_predictions=posterior_predictions,
+            diagnostics_dir=diagnostics_dir,
+            lambda_weight=lambda_weight,
+            omega=omega,
+            anchor_assignments=anchor_assignments_info[0],
+            anchor_assignments_path=anchor_assignments_info[1],
+            subclusters=subclusters_info[0],
+            subclusters_path=subclusters_info[1],
         )
 
 
@@ -805,6 +847,170 @@ def _write_trace(
                     handle.write(json.dumps(record, sort_keys=True) + "\n")
     except OSError as exc:  # pragma: no cover - unlikely in tests
         raise AtlasCliError(f"Failed to write trace output to '{path}': {exc}")
+
+
+def _emit_diagnostics(
+    args: argparse.Namespace,
+    *,
+    scores: pd.DataFrame,
+    stores: pd.DataFrame,
+    posterior_predictions: pd.DataFrame | None,
+    diagnostics_dir: Path,
+    lambda_weight: float | None,
+    omega: float,
+    anchor_assignments: pd.DataFrame | None,
+    anchor_assignments_path: Path | None,
+    subclusters: pd.DataFrame | None,
+    subclusters_path: Path | None,
+) -> None:
+    diagnostics_dir = diagnostics_dir.expanduser().resolve()
+
+    diagnostics_frame = scores.copy()
+    diagnostics_frame["StoreId"] = diagnostics_frame["StoreId"].astype(str)
+
+    store_metadata_columns = [column for column in ("StoreId", "Metro", "Type") if column in stores.columns]
+    if store_metadata_columns:
+        metadata_frame = stores.loc[:, store_metadata_columns].copy()
+        metadata_frame["StoreId"] = metadata_frame["StoreId"].astype(str)
+        diagnostics_frame = diagnostics_frame.merge(metadata_frame.drop_duplicates(subset="StoreId"), on="StoreId", how="left")
+
+    anchor_column = None
+    if anchor_assignments is not None and "anchor_id" in anchor_assignments.columns:
+        assignments = anchor_assignments[["StoreId", "anchor_id"]].copy()
+        assignments["StoreId"] = assignments["StoreId"].astype(str)
+        assignments["anchor_id"] = assignments["anchor_id"].astype(str)
+        diagnostics_frame = diagnostics_frame.merge(assignments, on="StoreId", how="left")
+        anchor_column = "anchor_id"
+    elif "Metro" in diagnostics_frame.columns:
+        anchor_column = "Metro"
+
+    candidate_metrics = [
+        "ValuePrior",
+        "YieldPrior",
+        "CompositePrior",
+        "ValuePosterior",
+        "YieldPosterior",
+        "Value",
+        "Yield",
+        "Composite",
+        "Cred",
+        "ECDF_q",
+        "Omega",
+    ]
+    metrics = [column for column in candidate_metrics if column in diagnostics_frame.columns]
+    metrics = metrics or [
+        column
+        for column in diagnostics_frame.columns
+        if column != "StoreId" and pd.api.types.is_numeric_dtype(diagnostics_frame[column])
+    ]
+
+    score_column = None
+    for candidate in ("Composite", "CompositePrior", "Value", "ValuePrior"):
+        if candidate in diagnostics_frame.columns:
+            score_column = candidate
+            break
+    if score_column is None and metrics:
+        score_column = metrics[0]
+
+    if score_column is not None:
+        qa_signals = generate_qa_signals(
+            diagnostics_frame,
+            score_column=score_column,
+            anchor_column=anchor_column,
+        )
+    else:
+        qa_signals = {
+            "high_leverage_anchors": [],
+            "outlier_scores": [],
+            "warnings": ["No numeric score column available for QA"],
+        }
+
+    correlations = compute_correlation_table(diagnostics_frame, columns=metrics or None)
+    distributions = summarize_distributions(diagnostics_frame, metrics=metrics or None)
+
+    metadata: dict[str, object] = {
+        "mode": args.mode,
+        "lambda_weight": None if lambda_weight is None else float(lambda_weight),
+        "omega": float(omega),
+        "record_count": int(len(scores)),
+        "diagnostics_version": DIAGNOSTICS_VERSION,
+    }
+    if anchor_assignments is not None:
+        anchors_unique = (
+            int(anchor_assignments["anchor_id"].astype(str).nunique())
+            if "anchor_id" in anchor_assignments.columns
+            else None
+        )
+        metadata["anchor_assignments"] = {
+            "path": str(anchor_assignments_path) if anchor_assignments_path else None,
+            "records": int(len(anchor_assignments)),
+            "unique_anchors": anchors_unique,
+        }
+    if subclusters is not None:
+        metadata["subclusters"] = {
+            "path": str(subclusters_path) if subclusters_path else None,
+            "records": int(len(subclusters)),
+        }
+    if posterior_predictions is not None:
+        metadata["posterior_predictions"] = int(len(posterior_predictions))
+
+    payload = {
+        "metadata": metadata,
+        "correlations": correlations,
+        "distributions": distributions,
+        "qa_signals": qa_signals,
+    }
+
+    warnings = qa_signals.get("warnings", []) if isinstance(qa_signals, dict) else []
+    html_sections = [
+        "<html><body>",
+        f"<h1>Atlas Diagnostics ({args.mode})</h1>",
+        f"<p>Records analysed: {len(scores)}</p>",
+        f"<p>Diagnostics version: {DIAGNOSTICS_VERSION}</p>",
+        "<h2>Warnings</h2>",
+        "<ul>",
+    ]
+    if warnings:
+        html_sections.extend(f"<li>{warning}</li>" for warning in warnings)
+    else:
+        html_sections.append("<li>None</li>")
+    html_sections.extend(["</ul>", "</body></html>"])
+    html_report = "".join(html_sections)
+
+    parquet_columns: list[str] = ["StoreId"]
+    for column in metrics:
+        if column not in parquet_columns:
+            parquet_columns.append(column)
+    if anchor_column and anchor_column in diagnostics_frame.columns:
+        parquet_columns.append(anchor_column)
+
+    parquet_frame = diagnostics_frame.loc[:, [column for column in parquet_columns if column in diagnostics_frame.columns]].copy()
+
+    write_json(payload, diagnostics_dir)
+    write_html(html_report, diagnostics_dir)
+    write_parquet(parquet_frame, diagnostics_dir)
+
+
+def _load_related_artifacts(
+    stores_path: str | Path,
+) -> tuple[tuple[pd.DataFrame | None, Path | None], tuple[pd.DataFrame | None, Path | None]]:
+    base = Path(stores_path).expanduser().resolve().parent
+
+    anchor_assignments_path = base / "anchor_assignments.csv"
+    anchor_assignments: pd.DataFrame | None = None
+    if anchor_assignments_path.exists():
+        anchor_assignments = pd.read_csv(anchor_assignments_path)
+    else:
+        anchor_assignments_path = None
+
+    subclusters_path = base / "subclusters.csv"
+    subclusters: pd.DataFrame | None = None
+    if subclusters_path.exists():
+        subclusters = pd.read_csv(subclusters_path)
+    else:
+        subclusters_path = None
+
+    return (anchor_assignments, anchor_assignments_path), (subclusters, subclusters_path)
 
 
 def _load_dataset(loader, location: str, label: str) -> pd.DataFrame:
