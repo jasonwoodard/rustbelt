@@ -7,8 +7,8 @@ This document captures the actionable tasks required to deliver Atlas v0.2. It i
 | Task ID | Description | Status | Dependencies | Exit Criteria |
 | --- | --- | --- | --- | --- |
 | A2.1 | Implement DBSCAN/HDBSCAN-based anchor detection in `atlas.clustering` with configurable parameters for metro tuning. | DONE | Baseline scoring pipeline | Anchors generated for sample datasets with metrics logged. |
-| A2.2 | Define sub-cluster nesting and persistence format, ensuring stable identifiers and parent-child relationships. | PENDING | A2.1 | Sub-cluster JSON/CSV exports with schema draft. |
-| A2.3 | Extend CLI to expose anchor and sub-cluster generation (flags or subcommands) with integration tests. | PENDING | A2.1, A2.2 | CLI command produces anchors/sub-clusters, tests cover sample fixture. |
+| A2.2 | Define sub-cluster nesting and persistence format, ensuring stable identifiers and parent-child relationships. | DONE | A2.1 | Sub-cluster JSON/CSV exports with schema draft. |
+| A2.3 | Extend CLI to expose anchor and sub-cluster generation (flags or subcommands) with integration tests. | DONE | A2.1, A2.2 | CLI command produces anchors/sub-clusters, tests cover sample fixture. |
 | A2.4 | Update fixture regeneration scripts to incorporate anchors/sub-clusters for regression coverage. | DONE. | A2.3 | Regenerated fixtures stored; CI regression leverages new artifacts. |
 
 ## 2. Posterior Trace Exports
