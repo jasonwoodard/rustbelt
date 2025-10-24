@@ -38,10 +38,12 @@ Follow-up notes for D2.1: validate leverage/outlier heuristics against productio
 
 | Task ID | Description | Status | Dependencies | Exit Criteria |
 | --- | --- | --- | --- | --- |
-| S2.1 | Draft schemas for scores, anchors, and clusters under `schema/atlas/v1/`. | PENDING | Outputs defined (A2, P2) | JSON Schema files merged with version tags. |
+| S2.1 | Draft schemas for scores, anchors, and clusters under `schema/atlas/v1/`. | DONE | Outputs defined (A2, P2) | JSON Schema files merged with version tags (score, anchor, cluster). |
 | S2.2 | Integrate schema validation into Atlas CLI (e.g., via `jsonschema`). | PENDING | S2.1 | CLI fails invalid outputs, passes valid fixtures. |
 | S2.3 | Create integration tests that run Solver against frozen Atlas outputs to validate contracts. | PENDING | S2.2 | Solver regression test suite consumes Atlas outputs successfully. |
 | S2.4 | Document schema bump and release process for Atlas ⇄ Solver handoff. | PENDING | S2.1–S2.3 | Docs updated with versioning workflow. |
+
+- **New artifacts:** `schema/atlas/v1/score.schema.json`, `schema/atlas/v1/anchor.schema.json`, and `schema/atlas/v1/cluster.schema.json` define the Solver-facing contracts for scores, anchors, and sub-clusters.
 
 ## 5. Documentation, Fixtures, Release Readiness
 

@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rustbelt.atlas/schema/atlas/v1/score.schema.json",
+  "$comment": "Atlas schema version v1",
+  "title": "Atlas Score Record",
+  "description": "Blended prior/posterior score output emitted by the Atlas CLI scoring command.",
+  "type": "object",
+  "required": [
+    "StoreId",
+    "Value",
+    "Yield",
+    "Omega"
+  ],
+  "properties": {
+    "StoreId": {
+      "type": "string",
+      "description": "Canonical identifier for the scored store.",
+      "minLength": 1
+    },
+    "Value": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Final value score after blending prior and posterior stages.",
+      "minimum": 0.0,
+      "maximum": 5.0
+    },
+    "Yield": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Final yield score after blending prior and posterior stages.",
+      "minimum": 0.0,
+      "maximum": 5.0
+    },
+    "Composite": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Composite value/yield score when a lambda weight is provided.",
+      "minimum": 0.0,
+      "maximum": 5.0
+    },
+    "Omega": {
+      "type": "number",
+      "description": "Weight applied to posterior scores during blending (0 = prior only, 1 = posterior only).",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "ValuePrior": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Prior stage value score for the store.",
+      "minimum": 0.0,
+      "maximum": 5.0
+    },
+    "YieldPrior": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Prior stage yield score for the store.",
+      "minimum": 0.0,
+      "maximum": 5.0
+    },
+    "CompositePrior": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Prior stage composite score when available.",
+      "minimum": 0.0,
+      "maximum": 5.0
+    },
+    "ValuePosterior": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Posterior stage value score before blending.",
+      "minimum": 0.0,
+      "maximum": 5.0
+    },
+    "YieldPosterior": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Posterior stage yield score before blending.",
+      "minimum": 0.0,
+      "maximum": 5.0
+    },
+    "Theta": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Posterior theta parameter backing the yield score.",
+      "minimum": 0.0
+    },
+    "Cred": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Posterior credibility weight derived from observed variance.",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "Method": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Posterior estimation strategy applied to the store.",
+      "enum": [
+        "GLM",
+        "Hier",
+        "kNN",
+        null
+      ]
+    },
+    "ECDF_q": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Posterior ECDF quantile associated with the theta estimate.",
+      "minimum": 0.0,
+      "maximum": 1.0
+    }
+  },
+  "additionalProperties": false
+}

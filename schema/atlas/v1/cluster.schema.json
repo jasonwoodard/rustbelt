@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rustbelt.atlas/schema/atlas/v1/cluster.schema.json",
+  "$comment": "Atlas schema version v1",
+  "title": "Atlas Sub-Cluster Record",
+  "description": "Hierarchy-aware sub-cluster metadata emitted by the Atlas CLI subcluster command.",
+  "type": "object",
+  "required": [
+    "anchor_id",
+    "subcluster_id",
+    "lineage",
+    "depth",
+    "store_count",
+    "store_ids",
+    "metadata"
+  ],
+  "properties": {
+    "anchor_id": {
+      "type": "string",
+      "description": "Anchor identifier that owns the sub-cluster.",
+      "minLength": 1
+    },
+    "subcluster_id": {
+      "type": "string",
+      "description": "Stable identifier assigned to the sub-cluster lineage.",
+      "minLength": 1
+    },
+    "parent_subcluster_id": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Identifier of the parent sub-cluster when nested.",
+      "minLength": 1
+    },
+    "lineage": {
+      "type": "string",
+      "description": "Ordinal lineage for the sub-cluster encoded as dotted triplets (e.g., 001.002).",
+      "pattern": "^\\d{3}(\\.\\d{3})*$"
+    },
+    "depth": {
+      "type": "integer",
+      "description": "Depth of the sub-cluster within the hierarchy (1-indexed).",
+      "minimum": 1
+    },
+    "store_count": {
+      "type": "integer",
+      "description": "Number of stores contained within the sub-cluster.",
+      "minimum": 1
+    },
+    "store_ids": {
+      "type": "array",
+      "description": "Store identifiers assigned to the sub-cluster.",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "centroid_lat": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Optional latitude for the sub-cluster centroid in decimal degrees.",
+      "minimum": -90,
+      "maximum": 90
+    },
+    "centroid_lon": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "Optional longitude for the sub-cluster centroid in decimal degrees.",
+      "minimum": -180,
+      "maximum": 180
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional attributes associated with the sub-cluster.",
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number",
+          "integer"
+        ]
+      }
+    }
+  },
+  "additionalProperties": false
+}
