@@ -199,6 +199,100 @@ def test_cli_blended_sparse_rural_fixture(tmp_path: Path) -> None:
 
 
 @pytest.mark.integration
+def test_cli_posterior_only_trace_switches(tmp_path: Path) -> None:
+    fixture_dir = fixture_path("sparse_rural", "stores").parent
+    output = tmp_path / "posterior.csv"
+    combined_trace = tmp_path / "posterior-only.jsonl"
+    posterior_trace = tmp_path / "posterior-diagnostics.csv"
+
+    _run_cli(
+        tmp_path,
+        [
+            "--mode",
+            "posterior-only",
+            "--stores",
+            str(fixture_dir / "stores.csv"),
+            "--observations",
+            str(fixture_dir / "observations.csv"),
+            "--output",
+            str(output),
+            "--trace-out",
+            str(combined_trace),
+            "--posterior-trace",
+            str(posterior_trace),
+            "--trace-format",
+            "jsonl",
+            "--posterior-trace-format",
+            "csv",
+            "--no-include-prior-trace",
+            "--no-include-blend-trace",
+        ],
+    )
+
+    output_frame = pd.read_csv(output)
+    assert not output_frame.empty
+
+    combined_lines = [line for line in combined_trace.read_text(encoding="utf-8").splitlines() if line]
+    assert len(combined_lines) == len(output_frame)
+    combined_records = [json.loads(line) for line in combined_lines]
+    assert {record["stage"] for record in combined_records} == {"posterior"}
+    assert all(record["metadata.schema_version"] == TRACE_SCHEMA_VERSION for record in combined_records)
+
+    posterior_df = pd.read_csv(posterior_trace)
+    assert set(posterior_df["stage"]) == {"posterior"}
+    assert len(posterior_df) == len(output_frame)
+
+
+@pytest.mark.integration
+def test_cli_blended_trace_csv_format(tmp_path: Path) -> None:
+    fixture_dir = fixture_path("dense_urban", "stores").parent
+    output = tmp_path / "blended.csv"
+    trace = tmp_path / "blend.csv"
+    posterior_trace = tmp_path / "posterior.jsonl"
+
+    _run_cli(
+        tmp_path,
+        [
+            "--mode",
+            "blended",
+            "--stores",
+            str(fixture_dir / "stores.csv"),
+            "--affluence",
+            str(fixture_dir / "affluence.csv"),
+            "--observations",
+            str(fixture_dir / "observations.csv"),
+            "--output",
+            str(output),
+            "--trace-out",
+            str(trace),
+            "--posterior-trace",
+            str(posterior_trace),
+            "--trace-format",
+            "csv",
+            "--posterior-trace-format",
+            "jsonl",
+            "--no-include-posterior-trace",
+        ],
+    )
+
+    frame = pd.read_csv(output)
+    assert not frame.empty
+
+    combined_df = pd.read_csv(trace)
+    assert set(combined_df["stage"]) == {"prior", "blend"}
+    assert combined_df["metadata.schema_version"].nunique() == 1
+    assert combined_df["metadata.schema_version"].iloc[0] == TRACE_SCHEMA_VERSION
+    assert combined_df["stage"].value_counts().to_dict() == {
+        "prior": len(frame),
+        "blend": len(frame),
+    }
+
+    posterior_lines = [line for line in posterior_trace.read_text(encoding="utf-8").splitlines() if line]
+    posterior_records = [json.loads(line) for line in posterior_lines]
+    assert posterior_records
+    assert {record["stage"] for record in posterior_records} == {"posterior"}
+    assert all(record["metadata.schema_version"] == TRACE_SCHEMA_VERSION for record in posterior_records)
+@pytest.mark.integration
 def test_cli_anchors_detects_clusters(tmp_path: Path) -> None:
     stores = fixture_path("dense_urban", "stores")
     anchors_output = tmp_path / "anchors.csv"

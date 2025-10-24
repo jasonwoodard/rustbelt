@@ -58,7 +58,7 @@ You can sort by V, Y, or combine them (see “Modes” below).
      --stores packages/atlas-python/src/atlas/fixtures/dense_urban/stores.csv \
      --affluence packages/atlas-python/src/atlas/fixtures/dense_urban/affluence.csv \
      --output out/dense_prior.csv \
-     --trace-out out/dense_prior_trace.json
+     --trace-out out/dense_prior_trace.jsonl
    ```
    Check the CSV to see 1–5 Value/Yield scores and the JSONL trace to understand how the prior was assembled (baseline + affluence).
 4. **Fit the posterior** once you have visit notes:
@@ -68,7 +68,7 @@ You can sort by V, Y, or combine them (see “Modes” below).
      --stores packages/atlas-python/src/atlas/fixtures/dense_urban/stores.csv \
      --observations packages/atlas-python/src/atlas/fixtures/dense_urban/observations.csv \
      --ecdf-window Metro \
-     --posterior-trace out/dense_posterior_diagnostics.parquet \
+     --posterior-trace out/dense_posterior_diagnostics.csv \
      --output out/dense_posterior.csv
    ```
    Confirm the visited stores recover their observed Value/Yield (FR-1a AC1) and that unvisited stores still receive predictions with method + credibility fields (FR-1a AC2).
@@ -89,6 +89,13 @@ You can sort by V, Y, or combine them (see “Modes” below).
    - Re-run with `--explain` for a lightweight sample trace (`atlas-trace.json` / `atlas-trace.csv`).
 
 Re-run the commands with the `sparse_rural` fixtures to see how the engine behaves with minimal observations and heavier reliance on priors.
+
+### Trace output switches
+
+- `--trace-out PATH` writes a combined trace for whichever scoring stages ran. Priors, posteriors, and blend rows are included by default.
+- Toggle specific stages with `--no-include-prior-trace`, `--no-include-posterior-trace`, or `--no-include-blend-trace` when you only need a subset (for example, blend-only QA dumps).
+- Choose the combined trace format with `--trace-format {jsonl,csv}`. The flag controls the serializer regardless of filename suffix.
+- `--posterior-trace PATH` emits posterior-only diagnostics, and `--posterior-trace-format {jsonl,csv}` controls that file separately (default CSV). Posterior rows are still included in the combined trace unless you disable them with `--no-include-posterior-trace`.
 
 ---
 
