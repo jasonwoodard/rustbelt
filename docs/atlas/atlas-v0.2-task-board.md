@@ -23,9 +23,11 @@ This document captures the actionable tasks required to deliver Atlas v0.2. It i
 
 | Task ID | Description | Status | Dependencies | Exit Criteria |
 | --- | --- | --- | --- | --- |
-| D2.1 | Implement correlation tables, distribution summaries, and QA signals in `atlas.diagnostics`. | PENDING | Anchors/sub-clusters available | Diagnostics functions return expected structures for sample data. |
+| D2.1 | Implement correlation tables, distribution summaries, and QA signals in `atlas.diagnostics`. | DONE | Anchors/sub-clusters available | Diagnostics functions return expected structures for sample data. |
 | D2.2 | Decide on output formats (JSON/HTML/Parquet) and implement writers. | PENDING | D2.1 | Diagnostics emitted to disk with versioned filenames. |
 | D2.3 | Wire diagnostics into CLI with default-on sidecar or flag and add regression tests. | PENDING | D2.1, D2.2 | CLI run produces diagnostics; tests assert file existence/shape. |
+
+Follow-up notes for D2.1: validate leverage/outlier heuristics against production score distributions and confirm JSON writers planned in D2.2 capture the new schemas.
 
 ## 4. Solver Integration and Data Contracts
 
