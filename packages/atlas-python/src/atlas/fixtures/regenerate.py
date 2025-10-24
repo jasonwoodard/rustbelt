@@ -3,10 +3,21 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import json
 from pathlib import Path
-from typing import Iterable
+from typing import Iterable, Mapping, Sequence
 
 import pandas as pd
+
+from atlas.clustering.anchors import (
+    AnchorDetectionParameters,
+    AnchorDetectionResult,
+    detect_anchors,
+)
+from atlas.clustering.subclusters import (
+    SubClusterNodeSpec,
+    build_subcluster_hierarchy,
+)
 
 
 @dataclass(frozen=True)
@@ -17,6 +28,8 @@ class FixtureDefinition:
     stores: Iterable[dict[str, object]]
     affluence: Iterable[dict[str, object]] | None = None
     observations: Iterable[dict[str, object]] | None = None
+    anchor_parameters: AnchorDetectionParameters | Mapping[str, object] | None = None
+    subcluster_specs: Mapping[str, Sequence[SubClusterNodeSpec]] | None = None
 
 
 _FIXTURES: tuple[FixtureDefinition, ...] = (
@@ -172,6 +185,51 @@ _FIXTURES: tuple[FixtureDefinition, ...] = (
                 "Metro": "Metro-Dense",
             },
         ],
+        anchor_parameters=AnchorDetectionParameters(
+            algorithm="dbscan",
+            eps=0.03,
+            min_samples=2,
+            metric="euclidean",
+            id_prefix="dense-anchor",
+        ),
+        subcluster_specs={
+            "dense-anchor-001": (
+                SubClusterNodeSpec(
+                    key="dense-core",
+                    store_ids=("DU-001", "DU-002", "DU-003"),
+                    metadata={"tier": "core"},
+                ),
+                SubClusterNodeSpec(
+                    key="dense-riverfront",
+                    parent_key="dense-core",
+                    store_ids=("DU-001", "DU-002"),
+                    metadata={"segment": "riverfront"},
+                ),
+                SubClusterNodeSpec(
+                    key="dense-midtown",
+                    parent_key="dense-core",
+                    store_ids=("DU-003",),
+                    metadata={"segment": "midtown"},
+                ),
+            ),
+            "dense-anchor-002": (
+                SubClusterNodeSpec(
+                    key="dense-east",
+                    store_ids=("DU-004", "DU-005"),
+                    metadata={"tier": "secondary"},
+                ),
+                SubClusterNodeSpec(
+                    key="dense-eastern-market",
+                    parent_key="dense-east",
+                    store_ids=("DU-004",),
+                ),
+                SubClusterNodeSpec(
+                    key="dense-north-channel",
+                    parent_key="dense-east",
+                    store_ids=("DU-005",),
+                ),
+            ),
+        },
     ),
     FixtureDefinition(
         name="sparse_rural",
@@ -297,6 +355,37 @@ _FIXTURES: tuple[FixtureDefinition, ...] = (
                 "Metro": "Metro-Rural",
             },
         ],
+        anchor_parameters=AnchorDetectionParameters(
+            algorithm="dbscan",
+            eps=20.0,
+            min_samples=2,
+            metric="haversine",
+            id_prefix="rural-anchor",
+        ),
+        subcluster_specs={
+            "rural-anchor-001": (
+                SubClusterNodeSpec(
+                    key="rural-network",
+                    store_ids=("SR-001", "SR-002", "SR-003", "SR-004"),
+                    metadata={"tier": "regional"},
+                ),
+                SubClusterNodeSpec(
+                    key="rural-north",
+                    parent_key="rural-network",
+                    store_ids=("SR-001", "SR-002"),
+                ),
+                SubClusterNodeSpec(
+                    key="rural-south",
+                    parent_key="rural-network",
+                    store_ids=("SR-003", "SR-004"),
+                ),
+                SubClusterNodeSpec(
+                    key="rural-lakeside",
+                    parent_key="rural-south",
+                    store_ids=("SR-004",),
+                ),
+            ),
+        },
     ),
 )
 
@@ -309,15 +398,87 @@ def _write_csv(records: Iterable[dict[str, object]] | None, path: Path) -> None:
     frame.to_csv(path, index=False)
 
 
+def _write_frame(frame: pd.DataFrame, path: Path) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    frame.to_csv(path, index=False)
+
+
+def _write_json(data: Mapping[str, object], path: Path) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    payload = json.dumps(data, indent=2, sort_keys=True) + "\n"
+    path.write_text(payload, encoding="utf-8")
+
+
+def _coerce_anchor_parameters(
+    params: AnchorDetectionParameters | Mapping[str, object] | None,
+) -> AnchorDetectionParameters | None:
+    if params is None:
+        return None
+    if isinstance(params, AnchorDetectionParameters):
+        return params
+    if isinstance(params, Mapping):
+        return AnchorDetectionParameters(**params)
+    raise TypeError("Unsupported anchor parameter configuration")
+
+
 def regenerate(root: str | Path | None = None) -> None:
     """Regenerate all fixture CSVs under ``root`` (defaults to package data)."""
 
     base = Path(root) if root is not None else Path(__file__).resolve().parent
     for fixture in _FIXTURES:
         target = base / fixture.name
-        _write_csv(fixture.stores, target / "stores.csv")
+        stores = list(fixture.stores)
+        _write_csv(stores, target / "stores.csv")
         _write_csv(fixture.affluence, target / "affluence.csv")
         _write_csv(fixture.observations, target / "observations.csv")
+
+        anchor_params = _coerce_anchor_parameters(fixture.anchor_parameters)
+        anchor_result: AnchorDetectionResult | None = None
+
+        if anchor_params is not None:
+            stores_frame = pd.DataFrame.from_records(stores)
+            anchor_result = detect_anchors(stores_frame, anchor_params)
+            anchors_frame = anchor_result.to_frame()
+            if "store_ids" in anchors_frame.columns:
+                anchors_frame["store_ids"] = anchors_frame["store_ids"].apply(
+                    lambda value: json.dumps(list(value))
+                )
+            anchors_path = target / "anchors.csv"
+            _write_frame(anchors_frame, anchors_path)
+
+            assignments = anchor_result.store_assignments.reset_index()
+            assignments.columns = [
+                anchor_params.store_id_column,
+                "anchor_id",
+            ]
+            _write_frame(assignments, target / "anchor_assignments.csv")
+            _write_json(anchor_result.metrics, target / "anchor_metrics.json")
+
+        subcluster_specs = fixture.subcluster_specs or {}
+        if subcluster_specs:
+            if anchor_result is None:
+                raise RuntimeError(
+                    "Sub-cluster specifications require anchor detection results"
+                )
+            all_subclusters: list[dict[str, object]] = []
+            for anchor in anchor_result.anchors:
+                specs = subcluster_specs.get(anchor.anchor_id)
+                if not specs:
+                    continue
+                hierarchy = build_subcluster_hierarchy(anchor.anchor_id, specs)
+                all_subclusters.extend(hierarchy.to_records())
+
+            if all_subclusters:
+                subclusters_frame = pd.DataFrame.from_records(all_subclusters)
+                if "store_ids" in subclusters_frame.columns:
+                    subclusters_frame["store_ids"] = subclusters_frame["store_ids"].apply(
+                        lambda value: json.dumps(list(value))
+                    )
+                if "metadata" in subclusters_frame.columns:
+                    subclusters_frame["metadata"] = subclusters_frame["metadata"].apply(
+                        lambda value: json.dumps(dict(value))
+                    )
+                _write_frame(subclusters_frame, target / "subclusters.csv")
 
 
 if __name__ == "__main__":  # pragma: no cover - manual utility

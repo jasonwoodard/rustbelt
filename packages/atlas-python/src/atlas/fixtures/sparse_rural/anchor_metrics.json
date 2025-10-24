@@ -1,0 +1,10 @@
+{
+  "algorithm": "dbscan",
+  "eps": 20.0,
+  "metric": "haversine",
+  "min_samples": 2,
+  "noise_points": 0,
+  "noise_ratio": 0.0,
+  "num_anchors": 1,
+  "total_points": 4
+}
