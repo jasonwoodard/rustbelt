@@ -88,6 +88,18 @@ def test_posterior_pipeline_recovers_observed_scores(tmp_path: Path) -> None:
         assert "observations.visits" in trace_row
         assert "model.parameters_hash" in trace_row
 
+    trace_rows = list(pipeline.iter_traces())
+    assert trace_rows
+    assert {row["store_id"] for row in trace_rows} == set(predictions["StoreId"])
+    assert all(row["stage"] == "posterior" for row in trace_rows)
+    first_trace = trace_rows[0]
+    assert {"baseline.theta_prediction", "observations.visits", "scores.yield_final"} <= set(first_trace)
+
+    trace_frame = pipeline.trace_records_frame()
+    assert not trace_frame.empty
+    assert set(trace_frame["store_id"]) == set(predictions["StoreId"])
+    assert {"baseline.theta_prediction", "scores.theta_final"} <= set(trace_frame.columns)
+
     summary = pipeline.store_summary_
     assert summary is not None
 

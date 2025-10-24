@@ -15,7 +15,7 @@ This document captures the actionable tasks required to deliver Atlas v0.2. It i
 
 | Task ID | Description | Status | Dependencies | Exit Criteria |
 | --- | --- | --- | --- | --- |
-| P2.1 | Persist `PosteriorPipeline.trace_records_` into JSONL/CSV outputs alongside priors. | PENDING | Existing posterior pipeline | Trace artifacts produced in local runs. |
+| P2.1 | Persist `PosteriorPipeline.trace_records_` into JSONL/CSV outputs alongside priors. | DONE | Existing posterior pipeline | Trace payloads surfaced via `PosteriorPipeline.iter_traces()` and CLI `_write_posterior_trace` now land in trace files. |
 | P2.2 | Unify prior, posterior, and blend trace schemas and document format versioning. | PENDING | P2.1 | Shared schema published under `schema/atlas/v1/`. |
 | P2.3 | Add CLI switches/tests validating posterior/blend trace generation. | PENDING | P2.1, P2.2 | CLI integration tests pass, optional flags documented. |
 

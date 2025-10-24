@@ -359,9 +359,9 @@ def _handle_score(args: argparse.Namespace) -> None:
             )
 
     posterior_predictions: pd.DataFrame | None = None
-    posterior_pipeline: PosteriorPipeline | None = None
+    posterior_trace_rows: list[dict[str, object]] = []
     if args.mode in {MODE_POSTERIOR, MODE_BLENDED}:
-        posterior_pipeline, posterior_predictions = _run_posterior_pipeline(
+        _, posterior_predictions, posterior_trace_rows = _run_posterior_pipeline(
             stores,
             observations,
             window_column=args.ecdf_window,
@@ -391,6 +391,9 @@ def _handle_score(args: argparse.Namespace) -> None:
         omega,
     )
 
+    if posterior_trace_rows:
+        trace_records.extend(posterior_trace_rows)
+
     trace_records.extend(_build_blend_trace_records(output, lambda_weight=lambda_weight))
 
     if output is None:
@@ -401,14 +404,8 @@ def _handle_score(args: argparse.Namespace) -> None:
     if args.trace_out and trace_records:
         _write_trace(trace_records, Path(args.trace_out))
 
-    if args.posterior_trace and posterior_pipeline is not None:
-        trace_path = Path(args.posterior_trace)
-        if posterior_predictions is not None:
-            _write_table(posterior_predictions, trace_path)
-        else:
-            summary = posterior_pipeline.store_summary_
-            if summary is not None:
-                _write_table(summary.reset_index(), trace_path)
+    if args.posterior_trace and posterior_trace_rows:
+        _write_posterior_trace(posterior_trace_rows, Path(args.posterior_trace))
 
 
 def _handle_anchors(args: argparse.Namespace) -> None:
@@ -515,7 +512,7 @@ def _run_posterior_pipeline(
     *,
     window_column: str | None,
     ecdf_cache: str | None,
-) -> tuple[PosteriorPipeline, pd.DataFrame]:
+) -> tuple[PosteriorPipeline, pd.DataFrame, list[dict[str, object]]]:
     pipeline = PosteriorPipeline()
     cache_path = Path(ecdf_cache).resolve() if ecdf_cache else None
     pipeline.fit(
@@ -525,7 +522,8 @@ def _run_posterior_pipeline(
         ecdf_cache_path=str(cache_path) if cache_path else None,
     )
     predictions = pipeline.predict(stores)
-    return pipeline, predictions
+    trace_rows = list(pipeline.iter_traces())
+    return pipeline, predictions, trace_rows
 
 
 def _blend_scores(
@@ -758,15 +756,38 @@ def _write_json(data: dict[str, object], path: Path) -> None:
         raise AtlasCliError(f"Failed to write JSON output to '{path}': {exc}")
 
 
+def _write_trace_table(records: Sequence[dict[str, object]], path: Path) -> None:
+    records_list = list(records)
+    frame = pd.DataFrame.from_records(records_list)
+    _write_table(frame, path)
+
+
 def _write_trace(records: Iterable[dict[str, object]], path: Path) -> None:
     path = path.expanduser().resolve()
     path.parent.mkdir(parents=True, exist_ok=True)
+    materialised = list(records)
+    suffix = path.suffix.lower()
     try:
+        if suffix not in {".json", ".jsonl", ".ndjson"}:
+            _write_trace_table(materialised, path)
+            return
+
         with path.open("w", encoding="utf-8") as handle:
-            for record in records:
+            for record in materialised:
                 handle.write(json.dumps(record, sort_keys=True) + "\n")
     except OSError as exc:  # pragma: no cover - unlikely in tests
         raise AtlasCliError(f"Failed to write trace output to '{path}': {exc}")
+
+
+def _write_posterior_trace(records: Sequence[dict[str, object]], path: Path) -> None:
+    if not records:
+        return
+
+    suffix = path.suffix.lower()
+    if suffix in {".json", ".jsonl", ".ndjson"}:
+        _write_trace(records, path)
+    else:
+        _write_trace_table(records, path)
 
 
 def _load_dataset(loader, location: str, label: str) -> pd.DataFrame:
