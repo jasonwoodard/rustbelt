@@ -1,0 +1,10 @@
+{
+  "algorithm": "dbscan",
+  "eps": 0.03,
+  "metric": "euclidean",
+  "min_samples": 2,
+  "noise_points": 0,
+  "noise_ratio": 0.0,
+  "num_anchors": 2,
+  "total_points": 5
+}

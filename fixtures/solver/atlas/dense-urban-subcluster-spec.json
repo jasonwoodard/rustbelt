@@ -1,0 +1,31 @@
+[
+  {
+    "key": "root",
+    "store_ids": [
+      "DU-001",
+      "DU-002",
+      "DU-003"
+    ]
+  },
+  {
+    "key": "high-priority",
+    "parent_key": "root",
+    "store_ids": [
+      "DU-001"
+    ],
+    "metadata": {
+      "note": "Prime corridor"
+    }
+  },
+  {
+    "key": "emerging",
+    "parent_key": "root",
+    "store_ids": [
+      "DU-002",
+      "DU-003"
+    ],
+    "metadata": {
+      "note": "Watch list"
+    }
+  }
+]

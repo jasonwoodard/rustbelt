@@ -1,0 +1,3 @@
+anchor_id,cluster_label,centroid_lat,centroid_lon,store_count,store_ids
+metro-anchor-001,0,42.346000000000004,-83.05400000000002,3,"('DU-001', 'DU-002', 'DU-003')"
+metro-anchor-002,1,42.38,-83.025,2,"('DU-004', 'DU-005')"
