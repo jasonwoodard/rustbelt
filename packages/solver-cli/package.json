@@ -10,6 +10,7 @@
     "dev:cli": "tsx watch src/index.ts",
     "dev:day-of-app": "esbuild src/io/dayOfApp/index.ts --bundle --format=iife --target=es2019 --outfile=out/day-of-app.js --sourcemap --watch",
     "test": "vitest",
+    "test:integration": "vitest run tests/atlas-integration.test.ts",
     "lint": "eslint . --ext .ts"
   },
   "dependencies": {
@@ -26,11 +27,12 @@
     "@typescript-eslint/eslint-plugin": "^8.40.0",
     "@typescript-eslint/parser": "^8.40.0",
     "@xmldom/xmldom": "^0.8.11",
+    "ajv": "^8.17.1",
     "esbuild": "^0.24.0",
     "eslint": "^9.33.0",
     "eslint-config-prettier": "^10.1.8",
-    "prettier": "^3.6.2",
     "npm-run-all": "^4.1.5",
+    "prettier": "^3.6.2",
     "tsx": "^4.20.5",
     "typescript": "^5.9.2",
     "vitest": "^3.2.4"

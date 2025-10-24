@@ -1,6 +1,9 @@
 {
   "name": "rustbelt-monorepo",
   "private": true,
+  "scripts": {
+    "test:integration": "npm run test:integration --workspace packages/solver-cli"
+  },
   "workspaces": [
     "packages/solver-cli"
   ]

@@ -1,0 +1,80 @@
+{
+  "config": {
+    "mph": 28,
+    "defaultDwellMin": 12,
+    "seed": 2024,
+    "runNote": "atlas-regression-dense-urban"
+  },
+  "days": [
+    {
+      "dayId": "D1",
+      "start": {
+        "id": "DU-START",
+        "name": "Downtown Depot",
+        "lat": 42.331,
+        "lon": -83.045
+      },
+      "end": {
+        "id": "DU-END",
+        "name": "Warehouse Return",
+        "lat": 42.389,
+        "lon": -83.02
+      },
+      "window": {
+        "start": "08:00",
+        "end": "18:00"
+      },
+      "dayOfWeek": "Wed",
+      "mustVisitIds": [
+        "DU-001"
+      ]
+    }
+  ],
+  "stores": [
+    {
+      "id": "DU-001",
+      "name": "River Town Thrift",
+      "lat": 42.331,
+      "lon": -83.045,
+      "dayId": "D1",
+      "dwellMin": 15,
+      "score": 3.55
+    },
+    {
+      "id": "DU-002",
+      "name": "Midtown Vintage",
+      "lat": 42.36,
+      "lon": -83.065,
+      "dayId": "D1",
+      "dwellMin": 15,
+      "score": 3.864
+    },
+    {
+      "id": "DU-003",
+      "name": "Upcycle Collective",
+      "lat": 42.347,
+      "lon": -83.052,
+      "dayId": "D1",
+      "dwellMin": 15,
+      "score": 2.9467499999999998
+    },
+    {
+      "id": "DU-004",
+      "name": "Eastern Flea",
+      "lat": 42.371,
+      "lon": -83.03,
+      "dayId": "D1",
+      "dwellMin": 15,
+      "score": 3.6175
+    },
+    {
+      "id": "DU-005",
+      "name": "Warehouse Finds",
+      "lat": 42.389,
+      "lon": -83.02,
+      "dayId": "D1",
+      "dwellMin": 15,
+      "score": 3.33125
+    }
+  ]
+}

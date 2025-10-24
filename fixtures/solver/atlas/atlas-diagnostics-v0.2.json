@@ -1,0 +1,284 @@
+{
+  "correlations": {
+    "method": "pearson",
+    "values": {
+      "Composite": {
+        "Composite": 1.0,
+        "CompositePrior": 0.5152354681505578,
+        "Cred": -0.9386327786735493,
+        "ECDF_q": 0.8865069397416104,
+        "Value": 0.24933478355627947,
+        "ValuePosterior": 0.5041108990939118,
+        "ValuePrior": 0.025587175565687008,
+        "Yield": 0.811509979970574,
+        "YieldPosterior": 0.8865069397416102,
+        "YieldPrior": 0.2590812211961656
+      },
+      "CompositePrior": {
+        "Composite": 0.5152354681505578,
+        "CompositePrior": 1.0,
+        "Cred": -0.34625029549748104,
+        "ECDF_q": 0.12643880576314498,
+        "Value": 0.43791600794442365,
+        "ValuePosterior": 0.6482468724092194,
+        "ValuePrior": 0.22234574841345597,
+        "Yield": 0.23139809272768821,
+        "YieldPosterior": 0.12643880576314498,
+        "YieldPrior": 0.3360207769340136
+      },
+      "Cred": {
+        "Composite": -0.9386327786735493,
+        "CompositePrior": -0.34625029549748104,
+        "Cred": 1.0,
+        "ECDF_q": -0.9673856540861422,
+        "Value": 0.09788555440223036,
+        "ValuePosterior": -0.18948018069013736,
+        "ValuePrior": 0.2998499873878945,
+        "Yield": -0.9619884742831045,
+        "YieldPosterior": -0.9673856540861422,
+        "YieldPrior": -0.4803858548026091
+      },
+      "ECDF_q": {
+        "Composite": 0.8865069397416104,
+        "CompositePrior": 0.12643880576314498,
+        "Cred": -0.9673856540861422,
+        "ECDF_q": 1.0,
+        "Value": -0.12986682980814296,
+        "ValuePosterior": 0.0839630636773753,
+        "ValuePrior": -0.27256709693434195,
+        "Yield": 0.9311429898014218,
+        "YieldPosterior": 1.0,
+        "YieldPrior": 0.3329541451159586
+      },
+      "Omega": {},
+      "Value": {
+        "Composite": 0.24933478355627947,
+        "CompositePrior": 0.43791600794442365,
+        "Cred": 0.09788555440223036,
+        "ECDF_q": -0.12986682980814296,
+        "Value": 1.0,
+        "ValuePosterior": 0.8972820205538288,
+        "ValuePrior": 0.9438918121529443,
+        "Yield": -0.3635459349057275,
+        "YieldPosterior": -0.12986682980814326,
+        "YieldPrior": -0.6706232993536577
+      },
+      "ValuePosterior": {
+        "Composite": 0.5041108990939118,
+        "CompositePrior": 0.6482468724092194,
+        "Cred": -0.18948018069013736,
+        "ECDF_q": 0.0839630636773753,
+        "Value": 0.8972820205538288,
+        "ValuePosterior": 1.0,
+        "ValuePrior": 0.7011435906532406,
+        "Yield": -0.056482600967033066,
+        "YieldPosterior": 0.0839630636773753,
+        "YieldPrior": -0.32026628175211524
+      },
+      "ValuePrior": {
+        "Composite": 0.025587175565687008,
+        "CompositePrior": 0.22234574841345597,
+        "Cred": 0.2998499873878945,
+        "ECDF_q": -0.27256709693434195,
+        "Value": 0.9438918121529443,
+        "ValuePosterior": 0.7011435906532406,
+        "ValuePrior": 1.0,
+        "Yield": -0.5449261889698387,
+        "YieldPosterior": -0.27256709693434195,
+        "YieldPrior": -0.843565166130102
+      },
+      "Yield": {
+        "Composite": 0.811509979970574,
+        "CompositePrior": 0.23139809272768821,
+        "Cred": -0.9619884742831045,
+        "ECDF_q": 0.9311429898014218,
+        "Value": -0.3635459349057275,
+        "ValuePosterior": -0.056482600967033066,
+        "ValuePrior": -0.5449261889698387,
+        "Yield": 1.0,
+        "YieldPosterior": 0.9311429898014218,
+        "YieldPrior": 0.6538761111454833
+      },
+      "YieldPosterior": {
+        "Composite": 0.8865069397416102,
+        "CompositePrior": 0.12643880576314498,
+        "Cred": -0.9673856540861422,
+        "ECDF_q": 1.0,
+        "Value": -0.12986682980814326,
+        "ValuePosterior": 0.0839630636773753,
+        "ValuePrior": -0.27256709693434195,
+        "Yield": 0.9311429898014218,
+        "YieldPosterior": 1.0,
+        "YieldPrior": 0.3329541451159586
+      },
+      "YieldPrior": {
+        "Composite": 0.2590812211961656,
+        "CompositePrior": 0.3360207769340136,
+        "Cred": -0.4803858548026091,
+        "ECDF_q": 0.3329541451159586,
+        "Value": -0.6706232993536577,
+        "ValuePosterior": -0.32026628175211524,
+        "ValuePrior": -0.843565166130102,
+        "Yield": 0.6538761111454833,
+        "YieldPosterior": 0.3329541451159586,
+        "YieldPrior": 1.0
+      }
+    }
+  },
+  "distributions": {
+    "Composite": {
+      "count": 5,
+      "mean": 3.4619,
+      "missing": 0,
+      "quantiles": {
+        "0.05": 3.02365,
+        "0.5": 3.55,
+        "0.95": 3.8146999999999998
+      },
+      "variance": 0.09522126500000005
+    },
+    "CompositePrior": {
+      "count": 5,
+      "mean": 3.2138,
+      "missing": 0,
+      "quantiles": {
+        "0.05": 3.0417,
+        "0.5": 3.2624999999999997,
+        "0.95": 3.3524000000000003
+      },
+      "variance": 0.018676059999999987
+    },
+    "Cred": {
+      "count": 5,
+      "mean": 0.056422457377522196,
+      "missing": 0,
+      "quantiles": {
+        "0.05": 0.03336296157443047,
+        "0.5": 0.05102715556553282,
+        "0.95": 0.09456199454992381
+      },
+      "variance": 0.0006449488386126936
+    },
+    "ECDF_q": {
+      "count": 5,
+      "mean": 0.55,
+      "missing": 0,
+      "quantiles": {
+        "0.05": 0.2,
+        "0.5": 0.5,
+        "0.95": 0.85
+      },
+      "variance": 0.06625
+    },
+    "Omega": {
+      "count": 5,
+      "mean": 0.5,
+      "missing": 0,
+      "quantiles": {
+        "0.05": 0.5,
+        "0.5": 0.5,
+        "0.95": 0.5
+      },
+      "variance": 0.0
+    },
+    "Value": {
+      "count": 5,
+      "mean": 3.9827999999999997,
+      "missing": 0,
+      "quantiles": {
+        "0.05": 3.5749999999999997,
+        "0.5": 4.0,
+        "0.95": 4.5146
+      },
+      "variance": 0.14986015999999994
+    },
+    "ValuePosterior": {
+      "count": 5,
+      "mean": 4.220000000000001,
+      "missing": 0,
+      "quantiles": {
+        "0.05": 3.82,
+        "0.5": 4.15,
+        "0.95": 4.7
+      },
+      "variance": 0.12860000000000002
+    },
+    "ValuePrior": {
+      "count": 5,
+      "mean": 3.7456000000000005,
+      "missing": 0,
+      "quantiles": {
+        "0.05": 3.27,
+        "0.5": 3.5,
+        "0.95": 4.3992
+      },
+      "variance": 0.22978464000000015
+    },
+    "Yield": {
+      "count": 5,
+      "mean": 2.941,
+      "missing": 0,
+      "quantiles": {
+        "0.05": 2.0035,
+        "0.5": 3.0999999999999996,
+        "0.95": 3.553
+      },
+      "variance": 0.4116065000000001
+    },
+    "YieldPosterior": {
+      "count": 5,
+      "mean": 3.2,
+      "missing": 0,
+      "quantiles": {
+        "0.05": 1.8,
+        "0.5": 3.0,
+        "0.95": 4.4
+      },
+      "variance": 1.06
+    },
+    "YieldPrior": {
+      "count": 5,
+      "mean": 2.682,
+      "missing": 0,
+      "quantiles": {
+        "0.05": 2.0220000000000002,
+        "0.5": 2.82,
+        "0.95": 3.195
+      },
+      "variance": 0.2462259999999999
+    }
+  },
+  "metadata": {
+    "anchor_assignments": {
+      "path": "/workspace/rustbelt/packages/atlas-python/src/atlas/fixtures/dense_urban/anchor_assignments.csv",
+      "records": 5,
+      "unique_anchors": 2
+    },
+    "diagnostics_version": "v0.2",
+    "lambda_weight": 0.5,
+    "mode": "blended",
+    "omega": 0.5,
+    "posterior_predictions": 5,
+    "record_count": 5,
+    "subclusters": {
+      "path": "/workspace/rustbelt/packages/atlas-python/src/atlas/fixtures/dense_urban/subclusters.csv",
+      "records": 6
+    }
+  },
+  "qa_signals": {
+    "high_leverage_anchors": [
+      {
+        "anchor": "dense-anchor-001",
+        "count": 3.0,
+        "share": 0.6
+      },
+      {
+        "anchor": "dense-anchor-002",
+        "count": 2.0,
+        "share": 0.4
+      }
+    ],
+    "outlier_scores": [],
+    "warnings": []
+  }
+}
