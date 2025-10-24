@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
+from atlas.diagnostics import DIAGNOSTICS_BASENAME, DIAGNOSTICS_VERSION
 from atlas.explain.trace import TRACE_SCHEMA_VERSION
 from atlas.fixtures import fixture_path
 
@@ -103,6 +104,81 @@ def test_cli_prior_dense_urban_fixture(tmp_path: Path) -> None:
         atol=1e-6,
         rtol=0.0,
     )
+
+    diagnostics_json = tmp_path / f"{DIAGNOSTICS_BASENAME}.json"
+    diagnostics_html = tmp_path / f"{DIAGNOSTICS_BASENAME}.html"
+    diagnostics_parquet = tmp_path / f"{DIAGNOSTICS_BASENAME}.parquet"
+
+    assert diagnostics_json.exists()
+    assert diagnostics_html.exists()
+    assert diagnostics_parquet.exists()
+
+    payload = json.loads(diagnostics_json.read_text(encoding="utf-8"))
+    assert payload["metadata"]["mode"] == "prior-only"
+    assert payload["metadata"]["record_count"] == len(frame)
+    assert payload["metadata"]["diagnostics_version"] == DIAGNOSTICS_VERSION
+    assert "correlations" in payload and payload["correlations"]["method"]
+    assert "Composite" in payload["distributions"]
+    assert "qa_signals" in payload and "warnings" in payload["qa_signals"]
+
+    parquet_df = pd.read_parquet(diagnostics_parquet)
+    assert {"StoreId", "Composite"} <= set(parquet_df.columns)
+    assert len(parquet_df) == len(frame)
+
+
+@pytest.mark.integration
+def test_cli_diagnostics_dir_override_and_disable(tmp_path: Path) -> None:
+    stores = fixture_path("dense_urban", "stores")
+
+    explicit_dir = tmp_path / "diagnostics"
+    output = tmp_path / "scores.csv"
+
+    _run_cli(
+        tmp_path,
+        [
+            "--mode",
+            "prior-only",
+            "--stores",
+            str(stores),
+            "--output",
+            str(output),
+            "--diagnostics-dir",
+            str(explicit_dir),
+        ],
+    )
+
+    json_path = explicit_dir / f"{DIAGNOSTICS_BASENAME}.json"
+    html_path = explicit_dir / f"{DIAGNOSTICS_BASENAME}.html"
+    parquet_path = explicit_dir / f"{DIAGNOSTICS_BASENAME}.parquet"
+
+    assert json_path.exists()
+    assert html_path.exists()
+    assert parquet_path.exists()
+
+    disabled_root = tmp_path / "disabled"
+    disabled_root.mkdir()
+    disabled_output = disabled_root / "scores.csv"
+
+    _run_cli(
+        tmp_path,
+        [
+            "--mode",
+            "prior-only",
+            "--stores",
+            str(stores),
+            "--output",
+            str(disabled_output),
+            "--no-diagnostics",
+        ],
+    )
+
+    disabled_json = disabled_root / f"{DIAGNOSTICS_BASENAME}.json"
+    disabled_html = disabled_root / f"{DIAGNOSTICS_BASENAME}.html"
+    disabled_parquet = disabled_root / f"{DIAGNOSTICS_BASENAME}.parquet"
+
+    assert not disabled_json.exists()
+    assert not disabled_html.exists()
+    assert not disabled_parquet.exists()
 
 
 @pytest.mark.integration
