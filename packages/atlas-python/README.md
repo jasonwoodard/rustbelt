@@ -39,10 +39,10 @@ rustbelt-atlas score \
   --stores src/atlas/fixtures/dense_urban/stores.csv \
   --affluence src/atlas/fixtures/dense_urban/affluence.csv \
   --output out/dense_prior.csv \
-  --trace-out out/dense_prior_trace.json
+  --trace-out out/dense_prior_trace.jsonl
 ```
 
-This command produces `out/dense_prior.csv` with Value, Yield, and Composite columns for every store. The optional `--trace-out` flag emits a JSONL file listing the baseline, affluence, and adjacency terms that sum to each score.
+This command produces `out/dense_prior.csv` with Value, Yield, and Composite columns for every store. The optional `--trace-out` flag emits a line-delimited JSON (JSONL) file listing the baseline, affluence, and adjacency terms that sum to each score.
 
 ### Example: posterior-only scoring
 
@@ -52,11 +52,11 @@ rustbelt-atlas score \
   --stores src/atlas/fixtures/dense_urban/stores.csv \
   --observations src/atlas/fixtures/dense_urban/observations.csv \
   --ecdf-window Metro \
-  --posterior-trace out/dense_posterior_diagnostics.parquet \
+  --posterior-trace out/dense_posterior_trace.csv \
   --output out/dense_posterior.csv
 ```
 
-Posterior mode fits against the observation log and predicts Value/Yield for all stores. When `--posterior-trace` is provided, the CLI persists per-store diagnostics (either the predictions themselves or aggregate fit summaries) to help validate acceptance criteria around posterior recovery.
+Posterior mode fits against the observation log and predicts Value/Yield for all stores. When `--posterior-trace` is provided, the CLI persists a CSV trace of per-store diagnostics (either the predictions themselves or aggregate fit summaries) to help validate acceptance criteria around posterior recovery, and writes the versioned `atlas-diagnostics-v0.2.{json,html,parquet}` bundle alongside it for richer QA artifacts.
 
 ### Example: blended scoring
 
@@ -75,8 +75,8 @@ Blended mode overlays posterior observations on top of priors. Any store with ob
 ### Explaining scores and traces
 
 - `--explain` writes a standalone pair of files (`atlas-trace.json` and `atlas-trace.csv`) that show how the prototype composes Value/Yield from priors. Use this for quick demos.
-- `--trace-out` (prior) and `--posterior-trace` (posterior) persist detailed machine-readable traces for downstream QA or report generation.
-- Output CSVs/Parquet files always include `StoreId`, `Value`, `Yield`, and—when λ is provided—`Composite`. Posterior runs also emit credibility and method metadata once the modeling layer lands.
+- `--trace-out` (prior) and `--posterior-trace` (posterior) persist detailed machine-readable traces (`.jsonl` for priors, `.csv` for posterior runs) for downstream QA or report generation. The posterior trace command also materializes the `atlas-diagnostics-v0.2.{json,html,parquet}` diagnostics bundle.
+- Score exports are CSVs that include `StoreId`, `Value`, `Yield`, and—when λ is provided—`Composite`. Posterior runs will additionally emit credibility and method metadata once the modeling layer lands, in addition to the diagnostics bundle noted above.
 
 ### Cross-links to design documents
 
