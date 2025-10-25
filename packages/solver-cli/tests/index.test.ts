@@ -9,7 +9,7 @@ import { formatTimestampToken } from '../src/time';
 describe('CLI', () => {
   it('configures the commander program', () => {
     expect(program.name()).toBe('rustbelt');
-    expect(program.description()).toBe('CLI for ...');
+    expect(program.description()).toBe('Multi-day thrift route planner CLI');
     expect(program.version()).toBe('0.1.0');
     expect(program.commands.map((c) => c.name())).toContain('solve-day');
   });

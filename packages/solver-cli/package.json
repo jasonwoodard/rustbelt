@@ -9,7 +9,7 @@
     "dev": "npm-run-all --parallel dev:cli dev:day-of-app",
     "dev:cli": "tsx watch src/index.ts",
     "dev:day-of-app": "esbuild src/io/dayOfApp/index.ts --bundle --format=iife --target=es2019 --outfile=out/day-of-app.js --sourcemap --watch",
-    "test": "vitest",
+    "test": "vitest run",
     "test:integration": "vitest run tests/atlas-integration.test.ts",
     "lint": "eslint . --ext .ts"
   },

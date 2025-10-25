@@ -2,7 +2,9 @@
   "name": "rustbelt-monorepo",
   "private": true,
   "scripts": {
-    "test:integration": "npm run test:integration --workspace packages/solver-cli"
+    "test": "npm run --workspace packages/solver-cli test && npm run test:atlas",
+    "test:integration": "npm run --workspace packages/solver-cli test:integration",
+    "test:atlas": "python -m pytest packages/atlas-python/tests"
   },
   "workspaces": [
     "packages/solver-cli"

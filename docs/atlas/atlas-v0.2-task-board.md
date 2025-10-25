@@ -46,6 +46,7 @@ Follow-up notes for D2.1: validate leverage/outlier heuristics against productio
 - **New artifacts:** `schema/atlas/v1/score.schema.json`, `schema/atlas/v1/anchor.schema.json`, and `schema/atlas/v1/cluster.schema.json` define the Solver-facing contracts for scores, anchors, and sub-clusters.
 - **Validation hook:** the Atlas CLI now validates score, anchor, and sub-cluster payloads against the v1 schemas before writing outputs, failing fast when payloads drift from the contract.
 - **Regression coverage:** `packages/solver-cli/tests/atlas-integration.test.ts` validates the frozen Atlas fixtures against the v1 schemas and runs the Solver end-to-end on the scored trip via `npm run test:integration`.
+- **CI scope update:** `npm test` now runs Solver unit + integration suites alongside the Atlas CLI pytest suite, keeping anchor, trace, and diagnostics contracts under continuous verification.
 
 ## 5. Documentation, Fixtures, Release Readiness
 
@@ -53,7 +54,7 @@ Follow-up notes for D2.1: validate leverage/outlier heuristics against productio
 | --- | --- | --- | --- | --- |
 | R2.1 | Update user docs (`docs/atlas/README.md`, CLI examples) to include new commands/artifacts. | DONE | Feature work complete | Docs merged with CLI quickstart, diagnostics/trace coverage, and v0.2 callouts. |
 | R2.2 | Refresh synthetic fixtures and regeneration tooling to include anchors, diagnostics, and traces. | DONE | A2.4, P2.3, D2.3 | Updated fixtures versioned and referenced by tests. |
-| R2.3 | Expand integration/regression tests to cover new artifacts end-to-end. | PENDING | R2.2 | CI suite covers anchors, traces, diagnostics generation. |
+| R2.3 | Expand integration/regression tests to cover new artifacts end-to-end. | DONE | R2.2 | CI suite covers anchors, traces, diagnostics generation. |
 | R2.4 | Prepare release notes and checklist for Atlas v0.2 GA. | PENDING | All above tasks | Release checklist published and shared. |
 
 ## Cross-Cutting Considerations
