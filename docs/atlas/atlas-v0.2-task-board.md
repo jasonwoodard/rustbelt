@@ -55,7 +55,7 @@ Follow-up notes for D2.1: validate leverage/outlier heuristics against productio
 | R2.1 | Update user docs (`docs/atlas/README.md`, CLI examples) to include new commands/artifacts. | DONE | Feature work complete | Docs merged with CLI quickstart, diagnostics/trace coverage, and v0.2 callouts. |
 | R2.2 | Refresh synthetic fixtures and regeneration tooling to include anchors, diagnostics, and traces. | DONE | A2.4, P2.3, D2.3 | Updated fixtures versioned and referenced by tests. |
 | R2.3 | Expand integration/regression tests to cover new artifacts end-to-end. | DONE | R2.2 | CI suite covers anchors, traces, diagnostics generation. |
-| R2.4 | Prepare release notes and checklist for Atlas v0.2 GA. | PENDING | All above tasks | Release checklist published and shared. |
+| R2.4 | Prepare release notes and checklist for Atlas v0.2 GA. | DONE | All above tasks | Release notes published at `docs/atlas/releases/v0.2.md` and cross-linked across docs. |
 
 ## Cross-Cutting Considerations
 
