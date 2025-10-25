@@ -23,6 +23,7 @@ Atlas fuses these into a consistent, explainable V/Y view.
 ## Release notes
 
 - [Atlas v0.2 Release Notes](releases/v0.2.md)
+- [Atlas v0.2 GA Release Checklist](release-checklists/v0.2-ga.md)
 
 ---
 
