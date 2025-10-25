@@ -87,6 +87,7 @@ describe('Atlas integration fixtures', () => {
   const scoreValidator = compileValidator('score');
   const anchorValidator = compileValidator('anchor');
   const clusterValidator = compileValidator('cluster');
+  const traceValidator = compileValidator('trace');
 
   it('validate Atlas score, anchor, and cluster schemas', () => {
     const scoreRows = parseCsv(readFileSync(join(atlasFixtureDir, 'dense-urban-scores.csv'), 'utf8'));
@@ -134,6 +135,45 @@ describe('Atlas integration fixtures', () => {
       const payload = JSON.parse(line) as unknown;
       assertValid(clusterValidator, payload, 'Cluster record');
     }
+
+    const traceLines = readFileSync(join(atlasFixtureDir, 'dense-urban-trace.jsonl'), 'utf8')
+      .split(/\r?\n/)
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0);
+    expect(traceLines.length).toBeGreaterThan(0);
+    const seenStages = new Set<string>();
+    for (const line of traceLines) {
+      const payload = JSON.parse(line) as Record<string, unknown>;
+      assertValid(traceValidator, payload, `Trace record ${(payload['store_id'] as string) || 'unknown'}`);
+      if (typeof payload.stage === 'string') {
+        seenStages.add(payload.stage);
+      }
+    }
+    expect(seenStages.has('prior')).toBe(true);
+    expect(seenStages.has('blend')).toBe(true);
+
+    const posteriorTraceRows = parseCsv(readFileSync(join(atlasFixtureDir, 'dense-urban-posterior-trace.csv'), 'utf8'));
+    expect(posteriorTraceRows.length).toBeGreaterThan(0);
+    for (const row of posteriorTraceRows) {
+      const payload: Record<string, unknown> = {};
+      for (const [key, value] of Object.entries(row)) {
+        const trimmed = value.trim();
+        if (trimmed === '') {
+          payload[key] = null;
+          continue;
+        }
+        const numeric = Number(trimmed);
+        payload[key] = Number.isFinite(numeric) ? numeric : trimmed;
+      }
+      assertValid(traceValidator, payload, `Posterior trace record ${(payload['store_id'] as string) || 'unknown'}`);
+      expect(payload.stage).toBe('posterior');
+    }
+
+    const diagnosticsPath = join(atlasFixtureDir, 'atlas-diagnostics-v0.2.json');
+    const diagnostics = JSON.parse(readFileSync(diagnosticsPath, 'utf8')) as {
+      metadata?: { diagnostics_version?: string };
+    };
+    expect(diagnostics.metadata?.diagnostics_version).toBe('v0.2');
   });
 
   it('runs solver end-to-end with Atlas-scored trip', () => {

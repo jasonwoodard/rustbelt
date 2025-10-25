@@ -5,6 +5,10 @@ regression suite:
 
 - `dense-urban-scores.csv` – blended score export used to seed store `score`
   values in `dense-urban-trip.json`.
+- `dense-urban-trace.jsonl` – combined prior/posterior/blend traces emitted by
+  the scoring CLI.
+- `dense-urban-posterior-trace.csv` – posterior-only traces with wide columns
+  for detailed audits.
 - `dense-urban-anchors.csv` / `dense-urban-anchor-assignments.csv` – DBSCAN
   anchor summary and assignments for the dense urban scenario.
 - `dense-urban-subclusters.jsonl` – hierarchy materialised from
@@ -23,44 +27,15 @@ regression suite:
    pip install jsonschema numpy pandas pyarrow
    ```
 
-2. Recreate the outputs from the canonical fixtures:
+2. Regenerate the Atlas outputs and Solver trip directly from the repository
+   root:
 
    ```bash
-   cd packages/atlas-python
-   PYTHONPATH=src python -m atlas.cli score \
-     --mode blended \
-     --stores src/atlas/fixtures/dense_urban/stores.csv \
-     --affluence src/atlas/fixtures/dense_urban/affluence.csv \
-     --observations src/atlas/fixtures/dense_urban/observations.csv \
-     --output ../../fixtures/solver/atlas/dense-urban-scores.csv \
-     --lambda 0.5
-
-   PYTHONPATH=src python -m atlas.cli anchors \
-     --stores src/atlas/fixtures/dense_urban/stores.csv \
-     --output ../../fixtures/solver/atlas/dense-urban-anchors.csv \
-     --store-assignments ../../fixtures/solver/atlas/dense-urban-anchor-assignments.csv \
-     --metrics ../../fixtures/solver/atlas/dense-urban-anchor-metrics.json \
-     --algorithm dbscan \
-     --eps 0.03 \
-     --min-samples 2 \
-     --metric euclidean \
-     --id-prefix metro-anchor
-
-   PYTHONPATH=src python -m atlas.cli subclusters \
-     --anchor-id metro-anchor-001 \
-     --spec ../../fixtures/solver/atlas/dense-urban-subcluster-spec.json \
-     --output ../../fixtures/solver/atlas/dense-urban-subclusters.jsonl \
-     --id-prefix metro-anchor-001-sc
-   ```
-
-3. Rebuild the Solver trip JSON with the blended scores:
-
-   ```bash
-   cd ../../
    python fixtures/solver/atlas/regenerate_trip.py
    ```
 
-   (Or adapt the helper script to match future schema additions.)
+   The helper script shells into the Atlas CLI to rewrite scores, traces,
+   diagnostics, anchors, and sub-clusters before rebuilding the Solver trip.
 
 The Solver regression test `npm run test:integration` will fail if the
 regenerated fixtures drift from the JSON schemas in `schema/atlas/v1`.
