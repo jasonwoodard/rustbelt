@@ -7,6 +7,8 @@ Atlas helps you decide **where the good stores probably are** and **how to prior
 - **Value (V):** how good the “haul” felt (1–5).
 - **Yield (Y):** how fast you found buy-worthy items, adjusted for time (1–5).
 
+> Looking for the newest CLI and artifact updates? Read the [Atlas v0.2 release notes](releases/v0.2.md).
+
 You can keep V and Y separate, or press a button to combine them into one number for routing.
 
 ---

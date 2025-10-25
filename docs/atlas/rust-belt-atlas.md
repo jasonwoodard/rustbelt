@@ -10,6 +10,10 @@ Together they form a connected workflow: Atlas charts, Solver routes.
 
 ---
 
+> **Need the latest update?** See the [Atlas v0.2 release notes](releases/v0.2.md) for CLI, diagnostics, and schema changes.
+
+---
+
 ## Purpose
 
 Atlas answers two key questions:

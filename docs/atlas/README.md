@@ -20,6 +20,12 @@ Atlas fuses these into a consistent, explainable V/Y view.
 
 ---
 
+## Release notes
+
+- [Atlas v0.2 Release Notes](releases/v0.2.md)
+
+---
+
 ## What Atlas can do
 
 1) **Score stores with no observations** (cold start)  
