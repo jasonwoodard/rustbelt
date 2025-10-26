@@ -124,6 +124,13 @@ The CLI validates every payload against the score and trace schemas (`schema/atl
 
 Disable diagnostics with `--no-diagnostics` or redirect the sidecars to a different directory via `--diagnostics-dir`.
 
+When diagnostics are enabled the `score` command also looks for `anchor_assignments.csv` and `subclusters.csv` in the directory that
+contains the `--stores` payload. When those files exist they are automatically merged into the diagnostics bundle so anchor context
+travels with the scoring artifacts. The canonical filenames line up with the outputs from `rustbelt-atlas anchors` (rename the
+`--store-assignments` export to `anchor_assignments.csv` when promoting it) and `rustbelt-atlas subclusters` (write or symlink the
+cluster rollup to `subclusters.csv`). Both formats are validated against [`schema/atlas/v1/anchor.schema.json`](../../schema/atlas/v1/anchor.schema.json)
+and [`schema/atlas/v1/cluster.schema.json`](../../schema/atlas/v1/cluster.schema.json).
+
 ### Detect anchors
 
 ```bash
