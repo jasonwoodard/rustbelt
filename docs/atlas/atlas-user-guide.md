@@ -86,8 +86,9 @@ You can sort by V, Y, or combine them (see “Modes” below).
    ```
    The blended file keeps posterior means for visited stores while filling gaps with priors and recomputing the λ-weighted composite score.
 6. **Inspect the outputs**:
-   - `out/*.csv`: Value/Yield (and optional Composite) per store.
-   - `out/*.json` or `out/*.parquet`: Trace files you can attach to QA reports or demos.
+   - Score exports (`out/dense_prior.csv`, `out/dense_posterior.csv`, `out/dense_blended.csv`): Value/Yield (and optional Composite) per store.
+   - Traces (`out/dense_prior_trace.jsonl`, optional `out/dense_posterior_diagnostics.csv` when you pass `--posterior-trace`): machine-readable records of how priors and posteriors were assembled.
+   - Diagnostics (`out/atlas-diagnostics-v0.2.{json,html,parquet}`): richer QA bundles emitted alongside posterior traces for dashboards and reports.
    - Re-run with `--explain` for a lightweight sample trace (`atlas-trace.json` / `atlas-trace.csv`).
 
 Re-run the commands with the `sparse_rural` fixtures to see how the engine behaves with minimal observations and heavier reliance on priors.
@@ -97,7 +98,7 @@ Re-run the commands with the `sparse_rural` fixtures to see how the engine behav
 - `--trace-out PATH` writes a combined trace for whichever scoring stages ran. Priors, posteriors, and blend rows are included by default.
 - Toggle specific stages with `--no-include-prior-trace`, `--no-include-posterior-trace`, or `--no-include-blend-trace` when you only need a subset (for example, blend-only QA dumps).
 - Choose the combined trace format with `--trace-format {jsonl,csv}`. The flag controls the serializer regardless of filename suffix.
-- `--posterior-trace PATH` emits posterior-only diagnostics, and `--posterior-trace-format {jsonl,csv}` controls that file separately (default CSV). Posterior rows are still included in the combined trace unless you disable them with `--no-include-posterior-trace`.
+- `--posterior-trace PATH` emits posterior-only traces (`.csv` by default, switchable via `--posterior-trace-format {jsonl,csv}`) and writes the `atlas-diagnostics-v0.2.{json,html,parquet}` sidecars in the same directory. Posterior rows are still included in the combined trace unless you disable them with `--no-include-posterior-trace`.
 
 ---
 
