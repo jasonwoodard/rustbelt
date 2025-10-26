@@ -43,7 +43,7 @@ You can sort by V, Y, or combine them (see “Modes” below).
 
 ---
 
-## Quickstart: run Atlas v0.1 with sample data
+## Quickstart: run Atlas v0.2 with sample data
 
 1. **Install the prototype** (once per machine):
    ```bash
