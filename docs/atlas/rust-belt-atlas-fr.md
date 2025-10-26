@@ -4,11 +4,19 @@ Rust Belt Atlas is the **scoring and clustering engine** for the Rust Belt proje
 It provides per-store Value/Yield scores, metro anchors, and store clusters to be consumed by the Rust Belt Solver.
 Atlas sits upstream of Solver: **Atlas maps the landscape, Solver plans the journey.**
 
+## Roadmap
+
+- **v0.1 (Prototype, delivered)**: Prior/posterior/blended scoring pipelines, ω provenance, trace exports, and ECDF caching.
+- **v0.2 (Ready for release)**: Metro anchors, sub-cluster nesting, posterior trace exports, Solver contract validation, and diagnostics reporters now ship with Atlas.
+- **v0.3+**: Harden Solver integration tests, add affluence model calibration and automated anchor/cluster QA dashboards.
+
+With v0.2 feature work landed and validated through CLI and Solver integration tests, Atlas is ready for promotion to the next milestone.
+
 ---
 
 ## Assessment of v0.1
 
-The Python prototype under `packages/atlas-python/` delivers a fully working scoring CLI with prior, posterior, and blended modes, blend provenance, and trace/diagnostic exports. Prior and posterior pipelines are unit-tested end to end, and the CLI enforces the expected data contracts. Anchor detection, sub-clusters, and the richer diagnostics package remain stubs, so the original v0.1 scope is only partially complete.
+The Python prototype under `packages/atlas-python/` delivers a fully working scoring CLI with prior, posterior, and blended modes, blend provenance, and trace exports. Prior and posterior pipelines are unit-tested end to end, and the CLI enforces the expected data contracts. Anchor detection, sub-clusters, Solver contract checks, and diagnostics reporters were deferred to v0.2 but are now implemented in the same package.
 
 *Delivered capabilities*
 - `rustbelt-atlas score` covers prior-only, posterior-only, and blended runs, enforces the affluence feature contract, and writes CSV/JSON outputs with optional λ and ω parameters.
@@ -16,9 +24,9 @@ The Python prototype under `packages/atlas-python/` delivers a fully working sco
 - Posterior scoring fits Poisson/NegBin GLMs with per-store fallbacks, ECDF-based Yield mapping, optional ECDF caching, and spatial kNN smoothing for unvisited stores.
 - Output records include prior/posterior components, ω provenance, and trace rows that explain each store’s prior and blend contributions when `--trace-out` is used. Posterior diagnostics can be persisted via `--posterior-trace` for further analysis.
 
-*Deferred or partial items*
-- Metro anchors, sub-clusters, and diagnostics modules are placeholders with no executable implementation yet.
-- Posterior trace records are captured in-memory but not yet exported alongside prior/blend traces, so explainability is partial for posterior mode.
+*Outstanding opportunities*
+- Spatial smoothing remains opt-in via helper utilities; default adjacency pipelines are still under evaluation.
+- Posterior QA heuristics could incorporate dwell/purchase covariates beyond the current θ-based signals.
 
 ---
 
@@ -29,11 +37,11 @@ The Python prototype under `packages/atlas-python/` delivers a fully working sco
 | FR-1 | Store Scoring (Value–Yield)    | Delivered  | CLI enforces affluence inputs; prior scoring matches spec with optional λ and adjacency helper. |
 | FR-1a | Posterior-Only Scoring        | Delivered  | GLM + hierarchical + kNN pipeline with ECDF Yield mapping and diagnostics export. |
 | FR-1b | Blending Weight & Provenance  | Delivered  | Outputs ω, prior/posterior components, and blend traces; defaults configurable. |
-| FR-2 | Metro Anchor Identification    | Deferred   | No anchor command or implementation in repository. |
-| FR-3 | Sub-Cluster Detection          | Deferred   | Dependent on anchor work; module is empty. |
-| FR-4 | Explainability Trace           | Partial    | Prior/blend traces shipped; posterior traces kept in memory only. |
-| FR-5 | Data Exchange with Solver      | Partial    | CSV/JSON outputs align with Solver expectations but no direct integration tests or schema versioning yet. |
-| FR-6 | Diagnostics & Reports          | Deferred   | Diagnostics package placeholder with no emitters. |
+| FR-2 | Metro Anchor Identification    | Delivered  | `atlas anchors` command clusters stores via DBSCAN/HDBSCAN and emits assignments + metrics. |
+| FR-3 | Sub-Cluster Detection          | Delivered  | `atlas subclusters` materialises hierarchies from JSON specs and validates topology. |
+| FR-4 | Explainability Trace           | Delivered  | Prior, posterior, and blend stages export JSONL/CSV traces with CLI inclusion flags. |
+| FR-5 | Data Exchange with Solver      | Delivered  | Fixtures + tests validate CSV/JSON schemas against Solver contracts. |
+| FR-6 | Diagnostics & Reports          | Delivered  | Diagnostics writers emit JSON, HTML, and Parquet summaries with QA signals. |
 
 ---
 
@@ -79,7 +87,7 @@ Atlas trains on observation logs to recover posterior Value/Yield estimates for 
 - AC4: Pipeline is deterministic for a given dataset; ECDF caches ensure reproducibility when configured.
 
 **Gaps**
-- Posterior trace records are generated but not yet exported alongside prior traces (see FR-4).
+- Posterior hyper-parameter selection still relies on analyst configuration; automated cross-validation is a future enhancement.
 
 ---
 
@@ -103,55 +111,67 @@ Atlas emits the blending weight ω and keeps the prior/posterior components visi
 ---
 
 ## FR-2: Metro Anchor Identification
-**Status: Deferred**
+**Status: Delivered in v0.2**
 
-There is no implementation for metro anchors in the prototype. The `atlas.clustering` module is a placeholder, and the CLI exposes no `anchors` command yet.
+DBSCAN/HDBSCAN clustering for metro anchors ships under `atlas.clustering.anchors` and is surfaced via the `atlas anchors` CLI command. Runs can persist anchor metadata, store assignments, and clustering metrics for Solver.
 
-**Next steps**
-- Implement anchor detection (e.g., DBSCAN/HDBSCAN over lat/lon) with configurable parameters.
-- Define output schema and wire a CLI subcommand that emits anchors for downstream Solver use.
+**Implementation highlights**
+- `AnchorDetectionParameters` supports DBSCAN and HDBSCAN configurations, haversine distance, metro identifiers, and custom ID prefixes.
+- `detect_anchors` returns structured anchors, assignments, and metrics, with schema validation in CLI handlers.
+- Fixture regeneration scripts exercise anchor detection to create regression datasets for integration testing.
 
 ---
 
 ## FR-3: Sub-Cluster Detection
-**Status: Deferred**
+**Status: Delivered in v0.2**
 
-Sub-clusters depend on anchor detection and likewise have no executable code in the repository. Future work should extend the clustering module once anchors exist.
+Sub-cluster hierarchies can now be materialised from JSON specifications using `atlas.clustering.subclusters`. The `atlas subclusters` CLI command validates topology constraints and writes nested IDs for downstream consumption.
+
+**Implementation highlights**
+- `build_subcluster_hierarchy` constructs parent/child relationships with validation against duplicate IDs and missing parents.
+- Hierarchies export to DataFrames with anchor identifiers, depth ordering, and leaf store assignments.
+- CLI tooling enforces schema correctness before emitting CSV/JSON outputs.
 
 ---
 
 ## FR-4: Explainability Trace
-**Status: Partial in v0.1**
+**Status: Delivered in v0.2**
 
 **Delivered**
-- `--trace-out` records prior contributions (baseline, affluence, adjacency, posterior overrides) plus blend provenance per store in JSONL form for reproducible audits.
+- `--trace-out` records prior, posterior, and blend contributions with per-stage inclusion flags so analysts can tailor payload size.
+- Posterior traces stream from `PosteriorPipeline.iter_traces()` and can be emitted separately via `--posterior-trace` with CSV or JSONL encodings.
 - `TraceRecord` utilities provide consistent flattening/hashing for trace payloads used across scoring stages.
 
 **Remaining gaps**
-- Posterior traces are built inside `PosteriorPipeline` but never exported, so analysts cannot yet inspect GLM vs hierarchical contributions without instrumenting Python directly.
-- A consolidated explainability artifact (single CSV/JSON per run) would simplify Solver-facing auditing once posterior traces are exposed.
+- A consolidated explainability artifact (single CSV/JSON per run) would still simplify Solver-facing auditing beyond raw trace rows.
 
 ---
 
 ## FR-5: Data Exchange with Solver
-**Status: Partial in v0.1**
+**Status: Delivered in v0.2**
 
 **Delivered**
-- CLI writes CSV/JSON outputs with Value, Yield, Composite, ω, and provenance columns suitable for Solver ingestion.
+- CLI writes CSV/JSON outputs with Value, Yield, Composite, ω, provenance, and diagnostics columns suitable for Solver ingestion.
+- Solver CLI integration tests exercise Atlas fixtures (`dense-urban` scenarios) to enforce schema compatibility for scores, anchors, and cluster assignments.
 - Posterior diagnostics can be persisted to CSV/Parquet for validation alongside scored stores.
 
 **Remaining gaps**
-- No automated contract tests exist with the Solver repository, and schema versioning is not yet formalised. Coordinated integration tests should be added before declaring the data contract stable.
+- Schema versioning is tracked through diagnostics metadata but could benefit from published semver once Solver integration solidifies.
 
 ---
 
 ## FR-6: Diagnostics & Reports
-**Status: Deferred**
+**Status: Delivered in v0.2**
 
-The diagnostics module is currently a stub; no correlation analyses, distribution reports, or outlier detection are emitted in the prototype.
+Atlas now emits diagnostics sidecars containing JSON summaries, HTML reports, and Parquet extracts with QA signals.
+
+**Delivered**
+- `compute_correlation_table` and `summarize_distributions` produce the statistical views consumed by CLI diagnostics output.
+- QA heuristics highlight high-leverage anchors and outlier scores when anchor assignments are available.
+- Writers materialise diagnostics in consistent directory layouts alongside score runs.
 
 **Next steps**
-- Implement JSON/HTML report generation that summarises affluence correlations, Value/Yield distributions, and anchor/cluster stats once those features exist.
+- Expand HTML reports with richer visualisations and cross-run trend comparisons once Solver establishes dashboards.
 
 ---
 
@@ -160,14 +180,6 @@ The diagnostics module is currently a stub; no correlation analyses, distributio
 - Route optimisation (Solver responsibility).
 - Run shape filtering (Loop vs Haul) — flagged for Solver extension.
 - Mid-day re-optimisation — Solver responsibility.
-
----
-
-## Roadmap
-
-- **v0.1 (Prototype, delivered)**: Prior/posterior/blended scoring pipelines, ω provenance, trace exports, and ECDF caching.
-- **v0.2 (Next)**: Ship metro anchors and sub-clusters, surface posterior traces in explainability outputs, and stand up initial diagnostics/reporting.
-- **v0.3+**: Harden Solver integration tests, add affluence model calibration and automated anchor/cluster QA dashboards.
 
 ---
 
