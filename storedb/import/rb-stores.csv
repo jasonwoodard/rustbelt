@@ -1,0 +1,329 @@
+ID,AutoIds,Type,Name,Address,google-name,GScore,GRevCount,JScore,Tier,Must-Visit,Day,Note,Lat,Lon,LiveCensusLat,LiveCensusLon,store-pk,google-url
+AJ,AJ1,Antique,Arcade Junction,"320 Main St, Arcade, NY 14009",Arcade Junction,4.8,66,4.0,Top,,,Good potential,42.533843395362,-78.424489530318,-Have Lat-,-Have Lon-,1,https://maps.app.goo.gl/nc2DyPcyuhBFagVz5
+RRAC,RRAC1,Antique,Rcs & Randys Antiques Co-Op,"212 Lake Shore Dr E, Dunkirk, NY 14048",Rcs & Randys Antiques Co-Op,4.6,124,4.0,Top,,,Good potential,42.489967125549,-79.323415719901,-Have Lat-,-Have Lon-,2,https://maps.app.goo.gl/uLdqt27Vvi8Kx3Ry6
+SHTTA,SHTTA1,Thrift,"Solomon's Hidden Treasures Thrift, Antiques & Outlet","14218 US-219 GPS, 14218 S Cascade Dr, Springville, NY 14141","Solomon's Hidden Treasures Thrift, Antiques & Outlet",3.9,33,3.3,Mid,,,"Smaller, seems limited",42.491847780846,-78.693071558398,-Have Lat-,-Have Lon-,3,https://maps.app.goo.gl/MvSumuUf69PQB4Zr8
+SLTS,SLTS1,Thrift,St Luke's Thrift Shop,"409 Pine St, Jamestown, NY 14701",St Luke's Thrift Shop,4.3,6,2.0,Low,,,"Limited hours, just a house",42.097518894618,-79.240479514338,-Have Lat-,-Have Lon-,4,https://maps.app.goo.gl/ypLcBjaUJ5eRf37k7
+RT,RT1,Junk,Ron's Treasures,"88 N Main St, Cassadaga, NY 14718",Ron's Treasures,4.5,51,3.5,Mid,,,Could be a sleeper hit,42.348123754568,-79.310381497269,-Have Lat-,-Have Lon-,5,https://maps.app.goo.gl/6FY7UoSZ35zCnKrj8
+TA,TA1,Antique,Trolley Antiques,"440 Baldwin St, Meadville, PA 16335",Trolley Antiques,4.7,26,2.5,Low,,,"Small, out of the way. In a trolley",41.652890082142,-80.153108623774,-Have Lat-,-Have Lon-,6,https://maps.app.goo.gl/vz2LYjSVJ5yhM1GYA
+WSAM,WSAM1,Antique,Whistle Stop Antique Mall,"50 N Center St, Corry, PA 16407",Whistle Stop Antique Mall,4.5,138,4.0,Top,,,Looks large and varied,41.921358450600,-79.640673952454,-Have Lat-,-Have Lon-,7,https://maps.app.goo.gl/8sxHXWwHeAcobZgR6
+MSA2,MSA1,Antique,Main Street Antiques,"7447 W Ridge Rd, Fairview, PA 16415",Main Street Antiques,4.6,26,3.0,Mid,,,"Images unclear, just someone's house?",42.032803817302,-80.253949499435,-Have Lat-,-Have Lon-,8,https://maps.app.goo.gl/zuL9w9SphpNbtmLX6
+FNJ,FNJ1,Thrift,Funk N Junk,"65 Main St W, Girard, PA 16417",Funk N Junk,5.0,26,3.8,Top,,,Curious; has potential,42.000356470277,-80.317733995196,-Have Lat-,-Have Lon-,9,https://maps.app.goo.gl/5tEZPt3kR4LHWCad8
+FKTS,FKTS1,Thrift,Finders Keepers Thrift Shop,"325 W Erie St, Linesville, PA 16424",Finders Keepers Thrift Shop,4.7,35,4.0,Top,,,"Something going on here, hard to say. Closed Mondays",41.656369074660,-80.426292954401,-Have Lat-,-Have Lon-,10,https://maps.app.goo.gl/JpQRRPGrPfKy18pc8
+IAM,IAM1,Antique,Interstate Antique Mall,"5446 PA-89, North East, PA 16428",Interstate Antique Mall,3.2,36,3.8,Top,,,"Looks neat, but expensive",42.191680758531,-79.837438007144,-Have Lat-,-Have Lon-,11,https://maps.app.goo.gl/nPH6EWaqaqGqqsfi9
+TTAT,TTAT1,Thrift,Treva's Trinkets and Treasures,"77 S Pearl St, North East, PA 16428",Treva's Trinkets and Treasures,4.7,37,4.0,Top,,NODAY,"Yep, eclectic, well curated - closed for this trip",42.211117333873,-79.837341450818,-Have Lat-,-Have Lon-,12,https://maps.app.goo.gl/DTdxHK3KFnzKsXBC9
+FKOE,FKOE1,Thrift,Finders Keepers Of Erie,"1250 Brown Ave, Erie, PA 16502",Finders Keepers Of Erie,4.6,142,3.6,Mid,,,High-Mid Thrift store,42.102881635880,-80.100783236134,-Have Lat-,-Have Lon-,13,https://maps.app.goo.gl/PiTcuMNetn86PUZA6
+CSTAT,CSTAT1,Thrift,Cobb's Second Time Around Thrift Shop,"1215 Parade St, Erie, PA 16503",Cobb's Second Time Around Thrift Shop,4.2,253,3.8,Top,,,Looks big; worthwhile,42.126531887305,-80.072549728280,-Have Lat-,-Have Lon-,14,https://maps.app.goo.gl/Y1UUA9vNPT1ZUoC2A
+GSTS,GSTS1,Thrift,Green Scene Thrift Store,"1301 E Grandview Blvd, Erie, PA 16504",Green Scene Thrift Store,4.6,87,3.8,Top,,,Looks worthwhile,42.106368486532,-80.033370746773,-Have Lat-,-Have Lon-,15,https://maps.app.goo.gl/SsNTMYQneY4uRBy4A
+CMT,CMT1,Thrift,City Mission Thrift,"2064 W 16th St, Erie, PA 16505",City Mission Thrift,3.9,30,3.9,Top,,,Looks like good size organizational thrift store,42.104626488681,-80.121776930886,-Have Lat-,-Have Lon-,16,https://maps.app.goo.gl/8xLhDnHym3uVg6X8A
+OA,OA1,Antique,Oregon Antiques,"3436 W Lake Rd, Erie, PA 16505",Oregon Antiques,4.8,151,3.5,Top,,,"Looks interesting, maybe mostly furniture",42.101021981577,-80.163581969552,-Have Lat-,-Have Lon-,17,https://maps.app.goo.gl/gQ4xR6fJZEPSjGpGA
+TSP,TSP1,Boutique,The Sassy Peacock,"845 Pittsburgh Ave, Erie, PA 16505",The Sassy Peacock,4.3,115,1.0,Low,,,Women's clothes consignment,42.108627246398,-80.133101104607,-Have Lat-,-Have Lon-,18,https://maps.app.goo.gl/DYXbvcw9hppf5uKV7
+PIMAA,PIMAA1,Surplus,"Presque Isle Militaria, Antiques and Collectibles","811 W 26th St, Erie, PA 16508","Presque Isle Militaria, Antiques and Collectibles",4.8,45,2.8,Mid,,,Interesting but not sure it would have anything,42.105540601858,-80.090722986574,-Have Lat-,-Have Lon-,19,https://maps.app.goo.gl/bbjgaXN1hFogCaCw6
+SS2,SS1,Thrift,Secondhand shop,"1508 W 32nd St, Erie, PA 16508",Secondhand shop,3.7,18,1.8,Low,,,Small; no obvious promise,42.095483281621,-80.101942854306,-Have Lat-,-Have Lon-,20,https://maps.app.goo.gl/Tg5awJTmwjMnUVwP7
+MTS,MTS1,Thrift,Mel & Tee's Secondhand & Estate Sales,"4915 Hillsdale Ave, Erie, PA 16509",Mel & Tee's Secondhand & Estate Sales,4.6,100,3.8,Mid,,,Has potential,42.082588445399,-80.089215148754,-Have Lat-,-Have Lon-,21,https://maps.app.goo.gl/qaCJb4B13Hu2xXGN8
+RCTS,RCTS1,Thrift,Rainbow Connection Thrift Store,"1516 Buffalo Rd, Erie, PA 16510",Rainbow Connection Thrift Store,4.1,66,3.4,Mid,,,Probably fair; hard to say; Methodist Church Store,42.129238096652,-80.042458531383,-Have Lat-,-Have Lon-,22,https://maps.app.goo.gl/P3Tp6crrLEt15fn37
+V,V1,Antique,Vintillage,"1019 N Main St, Bowling Green, OH 43402",Vintillage,4.8,59,4.1,Top,,,Stacked stuff; good looking,41.386969488836,-83.650559979749,-Have Lat-,-Have Lon-,23,https://maps.app.goo.gl/wkgexv5rPwEsojH47
+AIC,AIC1,Antique,Antiques In Clyde,"109 W Buckeye St, Clyde, OH 43410",Antiques In Clyde,4.8,8,3.6,Mid,,,"Small store, could be good.",41.305325806012,-82.974998847854,-Have Lat-,-Have Lon-,24,https://maps.app.goo.gl/sHQ6VM2pTJowAT9QA
+AVM,AVM1,Vintage,Armory vintage Market,"1005 E State St, Fremont, OH 43420",Armory vintage Market,4.9,36,4.1,Top,must-visit,,"Looks good, space is interesting",41.343487452168,-83.099059334270,-Have Lat-,-Have Lon-,25,https://maps.app.goo.gl/ePTPqdJ1huGgihVc9
+BUKB,BUKB1,Thrift,Bearly Used Kids Boutique,"236 N Front St, Fremont, OH 43420",Bearly Used Kids Boutique,4.1,24,1.0,Low,,,,41.347478384673,-83.113456418240,-Have Lat-,-Have Lon-,26,https://maps.app.goo.gl/jktEWpiG8VgWVj4v6
+MTA,MTA1,Antique,M & T Antiques,"427 W State St, Fremont, OH 43420",M & T Antiques,3.4,13,3.9,Mid,,,"Old school corner location, little information. Gamble!",41.347672411392,-83.114672111185,-Have Lat-,-Have Lon-,27,https://maps.app.goo.gl/3c3tcWeA112LYFvf9
+NTYC,NTYC1,Junk,New-To-You Consignments,"2306 W State St, Fremont, OH 43420",New-To-You Consignments,4.6,8,3.7,Mid,,,"Information is sparse, but seeme liek ithas potential",41.360050512706,-83.144098174735,-Have Lat-,-Have Lon-,28,https://maps.app.goo.gl/m999nexzNeMCtVVC7
+PAPE,PAPE1,Thrift,Past and present emporium,"611 W State St, Fremont, OH 43420",Past and present emporium,4.6,46,3.9,Top,,,Looks promising,41.348653880344,-83.116979645576,-Have Lat-,-Have Lon-,29,https://maps.app.goo.gl/3t1pWTEmuouKVT7Q8
+CWUTS,CWUTS1,Thrift,Church Women United Thrift Shop,"631 S Crissey Rd, Holland, OH 43528",Church Women United Thrift Shop,4.5,77,3.3,Mid,,,,41.635441761032,-83.761580791087,-Have Lat-,-Have Lon-,30,https://maps.app.goo.gl/2nkFy33CxAEAda9Z7
+MAM,MAM1,Antique,Maumee Antique Mall,"1552 S Reynolds Rd, Maumee, OH 43537",Maumee Antique Mall,4.6,"1,626",3.8,Top,,,Was must-visit. Closer look dropped it off the list.,41.590842984434,-83.664615541868,-Have Lat-,-Have Lon-,31,https://maps.app.goo.gl/fbLomVTHonFY8ues7
+AAI,AAI1,ArchSalvage,Architectural Artifacts Inc.,"20 S Ontario St, Toledo, OH 43604",Architectural Artifacts Inc.,4.4,99,4.1,Top,,,"ArchSalvage, but looks good.",41.649091695510,-83.542472855926,-Have Lat-,-Have Lon-,32,https://maps.app.goo.gl/1icsJgnQHRARacuz6
+HOD,HOD1,Vintage,House of Dow,"1501 Adams St, Toledo, OH 43604",House of Dow,4.6,149,3.9,Top,,,Looks Good,41.657294398356,-83.543708655603,-Have Lat-,-Have Lon-,33,https://maps.app.goo.gl/5FcPq8e8prDFgTqQ9
+TVAT,TVAT1,Antique,The Vault Antiques & Treasures,"1583 W Sylvania Ave, Toledo, OH 43612",The Vault Antiques & Treasures,4.8,162,4.3,Top,must-visit,,Looks Good,41.692281669916,-83.582227128609,-Have Lat-,-Have Lon-,34,https://maps.app.goo.gl/2928ZqRjdbRJWQcr8
+TSL,TSL1,Thrift,That Store LLC,"3237 W Sylvania Ave, Toledo, OH 43613",That Store LLC,5.0,1,1.0,Low,,,Looks like modern stuff and cheap jewelry,41.691764993694,-83.622275071409,-Have Lat-,-Have Lon-,35,https://maps.app.goo.gl/wejurGwbVHhduix69
+GFIM,GFIM1,Antique,Great Finds in Maumee,"1855 S Reynolds Rd, Toledo, OH 43614",Great Finds in Maumee,4.4,114,3.0,Mid,,,Has a lot of 'Boutique' indicators,41.605764160280,-83.664543898393,-Have Lat-,-Have Lon-,36,https://maps.app.goo.gl/mvb7jCHZ6Vc3RHTf9
+NLRS,NLRS1,Thrift,Nine LIves Resale Shop,"4317 Heatherdowns Blvd, Toledo, OH 43614",Nine Lives Resale Shop,4.3,48,3.7,Top,,,Proper Thrift Store,41.594192689079,-83.644269327428,-Have Lat-,-Have Lon-,37,https://maps.app.goo.gl/zf7rhBGDwNDMHvuD9
+TCKA,TCKA1,Antique,The Copper Kettle Antiques,"1544 S Byrne Rd, Toledo, OH 43614",The Copper Kettle Antiques,4.8,98,4.6,Top,,,Looks to great junk/antique store,41.611610835276,-83.625851872076,-Have Lat-,-Have Lon-,38,https://maps.app.goo.gl/rvT6yVg5zJskmFUj9
+CIHI,CIHI1,Consignment,Consign It! Home Interiors,"6925 Central Ave, Toledo, OH 43617",Consign It! Home Interiors,4.6,328,1.5,Top,,,"Looks got at what it is, but not for me.",41.674305548524,-83.708647689865,-Have Lat-,-Have Lon-,39,https://maps.app.goo.gl/mXSkaUwzDr61fNar9
+GCHFH,GCHFH1,Thrift,Greater Cleveland Habitat for Humanity - Amherst ReStore,"300 Rice Industrial Pkwy, Amherst, OH 44001",Greater Cleveland Habitat for Humanity - Amherst ReStore,3.5,69,3.5,Mid,,,Classic HfH - furniture and stuff. Quick stop,41.395525506208,-82.209643093814,-Have Lat-,-Have Lon-,40,https://maps.app.goo.gl/YtxRVQwd2W1n9bsQ7
+ORBA,ORBA1,Antique,Olde Red Barn Antiques & Collectibles,"186 W Main St, Andover, OH 44003",Olde Red Barn Antiques & Collectibles,3.8,21,1.0,Low,,,Somebody's back barn. Sounds like difficult owner.,41.607193133509,-80.575120353708,-Have Lat-,-Have Lon-,41,https://maps.app.goo.gl/HZ66kSc6vxZc9Gix7
+AAM,AAM1,Antique,Ashtabula Antique Mall,"4876 N Ridge Rd W, Ashtabula, OH 44004",Ashtabula Antique Mall,3.4,72,3.8,Top,,,"Looks great, no frills",41.836574484200,-80.853763996725,-Have Lat-,-Have Lon-,42,https://maps.app.goo.gl/gaqn6TEEziygtPhB7
+CFAN,CFAN1,Thrift,Classic Finds and Nautical,"Bridge St, Ashtabula, OH 44004",Classic Finds and Nautical,5.0,3,4.0,Top,,,Just has some xFactor,41.899681400000,-80.798962400000,-Have Lat-,-Have Lon-,43,https://maps.app.goo.gl/KsU1dP2S7CTYoiw56
+FSW,FSW1,Antique,Fat Sally's Warehouse,"1569 Laird Dr, Ashtabula, OH 44004",Fat Sally's Warehouse,4.7,213,4.1,Top,,,"Looks good, nice stuff, not too fancy",41.893855805386,-80.804068111485,-Have Lat-,-Have Lon-,44,https://maps.app.goo.gl/B5AuTfrHm3pEyC9w7
+TCS,TCS1,Antique,The Curiosity Shoppe,"3315 N Ridge Rd E, Ashtabula, OH 44004",The Curiosity Shoppe,4.1,63,3.9,Top,,,Seems like mostly furniture,41.879531637759,-80.752066796881,-Have Lat-,-Have Lon-,45,https://maps.app.goo.gl/hY8zKo7K4NF2PKc48
+JHA,JHA1,Antique,Jameson Homestead Antiques,"36675 Detroit Rd, Avon, OH 44011",Jameson Homestead Antiques,4.4,65,3.0,Mid,,,Not vibing with the interior photos,41.454173824105,-82.031499065976,-Have Lat-,-Have Lon-,46,https://maps.app.goo.gl/jaP2SHwGz9WW3tms8
+CTSAB,CTSAB1,Boutique,Columbia Thrift Store and boutique,"23005 Sprague Rd, Columbia Station, OH 44028",Columbia Thrift Store and boutique,5.0,16,3.2,Mid,,,Looks like a decent store. Christian charity,41.350632649461,-81.877647309574,-Have Lat-,-Have Lon-,47,https://maps.app.goo.gl/cK9S1MukwLRb6uC48
+CTS,CTS1,Thrift,Conneaut Thrift Shop,"255 Main St, Conneaut, OH 44030",Conneaut Thrift Shop,4.7,21,3.7,Mid,,,Hospital Thrift shop!,41.942841691849,-80.555892279975,-Have Lat-,-Have Lon-,48,https://maps.app.goo.gl/MFnBjY7hUC6zFBU76
+BB,BB1,Boutique,Broadway Boutique,"390 Broad St, Elyria, OH 44035",Broadway Boutique,4.0,1,0.5,Low,,,All signs point to closed for good,41.367569600000,-82.716291400000,-Have Lat-,-Have Lon-,49,https://maps.app.goo.gl/6mDD4GtsDkQDqdRb6
+NTYRS,NTYRS1,Thrift,New To You Resale Shop,"625 Broad St, Elyria, OH 44035",New To You Resale Shop,4.6,56,3.9,Top,,,Looks likd a solid store,41.367846176278,-82.112124710051,-Have Lat-,-Have Lon-,50,https://maps.app.goo.gl/Vw6VUZ8pp87nat1Q9
+RE,RE1,Thrift,Roxy's Emporium,"Shops On Broad, 374 Broad St, Elyria, OH 44035",Roxy's Emporium,4.6,28,0.5,Low,,,Indications are there is nothing there,41.367699000000,-82.106090600000,-Have Lat-,-Have Lon-,51,https://maps.app.goo.gl/hMt39MVoewF5E2aL9
+TBH,TBH1,Furniture,The Bargain House,"450 Cleveland St, Elyria, OH 44035",The Bargain House,4.9,346,4.0,Top,,,FURNITURE STORE,41.375145226291,-82.085263050924,-Have Lat-,-Have Lon-,52,https://maps.app.goo.gl/NZHGyyzuwJjhyT4r9
+BA,BA1,Antique,Broadway Antiques,"71 N Broadway, Geneva, OH 44041",Broadway Antiques,4.3,25,3.8,Mid,,,"Small store, but funky and interesting looking",41.806049682886,-80.947186950183,-Have Lat-,-Have Lon-,53,https://maps.app.goo.gl/kPq2yXy9nb9wLS5o6
+CCC,CCC1,Boutique,Classic Country Consignments,"4426 N Ridge Rd E, Geneva, OH 44041",Classic Country Consignments,4.4,38,1.0,Mid,,,Looks like boutique + modern junk,41.805058013017,-80.913059023691,-Have Lat-,-Have Lon-,54,https://maps.app.goo.gl/KobNBE4fDZoWGrMR9
+GT,GT1,Thrift,Geneva Thrift,"660 E Main St, Geneva, OH 44041",Geneva Thrift,5.0,6,2.0,Low,,,Just looks like stuff I'm not into.,41.808778981594,-80.936936154875,-Have Lat-,-Have Lon-,55,https://maps.app.goo.gl/dcfC272qBVncc3qV9
+TGD,TGD1,Antique,The Green Door,"OH-84, Geneva, OH 44041",The Green Door,4.4,23,3.9,Mid,,,This place looks interesting,41.780260300000,-81.002470700000,-Have Lat-,-Have Lon-,56,https://maps.app.goo.gl/PC7i2BwJjfgEQLAJ8
+TRVM,TRVM1,Vintage,The Refindary Vintage Market,"39 S Chestnut St, Jefferson, OH 44047",The Refindary Vintage Market,5.0,20,3.6,Mid,,,Multi-Dealer? Might be worth the stop,41.737520062976,-80.769540344631,-Have Lat-,-Have Lon-,57,https://maps.app.goo.gl/91WPeCjjjmQmu4Ps6
+BBAAC,BBAAC1,Antique,Be Back Antiques and Collectibles,"1342 N Leavitt Rd, Lorain, OH 44052",Be Back Antiques and Collectibles,4.5,54,2.8,Mid,,,Mid all around,41.455896826049,-82.202431871733,-Have Lat-,-Have Lon-,58,https://maps.app.goo.gl/sE1sWPLEeEHuxhgv7
+SAF,SAF1,Discount,Simply Affordable Finds,"26649 Brookpark Ext, North Olmsted, OH 44070",Simply Affordable Finds,4.8,70,1.0,Mid,,,"Liquidation store, meh",41.419641314396,-81.917510545130,-Have Lat-,-Have Lon-,59,https://maps.app.goo.gl/kQ3A1wPqdyf994sH9
+VWT-Olmstead,VWT,Thrift,Value World Thrift,"24869 Lorain Rd, North Olmsted, OH 44070",Value World Thrift,4.2,387,4.5,Top,,,Classic Chain - Get in there.,41.425528608980,-81.897199579145,-Have Lat-,-Have Lon-,60,https://maps.app.goo.gl/9BQ8imX6AURECGqW7
+MSA,MSA3,Antique,Main Street Antiques,"335 S Main St, Oberlin, OH 44074",Main Street Antiques,4.6,114,3.8,Top,,,Looks huge,41.282454290143,-82.217600403511,-Have Lat-,-Have Lon-,61,https://maps.app.goo.gl/NW4oB1Fm4EumKBzp6
+RS,RS1,Boutique,Ratsy's Store,"27 S Main St, Oberlin, OH 44074",Ratsy's Store,4.9,42,4.1,Top,,,Has a Mystery Spot (but Boutique) vibe. I'll go,41.290986630900,-82.217343351938,-Have Lat-,-Have Lon-,62,https://maps.app.goo.gl/yiUBKTCRHt3KGrzh9
+SBTL,SBTL1,Vintage,Shops By The Lake,"1871 N Ridge Rd, Painesville, OH 44077",Shops By The Lake,4.5,525,4.0,Top,must-visit,,150 store multi-dealer : yeah,41.748994881171,-81.208780911127,-Have Lat-,-Have Lon-,63,https://maps.app.goo.gl/xhDjZi6dpxi9cGkn6
+PBB,PBB1,Furniture,Perry Bargain Barn,"4650 N Ridge Rd, Perry, OH 44081",Perry Bargain Barn,4.4,86,2.6,Mid,,,Just someone's barn. Mostly furniture,41.787501661345,-81.123108374508,-Have Lat-,-Have Lon-,64,https://maps.app.goo.gl/GxBarvHRRNgkmdmw6
+TATL,TATL1,Antique,Treasures at the Langshaw,"4179 Main St, Perry, OH 44081",Treasures at the Langshaw,4.9,10,3.0,Mid,,,Not vibing with the interior photos,41.758384928317,-81.138204851177,-Have Lat-,-Have Lon-,65,https://maps.app.goo.gl/UyujCwAwYFL9w5WH9
+MCVC,MCVC1,Sports,My Cuzin Vintage Cleveland,"6507 Detroit Ave, Cleveland, OH 44102",My Cuzin Vintage Cleveland,4.0,71,0.0,Mid,,,Sports collectibles : Hard Pass,41.483972699532,-81.730361207570,-Have Lat-,-Have Lon-,66,https://maps.app.goo.gl/VRz99jSbpNjYvgKH9
+SL,SL1,Antique,Sweet Lorain,"7105 Lorain Ave, Cleveland, OH 44102",Sweet Lorain,3.7,208,4.9,Top,must-visit,,"Yeah, great interior, wanna go",41.473321308529,-81.733915357678,-Have Lat-,-Have Lon-,67,https://maps.app.goo.gl/tZMMMUwdojZAb2DB6
+NTVS,NTVS1,Thrift,Nifty Thrifty Variety Shop,"7100 Broadway Ave Suite 200, Cleveland, OH 44105",Nifty Thrifty Variety Shop,5.0,15,1.0,Low,,,Yeah sparse low end thrift,41.458078091966,-81.638684296080,-Have Lat-,-Have Lon-,68,https://maps.app.goo.gl/tQu8ptD8B1btJ7L36
+CC,CC1,Boutique,Cleveland Curiosities,"13375, 13373 Madison Ave, Lakewood, OH 44107",Cleveland Curiosities,4.7,464,1.2,Top,,,"Full of weird stuff, but reads boutique",41.476968028201,-81.784520982721,-Have Lat-,-Have Lon-,69,https://maps.app.goo.gl/CCp4nWNeLAkdsqmz9
+FNFVC,FNFVC1,Vintage,Future No Future Vintage Clothing,"16008 Detroit Ave, Lakewood, OH 44107",Future No Future Vintage Clothing,4.7,33,0.0,Mid,,,Temp closed?,41.485247891778,-81.809291970509,-Have Lat-,-Have Lon-,70,https://maps.app.goo.gl/ZH4LXM54gzjUNpFY9
+MF,MF1,Boutique,Magically Found,"13349 Madison Ave, Lakewood, OH 44107",Magically Found,5.0,17,1.0,Top,,,"Boutique, not for me.",41.476965114804,-81.783590154097,-Have Lat-,-Have Lon-,71,https://maps.app.goo.gl/xQMSiAy3GZKoonB88
+MC,MC1,Vintage,Margie’s Closet,"1384 W 117th St, Lakewood, OH 44107",Margie’s Closet,4.6,45,2.0,Top,,,Seems specialized; Unclear it's worthwhile,41.483981516909,-81.768823435555,-Have Lat-,-Have Lon-,72,https://maps.app.goo.gl/Y3U5bhiJ1jxhkqgr9
+VWT-Lakewood,VWT1,Thrift,Value World Thrift,"11900 Detroit Ave, Lakewood, OH 44107",Value World Thrift,4.2,813,4.5,Top,,,Classic Chain - Get in there.,41.483958040635,-81.771809570569,-Have Lat-,-Have Lon-,73,https://maps.app.goo.gl/YJhCyAcMDvnatDV17
+ATFY,ATFY1,Antique,All Things For You,"3136 W 14th St, Cleveland, OH 44109",All Things For You,4.6,56,3.0,Top,,,"Looks interesting, reads boutique a wee bit",41.468964215909,-81.691264834740,-Have Lat-,-Have Lon-,74,https://maps.app.goo.gl/7byeY8ZYh4YZ4nbD8
+PG,PG1,Vintage,Paradise Galleria,"3910 Lorain Ave, Cleveland, OH 44113",Paradise Galleria,4.6,94,4.1,Top,must-visit,,Massive and funky,41.480752749907,-81.712500222034,-Have Lat-,-Have Lon-,75,https://maps.app.goo.gl/Xes3P3yND3P36ZUh6
+PGCCA,PGCCA1,Thrift,PEARLS Girls' Community Closet at Malachi Center,"2416 Superior Viaduct, Cleveland, OH 44113",PEARLS Girls' Community Closet at Malachi Center,5.0,20,2.0,Mid,,,Seems small and not for me,41.492185192483,-81.707439709432,-Have Lat-,-Have Lon-,76,https://maps.app.goo.gl/pDJ8DVimRQ5UDBoc9
+SS,SS3,Vintage,Spooky's Studio,"2138 W 25th St, Cleveland, OH 44113",Spooky's Studio,5.0,7,2.0,Mid,,,Seems to have a sports spin,41.482486567830,-81.702076102983,-Have Lat-,-Have Lon-,77,https://maps.app.goo.gl/zY365ZJdofu6GJ1JA
+VNTG,VH,Furniture,VNTG Home,"1235 Marquette St, Cleveland, OH 44114",VNTG Home,4.1,106,2.0,Top,,,Seems to be a staging + furniture + refurb company,41.523587040736,-81.654029843480,-Have Lat-,-Have Lon-,78,https://maps.app.goo.gl/C355CmRdiqUBEXJEA
+TSYRS,TSYRS1,Thrift,The Salvage Yard Resale Shoppe,"22935 Lorain Rd, Fairview Park, OH 44126",The Salvage Yard Resale Shoppe,4.7,135,3.6,Top,,,"Something going on here, worth checking out",41.437401666580,-81.874219768284,-Have Lat-,-Have Lon-,79,https://maps.app.goo.gl/UR1bgsR3YqA2ju218
+RUST,R,Furniture,Rusticisle,"27146 Cook Rd, Olmsted Township, OH 44138",Rusticisle,4.8,16,0.1,Mid,,,Defaced vintage FURNITURE STORE,41.383757324972,-81.947700522836,-Have Lat-,-Have Lon-,80,https://maps.app.goo.gl/RNhuGXpLM1o7QHGz7
+STA,STA1,Antique,Second Thyme Around,"8153 Orchard St, Olmsted Falls, OH 44138",Second Thyme Around,4.8,139,3.4,Mid,,,"Interesting, but borderline. May be something]",41.373804872716,-81.902811342611,-Have Lat-,-Have Lon-,81,https://maps.app.goo.gl/4GSN1zgvsw9CBzcw5
+ASVC,ASVC1,Vintage,A Signature Vintage Clothing,"2208 Front St, Cuyahoga Falls, OH 44221",A Signature Vintage Clothing,4.7,13,1.5,Mid,,,"Exterior shows potential, but meh (also far out of the way near Akron)",41.136135084495,-81.482948692070,-Have Lat-,-Have Lon-,82,https://maps.app.goo.gl/g7Jyoix7n2fNiaUQ7
+AVAT,AVAT1,Thrift,Amelia's Vintage and Thrift,"9058 OH-14, Streetsboro, OH 44241",Amelia's Vintage and Thrift,4.7,72,2.5,Mid,,,Has fabric! But out the way,41.145145500000,-81.636156800000,-Have Lat-,-Have Lon-,83,https://maps.app.goo.gl/CmNgVMz2jrKvNESeA
+BSS,BSS1,Nautical,Big Ship Salvage,"11001 US Hwy 250 N unit d-1, Milan, OH 44846",Big Ship Salvage,4.7,44,5.0,Top,must-visit,,,41.327814088911,-82.620663899344,-Have Lat-,-Have Lon-,84,https://maps.app.goo.gl/fkpWPfwYWSAVipvS9
+OSW,OSW1,ArchSalvage,Old School Warehouse,"21 N Hamilton St, Monroeville, OH 44847",Old School Warehouse,4.9,18,2.8,Top,,,"Neat building, but not really doing ArchSalv",41.243728853697,-82.692132998183,-Have Lat-,-Have Lon-,85,https://maps.app.goo.gl/JwaZMu33CBz6WAtAA
+WPF,WPF1,Boutique,When Pigs Fly,"31 E Main St, Norwalk, OH 44857",When Pigs Fly,4.8,98,0.5,Mid,,,Boutique; Skip.,41.242965296570,-82.614400901245,-Have Lat-,-Have Lon-,86,https://maps.app.goo.gl/hCSyAE2M8KZcuxQf6
+SGBL,SGBL1,Thrift,Something Good & Beyond LLC,"1607 W Monroe St, Sandusky, OH 44870",Something Good & Beyond LLC,4.7,25,2.1,Low,,,Not vibing with interior photos,41.446642263524,-82.722574196294,-Have Lat-,-Have Lon-,87,https://maps.app.goo.gl/QR6NjZRdzxrCGx4k9
+TES,TES1,Thrift,The Encore Shop,"2215 Cleveland Rd W, Sandusky, OH 44870",The Encore Shop,4.6,39,3.5,Mid,,,Proper thrift store,41.436891189720,-82.669224966107,-Have Lat-,-Have Lon-,88,https://maps.app.goo.gl/kiJHwmvxvrNGCtt49
+OAAC,OAAC1,Thrift,Oscar's Antiques and Consignments,"591 N Sandusky St, Tiffin, OH 44883",Oscar's Antiques and Consignments,4.6,15,2.0,Low,,,Low end thrift junk,41.133386807689,-83.172989270245,-Have Lat-,-Have Lon-,89,https://maps.app.goo.gl/rxKsTYsQRdADMZ9Z9
+RI1,RI11,Thrift,Reclaim It 127,"127 S Washington St, Tiffin, OH 44883",Reclaim It 127,5.0,11,3.0,Top,,,"Nicely done upcycle, but meh",41.113857745018,-83.176378753354,-Have Lat-,-Have Lon-,90,https://maps.app.goo.gl/GFnJ8ko7nznKXSiM8
+VWT-Eastpointe,VWT2,Thrift,Value World Thrift,"24900 Kelly Rd, Eastpointe, MI 48021",Value World Thrift,3.9,477,4.5,Top,,,Classic Chain- Get in there.,42.478985165724,-82.926959459334,-Have Lat-,-Have Lon-,91,https://maps.app.goo.gl/RXGr6CX2yLCaHMxP7
+VWT-Southfield,VWT3,Thrift,Value World Thrift,"25646 Eight Mile W, Southfield, MI 48033",Value World Thrift,4.0,471,4.5,Top,,,Classic Chain- Get in there.,42.442742196635,-83.295836478484,-Have Lat-,-Have Lon-,92,https://maps.app.goo.gl/5bNiBsZXKHpuvr3C6
+RWBT,RWBT1,Thrift,Red White & Blue Thrift Store,"37545 Southbound Gratiot Ave, Clinton Township, MI 48036",Red White & Blue Thrift Store,3.8,699,4.0,Top,,,Classic Large Thrift Store,42.572945446062,-82.890151473912,-Have Lat-,-Have Lon-,93,https://maps.app.goo.gl/CBs1yKijoRRTWoue9
+CATTF,CATTF1,Antique,Charlie and the Treasure Factory,"40716 Hayes Rd, Clinton Township, MI 48038",Charlie and the Treasure Factory,4.9,104,3.2,Top,,,Seems to be toys and collectibles,42.595223300845,-82.971890430696,-Have Lat-,-Have Lon-,94,https://maps.app.goo.gl/tx4WuuLiWQ7uprov5
+MA,MA1,Thrift,Mimi's Attic,"221 Northbound Gratiot Ave, Mt Clemens, MI 48043",Mimi's Attic,4.8,67,3.8,Mid,,,Worth checking out,42.604339147074,-82.874189515667,-Have Lat-,-Have Lon-,95,https://maps.app.goo.gl/5PthKdUJ9DiaMfWr8
+VGR,VGR1,Vintage,Vintage Garden Resale,"1268 Southbound Gratiot Ave, Mt Clemens, MI 48043",Vintage Garden Resale,4.7,16,2.8,Low,,,Looks small; and meh,42.581257052749,-82.885743585051,-Have Lat-,-Have Lon-,96,https://maps.app.goo.gl/5JXTyZ6GbzJ5iZre8
+LAFV,LAFV1,Vintage,Lost and Found Vintage,"510 S Washington Ave, Royal Oak, MI 48067",Lost and Found Vintage,4.7,114,3.8,Top,,,Legit Vintage,42.486255298557,-83.146635128433,-Have Lat-,-Have Lon-,97,https://maps.app.goo.gl/3BxKUiVzCnsCLXSy5
+EHUR,EHUR1,Furniture,Everything Home Upscale Resale,"29862 Woodward Ave, Royal Oak, MI 48073",Everything Home Upscale Resale,4.1,131,2.0,Mid,,,Strong Marshall's vibe,42.509739743461,-83.178073567292,-Have Lat-,-Have Lon-,98,https://maps.app.goo.gl/CDQTeg1US5xMNh4F6
+TWL,TWL1,Antique,Time Warp LLC,"31336 Harper Ave, St Clair Shores, MI 48082",Time Warp LLC,4.5,119,4.0,Top,,,Funky interesting,42.526049813184,-82.896065923419,-Have Lat-,-Have Lon-,99,https://maps.app.goo.gl/HyQqLg7wSYyv5pBR6
+FUFA,FUFA1,Furniture,Fred's Unique Furniture & Antiques,"14091 8 Mile Rd, Warren, MI 48089",Fred's Unique Furniture & Antiques,4.7,251,3.2,Mid,,,FURNITURE STORE,42.449804120917,-82.979162786558,-Have Lat-,-Have Lon-,100,https://maps.app.goo.gl/MKtrdzHHnQCARSZB6
+VWT-Warren,VWT4,Thrift,Value World Thrift,"2001 E 11 Mile Rd, Warren, MI 48092",Value World Thrift,3.8,473,4.1,Top,,,Seems like the less nice VWT,42.490817636058,-83.083943979949,-Have Lat-,-Have Lon-,101,https://maps.app.goo.gl/p3AiZeGfpB9S3gkt6
+TS,TS1,Thrift,The ShareHouse,"5161 Jackson Rd, Ann Arbor, MI 48103",The ShareHouse,3.5,481,5.0,Top,must-visit,,Seems like a giant store.,42.287466209840,-83.830718044144,-Have Lat-,-Have Lon-,102,https://maps.app.goo.gl/TfYwGZMayHA58M5o8
+VMDV,VMDV1,Vintage,V-Male Detroit Vintage,"23902 Van Born Rd, Dearborn Heights, MI 48125",V-Male Detroit Vintage,4.6,41,4.1,Top,,,Looks really good,42.269215142856,-83.268896777462,-Have Lat-,-Have Lon-,103,https://maps.app.goo.gl/e9PEHNHD6v61hnDF9
+RIAVA,RIAVA1,Antique,"Retro Image Antiques, Vintage and Props","14246 Michigan Ave, Dearborn, MI 48126","Retro Image Antiques, Vintage and Props",4.7,15,3.8,Top,,,Looks pretty good. Wish there as more pictures,42.320780098694,-83.180944539064,-Have Lat-,-Have Lon-,104,https://maps.app.goo.gl/r8En9zcVbnGWNRGb8
+FFL,FFL1,Antique,Fortunate Finds LLC,"8023 Summerfield Rd, Lambertville, MI 48144",Fortunate Finds LLC,4.5,4,1.8,Mid,,,"Seem's sparse, hard to say",41.761874140694,-83.628784984544,-Have Lat-,-Have Lon-,105,https://maps.app.goo.gl/MBWpRusp1QsqYtZM8
+GSADL,GSADL1,Thrift,Goodwill Store and Donations: Livonia,"12651 Middlebelt Rd, Livonia, MI 48150",Goodwill Store and Donations: Livonia,3.7,434,3.8,Top,,,Classic Goodwill,42.376886316250,-83.333492634022,-Have Lat-,-Have Lon-,106,https://maps.app.goo.gl/J2niocEWjTXGa8vU9
+FKVV,FKVV1,Vintage,Finders Keepers Vintage & Vinyl,"900 N Mill St, Plymouth, MI 48170",Finders Keepers Vintage & Vinyl,4.6,212,3.5,Mid,,,"Looks fine, regular vintage",42.380844433961,-83.460746136215,-Have Lat-,-Have Lon-,107,https://maps.app.goo.gl/5JPYS1xPVNjqpQDPA
+VWT-Taylor,VWT5,Thrift,Value World Thrift,"22615 Ecorse Rd, Taylor, MI 48180",Value World Thrift,3.7,488,3.9,Top,,,Classic chain- Get in there.,42.255786246719,-83.256431414123,-Have Lat-,-Have Lon-,108,https://maps.app.goo.gl/jVAVgFmxrzLvJxwLA
+VWT-Westland,VWT6,Thrift,Value World Thrift,"35300 Central City Pkwy, Westland, MI 48185",Value World Thrift,4.0,630,4.0,Top,,,Classic chain- Get in there.,42.343181412273,-83.388254959552,-Have Lat-,-Have Lon-,109,https://maps.app.goo.gl/HSzkJuRrXyLdoYnE9
+FF,FF1,Consignment,Fabuless Finds,"16160 King Rd, Riverview, MI 48193",Fabuless Finds,4.4,290,1.8,Mid,,,Marshalls vibe,42.155332880174,-83.216486836687,-Have Lat-,-Have Lon-,110,https://maps.app.goo.gl/B7HuwNisp5CJfxNi7
+VWT-Southgate,VWT7,Thrift,Value World Thrift,"12125 Dix Toledo Rd, Southgate, MI 48195",Value World Thrift,4.0,454,3.8,Top,,,Classic chain- Get in there.,42.219891152932,-83.193964111776,-Have Lat-,-Have Lon-,111,https://maps.app.goo.gl/Er1zomn7dSuQLpyd8
+A,A1,Thrift,a2vintage,"130 W Michigan Ave, Ypsilanti, MI 48197",a2vintage,4.7,121,3.0,Mid,,,Not really my vibe vintage,42.241087220531,-83.613558399550,-Have Lat-,-Have Lon-,112,https://maps.app.goo.gl/Y2G5CNrATZKAXcWN6
+VEML,VEML1,Vintage,"Vintage Eastern Market, LLC","1515 Division St Suite B, Detroit, MI 48207","Vintage Eastern Market, LLC",4.6,328,3.8,Top,must-visit,,"Multi-dealer, prolly worthwhile",42.347937450459,-83.039417146296,-Have Lat-,-Have Lon-,113,https://maps.app.goo.gl/xcPv5vdjfdFWVUSu6
+GOGD,GOGD1,Thrift,Goodwill of Greater Detroit,"3111 Grand River Ave, Detroit, MI 48208",Goodwill of Greater Detroit,4.2,126,1.5,Mid,,,Reviews paint a bleak picture. Skip,42.340201348035,-83.068436103230,-Have Lat-,-Have Lon-,114,https://maps.app.goo.gl/q2D38ya2j2rLsF9k6
+FV,FV1,Vintage,Flamingo Vintage,"5449 Vernor W, Detroit, MI 48209",Flamingo Vintage,4.8,101,3.8,Top,,,Looks like proper vintage,42.318117771122,-83.100947517187,-Have Lat-,-Have Lon-,115,https://maps.app.goo.gl/rceiMgJwDNukmB5z6
+ASWOD,ASWOD1,ArchSalvage,Architectural Salvage Warehouse of Detroit,"5110 Bellevue St, Detroit, MI 48211",Architectural Salvage Warehouse of Detroit,4.1,103,4.0,Top,,,Seems to be building materials,42.372742111885,-83.024277361066,-Have Lat-,-Have Lon-,116,https://maps.app.goo.gl/MLFdgZ9u1MSrrh7NA
+JT,JT1,Thrift,Joy Thrift,"10334 Joseph Campau Ave, Hamtramck, MI 48212",Joy Thrift,4.7,24,2.3,Low,,,Small meh thrift it seems,42.399217069634,-83.059327561569,-Have Lat-,-Have Lon-,117,https://maps.app.goo.gl/LTpsN5SWmeVw6pWx8
+VogueVint,VV,Thrift,Vogue Vintage,"2141 Hilton Rd, Ferndale, MI 48220",Vogue Vintage,4.7,196,4.0,Top,must-visit,,Looks incredible,42.465465383937,-83.123326153120,-Have Lat-,-Have Lon-,118,https://maps.app.goo.gl/zQqbRNwQ8JiqwgY3A
+SG,SG1,ArchSalvage,Salvage Garden,"3135 W McNichols Rd, Detroit, MI 48221",Salvage Garden,5.0,61,3.6,Top,,,Looks like nice ArchSalv,42.417227435423,-83.131427176573,-Have Lat-,-Have Lon-,119,https://maps.app.goo.gl/AHRgZ1HRQEQHL8tD7
+VWT-OakPark,VWT8,Thrift,Value World Thrift,"22130 Coolidge Hwy, Oak Park, MI 48237",Value World Thrift,3.8,417,4.0,Top,,,Classic chain- Get in there.,42.457659382447,-83.181801001668,-Have Lat-,-Have Lon-,120,https://maps.app.goo.gl/3TfeD3LqxGAvdQVw5
+DC,DC1,Sports,Detroit Closet,"10236 Fenkell Ave, Detroit, MI 48238",Detroit Closet,4.3,23,0.0,Mid,,,Sports stuff,42.402509142301,-83.162241704675,-Have Lat-,-Have Lon-,121,https://maps.app.goo.gl/VpAYqN6p7xopTdT36
+OLSAA,OLSAA1,Vintage,Our Little Shoppe Antiques and Vintage,"5453 Auburn Rd, Shelby Township, MI 48317",Our Little Shoppe Antiques and Vintage,4.8,54,2.0,Low,,,Small meh thrift it seems,42.636811892229,-83.056796803127,-Have Lat-,-Have Lon-,122,https://maps.app.goo.gl/hHVtjjL9BXRdb1XS9
+DFM,DFM1,Flea,Dixieland Flea Market,"2045 Dixie Hwy, Waterford Township, MI 48328",Dixieland Flea Market,4.1,"2,195",3.8,Mid,,,Open Fri-Sat,42.664912609917,-83.327943385205,-Have Lat-,-Have Lon-,123,https://maps.app.goo.gl/kTmnS2XjX12ZRDDH9
+WBIS,WBIS1,Junk,We Buy It & Sell It All,"30930 Grand River Ave, Farmington, MI 48336",We Buy It & Sell It All,4.5,110,2.0,Mid,,,Not really vibing a lot of redecorating / upcycling,42.455175675039,-83.353448865411,-Have Lat-,-Have Lon-,124,https://maps.app.goo.gl/VvAjgdVVbfG2oAZy5
+PVAAM,PVAAM1,Vintage,"Paradise Vintage, Antiques and More","2241B W Vienna Rd, Clio, MI 48420","Paradise Vintage, Antiques and More",4.7,90,2.0,Low,,,Low end vintage,43.177546998919,-83.719615153665,-Have Lat-,-Have Lon-,125,https://maps.app.goo.gl/TMJAYeX2XwMSfaGQ9
+YT,YT1,Antique,Yesterday's Treasures,"300 S Leroy St, Fenton, MI 48430",Yesterday's Treasures,4.4,113,3.4,Mid,,,Seems worthwhile,42.793971787136,-83.705253336483,-Have Lat-,-Have Lon-,126,https://maps.app.goo.gl/rnubTCcPRRAUVtqG8
+TVFH,TVFH1,Antique,The Vintage Farm House,"310 S Broad St, Holly, MI 48442",The Vintage Farm House,4.8,252,3.6,Top,,,"Lots of nice rusty junk, just a little boutique",42.789861980076,-83.626445301888,-Have Lat-,-Have Lon-,127,https://maps.app.goo.gl/jubGBLweWiApmKx17
+TMM,TMM1,Antique,The Mega Mall,"15487 Old U.S. 27, Lansing, MI 48906",The Mega Mall,4.5,"1,136",4.5,Top,,NODAY,Tooo far out : Lansing,42.791729722999,-84.542704007561,-Have Lat-,-Have Lon-,128,https://maps.app.goo.gl/avdzLteb1qwQ7oyk7
+LMLDV,LMLDV1,Vintage,Like Mother Like Daughter Vintage Treasures,"1133 S Washington Ave, Lansing, MI 48910",Vintage Junkies,4.8,50,3.3,Mid,,NODAY,Boutique Vintage,42.720978566379,-84.552287999203,-Have Lat-,-Have Lon-,129,https://maps.app.goo.gl/Teo97KefTKQ1EJ4K8
+T,T1,Thrift,Thriftique,"1137 S Washington Ave, Lansing, MI 48910",Thriftique,4.8,103,3.3,Mid,,NODAY,Mid thrift,42.720856110232,-84.552288330551,-Have Lat-,-Have Lon-,130,https://maps.app.goo.gl/aNmqvLDTkinVpVKGA
+BAM,BAM1,Antique,Blissfield Antiques Mall,"103 W Adrian St, Blissfield, MI 49228",Blissfield Antiques Mall,4.5,194,3.8,Mid,,,Large antiques mall; intesting,41.832957268055,-83.863720411647,-Have Lat-,-Have Lon-,131,https://maps.app.goo.gl/W2y4cgPouWUDRGmg8
+1VM,1VM1,Antique,12 Vintage Market,"2751 W Michigan Ave, Clinton, MI 49236",12 Vintage Market,4.5,173,1.0,Low,,,Strong Marshall's vibe,42.073127746436,-84.038144423258,-Have Lat-,-Have Lon-,132,https://maps.app.goo.gl/PZAZHfuwEsQ4m28x6
+KTS,KTS1,Thrift,Kiwanis Thrift Sale,"100 N Staebler Rd Suite C, Ann Arbor, MI 48103",Kiwanis Thrift Sale,4.5,259,3.8,Top,,,Classic well organized thrift store. Only Open Fri & Sat,42.289484510504,-83.858205824553,-Have Lat-,-Have Lon-,133,https://maps.app.goo.gl/METyuvaVZxKwmPrb6
+TSAFS,TSAFS1,Thrift,The Salvation Army Family Store & Donation Center,"1621 S State St, Ann Arbor, MI 48104",The Salvation Army Family Store & Donation Center,4.1,872,3.7,Top,,,Classic well organized thrift store,42.261142020686,-83.740301350218,-Have Lat-,-Have Lon-,134,https://maps.app.goo.gl/RdHiwFSpAhA3hKNd7
+SAFA,SAFA1,Junk,Such A Find Antiques & Estate Liquidations,"1247 Rosewood St, Ann Arbor, MI 48104",Such A Find Antiques & Estate Liquidations,3.3,22,2.9,Low,,,Looks like a shady operation; no interior photos,42.255096622648,-83.731832081647,-Have Lat-,-Have Lon-,135,https://maps.app.goo.gl/j8M5A5fLBRUrPrsS8
+AATS,AATS1,Thrift,Ann Arbor Thrift Shop,"3500 Washtenaw Ave K, Ann Arbor, MI 48104",Ann Arbor Thrift Shop,4.1,113,3.5,Top,,,Look nice and legit,42.255689991053,-83.690434090721,-Have Lat-,-Have Lon-,136,https://maps.app.goo.gl/Vk5aXWeg2uzRKnQ28
+VWT9,VWT10,Thrift,Value World Thrift,"1410 E Michigan Ave, Ypsilanti, MI 48198",Value World Thrift,4.0,610,4.0,Top,,,,42.245572221237,-83.582547913813,-Have Lat-,-Have Lon-,137,https://maps.app.goo.gl/56RvX6MP9X12ysH68
+FASV,FASV1,Vintage,Find and Shine Vintage,"6 N Huron St, Ypsilanti, MI 48197",Find and Shine Vintage,5.0,9,3.2,Mid,,,"Looks okay, not very large AFAICT : Closed Mon, Tue, Wed",42.241136485064,-83.613010677507,-Have Lat-,-Have Lon-,138,https://maps.app.goo.gl/b367mE2twhPpLuHb9
+AAV,AAV1,Vintage,Apple Annie’s Vintage,"29 E Cross St, Ypsilanti, MI 48198",Apple Annie’s Vintage,4.3,17,3.5,Mid,,,"Looks fine, but sparse. Closed on Monday",42.246015184298,-83.610298993102,-Have Lat-,-Have Lon-,139,https://maps.app.goo.gl/PnBytYFNFp12sK3q7
+SCA,SCA1,Antique,Salt City Antiques,"115 W Michigan Ave, Ypsilanti, MI 48197",Salt City Antiques,4.7,138,4.0,Top,,,Looks like a great store! Not open Mon/Tue/Wed,42.240973944683,-83.613347261111,-Have Lat-,-Have Lon-,140,https://maps.app.goo.gl/AWYTLwqh8zALFEn56
+TGV,TGV1,Vintage,The Getup Vintage,"210 S 4th Ave, Ann Arbor, MI 48104",The Getup Vintage,4.6,74,3.2,Mid,,,Looks like yet another Vintage Store,42.280318379617,-83.747361970544,-Have Lat-,-Have Lon-,141,https://maps.app.goo.gl/Ff7xBpeVzeFD2t596
+JMA,JMA1,Antique,Jim MacDonald's Antiques,"29 E Cross St, Ypsilanti, MI 48198",Jim MacDonald's Antiques,4.4,22,3.4,MId,,,"Hard to say, little to go on. Closed Mon, Tue",42.246015184298,-83.610298993102,-Have Lat-,-Have Lon-,142,https://maps.app.goo.gl/vqekJzLPDYxjSQyt6
+LHAAR,LHAAR1,Antique,Lucky Haskins Antiques and Retro,"27 E Cross St, Ypsilanti, MI 48198",Lucky Haskins Antiques and Retro,5.0,24,3.7,Mid,,,Has smells of being fun junk style store; Closed on Mondays,42.246015000802,-83.610324590991,-Have Lat-,-Have Lon-,143,https://maps.app.goo.gl/MEa47B61ymLrPXWb7
+RAGS,R1,Vintage,Ragstock,"337 E Liberty St, Ann Arbor, MI 48104",Ragstock,4.3,391,4.0,Top,,,Looks like large funky vintage store,42.279535758164,-83.745316619500,-Have Lat-,-Have Lon-,144,https://maps.app.goo.gl/bac2JRZTP19C4TVE7
+TTD,TTD1,Thrift,The Thrift Depot,"19 E Cross St, Ypsilanti, MI 48198",The Thrift Depot,4.8,72,3.7,Mid,,,Looks like a credible good thrift store. Closed On Mondays,42.246014266817,-83.610426982545,-Have Lat-,-Have Lon-,145,https://maps.app.goo.gl/H4nHXTLVpCFuu4NG9
+GSADY,GSADY1,Thrift,Goodwill Store and Donations: Ypsilanti,"3782 Carpenter Rd, Ypsilanti, MI 48197",Goodwill Store and Donations: Ypsilanti,3.6,373,3.3,Mid,,,"Classic Goodwill, organized by color not size",42.233882578103,-83.680223661747,-Have Lat-,-Have Lon-,146,https://maps.app.goo.gl/DX6mZaksAc3dTvtv8
+AAPTS,AAPTS1,Thrift,Ann Arbor PTO Thrift Shop,"2280 S Industrial Hwy, Ann Arbor, MI 48104",Ann Arbor PTO Thrift Shop,4.4,254,4.1,Top,,,"Looks like a great well organized larege store; Closed: Mon, Tue, Wed",42.252973223837,-83.733888018403,-Have Lat-,-Have Lon-,147,https://maps.app.goo.gl/vUGCF4oWRDR183ER6
+HFHR,HFHR1,Thrift,Habitat For Humanity Restore,"3040 Co Rd 10, Canandaigua, NY 14424",Habitat For Humanity Restore,4.2,477,3.5,Top,,,,42.883930530766,-77.245744405984,-Have Lat-,-Have Lon-,148,https://maps.app.goo.gl/ZXYe7sZqeHVsd2uf9
+FLTT,FLTT1,Thrift,Finger Lakes Treasure Trove,"222 S Main St, Canandaigua, NY 14424",Finger Lakes Treasure Trove,4.8,72,3.2,Mid,,,Mid local thrift store,42.884404921480,-77.279098944448,-Have Lat-,-Have Lon-,149,https://maps.app.goo.gl/mB2otonVArn6DG2D8
+LWECO,LWECO1,Boutique,L W Emporium Co-op,"6355 Knickerbocker Rd, Ontario, NY 14519",L W Emporium Co-op,4.6,179,2.0,Top,,,,43.229053713099,-77.286331166167,-Have Lat-,-Have Lon-,150,https://maps.app.goo.gl/SCD4eu8LaKdeq8BSA
+EA,EA1,Antique,Eastridge Antiques,"1850 East Ridge Road, Rochester, NY 14622",Eastridge Antiques,4.5,281,3.5,Mid,,,Looks like it's pretty big and worthwhile,43.201701331846,-77.568000802970,-Have Lat-,-Have Lon-,151,https://maps.app.goo.gl/9EQifJC5UV4o4Hkz8
+SV,SV1,Vintage,Staple Vintage,"664 University Ave, Rochester, NY 14607",Staple Vintage,4.9,17,1.0,Top,,,Nice store; if only 90s were vintage,43.156032601504,-77.585135392423,-Have Lat-,-Have Lon-,152,https://maps.app.goo.gl/L3dUwmM6XXQbrT546
+SAT,SAT1,Antique,South Avenue Treasures,"1992 South Ave, Rochester, NY 14620",South Avenue Treasures,4.2,26,3.5,Mid,,,Looks like it has potential,43.117965785783,-77.616711385111,-Have Lat-,-Have Lon-,153,https://maps.app.goo.gl/KNraJz68PsmPygDU9
+HMA,HMA1,Antique,Henrietta Mall Antiques,"945 Jefferson Rd, Rochester, NY 14623",Henrietta Mall Antiques,4.4,172,3.0,Top,,,Multi-dealer; a lot of glassed in display cases; maybe over sampled on collectibles,43.087137141112,-77.613969682853,-Have Lat-,-Have Lon-,154,https://maps.app.goo.gl/tQJ6bKEbY35zGhyt9
+CAOL,CAOL1,Antique,Crossroads Antiques of Lima,"7348 E Main St, Lima, NY 14485",Crossroads Antiques of Lima,4.5,103,3.6,Top,,,My kind of junk pile store,42.905556490667,-77.609329463229,-Have Lat-,-Have Lon-,155,https://maps.app.goo.gl/hfhPUNRVKY1SoPnd8
+CFM,CFM1,Junk,Charlotte Flea Market,"4421 Lake Ave, Rochester, NY 14612",Charlotte Flea Market,4.1,59,3.0,Mid,,,Owner seems to like putting rope on things?,43.251201040280,-77.613793684940,-Have Lat-,-Have Lon-,156,https://maps.app.goo.gl/Mz5oBCWSb5umBmM36
+TSOWR,TSOWR1,Antique,The Shops On West Ridge,"3200 W Ridge Rd, Rochester, NY 14626",The Shops On West Ridge,4.6,833,2.8,Top,,,Seems to be a lot of boutique stuff,43.211543840519,-77.713369242519,-Have Lat-,-Have Lon-,157,https://maps.app.goo.gl/wgNFBo5ZCbsfWn5o6
+LH,LH1,Antique,Liberty Hollow,"4975 W Ridge Rd, Spencerport, NY 14559",Liberty Hollow,4.5,244,3.6,Top,,,"Looks like a good size store with hints of boutique, but also curation",43.218154657783,-77.788267833492,-Have Lat-,-Have Lon-,158,https://maps.app.goo.gl/1uNSo7RBjAYMhjGu7
+TTP,TTP1,Antique,The Trading Post,"110 W Main St, Avon, NY 14414",The Trading Post,4.2,118,3.0,Mid,,,Mostly furniture I'm not interested in,42.913406630515,-77.748374180309,-Have Lat-,-Have Lon-,159,https://maps.app.goo.gl/tLFRgov6DnihTHex6
+NDS,NDS1,Boutique,Not Dot Shop,"127 Main St, Geneseo, NY 14454",Not Dot Shop,4.9,34,2.5,Top,,,Boutique!,42.794855671151,-77.817052162003,-Have Lat-,-Have Lon-,160,https://maps.app.goo.gl/PTBQzsPrdtZ2kzVz7
+UVM,UVM1,Antique,Upstate Vintage Market,"8100 W Ridge Rd, Brockport, NY 14420",Upstate Vintage Market,4.5,91,3.4,Mid,,,"Some interesting stuff, not top notch, but in bounds",43.229661140342,-77.911465144516,-Have Lat-,-Have Lon-,161,https://maps.app.goo.gl/8eq4dFsx7uLzwwC29
+AFAC,AFAC1,Antique,Aprils Finds Antiques & Collectibles,"7895 E Main Rd, Le Roy, NY 14482",Aprils Finds Antiques & Collectibles,4.8,90,3.4,Mid,,,"Lookd solid, a bit of boutique but has tools",42.980170741840,-77.959664954758,-Have Lat-,-Have Lon-,162,https://maps.app.goo.gl/v2y3CP85RirhiRNx8
+2TAC,2TAC1,Junk,2nd Time Around Consignment,"123 US-20A, Leicester, NY 14481",2nd Time Around Consignment,4.7,237,3.3,Mid,,,"Looks solid, but a bit modern junk-y",43.004763200000,-78.816429100000,-Have Lat-,-Have Lon-,163,https://maps.app.goo.gl/WSRwwPM5kecb4zdP7
+GSDC,GSDC1,Thrift,Goodwill Store & Donation Center,"4152 W Main Street Rd, Batavia, NY 14020",Goodwill Store & Donation Center,3.9,114,3.9,Top,,,"Big Goodwill, appears to be sorted by size",43.005748379981,-78.206304514171,-Have Lat-,-Have Lon-,164,https://maps.app.goo.gl/ctEa3E9VjiiRdNr4A
+AWFM,AWFM1,Antique,Antique World & Flea Market,"11111 Main St, Clarence, NY 14031",Antique World & Flea Market,4.3,553,4.8,Top,,,Looks great: https://antiqueworldmarket.com/,42.983831250138,-78.572300161758,-Have Lat-,-Have Lon-,165,https://maps.app.goo.gl/1GK9Wx5QvU333YLh7
+JADA,JADA1,Antique,Junk and Disorderly Arts & Antiques,"265 Main St, Arcade, NY 14009",Junk and Disorderly Arts & Antiques,4.5,48,3.8,Top,,,Seems to indicate large place.,42.534003281563,-78.423723023849,-Have Lat-,-Have Lon-,166,https://maps.app.goo.gl/joFb9qDREx2VezL57
+WV,WV1,Vintage,Wallflower Vintage,"712 Main St, East Aurora, NY 14052",Wallflower Vintage,5.0,1,1.0,Mid,,,"No information, Website looks sparse and not promising",42.767885173302,-78.608222999774,-Have Lat-,-Have Lon-,167,https://maps.app.goo.gl/RcRdA9CwVcKyw8mf7
+BBW,BBW1,Thrift,Bear Bottom Wholesale,"20 Ann St, Lockport, NY 14094",Bear Bottom Wholesale,4.0,46,3.0,Low,,,Looks like junk,43.173957818772,-78.684572697362,-Have Lat-,-Have Lon-,168,https://maps.app.goo.gl/qeJxyYxgNnaRXmzt9
+SOGS,SOGS1,Antique,Sanborn Old General Store,"5856 Buffalo St, Sanborn, NY 14132",Sanborn Old General Store,4.6,105,2.5,Mid,,,Strong Boutique Vibe,43.137873203855,-78.889282427069,-Have Lat-,-Have Lon-,169,https://maps.app.goo.gl/asaGyxs6wbt66SbB6
+NEAM,NEAM1,Antique,Niagara Emporium Antique Mall,"2016 Military Rd, Niagara Falls, NY 14304",Niagara Emporium Antique Mall,4.2,32,2.8,Top,,,Seems to focus on collectibles or modern things. A lot of display cabinets,43.097592310382,-78.975406838785,-Have Lat-,-Have Lon-,170,https://maps.app.goo.gl/Kw7DJTxataYH6JGV9
+SCBAC,SCBAC1,Antique,Shawnee Country Barns Antique Co-Op,"6608 Shawnee Rd, North Tonawanda, NY 14120",Shawnee Country Barns Antique Co-Op,4.6,324,3.4,Mid,,,"Looks like a big barn of stuff, butalso a bit of modern and boutique mixed in.",43.107830711829,-78.836945196505,-Have Lat-,-Have Lon-,171,https://maps.app.goo.gl/wjGMwBBjoUKB8KHS8
+ATBR,ATBR1,Junk,Attic To Basement Repeats,"83 Broad St, Tonawanda, NY 14150",Attic To Basement Repeats,4.6,93,3.8,Mid,,,Looks like a classic junk store,43.018744411558,-78.877844705473,-Have Lat-,-Have Lon-,172,https://maps.app.goo.gl/ERnWGqzrgqWqdBdb6
+CGAE,CGAE1,Junk,CM Gold Antique & Estate Buyer,"5823 Main St, Williamsville, NY 14221",CM Gold Antique & Estate Buyer,4.8,79,3.6,Top,,,Seems to be an estate liquidator / pawn shop? Curious,42.964194551949,-78.736165118486,-Have Lat-,-Have Lon-,173,https://maps.app.goo.gl/3X7RQkJWWWGhRh3x6
+HA,HA1,Junk,Hello Again,"8619 Main St, Williamsville, NY 14221",Hello Again,5.0,7,3.1,Mid,,,"Small junk store, if close by, sure",42.965197759976,-78.672004211382,-Have Lat-,-Have Lon-,174,https://maps.app.goo.gl/rHAnsWVfG26yc6x56
+AB,AB1,Thrift,AMVETS Buffalo,"1833 Elmwood Ave, Buffalo, NY 14207",AMVETS Buffalo,4.2,448,4.6,Top,must-visit,,LARGE WAREHOUSE THRIFT!,42.945290339859,-78.878246854094,-Have Lat-,-Have Lon-,175,https://maps.app.goo.gl/wPS1Ym2fLps3sYwo6
+OHVC,OHVC1,Vintage,October House Vintage & Consignment,"1361 Hertel Ave, Buffalo, NY 14216",October House Vintage & Consignment,4.8,17,3.6,Mid,,,"Small shop, good 'old people clothes' feel",42.947658817111,-78.857757729167,-Have Lat-,-Have Lon-,176,https://maps.app.goo.gl/pHTBSWSHab2kZg5h9
+FTVA,FTVA1,Antique,Funky Town Vintage Antiques,"1165 Wehrle Dr, Buffalo, NY 14221",Funky Town Vintage Antiques,4.6,68,3.8,Top,,,"Yeah, mid century gems",42.949839355568,-78.738507789895,-Have Lat-,-Have Lon-,177,https://maps.app.goo.gl/6NE4ZBzy3nhpWcjQ7
+COO,C,Antique,COOCOOU,"1261 Niagara St, Buffalo, NY 14213",COOCOOU,4.6,73,3.7,Mid,,,Mid Century dreaming,42.918225446058,-78.898962410311,-Have Lat-,-Have Lon-,178,https://maps.app.goo.gl/8nTMVsWq8pgt5NQ56
+QCV,QCV1,Sports,Queen City Vintage,"746 Elmwood Ave, Buffalo, NY 14222",Queen City Vintage,4.6,54,4.6,Top,,,"Sports, not for me.",42.917371527172,-78.877106664837,-Have Lat-,-Have Lon-,179,https://maps.app.goo.gl/eEt1gzxL37jY1UP18
+STR,STR1,Vintage,Save The Rags,"795 Elmwood Ave, Buffalo, NY 14222",Save The Rags,4.7,29,3.9,Top,,,Looks Solid Vintage.,42.918829775054,-78.876939221264,-Have Lat-,-Have Lon-,180,https://maps.app.goo.gl/m52cMKjs5aCGQcDX8
+SDDS,SDDS1,Thrift,St.Vincent DePaul Discount Store,"1298 Main St, Buffalo, NY 14209",St.Vincent DePaul Discount Store,4.3,15,3.4,Mid,,,Not very big,42.908920948415,-78.866826557767,-Have Lat-,-Have Lon-,181,https://maps.app.goo.gl/9zuNSKdmWszF2iYS8
+BR,BR1,ArchSalvage,Buffalo ReUse,"980 Northampton St, Buffalo, NY 14211",Buffalo ReUse,4.4,97,3.3,Mid,,,"Looks good, but prolly a skip",42.907242818179,-78.831071631474,-Have Lat-,-Have Lon-,182,https://maps.app.goo.gl/cww77RwYkfTbboiy8
+TSSOB,TSSOB1,Thrift,The Serendipity Shoppe of Buffalo,"1 Symphony Cir, Buffalo, NY 14201",The Serendipity Shoppe of Buffalo,4.5,18,3.0,Mid,,,"Small thrift, little information",42.902520017006,-78.882580945211,-Have Lat-,-Have Lon-,183,https://maps.app.goo.gl/QSamouvvVPcGUbRR8
+MCVB,MCVB1,Vintage,My Cuzin Vintage Buffalo,"168 Elmwood Ave, Buffalo, NY 14201",My Cuzin Vintage,4.2,222,2.5,Mid,,,If only 1990s were vintage,42.901441220402,-78.877223717213,-Have Lat-,-Have Lon-,184,https://maps.app.goo.gl/Mz3VsTAnMP9oXwXp7
+BRV,B,Vintage,Backroomvintage,"497 Franklin St, Buffalo, NY 14202",Backroomvintage,4.4,55,3.7,Top,,,Has potential; lots of funk,42.899276428136,-78.872236361391,-Have Lat-,-Have Lon-,185,https://maps.app.goo.gl/gf9YB8XguGYmDbVq7
+SA,SA1,Antique,Sloan's Antiques,"730 William St, Buffalo, NY 14206",Sloan's Antiques,4.4,78,3.8,Mid,,,Piles of dusty junk - YEP,42.885118349062,-78.844716871256,-Have Lat-,-Have Lon-,186,https://maps.app.goo.gl/gU6fUv2byaGk5ipK8
+SBSA,SBSA1,Antique,Side By Side Antiques,"26 Abbott Rd, Buffalo, NY 14220",Side By Side Antiques,4.2,15,1.3,Low,,,Looks like someone's home,42.856962437387,-78.828229548647,-Have Lat-,-Have Lon-,187,https://maps.app.goo.gl/iH6BQc1m1WWWocja6
+SLADD,SLTS2,Thrift,Southtowns LADD Thrift Shop,"2280 Seneca St, Buffalo, NY 14210",Southtowns LADD Thrift Shop,4.5,24,3.4,Low,,,Small thrift store. Little information,42.851200585555,-78.804782571052,-Have Lat-,-Have Lon-,188,https://maps.app.goo.gl/rUSwDdKsnkfkcsr97
+ATSWS,ATSWS1,Thrift,AMVETS Thrift Store West Seneca,"1900 Ridge Rd, West Seneca, NY 14224",AMVETS Thrift Store West Seneca,4.4,313,4.1,High,,,BIG warehouse thrift - YEP,42.828791050897,-78.784309435252,-Have Lat-,-Have Lon-,189,https://maps.app.goo.gl/rQg1KTEtQLs6hpEcA
+AKRTS,AKRTS1,Thrift,A King's Ransom - Thrift Shop and Furniture Consignment,"3748 South Park Ave, Buffalo, NY 14219",A King's Ransom - Thrift Shop and Furniture Consignment,4.2,28,3.0,Low,,,,42.797504659936,-78.823804361564,-Have Lat-,-Have Lon-,190,https://maps.app.goo.gl/ci7TKFNxLoF3T8ZS8
+HTSHFT,HTSHF,Thrift,Hearts Thrift Store - Hearts for the Homeless Thrift Store (Tonawanda),"2217 Sheridan Dr, Buffalo, NY 14223",Hearts Thrift Store - Hearts for the Homeless Thrift Store (Tonawanda),4.3,25,4.0,High,,,A clean well organized thrift store!,42.980811214442,-78.850974884193,-Have Lat-,-Have Lon-,191,https://maps.app.goo.gl/NDraoZyLu4KetnFW8
+HTSHFB,HTSHF1,Thrift,Hearts Thrift Store - Hearts for the Homeless Thrift Store (Buffalo),"890 Tonawanda St, Buffalo, NY 14207",Hearts Thrift Store - Hearts for the Homeless Thrift Store (Buffalo),4.5,96,4.3,High,,,A clean well organized thrift store!,42.952777142833,-78.905501188492,-Have Lat-,-Have Lon-,192,https://maps.app.goo.gl/GBSn8DTpstzTx1oR6
+SAVERST,S,Thrift,Savers,"2309 Eggert Rd, Tonawanda Town, NY 14150",Savers,4.1,723,5.0,High,must-visit,,SAVERS!,42.981112399689,-78.825751077632,-Have Lat-,-Have Lon-,193,https://maps.app.goo.gl/FQfGEq1amMif8S6q7
+HFHRN,HFHRN1,Thrift,Habitat for Humanity ReStore North,"1030 Niagara Fls Blvd, Tonawanda Town, NY 14150",Habitat for Humanity ReStore North,4.5,103,3.5,High,,,Appears to be mostly furniture an building stuff,42.982005056700,-78.822964007753,-Have Lat-,-Have Lon-,194,https://maps.app.goo.gl/kGg7Mr7wBBUhA88UA
+SCB,SC,Consignment,Second Chic,"810 Elmwood Ave, Buffalo, NY 14222",Second Chic,4.5,106,2.0,Mid,,,Consignment shop?,42.919207068392,-78.877093506075,-Have Lat-,-Have Lon-,195,https://maps.app.goo.gl/vXCdqq71HgKDm6u59
+SAVERSB,S1,Thrift,Savers,"3701 McKinley Pkwy, Buffalo, NY 14219",Savers,3.8,410,4.8,High,must-visit,,"SAVERS! (42.7853963,-78.8107985)",42.785396300000,-78.810798500000,-Have Lat-,-Have Lon-,196,https://maps.app.goo.gl/UPsf9NNDkN28s7Rh9
+MSTS,MSTS1,Thrift,Main Street thrift store,"2637 Main St, Buffalo, NY 14214",Main Street thrift store,5.0,12,3.0,Low,,,Small Local Thrift store,42.939313386817,-78.838902984769,-Have Lat-,-Have Lon-,197,https://maps.app.goo.gl/DjEmzcU1LJs7THLi7
+HFHRS,HFHRS1,Thrift,Habitat for Humanity ReStore - South,"1675 South Park Ave, Buffalo, NY 14220",Habitat for Humanity ReStore - South,4.3,107,3.5,Mid,,,"Solid, mostly furniture and building supplies",42.852866447608,-78.826179878173,-Have Lat-,-Have Lon-,198,https://maps.app.goo.gl/gryUX89mivYgk9bq8
+SAVERSR,S2,Thrift,Savers,"980 Ridge Rd, Webster, NY 14580",Savers,4.0,488,5.0,HIgh,,,Savers!,43.208852107704,-77.460114345954,-Have Lat-,-Have Lon-,199,https://maps.app.goo.gl/jPXc793WwJ3MReoW7
+TSAFSRO,TSAFS2,Thrift,The Salvation Army Family Store & Donation Center,"114 E 4th St, Royal Oak, MI 48067",The Salvation Army Family Store & Donation Center,3.7,335,3.5,Mid,,,Regular small Salation Armani,42.487229636950,-83.143962061469,-Have Lat-,-Have Lon-,200,https://maps.app.goo.gl/BKCVrVNfC3v952TWA
+CR,CR1,Thrift,Council Resale,"3297 12 Mile Rd, Berkley, MI 48072",Council Resale,4.1,111,3.4,Mid,,,Small Local Thrift store,42.502987878223,-83.191678632857,-Have Lat-,-Have Lon-,201,https://maps.app.goo.gl/94QKM1TBSz7gDMWJ8
+GCOHT,GCOHT1,Thrift,Grace Centers of Hope Thrift Store & Donation Center- Oak Park,"FR68+8P, 23105 Coolidge Hwy, Oak Park, MI 48237",Grace Centers of Hope Thrift Store & Donation Center- Oak Park,4.0,21,3.5,Mid,,,Medium size Local Thrift store,42.460492460131,-83.182088667996,-Have Lat-,-Have Lon-,202,https://maps.app.goo.gl/WdFxadtzWMYWVzoz5
+LC,LC1,Vintage,Leah's Closet,"722 W Eleven Mile Rd, Royal Oak, MI 48067",Leah's Closet,4.8,33,3.0,Mid,,,Not a lot of information; vintage clothing,42.489954773168,-83.137031571047,-Have Lat-,-Have Lon-,203,https://maps.app.goo.gl/jFzLDjd2gLQKJTaT6
+SVDPT,SVDPT1,Thrift,St. Vincent de Paul Thrift Store,"28720 N Stephenson Hwy, Madison Heights, MI 48071",St. Vincent de Paul Thrift Store,3.9,309,3.2,Mid,,,"A bit sparse but otherwise, perfectly normal",42.489825000000,-83.304478900000,-Have Lat-,-Have Lon-,204,https://maps.app.goo.gl/qSVGra51AQz1ksLX8
+EUR,EUR1,Thrift,Encore Upscale Resale,"29080 Southfield Rd, Southfield, MI 48076",Encore Upscale Resale,4.3,241,3.4,Mid,,,Small Local Thrift store,42.503181600000,-83.374342300000,-Have Lat-,-Have Lon-,205,https://maps.app.goo.gl/Bf7jEHeyKzdRSV9s5
+RR,RR1,Thrift,Retro Rescuers,"477 W Marshall St, Ferndale, MI 48220",Retro Rescuers,5.0,16,3.1,Low,,,Listed as a Furniture store but pictures indicate otherwise.,42.45461569,-83.13733603,-Have Lat-,-Have Lon-,206,https://maps.app.goo.gl/4mSsfhSzy4GUsxnHA
+PTS,PTS1,Thrift,Presbyterian Thrift Shop,"331 N Main St, Plymouth, MI 48170",Presbyterian Thrift Shop,4.7,103,3.6,Mid,,,"Smal church thrift store; appears good quality. Closed Sunday, Monday",42.37502453,-83.46374378,-Have Lat-,-Have Lon-,207,https://maps.app.goo.gl/dTZxxEjFZJ2SiPj9A
+N2Y,N2Y1,Furniture,New 2 You,"1021 Novi Rd, Northville, MI 48167",New 2 You,4.4,81,3.0,Mid,,,"Mostly furniture, has a low end  Home Goods vibe",42.442841000000,-83.501509000000,-Have Lat-,-Have Lon-,208,https://maps.app.goo.gl/z2cvQWbUtGjLzcar9
+SOMM,SOMM1,Thrift,Seeds Of Mercy Mission,"32232 W 8 Mile Rd, Farmington Hills, MI 48336",Seeds Of Mercy Mission,5.0,8,2.8,Low,,,Small Local Thrift store,42.44094873,-83.36354833,-Have Lat-,-Have Lon-,209,https://maps.app.goo.gl/YRt9Ruu6D7oqBghq5
+TSAFSAH,TSAFS3,Thrift,The Salvation Army Family Store & Donation Center,"605 S Opdyke Rd, Auburn Hills, MI 48326",The Salvation Army Family Store & Donation Center,4.1,311,3.5,Mid,,,Standard decent Salvation Army,42.6305796,-83.24930213,-Have Lat-,-Have Lon-,210,https://maps.app.goo.gl/uyaoR51YSzAPH3zVA
+FTRS,FTRS1,Thrift,Freedom Treasures Resale Store,"7570 Cooley Lake Rd, Waterford Township, MI 48327",Freedom Treasures Resale Store,4.7,161,3.5,Mid,,,Solid little thrift store,42.61510427,-83.43989128,-Have Lat-,-Have Lon-,211,https://maps.app.goo.gl/92iZeiNmbSse99A97
+ODTS,ODTS1,Thrift,Open Door Thrift Store,"7140 Cooley Lake Rd, Waterford Township, MI 48327",Open Door Thrift Store,4.6,64,3.2,Mid,,,Small Local Thrift store,42.61558586,-83.42429124,-Have Lat-,-Have Lon-,212,https://maps.app.goo.gl/7mtDCQAtAeNy6L879
+TSAFSWB,TSAFS4,Thrift,The Salvation Army Family Store & Donation Center,"3232 Orchard Lake Rd, West Bloomfield Township, MI 48324",The Salvation Army Family Store & Donation Center,4.0,446,3.6,Mid,,,"Good size, well organized Salvation Army",42.60343092,-83.34878492,-Have Lat-,-Have Lon-,213,https://maps.app.goo.gl/MSCQTvrF2QtDvNbA9
+AU,AU1,Antique,Antiques & Uniques,"30200 Euclid Ave, Wickliffe, OH 44092",Antiques & Uniques,5.0,"3,536",4.8,Top,must-visit,,Looks great!,41.61622423,-81.46074243,-Have Lat-,-Have Lon-,214,https://maps.app.goo.gl/a8gG16bD7JBMEEyS8
+MB,MB1,Antique,Miscellaneous Barn,"190 Mantle Rd, Painesville, OH 44077",Miscellaneous Barn,4.8,42,3.9,Mid,,,"Big warehouse, interesting",41.74432556,-81.2274313,-Have Lat-,-Have Lon-,215,https://maps.app.goo.gl/NT2Vbbhv8YbMcqvq6
+GJE,GJE1,Junk,Grandma Jaree's Emporium,"25 McMaster St, Auburn, NY 13021",Grandma Jaree's Emporium,4.0,144,4.9,Top,must-visit,,OMG Giant Warehouse,42.93271633,-76.57297966,-Have Lat-,-Have Lon-,216,https://maps.app.goo.gl/nFnMA74ou19UHKEr7
+PLAM,PLAM1,Antique,Penny Lane Antique Mall,"319 Waterloo Geneva Rd, Geneva, NY 14456",Penny Lane Antique Mall,4.4,375,3.5,Mid,,,,42.932919700000,-77.183119700000,-Have Lat-,-Have Lon-,217,https://maps.app.goo.gl/CFNuUszs8AXt11NT9
+AU2,AU3,Antique,Antique Underground,"124 E Jefferson St, Syracuse, NY 13202",Antique Underground,4.5,26,3.3,Mid,,,,43.04697009,-76.15125491,-Have Lat-,-Have Lon-,218,https://maps.app.goo.gl/ru4MPJecb9PPJoSg7
+PLTS,PLTS1,Thrift,Pot Luck Thrift Shop,"7843 Oxbow Rd, Canastota, NY 13032",Pot Luck Thrift Shop,4.2,34,3.3,Low,,,,43.067661200000,-76.971127900000,-Have Lat-,-Have Lon-,219,https://maps.app.goo.gl/r1ea7GcuHkK7TXux7
+TJD,TJD1,Antique,The Junkyard's Daughter,"325 Broad St, Waverly, NY 14892",The Junkyard's Daughter,4.5,35,3.7,Top,,,,42.00106888,-76.54053472,-Have Lat-,-Have Lon-,220,https://maps.app.goo.gl/rg2wcmcUZCe2Ksaq7
+TFJM,TFJM1,Antique,The Funky Junk Market,"62 North Ave Suite 1B, Owego, NY 13827",The Funky Junk Market,3.8,4,3.3,Mid,,,Not a lot of information,42.10450979,-76.26296453,-Have Lat-,-Have Lon-,221,https://maps.app.goo.gl/9fcGe6n8EcnW6gBZ6
+OOAU,OOAU1,Junk,"Old, Odd, and Unique","93, 91 Clinton St, Binghamton, NY 13905","Old, Odd, and Unique",4.6,56,4.0,Mid,,,Promising classic junk store,42.10511081,-75.922147,-Have Lat-,-Have Lon-,222,https://maps.app.goo.gl/FjApZXXAdVuoFKQn7
+JPAAC,JPAAC1,Antique,Julies Place Antiques and Collectibles,"3300 E Main St, Endwell, NY 13760",Julies Place Antiques and Collectibles,5.0,12,4.0,Mid,,,,42.10655585,-76.02109236,-Have Lat-,-Have Lon-,223,https://maps.app.goo.gl/TwvM3zMsFZyfkNCn6
+GSADC,GSADC1,Thrift,Goodwill Store and Donations: Canton,"41937 Ford Rd, Canton Township, MI 48187",Goodwill Store and Donations: Canton,3.6,390,3.5,Mid,,,Open 7 days,42.32270218,-83.45432569,-Have Lat-,-Have Lon-,224,https://maps.app.goo.gl/6pWPjWjpUhLjBt9v6
+TSAFSCT,TSAFS5,Thrift,The Salvation Army Family Store & Donation Center,"43403 Joy Rd, Canton Township, MI 48187",The Salvation Army Family Store & Donation Center,4.0,558,3.7,Top,,,,42.35143979,-83.46917003,-Have Lat-,-Have Lon-,225,https://maps.app.goo.gl/NSPVmBBNnPWNdKgZ6
+GIOSM,GIOSM1,Thrift,Goodwill Industries of Southeastern Michigan - Saline Store,"423 E Michigan Ave, Saline, MI 48176",Goodwill Industries of Southeastern Michigan - Saline Store,3.9,174,3.7,Mid,,,,42.1702625,-83.77384578,-Have Lat-,-Have Lon-,226,https://maps.app.goo.gl/snqTYGTEbYWiwgmW7
+NARS,NARS1,Thrift,Nu2U Again Resale Shop,"1311 E Michigan Ave, Saline, MI 48176",Nu2U Again Resale Shop,4.5,127,3.6,Mid,,,,42.17421411,-83.76440785,-Have Lat-,-Have Lon-,227,https://maps.app.goo.gl/1Y8TDEQAzGNxDBUV6
+SCR,SCR1,Thrift,SCRAP Creative Reuse,"4567 Washtenaw Ave, Ann Arbor, MI 48108",SCRAP Creative Reuse,4.6,187,3.8,Top,,,Looks like an art . craft supply shop?,42.25267524,-83.67351038,-Have Lat-,-Have Lon-,228,https://maps.app.goo.gl/yhQ5iHvBPxkTmPMd8
+MCAG,MCAG1,Antique,Motor City Antique Gallery,"13431 Telegraph Rd, Flat Rock, MI 48134",Motor City Antique Gallery,4.6,971,4.0,Top,,,Looks like large warehouse of antiques. Closed Mondays,42.07318624,-83.30926085,-Have Lat-,-Have Lon-,229,https://maps.app.goo.gl/cezz42p2hiE7VbaT7
+PACM,PACM1,Antique,Plaza Antiques & Collectables Mall,"2621 Dix Hwy, Lincoln Park, MI 48146",Plaza Antiques & Collectables Mall,4.8,24,3.7,Top,,,Closed Mondays,42.24662625,-83.1952484,-Have Lat-,-Have Lon-,230,https://maps.app.goo.gl/2aixqEf1WA88GBWG9
+VA,VA1,Antique,Village Antiques,"22630 Michigan Ave, Dearborn, MI 48124",Village Antiques,4.3,118,3.3,Mid,,,"Closed Sun, Mon",42.3039335,-83.25414445,-Have Lat-,-Have Lon-,231,https://maps.app.goo.gl/FUNwkfBFnAa5tGtAA
+CCA,CCA1,Antique,Craftique Craft & antique,"5846 Middlebelt Rd, Garden City, MI 48135",Craftique Craft & antique,4.3,201,3.3,Low,,,"Looks like crafts and antiques, but multi-dealer. ",42.3275606,-83.6342806,-Have Lat-,-Have Lon-,232,https://maps.app.goo.gl/jnQk56fscyUSMqU89
+TPCAA,TPCAA1,Antique,Town Peddler Craft and Antique Mall,"35323 Plymouth Rd, Livonia, MI 48150",Town Peddler Craft and Antique Mall,4.7,"1,970",4.0,Top,must-visit,,Looks like a LARGE place with great ratings,42.36786559,-83.39102513,-Have Lat-,-Have Lon-,233,https://maps.app.goo.gl/vXrAqD8TSDAYoMd38
+VVACV,VVACV1,Antique,Vintage Vibes Antiques Collectibles Vinyl,"16320 Middlebelt Rd, Livonia, MI 48154",Vintage Vibes Antiques Collectibles Vinyl,4.7,23,3.4,Mid,,,,42.40685083,-83.33486458,-Have Lat-,-Have Lon-,234,https://maps.app.goo.gl/UVkkDFBjU1sDT7GKA
+TBIN,TBIN1,Antique,The Barn in Northville,"48120 Eight Mile W, Northville, MI 48167",The Barn in Northville,4.5,121,3.8,Top,,,,42.43630175,-83.51971918,-Have Lat-,-Have Lon-,235,https://maps.app.goo.gl/u6givXwwQVTpspY56
+OFA,OFA1,Antique,Odd Fellows Antiques,"3248 12 Mile Rd, Berkley, MI 48072",Odd Fellows Antiques,4.6,248,3.7,Top,,,,42.50309275,-83.19198748,-Have Lat-,-Have Lon-,236,https://maps.app.goo.gl/QfjiPjWLERR1y38V7
+SAL,SAL1,Antique,Sinclair Antiques Llc,"550 S Rochester Rd, Clawson, MI 48017",Sinclair Antiques Llc,4.8,178,3.5,Mid,,,Closed Monday Tuesday,42.52967495,-83.1369883,-Have Lat-,-Have Lon-,237,https://maps.app.goo.gl/D3U92AegWkPGuGL37
+CAE,CAE1,Antique,Clawson Antiques Etc,"118 S Main St, Clawson, MI 48017",Clawson Antiques Etc,4.6,53,3.4,Mid,,,Closed Monday Tuesday,42.53252298,-83.14623104,-Have Lat-,-Have Lon-,238,https://maps.app.goo.gl/5SzBeSLtrN1H1n1j7
+CAM,CAM1,Antique,Chelsea Antique Mall,"1178 S Main St, Chelsea, MI 48118",Chelsea Antique Mall,4.3,146,3.6,Mid,,,Closed on Monday,42.30574512,-84.02125036,-Have Lat-,-Have Lon-,239,https://maps.app.goo.gl/tQuCJwYeMU9sWx7EA
+FCFIA,FCFIA1,Thrift,"Full Circle Foundation, Inc. and Upscale Resale Shop","17006 Mack Ave, Grosse Pointe Park, MI 48230","Full Circle Foundation, Inc. and Upscale Resale Shop",4.7,33,3.4,Mid,,,Looks like a local thrift store,42.39442445,-82.92330565,-Have Lat-,-Have Lon-,240,https://maps.app.goo.gl/GcLvCURCukFRkdbH7
+TAF,TAF1,Vintage,Torn and Frayed,"1930 W Stadium Blvd, Ann Arbor, MI 48103",Torn and Frayed,4.9,37,3.6,Mid,,,Looks like a mid out of the way vintage store,42.26869781,-83.77199742,-Have Lat-,-Have Lon-,241,https://maps.app.goo.gl/pJfiw94SF6FvX51AA
+TSAFS6,TSAFS7,Thrift,The Salvation Army Family Store & Donation Center,"34150 Southbound Gratiot Ave, Clinton Township, MI 48035",The Salvation Army Family Store & Donation Center,4.4,"1,127",4.0,Mid,,,,42.54881857,-82.9026725,-Have Lat-,-Have Lon-,242,https://maps.app.goo.gl/bk74XDq4Ro1FMoj4A
+VWT-ClinTown,VWT11,Thrift,Value World Thrift,"33955 Gratiot Ave, Clinton Township, MI 48035",Value World Thrift,4.0,498,4.5,Mid,,,,42.54653487,-82.9048307,-Have Lat-,-Have Lon-,243,https://maps.app.goo.gl/8L8QFwCWCYVWrsq17
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
+,,,,,,,,,,,,,,,,,,#REF!
