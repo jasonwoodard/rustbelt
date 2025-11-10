@@ -7,7 +7,7 @@ This plan validates Atlas against its two core scoring use cases:
 
 It mirrors the Rust Belt Solver test style (clear inputs, commands, acceptance criteria, and artifacts) to ensure reproducibility.
 
-> Need the full CLI contract? See the [Atlas CLI reference](./atlas-cli-reference.md) for command flags, schema definitions, and diagnostics outputs.
+> Need the full CLI contract? See the [Atlas CLI reference](./rust-belt-atlas-cli-reference.md) for command flags, schema definitions, and diagnostics outputs.
 
 ---
 

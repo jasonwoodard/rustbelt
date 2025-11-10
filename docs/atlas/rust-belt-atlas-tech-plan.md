@@ -54,7 +54,7 @@ Atlas outputs are consumed by the Rust Belt Solver.
 
 ## CLI Workflow
 
-Atlas exposes three CLI subcommands: `score`, `anchors`, and `subclusters`. Refer to the [Atlas CLI reference](./atlas-cli-reference.md) for exhaustive flag descriptions and schema validation notes. Canonical invocations:
+Atlas exposes three CLI subcommands: `score`, `anchors`, and `subclusters`. Refer to the [Atlas CLI reference](./rust-belt-atlas-cli-reference.md) for exhaustive flag descriptions and schema validation notes. Canonical invocations:
 
 ```bash
 # Blended scoring with diagnostics

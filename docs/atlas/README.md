@@ -74,7 +74,7 @@ Optional:
 - Diagnostics sidecars (HTML, JSON, Parquet) summarising correlations, distributions, QA checks
 - Posterior-only traces (`--posterior-trace`) and combined stage traces (`--trace-out`) for auditability
 
-See the [Atlas CLI reference](./atlas-cli-reference.md) for a comprehensive flag and schema catalog.
+See the [Atlas CLI reference](./rust-belt-atlas-cli-reference.md) for a comprehensive flag and schema catalog.
 
 ### Trace & diagnostics schema versioning
 

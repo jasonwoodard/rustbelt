@@ -8,6 +8,7 @@ Atlas helps you decide **where the good stores probably are** and **how to prior
 - **Yield (Y):** how fast you found buy-worthy items, adjusted for time (1–5).
 
 > Looking for the newest CLI and artifact updates? Read the [Atlas v0.2 release notes](releases/v0.2.md).
+> Need the authoritative flag list and schemas? See the [Rust Belt Atlas CLI Reference](./rust-belt-atlas-cli-reference.md).
 
 You can keep V and Y separate, or press a button to combine them into one number for routing.
 
