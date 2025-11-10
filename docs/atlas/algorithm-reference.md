@@ -5,6 +5,8 @@ Rust Belt Atlas ("Atlas") converts prior intelligence and field observations int
 
 The reference covers desk priors, observational posterior models, blending policy, and the shared utilities (ECDF mapping, credibility, pooling, smoothing, dispersion fallback, and V–Y projection) used across scoring modes.
 
+For CLI flag behaviour and schema contracts see the [Atlas CLI reference](./atlas-cli-reference.md).
+
 ## Global Notation
 | Symbol | Meaning | Domain / Notes |
 | --- | --- | --- |
@@ -24,7 +26,12 @@ The reference covers desk priors, observational posterior models, blending polic
 | $\text{Cred}_i$ | Posterior credibility | $[0,1]$ |
 | $\text{Method}_i$ | Provenance tag | GLM, Hier, kNN, AnchorMean, Observed |
 | $\text{ECDF}_q$ | Quantile of $\hat{\theta}$ | $[0,1]$ |
-| $\text{SourceTrace}$ | Audit metadata | string |
+| $\text{Composite}_i$ | λ-weighted projection | optional |
+| $\text{Omega}_i$ | Blend weight | $[0,1]$ |
+| $\text{ValuePrior}_i$ | Prior mean of Value | — |
+| $\text{ValuePosterior}_i$ | Posterior mean of Value | — |
+| $\text{YieldPrior}_i$ | Prior mean of Yield | — |
+| $\text{YieldPosterior}_i$ | Posterior mean of Yield | — |
 
 ## Algorithms by Mode
 
@@ -39,7 +46,7 @@ Purpose: apply type baselines and affluence adjustments when no observations exi
 | `apply_affluence_adjustments` | Adjust prior value/yield using linear coefficients. | $V_i = V_b + \alpha_1 I_i + \alpha_2 P_i$; $Y_i = Y_b - \beta_1 R_i$ |
 | `derive_prior_theta` | Convert prior yield anchor into rate estimate. | $\theta^{\text{prior}}_i = \theta_b(\text{type})$ |
 | `clamp_bounds` | Keep value and yield within 1–5. | $V_i, Y_i \leftarrow \text{clip}_{[1,5]}(\cdot)$ |
-| `project_vy` | Compute optional blended score if requested. | $\text{VYScore}_\lambda = \lambda V_i + (1-\lambda) Y_i$ |
+| `project_vy` | Compute optional blended score if requested. | $\text{Composite}_\lambda = \lambda V_i + (1-\lambda) Y_i$ |
 | `emit_output` | Emit per-store prior record and trace provenance. | — |
 
 **Parameters & Defaults**
@@ -81,7 +88,7 @@ Purpose: estimate value and yield directly from observations using statistical m
 - Credibility: $\text{Cred} = 1/(1+\text{CV})$ with $\text{CV}$ from posterior SE / mean.
 
 **Edge Cases & Checks**
-- Drop duplicate visits per observer/date; log decision in `SourceTrace`.
+- Drop duplicate visits per observer/date; log decision in the stage trace output.
 - If ECDF window lacks support (<25 samples), fall back to `corpus` window and annotate.
 - Deterministic randomness: fix seed 11 for GLM and bootstrapping.
 - If GLM fails to converge, revert to hierarchical mean and set `Method=Hier`.
@@ -97,7 +104,7 @@ Purpose: merge prior and posterior estimates using global or adaptive weights.
 | `blend_value` | Combine prior/posterior value expectations. | $V_i^{\text{blend}} = \omega_{i,V} V_i^{\text{post}} + (1-\omega_{i,V}) V_i^{\text{prior}}$ |
 | `blend_theta` | Combine rate estimates then recompute yield. | $\hat{\theta}_i^{\text{blend}} = \omega_{i,\theta} \hat{\theta}_i^{\text{post}} + (1-\omega_{i,\theta}) \hat{\theta}_i^{\text{prior}}$ |
 | `remap_yield` | Map blended rate through ECDF to obtain final yield. | $Y_i^{\text{blend}} = 1 + 4 F_\Theta(\hat{\theta}_i^{\text{blend}})$ |
-| `project_vy` | Optionally compute $\text{VYScore}_\lambda$. | same as prior |
+| `project_vy` | Optionally compute $\text{Composite}_\lambda$. | same as prior |
 | `emit_components` | Output prior/posterior components, omega, and provenance. | — |
 
 **Parameters & Defaults**
@@ -156,13 +163,13 @@ Purpose: merge prior and posterior estimates using global or adaptive weights.
 | `check_threshold` | Compare against threshold 1.5. | if $D > 1.5$ |
 | `refit_negbin` | Refit using Negative Binomial with log link. | $\log \mu = \log (t/t_0) + X\beta$ |
 | `extract_theta` | Produce rate predictions from NegBin model. | same as GLM |
-| `flag_method` | Annotate `Method=GLM` but `SourceTrace` includes `negbin`. | — |
+| `flag_method` | Annotate `Method=GLM` and mark `negbin` in trace metadata. | — |
 
-### Projection to 1-D (VYScore_$\lambda$)
+### Projection to 1-D (Composite_$\lambda$)
 | Step | Plain English | Math |
 | --- | --- | --- |
 | `select_lambda` | Choose projection weight based on config. | $\lambda \in \{0.8, 0.6, 0.4\}$ |
-| `compute_score` | Combine value and yield into a single metric. | $\text{VYScore}_\lambda = \lambda V + (1-\lambda) Y$ |
+| `compute_score` | Combine value and yield into a single metric. | $\text{Composite}_\lambda = \lambda V + (1-\lambda) Y$ |
 | `record_trace` | Log lambda and components in metadata. | — |
 
 ## Worked Example (Metro: River City)
@@ -180,26 +187,27 @@ Purpose: merge prior and posterior estimates using global or adaptive weights.
 - $V^{\text{prior}} = 3.2 + 0.5(0.85) + 0.3(0.72) = 3.84$.
 - $Y^{\text{prior}} = 2.9 - 0.4(0.30) = 2.78$.
 - $\theta^{\text{prior}} = 2.4$ items/45m.
-- $\text{VYScore}_{0.6} = 0.6(3.84) + 0.4(2.78) = 3.42$.
+- $\text{Composite}_{0.6} = 0.6(3.84) + 0.4(2.78) = 3.42$.
 
 **Posterior-Only**
 - $\hat{\theta} = 3/(45/45) = 3.00$ items/45m (winsorized unchanged).
 - ECDF quantile (metro window) $F_\Theta(3.00) = 0.68$ → $Y^{\text{post}} = 1 + 4(0.68) = 3.72$.
 - Value regression $\hat{V}^{\text{post}} = 3.60$ (GLM with type intercept).
 - Credibility: posterior CV = 0.35 → $\text{Cred} = 1/(1+0.35) = 0.74$.
-- Method = GLM; `SourceTrace` includes visit ids and ECDF window.
+- Method = GLM; trace metadata includes visit ids and ECDF window.
 
 **Blended (global $\omega=0.7$)**
 - $V^{\text{blend}} = 0.7(3.60) + 0.3(3.84) = 3.67$.
 - $\hat{\theta}^{\text{blend}} = 0.7(3.00) + 0.3(2.40) = 2.82$.
 - ECDF quantile $F_\Theta(2.82) = 0.63$ → $Y^{\text{blend}} = 1 + 4(0.63) = 3.52$.
-- $\text{VYScore}_{0.6}^{\text{blend}} = 0.6(3.67) + 0.4(3.52) = 3.60$.
+- $\text{Composite}_{0.6}^{\text{blend}} = 0.6(3.67) + 0.4(3.52) = 3.60$.
 - Omega reported as 0.70 (value and theta), Cred retained 0.74, Method = GLM (blended).
 
 ## Appendix A: Pseudocode
 ```text
 function score_prior_only(stores, affluence, config):
     priors <- load_desk_priors(config.prior_version)
+    ecdf_prior <- build_prior_ecdf_if_available()
     for store in stores:
         if missing(store.zip):
             emit_anchor_mean(store)
@@ -210,9 +218,21 @@ function score_prior_only(stores, affluence, config):
         theta <- priors.theta_baseline[store.type]
         V <- clamp(V, 1, 5)
         Y <- clamp(Y, 1, 5)
+        record <- {
+            StoreId: store.id,
+            Value: V,
+            Yield: Y,
+            Theta: theta,
+            Cred: 0,
+            Method: "AnchorMean",
+            ECDF_q: ecdf_prior.quantile(theta),
+            ValuePrior: V,
+            YieldPrior: Y,
+            Omega: 0
+        }
         if config.lambda:
-            vy <- config.lambda * V + (1 - config.lambda) * Y
-        emit(store_id=store.id, Value=V, Yield=Y, Theta_est=theta, VYScore=vy, Method="AnchorMean")
+            record.Composite <- config.lambda * V + (1 - config.lambda) * Y
+        emit(record)
 
 function score_posterior_only(stores, observations, affluence, config):
     obs <- filter_invalid_visits(observations, dwell_min=30)
@@ -232,24 +252,48 @@ function score_posterior_only(stores, observations, affluence, config):
             method <- derive_method_flag(store)
         else:
             theta_post, value_post, yield_post, cred, method <- backfill_with_hier_knn(store)
-        emit(store_id=store.id, Theta_est=theta_post, Yield=yield_post, Value=value_post,
-             Cred=cred, Method=method, ECDF_q=ecdf.quantile(theta_post))
+        record <- {
+            StoreId: store.id,
+            Value: value_post,
+            Yield: yield_post,
+            Theta: theta_post,
+            Cred: cred,
+            Method: method,
+            ECDF_q: ecdf.quantile(theta_post),
+            ValuePosterior: value_post,
+            YieldPosterior: yield_post
+        }
+        if config.lambda:
+            record.Composite <- config.lambda * value_post + (1 - config.lambda) * yield_post
+        emit(record)
 
 function score_blended(prior_df, posterior_df, config):
     merged <- join(prior_df, posterior_df, on=StoreId)
     for row in merged:
         omega_value <- choose_omega(row.Cred, config, dimension="value")
         omega_theta <- choose_omega(row.Cred, config, dimension="theta")
-        value_blend <- omega_value * row.Value_post + (1 - omega_value) * row.Value_prior
-        theta_blend <- omega_theta * row.Theta_post + (1 - omega_theta) * row.Theta_prior
+        value_blend <- omega_value * row.ValuePosterior + (1 - omega_value) * row.ValuePrior
+        theta_blend <- omega_theta * row.ThetaPosterior + (1 - omega_theta) * row.ThetaPrior
         yield_blend <- map_to_yield(ecdf_window=config.ecdf_window, theta=theta_blend)
         if config.lambda:
             vy_blend <- config.lambda * value_blend + (1 - config.lambda) * yield_blend
-        emit(store_id=row.StoreId, Value_blend=value_blend, Yield_blend=yield_blend,
-             Value_prior=row.Value_prior, Value_post=row.Value_post,
-             Yield_prior=row.Yield_prior, Yield_post=row.Yield_post,
-             Theta_est=theta_blend, Cred=row.Cred, Omega=omega_theta,
-             VYScore_lambda=vy_blend)
+        record <- {
+            StoreId: row.StoreId,
+            Value: value_blend,
+            Yield: yield_blend,
+            Theta: theta_blend,
+            Cred: row.Cred,
+            Method: row.Method,
+            ECDF_q: ecdf.quantile(theta_blend),
+            Omega: omega_theta,
+            ValuePrior: row.ValuePrior,
+            ValuePosterior: row.ValuePosterior,
+            YieldPrior: row.YieldPrior,
+            YieldPosterior: row.YieldPosterior
+        }
+        if config.lambda:
+            record.Composite <- vy_blend
+        emit(record)
 ```
 
 ## Appendix B: Glossary

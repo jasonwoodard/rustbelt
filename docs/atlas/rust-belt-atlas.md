@@ -45,7 +45,7 @@ Atlas exposes three explicit scoring modes:
 
   Atlas records the configured or adaptive \( \omega \) together with its prior/posterior components for later auditing and diagnostics.
 
-> Projection to a 1-D score for Solver (when requested) uses the canonical \( \text{VYScore}_\lambda = \lambda V + (1-\lambda)Y \).
+> Projection to a 1-D score for Solver (when requested) uses the canonical \( \text{VYScore}_\lambda = \lambda V + (1-\lambda)Y \), emitted in the `Composite` column when `--lambda` is set.
 
 ---
 
@@ -60,11 +60,10 @@ Atlas exposes three explicit scoring modes:
 
 ## Outputs
 
-- **Scored stores** (always):
-  - `StoreId, Value (V), Theta_est (items/45m), Yield (Y), ModeComposite (VYScore_λ optional)`
-  - `Cred` (0–1 credibility / uncertainty proxy), `Method` (GLM|Hier|kNN|AnchorMean),
-  - `Omega`, `Value_prior`, `Value_post`, `Yield_prior`, `Yield_post` whenever blending is active,
-  - `SourceTrace` (baseline / affluence / adjacency / observed contributions and ECDF quantile).
+- **Scored stores** (always, matching [`score.schema.json`](../../schema/atlas/v1/score.schema.json)):
+  - `StoreId, Value, Yield, Composite (λ projection when requested)`
+  - `Omega`, `ValuePrior`, `ValuePosterior`, `YieldPrior`, `YieldPosterior`
+  - `Theta`, `Cred`, `Method`, `ECDF_q`
 
 - **Anchors** (optional): metro-level clusters with `AnchorId, centroid, store count, mean Value, mean Yield`.
 
@@ -73,6 +72,8 @@ Atlas exposes three explicit scoring modes:
 - **Diagnostics** (optional): correlation summaries, distributions, outlier detection.
 
 > Solver can consume either the 2-D V/Y fields with a projection parameter, or a pre-projected 1-D score.
+
+See the [Atlas CLI reference](./atlas-cli-reference.md) for command syntax, flag defaults, and full schema details.
 
 ---
 

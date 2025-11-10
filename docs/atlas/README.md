@@ -40,7 +40,7 @@ Atlas fuses these into a consistent, explainable V/Y view.
 
 4) **Optional projection**  
    When the Solver needs a single number:  
-   `VYScore_λ = λ·V + (1−λ)·Y` with λ ∈ {0.8 harvest, 0.6 balanced, 0.4 explore}.
+   `VYScore_λ = λ·V + (1−λ)·Y` with λ ∈ {0.8 harvest, 0.6 balanced, 0.4 explore} (emitted as the `Composite` column when `--lambda` is supplied).
 
 5) **Anchor & cluster** (optional)  
    Identify “pockets of goodness” (anchors) and nearby clusters to guide day design.
@@ -58,18 +58,23 @@ Atlas fuses these into a consistent, explainable V/Y view.
 
 ## Outputs
 
-Per store:
+Per store (validated against [`schema/atlas/v1/score.schema.json`](../../schema/atlas/v1/score.schema.json)):
 - `Value (V) [1–5]`
-- `Theta_est` (items per 45m)
 - `Yield (Y) [1–5]` (ECDF of θ)
-- `ModeComposite (VYScore_λ)` when requested
+- `Composite` (λ-projected V/Y when requested)
+- `Omega` (blend weight when applicable)
+- `ValuePrior`, `ValuePosterior`
+- `YieldPrior`, `YieldPosterior`
+- `Theta` (items per 45m)
 - `Cred` (0–1 credibility) and `Method` (GLM|Hier|kNN|AnchorMean)
-- `SourceTrace` (inputs & ECDF quantile for audit)
+- `ECDF_q` (quantile provenance)
 
 Optional:
 - Anchors & clusters (centroids, stats)
 - Diagnostics sidecars (HTML, JSON, Parquet) summarising correlations, distributions, QA checks
 - Posterior-only traces (`--posterior-trace`) and combined stage traces (`--trace-out`) for auditability
+
+See the [Atlas CLI reference](./atlas-cli-reference.md) for a comprehensive flag and schema catalog.
 
 ### Trace & diagnostics schema versioning
 
