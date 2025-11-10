@@ -52,10 +52,12 @@ Atlas outputs are consumed by the Rust Belt Solver.
 
 ---
 
-## CLI Design
+## CLI Workflow
+
+Atlas exposes three CLI subcommands: `score`, `anchors`, and `subclusters`. Refer to the [Atlas CLI reference](./atlas-cli-reference.md) for exhaustive flag descriptions and schema validation notes. Canonical invocations:
 
 ```bash
-# Score all stores
+# Blended scoring with diagnostics
 rustbelt-atlas score \
   --stores data/stores.csv \
   --affluence data/affluence.csv \
@@ -63,110 +65,74 @@ rustbelt-atlas score \
   --mode blended \
   --lambda 0.6 \
   --output out/scored-stores.csv \
-  --trace-out out/prior-trace.jsonl \
-  --posterior-trace out/posterior-diagnostics.csv
+  --trace-out out/scored-trace.jsonl \
+  --posterior-trace out/posterior-trace.csv
 
-# Build metro anchors
-rustbelt-atlas anchors \
-  --stores out/scored-stores.csv \
-  --out out/anchors.json
-
-# Cluster within anchors
-rustbelt-atlas clusters \
-  --stores out/scored-stores.csv \
-  --anchors out/anchors.json \
-  --out out/clusters.json
-````
-
-**Common flags**: `--min-anchor`, `--radius`, `--format` (csv/json/html), `--diagnostics`.
-
-## CLI Design (updated)
-
-# Posterior-only scoring (learn from observations; no priors)
+# Posterior-only scoring (no priors)
 rustbelt-atlas score \
   --stores data/stores.csv \
   --observations data/observations.csv \
   --mode posterior-only \
   --ecdf-window metro \
+  --lambda 0.6 \
   --output out/scored-post.csv \
-  --posterior-trace out/posterior-diagnostics.csv
+  --trace-out out/posterior-trace.jsonl
 
-> `observations.csv` must include `StoreId,DateTime,DwellMin,PurchasedItems,HaulLikert` with optional covariates such as `ObserverId`, `Spend`, or `Notes`. CLI validation rejects rows missing the required five columns and forwards optional fields to downstream modeling.
-
-# Blended scoring (when priors exist)
-rustbelt-atlas score \
+# Detect metro anchors
+rustbelt-atlas anchors \
   --stores data/stores.csv \
   --affluence data/affluence.csv \
-  --observations data/observations.csv \
-  --mode blended --lambda 0.7 \
-  --output out/scored-blend.csv
+  --output out/anchors.csv \
+  --store-assignments out/anchor-assignments.csv \
+  --metrics out/anchor-metrics.json
 
-**New flags**
-- `--mode {posterior-only|prior-only|blended}`
-- `--lambda <0..1>` shrinkage weight for blended mode
-- `--output <path>` destination for scored stores (CSV/JSON)
-- `--trace-out <path>` JSONL prior trace output (optional)
-- `--posterior-trace <path>` posterior diagnostics snapshot (optional)
-- `--ecdf-window {day|metro|trip|corpus}`
-- `--ecdf-cache <path>` persist ECDF reference for reproducibility
-- `--explain/--trace-dir` generate a lightweight sample trace (documentation aid)
+# Materialise sub-clusters for a specific anchor
+rustbelt-atlas subclusters \
+  --anchor-id metro-anchor-001 \
+  --spec data/subcluster-spec.json \
+  --output out/subclusters.jsonl \
+  --id-prefix metro-anchor-001-sc
+```
 
-All scoring modes write blend metadata (`omega`, prior/posterior Value & Yield) when relevant so analysts can audit the provenance of each score.
+Key shared flags:
 
+- `--mode {prior-only,posterior-only,blended}` controls scoring behaviour.
+- `--lambda <0..1>` emits the λ-weighted `Composite` column in addition to `Value` and `Yield`.
+- `--trace-out PATH` writes a combined stage trace (JSONL/CSV).
+- `--posterior-trace PATH` exports posterior-only diagnostics and triggers diagnostics sidecars.
+- `--store-assignments PATH` and `--metrics PATH` extend anchor exports with assignments and QA metrics.
+
+All scoring runs validate payloads against the v1 schemas before writing any outputs.
 
 ---
 
 ## Data Schemas
 
-### Input: stores.csv
+Loader inputs and outputs align with the JSON Schemas under `schema/atlas/v1` and the data loaders in `packages/atlas-python`.
 
-| StoreId | Name | Type | Lat | Lon | ChainFlag | Notes |
+### Input: `stores.csv`
 
-### Input: affluence.csv
+| StoreId | Name | Type | Lat | Lon | GeoId | ChainFlag (opt) | Notes (opt) |
 
-| GeoId | MedianIncome | %100k+HH | Education | HomeValue | Turnover |
+### Input: `affluence.csv`
 
-### Input: observations.csv
+| GeoId | MedianIncome | PctHH_100kPlus | PctRenters | Population | Metro (opt) |
+
+### Input: `observations.csv`
 
 | StoreId | DateTime | DwellMin | PurchasedItems | HaulLikert | ObserverId (opt) | Spend (opt) | Notes (opt) |
 
-**Example row**
+### Output: `scored-stores.csv`
 
-| StoreId | DateTime           | DwellMin | PurchasedItems | HaulLikert | ObserverId | Spend | Notes            |
-|---------|--------------------|----------|----------------|------------|------------|-------|------------------|
-| DT-014  | 2025-03-02T14:10Z  | 52       | 4              | 5          | J          | 86.25 | Found denim haul |
+| StoreId | Value | Yield | Composite | Omega | ValuePrior | ValuePosterior | YieldPrior | YieldPosterior | Theta | Cred | Method | ECDF_q |
 
-### Output: scored-stores.csv
+### Output: `anchors.csv`
 
-| StoreId | Value | Yield | Composite | Omega | Value_prior | Value_post | Yield_prior | Yield_post | AnchorId | ClusterId | SourceTrace |
+| AnchorId | Name | Lat | Lon | StoreCount | MeanValue | MeanYield | GeoId (opt) |
 
-> `Omega` and the prior/posterior columns are populated for blended runs and may be null otherwise; Solver consumption remains compatible by ignoring the optional fields.
+### Output: `subclusters.jsonl`
 
-### Output: anchors.json
-
-```json
-{
-  "AnchorId": "DT-1",
-  "Centroid": [42.331, -83.045],
-  "StoreCount": 12,
-  "MeanValue": 3.6,
-  "MeanYield": 3.2,
-  "Stores": ["S1", "S2", "S3"]
-}
-```
-
-### Output: clusters.json
-
-```json
-{
-  "ClusterId": "AA-2A",
-  "AnchorId": "AA-2",
-  "Centroid": [42.2808, -83.743],
-  "Stores": ["C1", "C2", "C3"],
-  "MeanValue": 4.0,
-  "MeanYield": 2.7
-}
-```
+Each row contains `AnchorId`, `SubclusterId`, centroid coordinates, membership list, and summary statistics (`StoreCount`, `MeanValue`, `MeanYield`). Files are validated against [`schema/atlas/v1/cluster.schema.json`](../../schema/atlas/v1/cluster.schema.json).
 
 ---
 
@@ -204,7 +170,7 @@ All scoring modes write blend metadata (`omega`, prior/posterior Value & Yield) 
 /tools/                     # Optional shared utilities (lint hooks, formatters) with language-specific subfolders
 ```
 
-- **Atlas package**: published as `atlas-python` (internal), exposes `atlas.cli` entry points (`score`, `anchors`, `clusters`). Dependencies live in `pyproject.toml` so Node modules are not required.
+- **Atlas package**: published as `atlas-python` (internal), exposes `atlas.cli` entry points (`score`, `anchors`, `subclusters`). Dependencies live in `pyproject.toml` so Node modules are not required.
 - **Solver package**: retains current functionality but relocated under `packages/solver-cli` with unchanged build scripts. Solver consumes Atlas outputs only via files in `/schema` (e.g., versioned CSV layout, JSON schema) and never imports Python code.
 - **Schema directory**: houses the versioned data contracts that mediate Atlas ↔ Solver exchange. Both sides depend on this directory **read-only**; no runtime linkage.
 - **Top-level tooling**: optional scripts (e.g., Makefile, CI) orchestrate `pip` and `npm` commands without mingling dependency graphs.
@@ -279,7 +245,7 @@ Option **B** balances isolation with maintainability. We absorb a one-time move 
 
 ### Data Validation & Contracts
 
-- Define JSON Schema files in `/schema/atlas/v1/` for `scored-stores`, `anchors`, and `clusters`, and use them both for Atlas output validation (via `jsonschema` in Python) and Solver ingestion tests (via TypeScript validators).
+- Define JSON Schema files in `/schema/atlas/v1/` for `scored-stores`, `anchors`, and `subclusters`, and use them both for Atlas output validation (via `jsonschema` in Python) and Solver ingestion tests (via TypeScript validators).
 - Version schemas (`v1`, `v1.1`, …) to allow non-breaking additions; Atlas exposes a `--schema-version` flag with default `latest`.
 
 ### Configuration Management
@@ -306,8 +272,8 @@ Option **B** balances isolation with maintainability. We absorb a one-time move 
 
 ## Feedback Loop
 
-1. **User runs Atlas** to score stores and generate anchors/clusters.
-2. **User geo-curates**: select metros/clusters for inclusion in Solver runs.
+1. **User runs Atlas** to score stores and generate anchors/subclusters.
+2. **User geo-curates**: select metros/subclusters for inclusion in Solver runs.
 3. **Solver produces itineraries**.
 4. **User executes trip and logs observations**.
 5. **Observations flow back into Atlas** → priors updated → next iteration improves.

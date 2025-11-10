@@ -7,13 +7,15 @@ This plan validates Atlas against its two core scoring use cases:
 
 It mirrors the Rust Belt Solver test style (clear inputs, commands, acceptance criteria, and artifacts) to ensure reproducibility.
 
+> Need the full CLI contract? See the [Atlas CLI reference](./atlas-cli-reference.md) for command flags, schema definitions, and diagnostics outputs.
+
 ---
 
 ## 0. Objective & Scope
 
 - Verify Atlas produces **explainable, reproducible** per-store Value (V) and Yield (Y) scores.
 - Confirm **modes** behave as designed: `prior-only`, `posterior-only`, `blended`.
-- Ensure optional **projection** `VYScore_λ` is consistent with λ choices.
+- Ensure optional **projection** (`Composite` column) is consistent with λ choices.
 - Validate optional **anchors** and **clusters** outputs.
 - Establish diagnostics, performance, and regression criteria.
 
@@ -46,10 +48,11 @@ Out of scope: UI and route optimization (covered by Solver).
 
 ## 3. Expected Columns (Scored Output)
 
-Per store (CSV/JSON):
-- `StoreId, V, Theta_est, Y`  
-- Optional projection: `VYScore_lambda` (if `--emit1d`)  
-- Diagnostics: `Cred, Method` (one of `GLM|Hier|kNN|AnchorMean`), `ECDF_q`, `SourceTrace`
+Per store (CSV/JSON, per [`score.schema.json`](../../schema/atlas/v1/score.schema.json)):
+- `StoreId, Value, Yield`
+- Optional projection: `Composite` (when `--lambda` provided)
+- Blend diagnostics: `Omega`, `ValuePrior`, `ValuePosterior`, `YieldPrior`, `YieldPosterior`
+- Core provenance: `Theta`, `Cred`, `Method`, `ECDF_q`
 
 For anchors/clusters (JSON):
 - `AnchorId/ClusterId, centroid, bounds/geom, store_count, mean_V, mean_Y, affluence_summary`
@@ -68,12 +71,13 @@ rustbelt-atlas score \
   --affluence data/zcta.csv \
   --mode prior-only \
   --ecdf-window metro \
-  --emit1d --lambda 0.6 \
-  --out out/scored-prior.csv
+  --lambda 0.6 \
+  --output out/scored-prior.csv \
+  --trace-out out/scored-prior-trace.jsonl
 ```
 
 **Acceptance Criteria (AC-P1):**
-- **AC-P1.1** Output contains `StoreId,V,Theta_est,Y` and, if requested, `VYScore_lambda`.
+- **AC-P1.1** Output contains `StoreId,Value,Yield,Theta,Composite` (λ projection present because `--lambda` provided).
 - **AC-P1.2** Sign sanity: on average, higher `MedianIncome` → higher **V**; higher `PctRenters` → lower **Y**.
 - **AC-P1.3** No missing values; `ECDF_q ∈ [0,1]`.
 - **AC-P1.4** Determinism: identical inputs/config produce identical ranks and file hash.
@@ -90,15 +94,18 @@ rustbelt-atlas score \
   --observations data/observations.csv \
   --mode posterior-only \
   --ecdf-window metro \
-  --out out/scored-post.csv \
-  --explain out/posterior-explain.json
+  --lambda 0.6 \
+  --output out/scored-post.csv \
+  --trace-out out/scored-post-trace.jsonl \
+  --posterior-trace out/posterior-trace.csv
 ```
 
 **Acceptance Criteria (AC-PO1):**
-- **AC-PO1.1** For visited stores: `V ≈ HaulLikert` and `Y` consistent with `PurchasedItems` & `DwellMin` via ECDF; CLI validation rejects rows missing required observation fields before scoring.
+- **AC-PO1.1** For visited stores: `Value ≈ HaulLikert` and `Yield` consistent with `PurchasedItems` & `DwellMin` via ECDF; CLI validation rejects rows missing required observation fields before scoring.
 - **AC-PO1.2** For unvisited stores: `Method` is set (`GLM|Hier|kNN|AnchorMean`) and `Cred ∈ [0,1]`.
 - **AC-PO1.3** Determinism: same inputs → identical ranks and file hash.
 - **AC-PO1.4** Incremental learning: adding one new observation reorders a plausible **local** neighborhood of unvisited stores (document delta count).
+- **AC-PO1.5** Posterior runs still emit `Composite` when `--lambda` is provided, and `ECDF_q` stays within `[0,1]`.
 
 ---
 
@@ -113,15 +120,17 @@ rustbelt-atlas score \
   --observations data/observations.csv \
   --mode blended --omega 0.7 \
   --ecdf-window metro \
-  --emit1d --lambda 0.6 \
-  --out out/scored-blended.csv
+  --lambda 0.6 \
+  --output out/scored-blended.csv \
+  --trace-out out/scored-blended-trace.jsonl
 ```
 
 **Acceptance Criteria (AC-B1):**
-- **AC-B1.1** For visited stores: observed V/Y take precedence (single-observer policy).
-- **AC-B1.2** For unvisited stores: blended values lie **between** prior-only and posterior-only predictions (prove with sample rows).
+- **AC-B1.1** For visited stores: observed Value/Yield take precedence (single-observer policy).
+- **AC-B1.2** For unvisited stores: blended Value/Yield land **between** prior-only and posterior-only predictions (prove with sample rows).
 - **AC-B1.3** ω sensitivity: ω=1 equals posterior-only ranks; ω=0 equals prior-only ranks; small ω changes adjust ranks smoothly (no discontinuities).
-- **AC-B1.4** λ sensitivity (if `--emit1d`): harvest (0.8) > balanced (0.6) > explore (0.4) shifts ordering in expected directions (document top-10 diffs).
+- **AC-B1.4** λ sensitivity: harvest (0.8) > balanced (0.6) > explore (0.4) shifts ordering in expected directions (document top-10 diffs).
+- **AC-B1.5** `Composite`, `Omega`, and prior/posterior component columns align with [`score.schema.json`](../../schema/atlas/v1/score.schema.json).
 
 ---
 
@@ -132,20 +141,20 @@ rustbelt-atlas score \
 rustbelt-atlas anchors \
   --stores data/stores.csv \
   --affluence data/zcta.csv \
-  --metro detroit \
-  --out out/anchors.json
+  --output out/anchors.csv \
+  --store-assignments out/anchor-assignments.csv \
+  --metrics out/anchor-metrics.json
 
-rustbelt-atlas clusters \
-  --stores data/stores.csv \
-  --affluence data/zcta.csv \
-  --metro detroit \
-  --eps-min 5km \
-  --out out/clusters.json
+rustbelt-atlas subclusters \
+  --anchor-id metro-anchor-001 \
+  --spec data/subcluster-spec.json \
+  --output out/subclusters.jsonl \
+  --id-prefix metro-anchor-001-sc
 ```
 
 **Acceptance Criteria:**
 - **AC-A1** Anchors correspond to coherent high-signal areas (affluence and/or high Y); include summary stats.
-- **AC-C1** Clusters align with short drive times; each store has ≤1 cluster id; cluster summaries (mean V/Y) are reported.
+- **AC-C1** Sub-clusters align with short drive times; each store has ≤1 subcluster id; summaries (mean Value/Yield) are reported.
 
 ---
 
@@ -191,10 +200,12 @@ rustbelt-atlas clusters \
 - `out/scored-post.csv`  
 - `out/scored-blended.csv`  
 - `out/posterior-explain.json`  
-- `out/anchors.json` (optional)  
-- `out/clusters.json` (optional)
+- `out/anchors.csv` (optional)
+- `out/anchor-assignments.csv` (optional)
+- `out/anchor-metrics.json` (optional)
+- `out/subclusters.jsonl` (optional)
 
-Each scored CSV **must** include: `StoreId,V,Theta_est,Y[,VYScore_lambda],Cred,Method,ECDF_q,SourceTrace`.
+Each scored CSV **must** include the schema-aligned columns: `StoreId,Value,Yield,Composite (when λ supplied),Omega,ValuePrior,ValuePosterior,YieldPrior,YieldPosterior,Theta,Cred,Method,ECDF_q`.
 
 ---
 
