@@ -109,9 +109,11 @@ Atlas validates incoming datasets via the schemas in `packages/atlas-python/src/
 | `Type` | ✓ | string | Store category used by the prior. |
 | `Lat` | ✓ | float64 | Latitude in decimal degrees. Duplicated to `Latitude` during scoring if absent. |
 | `Lon` | ✓ | float64 | Longitude in decimal degrees. Duplicated to `Longitude` during scoring if absent. |
+| `GeoId` | ✓ | string | Geo Identifier used to relate Stores to Affluence. |
 | `ChainFlag` | – | string | Optional chain indicator. |
 | `Notes` | – | string | Optional free-form notes. |
 | `Zip` | – | string | Optional ZIP/ZCTA identifier. |
+
 
 Additional expectations for prior/blended runs:
 
