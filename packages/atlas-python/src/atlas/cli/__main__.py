@@ -27,6 +27,7 @@ from atlas.clustering.subclusters import (
 )
 from atlas.cli.schema_validation import SchemaValidationError, SchemaValidator
 from atlas.data import MissingColumnsError, load_affluence, load_observations, load_stores
+from atlas.data.loaders import normalise_geo_id
 from atlas.explain import TraceRecord
 from atlas.diagnostics import (
     DIAGNOSTICS_VERSION,
@@ -745,7 +746,14 @@ def _attach_affluence_features(stores: pd.DataFrame, affluence: pd.DataFrame) ->
     if "GeoId" not in stores.columns:
         raise AtlasCliError("Stores dataset must include a GeoId column to join affluence data")
 
-    aff_subset = affluence[[column for column in ["GeoId", "MedianIncome", "Pct100kHH", "Turnover"] if column in affluence.columns]].copy()
+    aff_subset = affluence[
+        [column for column in ["GeoId", "MedianIncome", "Pct100kHH", "Turnover"] if column in affluence.columns]
+    ].copy()
+
+    stores = stores.copy()
+    stores["GeoId"] = normalise_geo_id(stores["GeoId"])
+    aff_subset["GeoId"] = normalise_geo_id(aff_subset["GeoId"])
+
     merged = stores.merge(aff_subset, on="GeoId", how="left", suffixes=("", "_aff"))
 
     merged = _ensure_normalised_column(

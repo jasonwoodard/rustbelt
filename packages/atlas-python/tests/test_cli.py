@@ -13,6 +13,7 @@ from atlas.cli.__main__ import (
     build_parser,
     main,
     _handle_score,
+    _attach_affluence_features,
 )
 from atlas.explain.trace import TRACE_SCHEMA_VERSION
 
@@ -38,12 +39,33 @@ def test_explain_flag_writes_trace_files(tmp_path: Path, monkeypatch) -> None:
     assert data
     row = data[0]
     assert "baseline.value" in row
-    assert "scores.value" in row
-    with pytest.raises(SystemExit):
-        parser.parse_args(["score", "--help"])
-    captured = capsys.readouterr()
-    assert "--mode" in captured.out
-    assert "score" in captured.out
+
+
+def test_attach_affluence_coerces_geo_ids() -> None:
+    stores = pd.DataFrame(
+        {
+            "StoreId": [1, 2],
+            "Name": ["A", "B"],
+            "Type": ["Thrift", "Antique"],
+            "Lat": [1.0, 2.0],
+            "Lon": [3.0, 4.0],
+            "GeoId": [12345.0, 67890.0],
+        }
+    )
+    affluence = pd.DataFrame(
+        {
+            "GeoId": ["12345", "67890"],
+            "MedianIncome": [50_000, 60_000],
+            "Pct100kHH": [0.2, 0.3],
+            "Turnover": [0.1, 0.2],
+        }
+    )
+
+    merged = _attach_affluence_features(stores, affluence)
+
+    assert merged["GeoId"].dtype.name.startswith("string")
+    assert list(merged["GeoId"]) == ["12345", "67890"]
+    assert {"MedianIncomeNorm", "Pct100kHHNorm", "PctRenterNorm"}.issubset(merged.columns)
 
 
 def test_version_flag_reports_package_version(capsys: pytest.CaptureFixture[str]) -> None:

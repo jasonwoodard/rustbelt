@@ -56,7 +56,7 @@ All other flags are scoped to a subcommand.
 #### Behaviour highlights
 
 - **Normalised prior features**: `prior-only` and `blended` modes require `MedianIncomeNorm`, `Pct100kHHNorm`, and `PctRenterNorm`. Provide them in the stores file or pass `--affluence` with a dataset that can supply them. The CLI will surface an error if any of the normalised columns remain missing after preprocessing.
-- **Affluence joins**: When `--affluence` is supplied, the CLI requires a `GeoId` column in the stores input. `_attach_affluence_features` joins the affluence file on `GeoId` and derives the normalised columns from any available `MedianIncome`, `Pct100kHH`, `PctRenter`, or `Turnover` series if they are not already present.
+- **Affluence joins**: When `--affluence` is supplied, the CLI requires a `GeoId` column in the stores input. `_attach_affluence_features` joins the affluence file on `GeoId` and derives the normalised columns from any available `MedianIncome`, `Pct100kHH`, `PctRenter`, or `Turnover` series if they are not already present. Both datasets coerce `GeoId` to string to tolerate CSVs that inferred numeric types.
 - **Posterior inputs**: `posterior-only` and `blended` modes refuse to run without `--observations`. The loader validates the payload against the observations schema before scoring.
 - **Trace emission**: Trace exports respect the include/exclude toggles. Posterior traces and diagnostics are only written when the respective flags are set and data exists.
 - **Omega defaults**: When not provided, `ω` defaults to `0.5`, evenly weighting prior and posterior scores in blended runs.
@@ -109,7 +109,7 @@ Atlas validates incoming datasets via the schemas in `packages/atlas-python/src/
 | `Type` | ✓ | string | Store category used by the prior. |
 | `Lat` | ✓ | float64 | Latitude in decimal degrees. Duplicated to `Latitude` during scoring if absent. |
 | `Lon` | ✓ | float64 | Longitude in decimal degrees. Duplicated to `Longitude` during scoring if absent. |
-| `GeoId` | ✓ | string | Geo Identifier used to relate Stores to Affluence. |
+| `GeoId` | Conditional | string | Geo Identifier used to relate Stores to Affluence. Required when joining affluence data. |
 | `ChainFlag` | – | string | Optional chain indicator. |
 | `Notes` | – | string | Optional free-form notes. |
 | `Zip` | – | string | Optional ZIP/ZCTA identifier. |
