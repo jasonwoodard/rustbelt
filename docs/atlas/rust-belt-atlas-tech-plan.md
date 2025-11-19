@@ -114,6 +114,8 @@ Loader inputs and outputs align with the JSON Schemas under `schema/atlas/v1` an
 
 | StoreId | Name | Type | Lat | Lon | GeoId | ChainFlag (opt) | Notes (opt) |
 
+`GeoId` is required when affluence covariates are supplied and is treated as a string identifier, even if the CSV parser infers a numeric type.
+
 ### Input: `affluence.csv`
 
 | GeoId | MedianIncome | PctHH_100kPlus | PctRenters | Population | Metro (opt) |

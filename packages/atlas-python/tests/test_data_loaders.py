@@ -24,6 +24,7 @@ def test_load_stores_csv(tmp_path: Path) -> None:
                 "Type": "Flagship",
                 "Lat": 42.331,
                 "Lon": -83.045,
+                "GeoId": 26163.0,
                 "ChainFlag": "Y",
             }
         ]
@@ -32,9 +33,10 @@ def test_load_stores_csv(tmp_path: Path) -> None:
 
     result = load_stores(stores_path)
 
-    assert result.shape == (1, 6)
+    assert result.shape == (1, 7)
     assert result.loc[0, "StoreId"] == "DT-001"
     assert pytest.approx(result.loc[0, "Lat"], rel=1e-6) == 42.331
+    assert result.loc[0, "GeoId"] == "26163"
 
 
 def test_load_observations_missing_column(tmp_path: Path) -> None:

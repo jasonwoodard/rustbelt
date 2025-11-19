@@ -48,13 +48,14 @@ FLOAT64 = "float64"
 STORES_SCHEMA = DatasetSchema(
     name="stores",
     required_columns=("StoreId", "Name", "Type", "Lat", "Lon"),
-    optional_columns=("ChainFlag", "Notes", "Zip"),
+    optional_columns=("GeoId", "ChainFlag", "Notes", "Zip"),
     dtypes={
         "StoreId": STRING,
         "Name": STRING,
         "Type": STRING,
         "Lat": FLOAT64,
         "Lon": FLOAT64,
+        "GeoId": STRING,
         "ChainFlag": STRING,
         "Notes": STRING,
         "Zip": STRING,
