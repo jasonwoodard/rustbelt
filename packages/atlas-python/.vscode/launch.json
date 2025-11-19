@@ -1,0 +1,74 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Atlas CLI — help",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "atlas.cli",
+      "args": ["--help"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "name": "Atlas CLI — score (prior-only)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "atlas.cli",
+      "args": [
+        "score",
+        "--mode", "prior-only",
+        "--stores", "inputs/atlas_store_input.csv",
+        "--affluence", "inputs/atlas_affluence_input.csv",
+        "--output", "out/dense_prior.csv",
+        "--trace-out", "out/dense_prior_trace.jsonl"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "envFile": "${workspaceFolder}/.env"
+    }
+
+    // Posterior-only (template):
+    // {
+    //   "name": "Atlas CLI — score (posterior-only, dense_urban)",
+    //   "type": "debugpy",
+    //   "request": "launch",
+    //   "module": "atlas.cli",
+    //   "args": [
+    //     "score",
+    //     "--mode", "posterior-only",
+    //     "--stores", "src/atlas/fixtures/dense_urban/stores.csv",
+    //     "--observations", "src/atlas/fixtures/dense_urban/observations.csv",
+    //     "--ecdf-window", "Metro",
+    //     "--posterior-trace", "out/dense_posterior_diagnostics.csv",
+    //     "--output", "out/dense_posterior.csv"
+    //   ],
+    //   "cwd": "${workspaceFolder}",
+    //   "console": "integratedTerminal",
+    //   "justMyCode": true
+    // },
+
+    // Blended (template):
+    // {
+    //   "name": "Atlas CLI — score (blended, dense_urban)",
+    //   "type": "debugpy",
+    //   "request": "launch",
+    //   "module": "atlas.cli",
+    //   "args": [
+    //     "score",
+    //     "--mode", "blended",
+    //     "--stores", "src/atlas/fixtures/dense_urban/stores.csv",
+    //     "--affluence", "src/atlas/fixtures/dense_urban/affluence.csv",
+    //     "--observations", "src/atlas/fixtures/dense_urban/observations.csv",
+    //     "--lambda", "0.6",
+    //     "--output", "out/dense_blended.csv"
+    //   ],
+    //   "cwd": "${workspaceFolder}",
+    //   "console": "integratedTerminal",
+    //   "justMyCode": true
+    // }
+  ]
+}
