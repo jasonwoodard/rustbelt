@@ -149,15 +149,15 @@ Use for ranking when you want a rate-adjusted quality scalar.
 ## 8. Validation Strategy (Pre-registered, falsifiable)
 
 ### Hypotheses
-- H-A: $ \text{Income} \uparrow \Rightarrow V \uparrow $ (positive $\alpha_1$).
-- H-B: $ \text{% Renters} \uparrow \Rightarrow \theta \downarrow $ (negative $\beta_2$).
-- H-C: Effects are **type-moderated** (Thrift > Antique).  
+- H-A: $\text{Income} \uparrow \Rightarrow V \uparrow$ (positive $\alpha_1$).
+- H-B: $\text{% Renters} \uparrow \Rightarrow \theta \downarrow$ (negative $\beta_2$).
+- H-C: Effects are **type-moderated** (Thrift $>$ Antique).
 - H-D: VY-based predictions outperform Google ratings for in-field outcomes.
 
 ### Protocol
-- **Split** by day/metro (e.g., fit on Detroit, test on Ann Arbor).  
+- **Split** by day/metro (e.g., fit on Detroit, test on Ann Arbor).
 - **Report** signs, effect sizes, RMSE/MAE (Value), deviance $R^2$ (Yield), calibration curves.
-- **Ablation:** remove affluence features, then remove type; measure degradation.  
+- **Ablation:** remove affluence features, then remove type; measure degradation.
 - **Robustness:** Winsorize extremes (e.g., spend per item), test NegBin vs Poisson.
 
 ---
@@ -176,7 +176,7 @@ Use for ranking when you want a rate-adjusted quality scalar.
 **Contract:** Atlas shapes the *value surface*; Solver navigates it.
 
 ### 9.1 Posterior-Only Inference
-In cold-start or “no-priors” phases, VY serves as a posterior predictor: models trained on observed visits (V, N, t) produce out-of-sample predictions for unvisited stores using affluence covariates and/or neighbor smoothing. Predicted θ is mapped to Y via the same ECDF as observations, preserving the operational 1–5 scale. Uncertainty is surfaced as a credibility score to guide exploitation vs exploration.
+In cold-start or “no-priors” phases, VY serves as a posterior predictor: models trained on observed visits (V, N, t) produce out-of-sample predictions for unvisited stores using affluence covariates and/or neighbor smoothing. Predicted $\theta$ is mapped to $Y$ via the same ECDF as observations, preserving the operational 1–5 scale. Uncertainty is surfaced as a credibility score to guide exploitation vs exploration.
 
 ---
 
