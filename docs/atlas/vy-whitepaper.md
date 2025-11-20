@@ -24,26 +24,26 @@ We formalize this as **Value (V)** and **Yield (Y)**.
 “**Quality of discovered items** given that discovery occurred.”  
 Operationally: a 1–5 ordinal rating reflecting the observer’s haul quality (uniqueness, desirability, condition, price-to-value fit).
 
-- **MVP proxy:** one Likert response per visit: \( V \in \{1,\dots,5\} \).
+- **MVP proxy:** one Likert response per visit: $V \in \{1,\dots,5\}$.
 - **Rationale:** V captures *intensity of goodness*; it should correlate with local wealth proxies (median income, % HH>\$100k), moderated by store type.
 
 ### 2.2 Yield (Y)
-“**Rate of purchased worthwhile items per unit expected time.**”  
-Let \(t\) be dwell time (minutes) and define a **nominal dwell** \(t_0 = 45\) min (policy baseline). Let \(N\) be the count of **items actually purchased** during the visit. (Spending is the threshold—if you bought it, it qualified.)
+“**Rate of purchased worthwhile items per unit expected time.**”
+Let $t$ be dwell time (minutes) and define a **nominal dwell** $t_0 = 45$ min (policy baseline). Let $N$ be the count of **items actually purchased** during the visit. (Spending is the threshold—if you bought it, it qualified.)
 
-- **Latent rate:** \(\theta\) items per \(t_0\).
-- **Observation model:**  
-  \[
+- **Latent rate:** $\theta$ items per $t_0$.
+- **Observation model:**
+  $$
   N \mid \theta, t \sim \text{Poisson}\!\big(\theta \cdot t/t_0 \big)
-  \]
+  $$
   (Negative Binomial alternative if overdispersed.)
-- **MVP estimator:** \(\hat{\theta} = \dfrac{N}{t/t_0}\).
+- **MVP estimator:** $\hat{\theta} = \dfrac{N}{t/t_0}$.
 
 **Score mapping (to [1,5]):** use a **monotone, dataset-relative** transform to preserve order and robustness:
-\[
+$$
 Y = 1 + 4 \cdot F_{\Theta}(\hat{\theta}),
-\]
-where \(F_{\Theta}\) is the empirical CDF of \(\hat{\theta}\) in the reference set (metro/day/corpus).
+$$
+where $F_{\Theta}$ is the empirical CDF of $\hat{\theta}$ in the reference set (metro/day/corpus).
 
 > **Interpretation:** Two stores with equal total purchases differ if one produces them in less time—Y rewards *efficiency*, not just count.
 
@@ -53,16 +53,16 @@ where \(F_{\Theta}\) is the empirical CDF of \(\hat{\theta}\) in the reference s
 
 Per visit, collect three fields (plus optional extras):
 
-1) **Dwell minutes** \(t\) (numeric).  
-2) **Purchased items** \(N\) (integer).  
-3) **Haul quality** \(H\in\{1,\dots,5\}\) (Likert).  
+1) **Dwell minutes** $t$ (numeric).
+2) **Purchased items** $N$ (integer).
+3) **Haul quality** $H\in\{1,\dots,5\}$ (Likert).
 
 Derived:
-- \(\hat{\theta} = N/(t/45)\) → **Yield rate** (items per \(t_0\)).  
-- \(Y = 1 + 4\cdot \text{ECDF}(\hat{\theta})\) (or PERCENTRANK).  
-- \(V = H\) (MVP; can upgrade to an ordinal model later).
+- $\hat{\theta} = N/(t/45)$ → **Yield rate** (items per $t_0$).
+- $Y = 1 + 4\cdot \text{ECDF}(\hat{\theta})$ (or PERCENTRANK).
+- $V = H$ (MVP; can upgrade to an ordinal model later).
 
-**Optional (useful later):** total spend \(S\), category tags, returns, observer id.
+**Optional (useful later):** total spend $S$, category tags, returns, observer id.
 
 ---
 
@@ -76,14 +76,14 @@ Empirical analysis (Detroit/Ann Arbor sample) indicates:
 
 Encode as **priors** for unvisited stores, **by type**:
 
-\[
+$$
 \begin{aligned}
 E[V \mid x] &= V_b(\text{type}) + \alpha_1 \cdot \text{Income}_{norm} + \alpha_2 \cdot \text{Pct100k}_{norm} + \epsilon_V \\
 \log E[\theta \mid x] &= \beta_0(\text{type}) + \beta_1 \cdot \text{Income}_{norm} - \beta_2 \cdot \text{Renters}_{norm} + \epsilon_\theta
 \end{aligned}
-\]
+$$
 
-- \(V_b(\text{type})\), \(\beta_0(\text{type})\) are **type baselines** (Thrift, Antique, Vintage).  
+- $V_b(\text{type})$, $\beta_0(\text{type})$ are **type baselines** (Thrift, Antique, Vintage).
 - Signs follow the empirical correlations; magnitudes are fit from data.
 
 **ZIP (ZCTA) vs Tract:** start at ZIP (practical for driving); upgrade to tracts if you need finer spatial signal. The model form is unchanged.
@@ -93,24 +93,24 @@ E[V \mid x] &= V_b(\text{type}) + \alpha_1 \cdot \text{Income}_{norm} + \alpha_2
 ## 5. Estimation and Calibration
 
 ### 5.1 Yield
-- **GLM (Poisson/NegBin):**  
-  \[
-  N \sim \text{Poisson}\big( \exp(\eta)\cdot t/t_0 \big),\quad 
+- **GLM (Poisson/NegBin):**
+  $$
+  N \sim \text{Poisson}\big( \exp(\eta)\cdot t/t_0 \big),\quad
   \eta = \beta_0(\text{type}) + \beta^\top x
-  \]
-  with \(x\) including normalized affluence features.  
+  $$
+  with $x$ including normalized affluence features.
   Use NegBin if overdispersion (check Pearson dispersion).
 
 ### 5.2 Value
-- **Ordinal regression (ordered logit/probit):** \(V \in \{1,\dots,5\}\) with thresholds \(\tau_1<\dots<\tau_4\).  
-  Linear predictor \( \alpha_0(\text{type}) + \alpha^\top x \).
+- **Ordinal regression (ordered logit/probit):** $V \in \{1,\dots,5\}$ with thresholds $\tau_1<\dots<\tau_4$.
+  Linear predictor $ \alpha_0(\text{type}) + \alpha^\top x $.
 
 **Pragmatic MVP:** fit linear models first for interpretability; switch to ordinal + NegBin when samples enlarge.
 
 ### 5.3 Baselines by Type (priors)
 Seed baselines from observed means and economic logic:
 
-| Type    | \(V_b\) | \(Y_b\) | Notes |
+| Type    | $V_b$ | $Y_b$ | Notes |
 |---------|--------:|--------:|-------|
 | Thrift  | 2.8     | 3.4     | High turnover, moderate quality |
 | Antique | 4.0     | 2.0     | High quality, low throughput |
@@ -124,16 +124,16 @@ Seed baselines from observed means and economic logic:
 
 Keep V and Y distinct for analysis, and **only project** to a scalar when an algorithm requires it (e.g., routing):
 
-\[
-\text{VYScore}_\lambda = \lambda V + (1-\lambda) Y,\quad 
+$$
+\text{VYScore}_\lambda = \lambda V + (1-\lambda) Y,\quad
 \lambda \in \{0.8\ \text{Harvest},\ 0.6\ \text{Balanced},\ 0.4\ \text{Explore}\}.
-\]
+$$
 
 Optional single-number objective for economics:
-\[
-\text{EVH} \approx E[V]\cdot E[\theta] 
+$$
+\text{EVH} \approx E[V]\cdot E[\theta]
 \quad \text{(“value-points per 45 min”)}
-\]
+$$
 Use for ranking when you want a rate-adjusted quality scalar.
 
 ---
@@ -141,7 +141,7 @@ Use for ranking when you want a rate-adjusted quality scalar.
 ## 7. JScore and Observer Effects
 
 - **JScore** (curation prior) is *exogenous* to V/Y; use it as a covariate for Value or as a tie-breaker.  
-- **Single-observer mode (you):** observed \(V,Y\) **override** priors for visited stores.  
+- **Single-observer mode (you):** observed $V,Y$ **override** priors for visited stores.
 - **Multi-observer future:** add random intercepts per observer to capture calibration and reliability; normalize individual biases (per-observer z-scores) before aggregation.
 
 ---
@@ -149,14 +149,14 @@ Use for ranking when you want a rate-adjusted quality scalar.
 ## 8. Validation Strategy (Pre-registered, falsifiable)
 
 ### Hypotheses
-- H-A: \( \text{Income} \uparrow \Rightarrow V \uparrow \) (positive \(\alpha_1\)).  
-- H-B: \( \text{% Renters} \uparrow \Rightarrow \theta \downarrow \) (negative \(\beta_2\)).  
+- H-A: $ \text{Income} \uparrow \Rightarrow V \uparrow $ (positive $\alpha_1$).
+- H-B: $ \text{% Renters} \uparrow \Rightarrow \theta \downarrow $ (negative $\beta_2$).
 - H-C: Effects are **type-moderated** (Thrift > Antique).  
 - H-D: VY-based predictions outperform Google ratings for in-field outcomes.
 
 ### Protocol
 - **Split** by day/metro (e.g., fit on Detroit, test on Ann Arbor).  
-- **Report** signs, effect sizes, RMSE/MAE (Value), deviance \(R^2\) (Yield), calibration curves.  
+- **Report** signs, effect sizes, RMSE/MAE (Value), deviance $R^2$ (Yield), calibration curves.
 - **Ablation:** remove affluence features, then remove type; measure degradation.  
 - **Robustness:** Winsorize extremes (e.g., spend per item), test NegBin vs Poisson.
 
@@ -166,11 +166,11 @@ Use for ranking when you want a rate-adjusted quality scalar.
 
 ### Atlas (Context Engine)
 - Inputs: store metadata, ZIP affluence, type; (optionally) past V/Y observations.  
-- Outputs: \(E[V]\), \(E[\theta]\), and a projected scalar if requested.  
+- Outputs: $E[V]$, $E[\theta]$, and a projected scalar if requested.
 - Roles: generate priors for unvisited stores; update with observations; identify spatial anchors/clusters.
 
 ### Solver (Routing)
-- Inputs: 1-D scores only (e.g., \(\text{VYScore}_\lambda\) or EVH), constraints (window, dwell, mph).  
+- Inputs: 1-D scores only (e.g., $\text{VYScore}_\lambda$ or EVH), constraints (window, dwell, mph).
 - Role: deterministic route optimization; explainable, free of scoring logic.
 
 **Contract:** Atlas shapes the *value surface*; Solver navigates it.
@@ -197,11 +197,11 @@ In cold-start or “no-priors” phases, VY serves as a posterior predictor: mod
 
 ## 11. Worked Example (MVP Transform)
 
-Visit row: \(t=36\) min, \(N=4\), \(H=4\).  
-- \(\hat{\theta} = 4 / (36/45) = 5.0\) items per 45 min.  
-- If the metro ECDF \(F_{\Theta}(5.0)=0.78\), then \(Y = 1 + 4\cdot 0.78 = 4.12\).  
-- \(V = H = 4\).  
-- **Balanced projection:** \(\text{VYScore}_{0.6} = 0.6\cdot 4 + 0.4\cdot 4.12 = 4.05\).
+Visit row: $t=36$ min, $N=4$, $H=4$.
+- $\hat{\theta} = 4 / (36/45) = 5.0$ items per 45 min.
+- If the metro ECDF $F_{\Theta}(5.0)=0.78$, then $Y = 1 + 4\cdot 0.78 = 4.12$.
+- $V = H = 4$.
+- **Balanced projection:** $\text{VYScore}_{0.6} = 0.6\cdot 4 + 0.4\cdot 4.12 = 4.05$.
 
 Explainable: “Above-average quality with a high rate per 45 minutes.”
 
