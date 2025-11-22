@@ -7,7 +7,11 @@
 SELECT s.*
 FROM v_store_score_out AS s
 JOIN store_batches AS b ON s.StoreId = b.store_id
-WHERE b.batch_name = 'Detroit-Set'; -- <<< TARGET BATCH NAME HERE
+-- WHERE b.batch_name = 'Detroit-Set'; -- <<< TARGET BATCH NAME HERE
+--WHERE b.batch_name = 'AnnArbor-Set'; -- <<< TARGET BATCH NAME HERE
+--WHERE b.batch_name = 'Cleveland-Set'; -- <<< TARGET BATCH NAME HERE
+--WHERE b.batch_name = 'Buffalo-Set'; -- <<< TARGET BATCH NAME HERE
+WHERE b.batch_name = 'Catskills-Set'; -- <<< TARGET BATCH NAME HERE
 
 
 -- 2. EXPORT AFFLUENCE DATA (atlas_affluence_input.csv)
@@ -23,7 +27,12 @@ WHERE
             s.GeoId
         FROM v_store_score_out AS s
         JOIN store_batches AS b ON s.StoreId = b.store_id
-        WHERE b.batch_name = 'Detroit-Set' -- <<< REPEAT THE TARGET BATCH NAME HERE
+        --WHERE b.batch_name = 'Detroit-Set' -- <<< REPEAT THE TARGET BATCH NAME HERE
+        --WHERE b.batch_name = 'AnnArbor-Set' -- <<< REPEAT THE TARGET BATCH NAME HERE
+        --WHERE b.batch_name = 'Cleveland-Set' -- <<< REPEAT THE TARGET BATCH NAME HERE
+        --WHERE b.batch_name = 'Buffalo-Set' -- <<< REPEAT THE TARGET BATCH NAME HERE
+        WHERE b.batch_name = 'Catskills-Set' -- <<< REPEAT THE TARGET BATCH NAME HERE
+
     );
 
 -- 3. RESET OUTPUT AND MODE

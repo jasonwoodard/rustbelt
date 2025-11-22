@@ -22,8 +22,8 @@
         "--mode", "prior-only",
         "--stores", "inputs/atlas_store_input.csv",
         "--affluence", "inputs/atlas_affluence_input.csv",
-        "--output", "out/dense_prior.csv",
-        "--trace-out", "out/dense_prior_trace.jsonl"
+        "--output", "out/catskill_prior.csv",
+        "--trace-out", "out/catskill_prior.jsonl"
       ],
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal",
