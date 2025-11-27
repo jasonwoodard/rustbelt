@@ -94,6 +94,41 @@ You can sort by V, Y, or combine them (see “Modes” below).
 
 Re-run the commands with the `sparse_rural` fixtures to see how the engine behaves with minimal observations and heavier reliance on priors.
 
+### Map dense or sparse neighborhoods with anchors and sub-clusters
+
+Use the built-in fixtures to learn the anchor/sub-cluster workflows before running them on your own metro. The examples below write outputs to `out/` so you can inspect them alongside your scoring runs.
+
+1. **Find anchors (DBSCAN):** good for tighter metros where distances are consistent.
+   ```bash
+   rustbelt-atlas anchors \
+     --stores packages/atlas-python/src/atlas/fixtures/dense_urban/stores.csv \
+     --algorithm dbscan \
+     --eps 0.003 \
+     --min-samples 5 \
+     --output out/dense_anchors.csv
+   ```
+   - **`--eps`**: pick a maximum neighbor distance in degrees; start around 0.002–0.004 for dense metros and increase only if clusters look over-split. If you see one giant cluster, lower it.
+   - **`--min-samples`**: raise this (e.g., 8–10) to require more evidence before declaring an anchor; lower it (3–4) when you expect sparse retail.
+   - **Output routing:** pass `out/dense_anchors.csv` into `rustbelt-atlas score --affluence ... --anchors out/dense_anchors.csv` to let the scoring stage weight stores near strong anchors higher, or load it into your diagnostics notebooks to visualize where Atlas thinks the retail gravity points are.
+
+2. **Find sub-clusters (HDBSCAN):** better when store spacing changes a lot across the metro.
+   ```bash
+   rustbelt-atlas subclusters \
+     --stores packages/atlas-python/src/atlas/fixtures/sparse_rural/stores.csv \
+     --algorithm hdbscan \
+     --min-samples 4 \
+     --min-cluster-size 6 \
+     --output out/rural_subclusters.csv
+   ```
+   - Prefer **`hdbscan`** when density varies block-to-block or you are mixing suburbs and city cores. Stick with **`dbscan`** when the street grid is uniform and you want predictable distances.
+   - Tune **`--min-samples`** the same way as anchors; use **`--min-cluster-size`** to filter out tiny clusters that are not worth a dedicated stop.
+   - **Output routing:** feed `out/rural_subclusters.csv` to the scorer with `--subclusters out/rural_subclusters.csv` to nudge Value/Yield toward promising pockets, or ship the file into diagnostics to see which pockets are driving high scores.
+
+3. **Quick sanity loop:**
+   - Start with `dense_urban` fixtures and `dbscan` to learn how changing `--eps` splits or merges anchors.
+   - Switch to `sparse_rural` fixtures and `hdbscan` to see how the algorithm adapts to uneven spacing without hand-tuning `--eps`.
+   - Keep the best anchor/sub-cluster file next to your scoring outputs so routing has both the **where** (clusters) and the **how good** (scores).
+
 ### Trace output switches
 
 - `--trace-out PATH` writes a combined trace for whichever scoring stages ran. Priors, posteriors, and blend rows are included by default.
