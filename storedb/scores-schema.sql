@@ -62,6 +62,7 @@ WITH latest AS (
 SELECT
   s.store_id,
   s.store_name,
+  s.store_type,
 
   MAX(CASE
         WHEN st.code = 'G_RATING'
@@ -110,7 +111,7 @@ SELECT
             AND l.maxkey = sc.effective_date || 'T' || substr(sc.observed_at,12)
             THEN sc.value
           END) AS J_Post,
-          
+
      MAX(CASE
           WHEN st.code = 'ATLAS_VALUE'
           AND l.maxkey = sc.effective_date || 'T' || substr(sc.observed_at,12)
