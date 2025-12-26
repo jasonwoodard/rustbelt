@@ -28,6 +28,59 @@ All other flags are scoped to a subcommand.
 
 ---
 
+## Common recipes
+
+The `fixtures/solver/atlas` directory contains copy/paste-ready commands that exercise the CLI end-to-end using the bundled dense urban datasets from `packages/atlas-python/src/atlas/fixtures/dense_urban`. Run them from the repository root; adjust extensions to `*.jsonl` to emit newline-delimited JSON instead of CSV.
+
+### Blended scoring with traces
+
+```bash
+rustbelt-atlas score \
+  --mode blended \
+  --stores packages/atlas-python/src/atlas/fixtures/dense_urban/stores.csv \
+  --affluence packages/atlas-python/src/atlas/fixtures/dense_urban/affluence.csv \
+  --observations packages/atlas-python/src/atlas/fixtures/dense_urban/observations.csv \
+  --output fixtures/solver/atlas/dense-urban-scores.csv \
+  --lambda 0.5 \
+  --trace-out fixtures/solver/atlas/dense-urban-trace.jsonl \
+  --posterior-trace fixtures/solver/atlas/dense-urban-posterior-trace.csv
+```
+
+- Use `--trace-out` when you want a compact, stage-aware log of the prior/posterior/blend calculations. Keep the `.jsonl` extension (or add `--trace-format csv`) to control serialization.
+- Supply `--posterior-trace` when you need the wide, posterior-only diagnostics; it also enables HTML/JSON/Parquet diagnostics sidecars next to the scored output unless `--no-diagnostics` is set.
+- The score export contains per-store `Value`, `Yield`, and optional `Composite` columns; traces include the stage indicator and intermediate weights for deeper inspection.
+
+### Anchor detection (CSV or JSONL)
+
+```bash
+rustbelt-atlas anchors \
+  --stores packages/atlas-python/src/atlas/fixtures/dense_urban/stores.csv \
+  --output fixtures/solver/atlas/dense-urban-anchors.csv \
+  --store-assignments fixtures/solver/atlas/dense-urban-anchor-assignments.csv \
+  --metrics fixtures/solver/atlas/dense-urban-anchor-metrics.json \
+  --algorithm dbscan \
+  --eps 0.03 \
+  --min-samples 2 \
+  --metric euclidean \
+  --id-prefix metro-anchor
+```
+
+- Anchor exports list centroids and store counts, assignments map each `StoreId` to an anchor label, and the metrics JSON captures the DBSCAN tuning and cluster counts. Swap `*.csv` outputs for `*.jsonl` when you prefer newline-delimited JSON.
+
+### Sub-cluster materialisation
+
+```bash
+rustbelt-atlas subclusters \
+  --anchor-id metro-anchor-001 \
+  --spec fixtures/solver/atlas/dense-urban-subcluster-spec.json \
+  --output fixtures/solver/atlas/dense-urban-subclusters.jsonl \
+  --id-prefix metro-anchor-001-sc
+```
+
+- The spec defines the target hierarchy; the CLI stamps each row with the anchor ID, lineage, and store roster. Emitting JSON lines makes it easy to concatenate multiple anchors, while a `.csv` extension produces a flat table.
+
+---
+
 ## `score` command
 
 ### Flags
