@@ -3,7 +3,7 @@ import requests
 from rustbelt_census import census_api
 
 
-def test_fetch_state_zcta_rows_uses_ucgid(monkeypatch, tmp_path):
+def test_fetch_state_zcta_rows_uses_state_filter(monkeypatch, tmp_path):
     captured: dict[str, dict[str, str]] = {}
 
     def fake_request_json(session, url, params, timeout, retries):
@@ -18,7 +18,7 @@ def test_fetch_state_zcta_rows_uses_ucgid(monkeypatch, tmp_path):
     result = census_api.fetch_state_zcta_rows(
         requests.Session(),
         2023,
-        "0400000US42",
+        "42",
         tmp_path / "state.json",
         timeout=1,
         retries=1,
@@ -26,9 +26,8 @@ def test_fetch_state_zcta_rows_uses_ucgid(monkeypatch, tmp_path):
         api_key=None,
     )
 
-    assert captured["params"]["ucgid"] == "0400000US42"
+    assert captured["params"]["in"] == "state:42"
     assert captured["params"]["for"] == f"{census_api.ZCTA_FIELD}:*"
-    assert "in" not in captured["params"]
     assert result.rows == [{"NAME": "Test ZCTA", census_api.ZCTA_FIELD: "12345"}]
 
 
@@ -83,7 +82,7 @@ def test_fetch_state_zcta_rows_refresh_bypasses_cache(monkeypatch, tmp_path):
     result = census_api.fetch_state_zcta_rows(
         requests.Session(),
         2023,
-        "0400000US42",
+        "42",
         tmp_path / "state.json",
         timeout=1,
         retries=1,
