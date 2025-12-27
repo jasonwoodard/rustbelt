@@ -114,7 +114,7 @@ def test_affluence_cli_state_only_sorts_output(monkeypatch, tmp_path, capsys):
     def fake_fetch_state_zcta_rows(
         session,
         year,
-        state_ucgid,
+        state_fips,
         cache_path,
         timeout,
         retries,
@@ -163,7 +163,7 @@ def test_affluence_cli_state_with_zips_preserves_order(monkeypatch, tmp_path, ca
     def fake_fetch_state_zcta_rows(
         session,
         year,
-        state_ucgid,
+        state_fips,
         cache_path,
         timeout,
         retries,

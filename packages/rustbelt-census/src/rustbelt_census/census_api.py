@@ -126,7 +126,7 @@ def _parse_census_rows(raw: Iterable[Iterable[str]]) -> list[dict[str, str]]:
 def fetch_state_zcta_rows(
     session: requests.Session,
     year: int,
-    state_ucgid: str,
+    state_fips: str,
     cache_path: Path,
     timeout: int,
     retries: int,
@@ -144,7 +144,7 @@ def fetch_state_zcta_rows(
     params.update(
         {
             "for": f"{ZCTA_FIELD}:*",
-            "ucgid": state_ucgid,
+            "in": f"state:{state_fips}",
         }
     )
     if api_key:

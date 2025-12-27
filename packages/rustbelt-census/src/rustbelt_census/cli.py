@@ -18,7 +18,7 @@ from rustbelt_census.census_api import (
 )
 from rustbelt_census.derive import pct_hh_100k_plus, pct_renters
 from rustbelt_census.formatters import write_rows
-from rustbelt_census.state_map import get_state_fips, get_state_ucgid
+from rustbelt_census.state_map import get_state_fips
 
 
 class UsageError(ValueError):
@@ -171,11 +171,9 @@ def run_affluence(args: argparse.Namespace, parser: argparse.ArgumentParser) -> 
         raise UsageError("At least one input mode is required: --state, --zips, or --zips-file.")
 
     state_fips = None
-    state_ucgid = None
     if args.state:
         try:
             state_fips = get_state_fips(args.state)
-            state_ucgid = get_state_ucgid(args.state)
         except ValueError as exc:
             raise UsageError(str(exc)) from exc
 
@@ -211,14 +209,14 @@ def run_affluence(args: argparse.Namespace, parser: argparse.ArgumentParser) -> 
 
     if state_fips:
         print(
-            f"Fetching ZCTAs for state={args.state.upper()} (ucgid={state_ucgid})",
+            f"Fetching ZCTAs for state={args.state.upper()} (fips={state_fips})",
             file=sys.stderr,
         )
         state_cache = cache_dir / f"state_collection_{year}_{state_fips}.json"
         result = fetch_state_zcta_rows(
             session,
             year,
-            state_ucgid,
+            state_fips,
             state_cache,
             timeout=args.timeout,
             retries=args.retries,
