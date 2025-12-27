@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS "temp_zip_data" (
 );
 
 
-.mode CSV
+.mode csv
 .import --skip 1 import/rust_belt_zip_data.csv temp_zip_data
 
 INSERT INTO zip_detail (
