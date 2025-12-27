@@ -273,7 +273,7 @@ def run_affluence(args: argparse.Namespace, parser: argparse.ArgumentParser) -> 
 
     output_handle = sys.stdout
     if args.out:
-        output_handle = open(args.out, "w", encoding="utf-8")
+        output_handle = open(args.out, "w", encoding="utf-8", newline="")
 
     try:
         write_rows(

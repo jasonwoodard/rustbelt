@@ -46,7 +46,7 @@ def write_csv(
     emit_sqlite_ready: bool,
 ) -> None:
     fieldnames = build_fieldnames(include_audit_fields)
-    writer = csv.DictWriter(handle, fieldnames=fieldnames)
+    writer = csv.DictWriter(handle, fieldnames=fieldnames, lineterminator="\n")
     writer.writeheader()
     for row in rows:
         formatted = {
