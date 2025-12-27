@@ -59,7 +59,7 @@ def parse_zip_inputs(zips_arg: Optional[str], zips_file: Optional[str]) -> list[
         try:
             values.extend(load_zips_file(Path(zips_file)))
         except FileNotFoundError as exc:
-            raise UsageError(f\"ZIP file not found: {zips_file}\") from exc
+            raise UsageError(f"ZIP file not found: {zips_file}") from exc
     return normalize_zips(values)
 
 
