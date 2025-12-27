@@ -84,10 +84,12 @@ def discover_latest_acs5_year(
     timeout: int,
     retries: int,
     cache_ttl_days: int,
+    refresh_cache: bool = False,
 ) -> tuple[int, bool]:
-    cached = read_cache_json(cache_path, ttl_days=cache_ttl_days)
-    if cached and "year" in cached:
-        return int(cached["year"]), True
+    if not refresh_cache:
+        cached = read_cache_json(cache_path, ttl_days=cache_ttl_days)
+        if cached and "year" in cached:
+            return int(cached["year"]), True
 
     data = _request_json(session, DISCOVERY_URL, None, timeout, retries)
     years = _parse_dataset_years(data)
@@ -130,10 +132,12 @@ def fetch_state_zcta_rows(
     retries: int,
     cache_ttl_days: int,
     api_key: Optional[str],
+    refresh_cache: bool = False,
 ) -> FetchResult:
-    cached = read_cache_json(cache_path, ttl_days=cache_ttl_days)
-    if cached and "rows" in cached:
-        return FetchResult(rows=cached["rows"], cache_hit=True)
+    if not refresh_cache:
+        cached = read_cache_json(cache_path, ttl_days=cache_ttl_days)
+        if cached and "rows" in cached:
+            return FetchResult(rows=cached["rows"], cache_hit=True)
 
     url = f"https://api.census.gov/data/{year}/{DATASET}"
     params = _build_base_params()

@@ -193,6 +193,7 @@ def run_affluence(args: argparse.Namespace, parser: argparse.ArgumentParser) -> 
             timeout=args.timeout,
             retries=args.retries,
             cache_ttl_days=21,
+            refresh_cache=args.refresh_cache,
         )
     except ApiError as exc:
         raise ApiError(
@@ -223,6 +224,7 @@ def run_affluence(args: argparse.Namespace, parser: argparse.ArgumentParser) -> 
             retries=args.retries,
             cache_ttl_days=7,
             api_key=api_key,
+            refresh_cache=args.refresh_cache,
         )
         if result.cache_hit:
             print("Cache hit: state collection", file=sys.stderr)
@@ -352,6 +354,11 @@ def build_parser() -> argparse.ArgumentParser:
         type=int,
         default=3,
         help="Percent precision (default: 3).",
+    )
+    affluence.add_argument(
+        "--refresh-cache",
+        action="store_true",
+        help="Bypass cached latest-year and state collection lookups.",
     )
     return parser
 
