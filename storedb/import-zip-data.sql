@@ -37,11 +37,21 @@ SELECT
   SUBSTR("Geographic Area Name", -5),
   "Geography",
   CAST(REPLACE("Population", ',', '') as INTEGER),
-  CAST(REPLACE(" MedianIncome ", ',', '') as INTEGER),
-  CAST("Pct100kPlus" as REAL),
-  CAST("PctRenter" as REAL),
+  CAST(
+    REPLACE(
+      REPLACE(
+        REPLACE(" MedianIncome ", ',', ''),
+        '$',
+        ''
+      ),
+      ' ',
+      ''
+    ) as REAL
+  ),
+  CAST(REPLACE("Pct100kPlus", '%', '') as REAL),
+  CAST(REPLACE("PctRenter", '%', '') as REAL),
   CAST(REPLACE("TotalRentersPopulation", ',', '') as INTEGER),
-  CAST("PctBAPlus" as REAL)
+  CAST(REPLACE("PctBAPlus", '%', '') as REAL)
 FROM temp_zip_data
 WHERE true
 ON CONFLICT(zip) DO UPDATE SET
@@ -57,4 +67,3 @@ ON CONFLICT(zip) DO UPDATE SET
   pct_ba_plus       = excluded.pct_ba_plus;
   --lat
   --long
-
