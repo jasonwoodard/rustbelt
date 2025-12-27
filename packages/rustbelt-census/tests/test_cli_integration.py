@@ -1,7 +1,10 @@
 import argparse
 import json
 
+import pytest
+
 from rustbelt_census import cli
+from rustbelt_census import census_api
 from rustbelt_census.formatters import BASE_FIELDS
 
 
@@ -60,3 +63,143 @@ def test_affluence_cli_outputs_expected_schema(monkeypatch, tmp_path, capsys):
         value = row[key]
         assert value is not None
         assert 0 <= value <= 100
+
+
+def test_affluence_cli_requires_input_mode(tmp_path):
+    args = argparse.Namespace(
+        zips=None,
+        zips_file=None,
+        state=None,
+        out=None,
+        format="jsonl",
+        emit_sqlite_ready=True,
+        include_audit_fields=True,
+        cache_dir=str(tmp_path),
+        timeout=1,
+        retries=1,
+        api_key_env="CENSUS_API_KEY",
+        precision=3,
+        refresh_cache=False,
+    )
+
+    with pytest.raises(cli.UsageError):
+        cli.run_affluence(args, cli.build_parser())
+
+
+def test_affluence_cli_rejects_invalid_state(tmp_path):
+    args = argparse.Namespace(
+        zips=None,
+        zips_file=None,
+        state="PX",
+        out=None,
+        format="jsonl",
+        emit_sqlite_ready=True,
+        include_audit_fields=True,
+        cache_dir=str(tmp_path),
+        timeout=1,
+        retries=1,
+        api_key_env="CENSUS_API_KEY",
+        precision=3,
+        refresh_cache=False,
+    )
+
+    with pytest.raises(cli.UsageError):
+        cli.run_affluence(args, cli.build_parser())
+
+
+def test_affluence_cli_state_only_sorts_output(monkeypatch, tmp_path, capsys):
+    def fake_discover_latest_acs5_year(session, cache_path, timeout, retries, cache_ttl_days, refresh_cache=False):
+        return 2022, False
+
+    def fake_fetch_state_zcta_rows(
+        session,
+        year,
+        state_ucgid,
+        cache_path,
+        timeout,
+        retries,
+        cache_ttl_days,
+        api_key,
+        refresh_cache=False,
+    ):
+        return census_api.FetchResult(
+            rows=[
+                {"NAME": "ZCTA 99999", cli.ZCTA_FIELD: "99999"},
+                {"NAME": "ZCTA 11111", cli.ZCTA_FIELD: "11111"},
+            ],
+            cache_hit=False,
+        )
+
+    monkeypatch.setattr(cli, "discover_latest_acs5_year", fake_discover_latest_acs5_year)
+    monkeypatch.setattr(cli, "fetch_state_zcta_rows", fake_fetch_state_zcta_rows)
+
+    args = argparse.Namespace(
+        zips=None,
+        zips_file=None,
+        state="PA",
+        out=None,
+        format="jsonl",
+        emit_sqlite_ready=True,
+        include_audit_fields=True,
+        cache_dir=str(tmp_path),
+        timeout=1,
+        retries=1,
+        api_key_env="CENSUS_API_KEY",
+        precision=3,
+        refresh_cache=False,
+    )
+
+    result = cli.run_affluence(args, cli.build_parser())
+    assert result == 0
+
+    output = capsys.readouterr().out.strip().splitlines()
+    assert [json.loads(line)["Zip"] for line in output] == ["11111", "99999"]
+
+
+def test_affluence_cli_state_with_zips_preserves_order(monkeypatch, tmp_path, capsys):
+    def fake_discover_latest_acs5_year(session, cache_path, timeout, retries, cache_ttl_days, refresh_cache=False):
+        return 2022, False
+
+    def fake_fetch_state_zcta_rows(
+        session,
+        year,
+        state_ucgid,
+        cache_path,
+        timeout,
+        retries,
+        cache_ttl_days,
+        api_key,
+        refresh_cache=False,
+    ):
+        return census_api.FetchResult(
+            rows=[
+                {"NAME": "ZCTA 19104", cli.ZCTA_FIELD: "19104"},
+            ],
+            cache_hit=False,
+        )
+
+    monkeypatch.setattr(cli, "discover_latest_acs5_year", fake_discover_latest_acs5_year)
+    monkeypatch.setattr(cli, "fetch_state_zcta_rows", fake_fetch_state_zcta_rows)
+
+    args = argparse.Namespace(
+        zips="19104,19103",
+        zips_file=None,
+        state="PA",
+        out=None,
+        format="jsonl",
+        emit_sqlite_ready=True,
+        include_audit_fields=True,
+        cache_dir=str(tmp_path),
+        timeout=1,
+        retries=1,
+        api_key_env="CENSUS_API_KEY",
+        precision=3,
+        refresh_cache=False,
+    )
+
+    result = cli.run_affluence(args, cli.build_parser())
+    assert result == 0
+
+    output = [json.loads(line) for line in capsys.readouterr().out.strip().splitlines()]
+    assert [row["Zip"] for row in output] == ["19104", "19103"]
+    assert output[1]["Status"] == "missing"
