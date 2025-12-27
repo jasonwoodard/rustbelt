@@ -217,7 +217,7 @@ def run_affluence(args: argparse.Namespace, parser: argparse.ArgumentParser) -> 
         result = fetch_state_zcta_rows(
             session,
             year,
-            state_fips,
+            state_ucgid,
             state_cache,
             timeout=args.timeout,
             retries=args.retries,
