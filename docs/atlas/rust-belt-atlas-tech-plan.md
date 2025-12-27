@@ -120,6 +120,40 @@ Loader inputs and outputs align with the JSON Schemas under `schema/atlas/v1` an
 
 | GeoId | MedianIncome | PctHH_100kPlus | PctRenters | Population | Metro (opt) |
 
+#### Affluence ingestion compatibility (rustbelt-census)
+
+`storedb/import-zip-data.sql` currently expects legacy CSV headers (`Geography`, `Geographic Area Name`,
+`Population`, `MedianIncome`, `Pct100kPlus`, `PctRenter`, `TotalRentersPopulation`, `PctBAPlus`), while
+the `rustbelt-census` CLI v0.1 output (see `packages/rustbelt-census/docs/rb-census-functional-spec.md`)
+emits `Zip`, `Name`, `MedianIncome`, `PctHH_100kPlus`, `PctRenters`, `Population`, plus audit fields.
+
+**Decision:** update the importer (not the CLI output) to accept the v0.1 CLI headers.
+
+Rationale:
+- The CLI output contract is already specified for v0.1 and aligns with the tool’s goals.
+- Adding legacy aliases would expand the v0.1 data contract unnecessarily.
+- The importer is a thin SQL ingestion step and cheaper to adapt.
+
+**`pct_ba_plus` scope:** out-of-scope for v0.1. It will remain `NULL` unless a future CLI version derives it
+from additional ACS tables (e.g., `B15003`).
+
+Deterministic mapping (CLI → importer → `zip_detail`):
+
+| CLI field | Import column | `zip_detail` column | Notes |
+| --- | --- | --- | --- |
+| `Zip` | `Zip` | `zip` | Preserve as text (leading zeros). |
+| `Name` | `Name` | `city` / `state` | Optional parse if `Name` is parseable; otherwise leave `city`/`state` NULL. |
+| `Population` | `Population` | `population` | Integer. |
+| `MedianIncome` | `MedianIncome` | `median_income` | Integer. |
+| `PctHH_100kPlus` | `PctHH_100kPlus` | `pct_100k_plus` | Real (percent). |
+| `PctRenters` | `PctRenters` | `pct_renter` | Real (percent). |
+| `RentersCount` | `RentersCount` | `renters_pop` | Integer (raw count). |
+| *(not emitted in v0.1)* | *(n/a)* | `geoid` | Remains NULL unless CLI adds `Geoid`. |
+| *(not emitted in v0.1)* | *(n/a)* | `pct_ba_plus` | Remains NULL (out-of-scope). |
+
+Audit fields (`AcsYear`, `Dataset`, `FetchedAtUtc`, `Status`, `ErrorMessage`, `OccupiedCount`,
+`HHCount_100kPlus`, `HHCountTotal`) are ignored by the importer.
+
 ### Input: `observations.csv`
 
 | StoreId | DateTime | DwellMin | PurchasedItems | HaulLikert | ObserverId (opt) | Spend (opt) | Notes (opt) |
