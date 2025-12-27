@@ -106,10 +106,38 @@ SQLite-ready formatting rules:
 - Numeric fields use plain decimal representation.
 
 ## Schema reconciliation plan (storedb)
-This plan assumes the storedb schema findings in the next stub (to be produced separately). Once the storedb review is complete, update the output schema to match storedb naming and types with a single, documented mapping layer in `formatters.py` (e.g., `Zip` → `zip_code` if required). If storedb columns already match the functional spec, keep the spec names and document a no-op mapping.
+StoreDB’s `zip_detail` table has now been reviewed. The table should be expanded to accept all fields emitted by `rustbelt-census` so we can preserve provenance and audit values while keeping legacy enrichment columns. With that change, the output schema aligns with the database column names and **no mapping layer is required** for v0.1.
 
-Proposed reconciliation steps:
-1. Compare storedb table columns against the spec’s required fields.
-2. Decide on canonical names (prefer storedb if already in use).
-3. Implement a mapping dict used only at the final output stage.
-4. Add a regression test ensuring the output schema matches the chosen storedb contract.
+Reconciled column set (DDL excerpt):
+```sql
+CREATE TABLE IF NOT EXISTS zip_detail (
+  zip            TEXT PRIMARY KEY,
+  geoid          TEXT,
+  city           TEXT,
+  state          TEXT,
+  county_fips    TEXT,
+  name           TEXT,
+  population     INTEGER,
+  median_income  INTEGER,
+  pct_100k_plus  REAL,
+  pct_renter     REAL,
+  renters_pop    INTEGER,
+  pct_ba_plus    REAL,
+  lat            REAL,
+  lon            REAL,
+  acs_year       INTEGER,
+  dataset        TEXT,
+  fetched_at_utc TEXT,
+  status         TEXT,
+  error_message  TEXT,
+  renters_count  INTEGER,
+  occupied_count INTEGER,
+  hh_count_100k_plus INTEGER,
+  hh_count_total INTEGER
+);
+```
+
+Reconciliation steps (updated):
+1. Keep `rustbelt-census` output field names aligned with `zip_detail` (e.g., `Zip` → `zip`, `Name` → `name` in import logic).
+2. Add import-time mapping if needed (CSV header normalization), but avoid renaming in the CLI output.
+3. Add a regression test to validate CSV headers match the expected database columns.

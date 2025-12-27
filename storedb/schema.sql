@@ -59,14 +59,24 @@ CREATE TABLE IF NOT EXISTS zip_detail (
   city           TEXT,
   state          TEXT,
   county_fips    TEXT,
+  name           TEXT,
   population     INTEGER,
   median_income  INTEGER,
   pct_100k_plus  REAL,
   pct_renter     REAL,
   renters_pop    INTEGER,
   pct_ba_plus    REAL,
-  lat            REAL, 
-  lon            REAL
+  lat            REAL,
+  lon            REAL,
+  acs_year       INTEGER,
+  dataset        TEXT,
+  fetched_at_utc TEXT,
+  status         TEXT,
+  error_message  TEXT,
+  renters_count  INTEGER,
+  occupied_count INTEGER,
+  hh_count_100k_plus INTEGER,
+  hh_count_total INTEGER
 );
 
 
@@ -77,4 +87,3 @@ CREATE UNIQUE INDEX IF NOT EXISTS stores_name_addr_uq ON stores(store_name, addr
 CREATE UNIQUE INDEX IF NOT EXISTS store_google_cid_uq ON store_google(google_cid);
 CREATE INDEX IF NOT EXISTS obs_store_date_idx ON observations(store_id, observed_at);
 CREATE INDEX IF NOT EXISTS zip_state_idx  ON zip_detail(state);
-
