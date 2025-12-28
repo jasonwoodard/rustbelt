@@ -119,7 +119,10 @@ def _parse_census_rows(raw: Iterable[Iterable[str]]) -> list[dict[str, str]]:
     header = rows[0]
     results = []
     for row in rows[1:]:
-        results.append({key: value for key, value in zip(header, row)})
+        res = {key: value for key, value in zip(header, row)}
+        if "ucgid" in res and ZCTA_FIELD not in res:
+            res[ZCTA_FIELD] = res["ucgid"].split("US")[-1]
+        results.append(res)
     return results
 
 
