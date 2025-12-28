@@ -234,7 +234,9 @@ def run_affluence(args: argparse.Namespace, parser: argparse.ArgumentParser) -> 
         if result.cache_hit:
             print("Cache hit: state collection", file=sys.stderr)
         raw_rows = result.rows
-        rows_by_zip = {row.get(ZCTA_FIELD): row for row in raw_rows}
+        rows_by_zip = {
+            zcta: row for row in raw_rows for zcta in [row.get(ZCTA_FIELD)] if zcta
+        }
 
         if zip_list:
             for zip_code in zip_list:
@@ -275,7 +277,9 @@ def run_affluence(args: argparse.Namespace, parser: argparse.ArgumentParser) -> 
                     rows.append(build_error_row(zip_code, year, fetched_at, str(exc)))
                 continue
             chunk_rows = _parse_census_rows(raw)
-            rows_by_zip = {row.get(ZCTA_FIELD): row for row in chunk_rows}
+            rows_by_zip = {
+                zcta: row for row in chunk_rows for zcta in [row.get(ZCTA_FIELD)] if zcta
+            }
             for zip_code in chunk:
                 row = rows_by_zip.get(zip_code)
                 if row is None:
