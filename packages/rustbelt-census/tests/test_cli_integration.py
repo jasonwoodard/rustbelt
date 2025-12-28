@@ -12,23 +12,40 @@ def test_affluence_cli_outputs_expected_schema(monkeypatch, tmp_path, capsys):
     def fake_discover_latest_acs5_year(session, cache_path, timeout, retries, cache_ttl_days, refresh_cache=False):
         return 2022, False
 
-    def fake_fetch_zcta_row(session, year, zip_code, timeout, retries, api_key):
-        return {
-            "NAME": "Test ZCTA",
-            "B19013_001E": "75000",
-            "B01003_001E": "2000",
-            "B25003_001E": "800",
-            "B25003_003E": "200",
-            "B19001_001E": "1000",
-            "B19001_013E": "100",
-            "B19001_014E": "50",
-            "B19001_015E": "30",
-            "B19001_016E": "20",
-            "B19001_017E": "10",
-        }
+    def fake_request_json(session, url, params, timeout, retries):
+        return [
+            [
+                "NAME",
+                "B19013_001E",
+                "B01003_001E",
+                "B25003_001E",
+                "B25003_003E",
+                "B19001_001E",
+                "B19001_013E",
+                "B19001_014E",
+                "B19001_015E",
+                "B19001_016E",
+                "B19001_017E",
+                cli.ZCTA_FIELD,
+            ],
+            [
+                "Test ZCTA",
+                "75000",
+                "2000",
+                "800",
+                "200",
+                "1000",
+                "100",
+                "50",
+                "30",
+                "20",
+                "10",
+                "12345",
+            ],
+        ]
 
     monkeypatch.setattr(cli, "discover_latest_acs5_year", fake_discover_latest_acs5_year)
-    monkeypatch.setattr(cli, "fetch_zcta_row", fake_fetch_zcta_row)
+    monkeypatch.setattr(cli, "_request_json", fake_request_json)
 
     args = argparse.Namespace(
         zips="12345",
