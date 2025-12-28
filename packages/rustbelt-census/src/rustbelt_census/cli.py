@@ -12,9 +12,11 @@ from rustbelt_census.census_api import (
     ApiError,
     DATASET,
     ZCTA_FIELD,
+    _build_base_params,
+    _parse_census_rows,
+    _request_json,
     discover_latest_acs5_year,
     fetch_state_zcta_rows,
-    fetch_zcta_row,
 )
 from rustbelt_census.derive import pct_hh_100k_plus, pct_renters
 from rustbelt_census.formatters import write_rows
@@ -70,6 +72,11 @@ def parse_int(value: Optional[str]) -> Optional[int]:
         return int(value)
     except ValueError:
         return None
+
+
+def chunk_list(data: list[str], size: int = 50) -> Iterable[list[str]]:
+    for start in range(0, len(data), size):
+        yield data[start : start + size]
 
 
 def build_row(
@@ -250,19 +257,38 @@ def run_affluence(args: argparse.Namespace, parser: argparse.ArgumentParser) -> 
                 )
     else:
         print("Fetching ZCTAs for explicit ZIP list", file=sys.stderr)
-        for zip_code in zip_list:
+        url = f"https://api.census.gov/data/{year}/{DATASET}"
+        for chunk in chunk_list(zip_list, size=50):
+            joined_zips = ",".join(chunk)
+            params = _build_base_params()
+            params.update(
+                {
+                    "for": f"{ZCTA_FIELD}:{joined_zips}",
+                }
+            )
+            if api_key:
+                params["key"] = api_key
             try:
-                raw = fetch_zcta_row(
-                    session,
-                    year,
-                    zip_code,
-                    timeout=args.timeout,
-                    retries=args.retries,
-                    api_key=api_key,
-                )
-                rows.append(build_row(raw, zip_code, year, fetched_at, args.precision))
+                raw = _request_json(session, url, params, timeout=args.timeout, retries=args.retries)
             except ApiError as exc:
-                rows.append(build_error_row(zip_code, year, fetched_at, str(exc)))
+                for zip_code in chunk:
+                    rows.append(build_error_row(zip_code, year, fetched_at, str(exc)))
+                continue
+            chunk_rows = _parse_census_rows(raw)
+            rows_by_zip = {row.get(ZCTA_FIELD): row for row in chunk_rows}
+            for zip_code in chunk:
+                row = rows_by_zip.get(zip_code)
+                if row is None:
+                    rows.append(
+                        build_error_row(
+                            zip_code,
+                            year,
+                            fetched_at,
+                            f"No data returned for ZCTA {zip_code}.",
+                        )
+                    )
+                else:
+                    rows.append(build_row(row, zip_code, year, fetched_at, args.precision))
 
     ok, missing, error = summarize_rows(rows)
     print(

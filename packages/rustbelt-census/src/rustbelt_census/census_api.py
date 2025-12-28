@@ -143,8 +143,7 @@ def fetch_state_zcta_rows(
     params = _build_base_params()
     params.update(
         {
-            "for": f"{ZCTA_FIELD}:*",
-            "in": f"state:{state_fips}",
+            "ucgid": f"pseudo(0400000US{state_fips}$8600000)",
         }
     )
     if api_key:

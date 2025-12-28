@@ -26,8 +26,7 @@ def test_fetch_state_zcta_rows_uses_state_filter(monkeypatch, tmp_path):
         api_key=None,
     )
 
-    assert captured["params"]["in"] == "state:42"
-    assert captured["params"]["for"] == f"{census_api.ZCTA_FIELD}:*"
+    assert captured["params"]["ucgid"] == "pseudo(0400000US42$8600000)"
     assert result.rows == [{"NAME": "Test ZCTA", census_api.ZCTA_FIELD: "12345"}]
 
 
