@@ -66,12 +66,32 @@ def parse_zip_inputs(zips_arg: Optional[str], zips_file: Optional[str]) -> list[
 
 
 def parse_int(value: Optional[str]) -> Optional[int]:
-    if value is None or value == "":
-        return None
+    if value is None or value == "" or value.startswith("-"):
+        # Most negative census values are suppression flags.
+        try:
+            val = int(value)
+            return val if val >= 0 else None
+        except ValueError:
+            return None
     try:
         return int(value)
     except ValueError:
         return None
+
+
+SUPPRESSION_MESSAGES = {
+    "-666666666": "fell into the lowest or highest interval (suppressed).",
+    "-888888888": "data not available or sample too small.",
+    "-999999999": "value could not be computed.",
+}
+
+
+def format_missing_message(label: str, raw_value: Optional[str]) -> str:
+    if raw_value in SUPPRESSION_MESSAGES:
+        return f"{label} suppressed: {SUPPRESSION_MESSAGES[raw_value]}"
+    if raw_value is None or raw_value == "":
+        return f"Missing {label.lower()}."
+    return f"{label} invalid."
 
 
 def chunk_list(data: list[str], size: int = 50) -> Iterable[list[str]]:
@@ -86,8 +106,10 @@ def build_row(
     fetched_at: str,
     precision: int,
 ) -> dict[str, object]:
-    median_income = parse_int(raw.get("B19013_001E"))
-    population = parse_int(raw.get("B01003_001E"))
+    median_income_raw = raw.get("B19013_001E")
+    population_raw = raw.get("B01003_001E")
+    median_income = parse_int(median_income_raw)
+    population = parse_int(population_raw)
     occupied = parse_int(raw.get("B25003_001E"))
     renters = parse_int(raw.get("B25003_003E"))
     hh_total = parse_int(raw.get("B19001_001E"))
@@ -112,9 +134,9 @@ def build_row(
         errors.append(pct_hh_error)
 
     if median_income is None:
-        errors.append("Missing median income.")
+        errors.append(format_missing_message("Median income", median_income_raw))
     if population is None:
-        errors.append("Missing population.")
+        errors.append(format_missing_message("Population", population_raw))
 
     if errors:
         status = "missing"
