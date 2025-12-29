@@ -50,6 +50,7 @@ At least one input mode is required: `--zips`, `--zips-file`, or `--state`. When
 | `--retries` | HTTP retry count (default: 3) |
 | `--api-key-env` | Environment variable containing Census API key (default: `CENSUS_API_KEY`) |
 | `--precision` | Percent precision for derived fields (default: 3) |
+| `--refresh-cache` | Bypass cached latest-year and state collection lookups |
 
 ## Input modes
 
@@ -90,23 +91,23 @@ rustbelt-census affluence --state PA --zips 19103,19104
 Each row includes:
 
 Required fields:
-- `Zip`
-- `Name`
-- `MedianIncome`
-- `PctHH_100kPlus`
-- `PctRenters`
-- `Population`
-- `AcsYear`
-- `Dataset`
-- `FetchedAtUtc`
-- `Status`
-- `ErrorMessage`
+- `zip`
+- `name`
+- `median_income`
+- `pct_hh_100k_plus`
+- `pct_renters`
+- `population`
+- `acs_year`
+- `dataset`
+- `fetched_at_utc`
+- `status`
+- `error_message`
 
 Audit fields (default on):
-- `RentersCount`
-- `OccupiedCount`
-- `HHCount_100kPlus`
-- `HHCountTotal`
+- `renters_count`
+- `occupied_count`
+- `hh_count_100k_plus`
+- `hh_count_total`
 
 ## Output formatting rules
 
@@ -114,6 +115,23 @@ Audit fields (default on):
 - When `--emit-sqlite-ready` is enabled, NULLs are emitted as empty fields.
 - ZIPs are emitted as strings to preserve leading zeros.
 - `--format jsonl` writes one JSON object per line.
+
+## Census suppression/error codes
+
+The Census API uses negative sentinel values to indicate suppressed or missing data.
+The CLI treats any negative value as missing and surfaces a descriptive error message
+when it encounters these codes.
+
+Known suppression codes and meanings:
+
+| Code | Meaning |
+| --- | --- |
+| `-666666666` | Fell into the lowest or highest interval (suppressed). |
+| `-888888888` | Data not available or sample too small. |
+| `-999999999` | Value could not be computed. |
+
+Other negative values (e.g., `-66666`) are treated as missing data and reported as
+invalid values in the `error_message` field.
 
 ## Exit codes
 
