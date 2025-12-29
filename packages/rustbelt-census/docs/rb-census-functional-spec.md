@@ -150,31 +150,31 @@ If an invalid state is provided:
 
 ### 7.1 Required columns (all formats)
 One record per ZCTA:
-- `Zip` (TEXT, 5 characters, leading zeros preserved)
-- `Name` (TEXT, optional but recommended; Census `NAME`)
-- `MedianIncome` (INTEGER or NULL)
-- `PctHH_100kPlus` (REAL or NULL)
-- `PctRenters` (REAL or NULL)
-- `Population` (INTEGER or NULL)
+- `zip` (TEXT, 5 characters, leading zeros preserved)
+- `name` (TEXT, optional but recommended; Census `NAME`)
+- `median_income` (INTEGER or NULL)
+- `pct_hh_100k_plus` (REAL or NULL)
+- `pct_renters` (REAL or NULL)
+- `population` (INTEGER or NULL)
 
 ### 7.2 Metadata columns (required)
-- `AcsYear` (INTEGER) — the vintage year actually used
-- `Dataset` (TEXT) — fixed value `acs/acs5`
-- `FetchedAtUtc` (TEXT ISO8601)
-- `Status` (TEXT) — one of: `ok`, `missing`, `error`
-- `ErrorMessage` (TEXT, nullable)
+- `acs_year` (INTEGER) — the vintage year actually used
+- `dataset` (TEXT) — fixed value `acs/acs5`
+- `fetched_at_utc` (TEXT ISO8601)
+- `status` (TEXT) — one of: `ok`, `missing`, `error`
+- `error_message` (TEXT, nullable)
 
 ### 7.3 Audit columns (default ON)
-- `RentersCount` (INTEGER)
-- `OccupiedCount` (INTEGER) or chosen denominator count
-- `HHCount_100kPlus` (INTEGER)
-- `HHCountTotal` (INTEGER)
+- `renters_count` (INTEGER)
+- `occupied_count` (INTEGER) or chosen denominator count
+- `hh_count_100k_plus` (INTEGER)
+- `hh_count_total` (INTEGER)
 
 ### 7.4 SQLite-ready rules (default ON)
 When `--emit-sqlite-ready` is enabled:
 - CSV MUST include a header row.
 - NULL values MUST be represented as empty fields in CSV.
-- Zip MUST be emitted as a text field (string) to preserve leading zeros.
+- zip MUST be emitted as a text field (string) to preserve leading zeros.
 - Numeric fields MUST be plain decimal representations without locale formatting.
 
 If `--format jsonl`, each line MUST be a single JSON object with the same field names.
@@ -191,7 +191,7 @@ If `--format jsonl`, each line MUST be a single JSON object with the same field 
 ### 8.2 Error handling
 - Partial success is allowed:
   - errors for some ZIPs MUST NOT prevent output for other ZIPs
-  - failed ZIPs MUST be included with `Status="error"` and `ErrorMessage`
+  - failed ZIPs MUST be included with `status="error"` and `error_message`
 
 ### 8.3 Determinism
 For the same discovered `AcsYear` and same inputs:
