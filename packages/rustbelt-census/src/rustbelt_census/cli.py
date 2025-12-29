@@ -142,54 +142,54 @@ def build_row(
         status = "missing"
 
     return {
-        "Zip": zip_code,
-        "Name": raw.get("NAME"),
-        "MedianIncome": median_income,
-        "PctHH_100kPlus": pct_hh_value,
-        "PctRenters": pct_renters_value,
-        "Population": population,
-        "AcsYear": year,
-        "Dataset": DATASET,
-        "FetchedAtUtc": fetched_at,
-        "Status": status,
-        "ErrorMessage": "; ".join(errors) if errors else None,
-        "RentersCount": renters,
-        "OccupiedCount": occupied,
-        "HHCount_100kPlus": hh_over_100k,
-        "HHCountTotal": hh_total,
+        "zip": zip_code,
+        "name": raw.get("NAME"),
+        "median_income": median_income,
+        "pct_hh_100k_plus": pct_hh_value,
+        "pct_renters": pct_renters_value,
+        "population": population,
+        "acs_year": year,
+        "dataset": DATASET,
+        "fetched_at_utc": fetched_at,
+        "status": status,
+        "error_message": "; ".join(errors) if errors else None,
+        "renters_count": renters,
+        "occupied_count": occupied,
+        "hh_count_100k_plus": hh_over_100k,
+        "hh_count_total": hh_total,
     }
 
 
 def build_error_row(zip_code: str, year: int, fetched_at: str, message: str) -> dict[str, object]:
     return {
-        "Zip": zip_code,
-        "Name": None,
-        "MedianIncome": None,
-        "PctHH_100kPlus": None,
-        "PctRenters": None,
-        "Population": None,
-        "AcsYear": year,
-        "Dataset": DATASET,
-        "FetchedAtUtc": fetched_at,
-        "Status": "error",
-        "ErrorMessage": message,
-        "RentersCount": None,
-        "OccupiedCount": None,
-        "HHCount_100kPlus": None,
-        "HHCountTotal": None,
+        "zip": zip_code,
+        "name": None,
+        "median_income": None,
+        "pct_hh_100k_plus": None,
+        "pct_renters": None,
+        "population": None,
+        "acs_year": year,
+        "dataset": DATASET,
+        "fetched_at_utc": fetched_at,
+        "status": "error",
+        "error_message": message,
+        "renters_count": None,
+        "occupied_count": None,
+        "hh_count_100k_plus": None,
+        "hh_count_total": None,
     }
 
 
 def build_missing_row(zip_code: str, year: int, fetched_at: str, message: str) -> dict[str, object]:
     row = build_error_row(zip_code, year, fetched_at, message)
-    row["Status"] = "missing"
+    row["status"] = "missing"
     return row
 
 
 def summarize_rows(rows: Iterable[dict[str, object]]) -> tuple[int, int, int]:
-    ok = sum(1 for row in rows if row.get("Status") == "ok")
-    missing = sum(1 for row in rows if row.get("Status") == "missing")
-    error = sum(1 for row in rows if row.get("Status") == "error")
+    ok = sum(1 for row in rows if row.get("status") == "ok")
+    missing = sum(1 for row in rows if row.get("status") == "missing")
+    error = sum(1 for row in rows if row.get("status") == "error")
     return ok, missing, error
 
 

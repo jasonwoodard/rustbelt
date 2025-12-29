@@ -73,10 +73,10 @@ def test_affluence_cli_outputs_expected_schema(monkeypatch, tmp_path, capsys):
     for field in BASE_FIELDS:
         assert field in row
 
-    assert row["AcsYear"] == 2022
-    assert row["Status"] == "ok"
+    assert row["acs_year"] == 2022
+    assert row["status"] == "ok"
 
-    for key in ("PctHH_100kPlus", "PctRenters"):
+    for key in ("pct_hh_100k_plus", "pct_renters"):
         value = row[key]
         assert value is not None
         assert 0 <= value <= 100
@@ -170,7 +170,7 @@ def test_affluence_cli_state_only_sorts_output(monkeypatch, tmp_path, capsys):
     assert result == 0
 
     output = capsys.readouterr().out.strip().splitlines()
-    assert [json.loads(line)["Zip"] for line in output] == ["11111", "99999"]
+    assert [json.loads(line)["zip"] for line in output] == ["11111", "99999"]
 
 
 def test_affluence_cli_state_with_zips_preserves_order(monkeypatch, tmp_path, capsys):
@@ -218,5 +218,5 @@ def test_affluence_cli_state_with_zips_preserves_order(monkeypatch, tmp_path, ca
     assert result == 0
 
     output = [json.loads(line) for line in capsys.readouterr().out.strip().splitlines()]
-    assert [row["Zip"] for row in output] == ["19104", "19103"]
-    assert output[1]["Status"] == "missing"
+    assert [row["zip"] for row in output] == ["19104", "19103"]
+    assert output[1]["status"] == "missing"

@@ -3,24 +3,24 @@ import json
 from typing import Iterable, List, Mapping, Optional, TextIO
 
 BASE_FIELDS = [
-    "Zip",
-    "Name",
-    "MedianIncome",
-    "PctHH_100kPlus",
-    "PctRenters",
-    "Population",
-    "AcsYear",
-    "Dataset",
-    "FetchedAtUtc",
-    "Status",
-    "ErrorMessage",
+    "zip",
+    "name",
+    "median_income",
+    "pct_hh_100k_plus",
+    "pct_renters",
+    "population",
+    "acs_year",
+    "dataset",
+    "fetched_at_utc",
+    "status",
+    "error_message",
 ]
 
 AUDIT_FIELDS = [
-    "RentersCount",
-    "OccupiedCount",
-    "HHCount_100kPlus",
-    "HHCountTotal",
+    "renters_count",
+    "occupied_count",
+    "hh_count_100k_plus",
+    "hh_count_total",
 ]
 
 
