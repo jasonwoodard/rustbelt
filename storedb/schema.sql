@@ -54,30 +54,36 @@ CREATE TABLE IF NOT EXISTS observations (
 
 -- ZIP/ZCTA enrichment (optional; populate as you expand)
 CREATE TABLE IF NOT EXISTS zip_detail (
-  zip            TEXT PRIMARY KEY,
-  geoid          TEXT,
-  city           TEXT,
-  state          TEXT,
-  county_fips    TEXT,
-  name           TEXT,
-  population     INTEGER,
-  median_income  INTEGER,
-  pct_100k_plus  REAL,
-  pct_renter     REAL,
-  renters_pop    INTEGER,
-  pct_ba_plus    REAL,
-  lat            REAL,
-  lon            REAL,
-  acs_year       INTEGER,
-  dataset        TEXT,
-  fetched_at_utc TEXT,
-  status         TEXT,
-  error_message  TEXT,
-  renters_count  INTEGER,
-  occupied_count INTEGER,
+  zip                TEXT PRIMARY KEY,         -- '15001'
+  name               TEXT,                     -- 'ZCTA5 15001'
+
+  -- core ACS-derived metrics
+  median_income      INTEGER,
+  pct_hh_100k_plus   REAL,                     -- percent, e.g. 47.730
+  pct_renters        REAL,                     -- percent, e.g. 23.333
+  population         INTEGER,
+
+  -- provenance / freshness
+  acs_year           INTEGER NOT NULL,         -- 2023
+  dataset            TEXT NOT NULL,            -- 'acs/acs5'
+  fetched_at_utc     TEXT NOT NULL,            -- ISO timestamp string
+  status             TEXT NOT NULL,            -- 'ok'|'error' etc.
+  error_message      TEXT,
+
+  -- supporting counts (denominators)
+  renters_count      INTEGER,
+  occupied_count     INTEGER,
   hh_count_100k_plus INTEGER,
-  hh_count_total INTEGER
+  hh_count_total     INTEGER,
+
+  -- optional integrity checks / normalization
+  --CHECK (LENGTH(zip) = 5 AND zip GLOB '[0-9][0-9][0-9][0-9][0-9]')
 );
+
+-- helpful indexes
+CREATE INDEX IF NOT EXISTS zip_detail_status_idx ON zip_detail(status);
+CREATE INDEX IF NOT EXISTS zip_detail_acs_idx ON zip_detail(acs_year, dataset);
+
 
 
 -- Indexes
