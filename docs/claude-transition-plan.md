@@ -8,78 +8,86 @@ This document captures an initial assessment of the Rustbelt project — its arc
 
 ## Prioritized Implementation Roadmap
 
-### Open Questions That Drive Roadmap Direction
+### Resolved Questions
 
-The issues identified in this assessment span from small technical fixes to significant roadmap decisions. Several of them cannot be prioritized correctly without answers to the following questions:
+The following questions were posed in the initial assessment and have been answered. Decisions are reflected in the tiers below.
 
-**Q1 — What is the primary usage mode today?**
-Is the user running Atlas → Solver as a connected pipeline for each trip, or are Atlas scores computed infrequently (e.g., monthly) and the solver run daily against stable scores? The answer determines whether pipeline glue automation is urgent or just convenient.
+**Q1 — Primary usage mode** *(answered)*
+The Atlas → Solver pipeline is not being used end-to-end today. The primary mode is the **local trip**: a list of nearby stores, run through Atlas, with outputs observed directly to decide which 1–2 stores to visit. Solver is nominally available but the Atlas → Solver handoff is too rough to use in practice. The goal is to smooth that path. An upcoming Florida trip will exercise the local trip model immediately.
 
-**Q2 — How many stores are in the active DB, and how many metros?**
-If the corpus is small (< 200 stores, 1–2 metros), the Euclidean kNN approximation in Atlas is unlikely to cause real problems. If it grows to 500+ stores across a wider geographic spread, the correctness issue becomes more material.
+*Decision: Pipeline glue is the top priority. Score injection into the solver is the next logical step after that.*
 
-**Q3 — Is the `dayOfApp` being used in the field?**
-The Bayesian multi-armed bandit "stay or leave" feature exists in the solver package but its integration path is unclear. If it is actively used, it should be treated as a first-class feature with proper CLI exposure. If it isn't, it's a candidate for extraction or deferral.
+**Q2 — Corpus size** *(answered)*
+~300 stores across 5–7 metros and growing. The kNN Euclidean approximation is not a problem in the local trip model (short distances, same metro). It becomes a real issue in the road trip model (5-day trips spanning multiple metros). The kNN fix is real but not urgent ahead of pipeline work.
 
-**Q4 — Is the plan to keep Atlas in Python long-term?**
-The tech plan mentions a potential TypeScript port of Atlas once the models stabilize. Choosing to stay with Python affects decisions about dependency scope (e.g., whether to bring in scipy/statsmodels), CI complexity, and where the pipeline glue lives.
+*Decision: Haversine fix moves to Tier 2. Pipeline glue is unambiguously first.*
 
-**Q5 — What is the canonical store type taxonomy?**
-The storedb and Atlas prior use different type vocabularies with no normalization layer. Is the storedb taxonomy the source of truth, or the Atlas one? Resolving this determines whether the DB needs migration, Atlas needs new type definitions, or a mapping layer should be introduced.
+**Q3 — dayOfApp usage** *(answered)*
+`dayOfApp` was built for a single 5-day road trip prototype. It is not in active use. It was an interesting experiment and the Bayesian bandit approach has merit conceptually, but it should not receive further investment at this stage. The lessons it encodes — real-time stay/leave updating, posterior-driven decisions — are worth noting for a future first-class in-trip app experience.
 
-**Q6 — Is multi-window store hours a real requirement?**
-The solver supports multiple open/close windows per day. The storedb schema supports only one. Are there stores in the corpus that are genuinely closed mid-day? If so, the schema needs to be extended before hours data is useful in solver runs.
+*Decision: Defer. Archive the concept; no new feature work.*
+
+**Q4 — Python vs. TypeScript for Atlas** *(answered)*
+Python stays for the foreseeable future. The modeling work is not done and Python has the libraries and flexibility to continue it. A TypeScript port is speculative generality until the models stabilize and a web or mobile front-end becomes a concrete near-term goal. There is no irreversible proposition here.
+
+*Decision: Defer TypeScript port entirely. Python commitment unblocks the scipy/statsmodels decision (Q4 → resolve Issue 5).*
+
+**Q5 — Store type taxonomy** *(answered)*
+The storedb taxonomy is intentionally expansive and should stay that way as a data capture layer. Atlas should enforce a narrower, validated set **at ingestion time** — not by constraining what the DB stores. Types like `Nautical`, `Boutique`, `Furniture`, `Sports`, `Discount` are too small a share of the corpus to model distinctly and should map to a fallback at the Atlas boundary. The real consolidation needed is:
+- `Junk` → `Thrift` (functionally equivalent)
+- `Antique` and `Vintage` → likely the same model (to be confirmed with a data review; not tonight)
+- `Surplus` and `Flea` → already in Atlas as `Flea/Surplus`
+
+*Decision: Add an explicit ingestion-time mapping dict in Atlas. Do not migrate the DB. Data review for Antique/Vintage model consolidation is a follow-on task.*
+
+**Q6 — Multi-window store hours** *(answered)*
+Single window per day is the right level of fidelity for now. Stores with unusual split hours are outliers and the schema captures the common case correctly. The solver already supports multi-window but there is no urgency to extend the DB to match. This is a no-harm, no-cost status quo.
+
+*Decision: No action. Leave both schema and solver as-is.*
 
 ---
 
-### Tier 1 — Fix Now (Correctness and Usability Blockers)
-
-These are either bugs, data quality issues, or gaps that make the system harder to use than it should be for its current purpose.
+### Tier 1 — Do Now (Unblocks the Florida Trip and the Local → Road Trip Pipeline)
 
 | # | Issue | Why Now |
 |---|---|---|
-| 1.1 | **Pipeline glue script** (storedb export → Atlas score → trip JSON merge) | Nothing connects the pieces. Users must manually handle CSV files. This is the biggest day-to-day friction point. |
-| 1.2 | **Store type normalization** | Types like `Nautical`, `Junk`, `Boutique`, `Furniture` silently map to `Unknown` in Atlas, degrading prior score quality for a meaningful slice of the corpus. |
-| 1.3 | **Haversine in kNN spatial smoothing** (`posterior.py`) | `_knn_smooth_sparse_predictions` uses Euclidean distance on decimal degrees. This is a correctness bug for east-west neighbors. Easy fix. |
-| 1.4 | **Store hours export utility** (DB minutes → solver HH:mm format) | Without this, open hours data in storedb cannot flow into solver runs. Anyone building the pipeline hits this and re-implements it. |
+| 1.1 | **Atlas → Solver pipeline glue** | The biggest day-to-day friction point. Nothing connects storedb export → Atlas score → trip JSON. A thin script or Makefile target unblocks the full end-to-end flow. |
+| 1.2 | **Score injection utility** | Merges Atlas `scored-stores.csv` into trip JSON `score` fields. The solver's λ-blend objective is wired up and waiting for this data feed. Required to make the pipeline actually useful. |
+| 1.3 | **Atlas ingestion type normalization** | Add an explicit mapping dict at the Atlas ingestion boundary: `Junk → Thrift`, `Surplus/Flea → Flea/Surplus`, `Nautical/Boutique/Furniture/Sports/Discount → Unknown` (explicit, not silent). Follow-on: confirm whether `Antique` and `Vintage` should share a model. |
+| 1.4 | **Update docs roadmap to reflect v0.2 completion** | v0.2 features are shipped and tested. The "in progress" markers create a false picture of where the project stands. Quick and low-risk. |
 
 ---
 
-### Tier 2 — Next Sprint (Simplification Without Regression Risk)
-
-These reduce maintenance cost or technical debt without requiring architectural decisions.
+### Tier 2 — Next Sprint (Correctness and Operational Maturity)
 
 | # | Issue | Notes |
 |---|---|---|
-| 2.1 | **Score injection utility** — merge Atlas `scored-stores.csv` into trip JSON `score` field | The solver's `lambda`-blend objective is wired up but has no data feed. A small CLI helper closes this loop. |
-| 2.2 | **dayOfApp — decide and document** | Either wire it into the main CLI with a proper `--day-of` flag, or extract it to a separate entry point. Its current location in `src/io/dayOfApp/` is ambiguous. |
-| 2.3 | **Update docs roadmap to reflect actual v0.2 implementation state** | Several v0.2 features (locks, reoptimizeDay, infeasibility advisor, break window) are implemented but the docs still mark them "in progress." This creates false impressions of project maturity. |
-| 2.4 | **Makefile or top-level run script** | The tech plan describes `make atlas-test` / `make solver-build` targets. They don't exist. Even a thin shell script adds clarity for new contributors. |
+| 2.1 | **Haversine in kNN spatial smoothing** (`posterior.py`) | Not urgent for local trips but a real correctness issue across metros on road trips. Easy fix once pipeline work is done. |
+| 2.2 | **Store hours export utility** | Bridges DB `open_min`/`close_min` integer format to solver `StoreOpenHours` HH:mm format. Needed once the pipeline is running and hours data should feed into solver constraints. |
+| 2.3 | **Replace scratch IRLS with scipy/statsmodels** | Python is staying, so this is now unblocked. Removes ~300 lines of custom GLM math in favor of well-validated library code. Medium effort; schedule when modeling work has a pause. |
+| 2.4 | **Makefile or top-level run script** | Described in the tech plan; does not exist. Adds reproducibility and lowers the barrier for running the full stack. |
 
 ---
 
-### Tier 3 — Architectural Decisions (Resolve After Q1–Q6 Above)
+### Tier 3 — Deferred (No Action Unless Circumstances Change)
 
-These require answers to the open questions before committing to an approach.
-
-| # | Issue | Depends On |
+| # | Issue | Rationale |
 |---|---|---|
-| 3.1 | **Replace scratch IRLS with scipy/statsmodels** | Q4 (Python long-term?). If yes, adopt the library. Removes ~300 lines of custom GLM math. |
-| 3.2 | **Resolve storedb store type taxonomy** | Q5. Either extend Atlas `TYPE_BASELINES`, add a mapping dict, or migrate the DB. |
-| 3.3 | **Multi-window store hours in storedb** | Q6. If real, the `store_hours` table needs a redesign (one row per window, not per day). |
-| 3.4 | **Coord type unification in Solver** | Low urgency but the tuple `[lat, lon]` vs object `{ lat, lon }` split is a latent footgun. Consider standardizing on `{ lat, lon }` throughout TS internals. |
-| 3.5 | **dayOfApp scoping** | Q3. The answer to whether it's being used determines whether it gets promoted or isolated. |
+| 3.1 | **dayOfApp — archive and document** | Prototype only; no further investment. Document the bandit concept and lessons in a design note for a future in-trip app. Do not wire into main CLI. |
+| 3.2 | **Antique/Vintage model consolidation** | Likely the same model, but needs a data review before acting. Low urgency. |
+| 3.3 | **Coord type unification in Solver** | Latent footgun (tuple vs. object), but not a current bug. Defer unless there is a related refactor in the area. |
+| 3.4 | **Multi-window store hours** | Confirmed no-action. Single window per day is correct for the corpus. |
+| 3.5 | **Atlas TypeScript port** | Speculative generality. No concrete trigger to revisit. |
 
 ---
 
-### Tier 4 — Roadmap Items (Already Documented, No New Decisions Needed)
+### Tier 4 — Existing Roadmap Items (No New Decisions Needed)
 
-These are already in the implementation plan and are not blocked. Listed here for completeness and sequencing context.
+These are already in the implementation plan and sequencing is unchanged.
 
-- **v0.3 Solver** — Score/blend objective mode (lambda), spatial corridor/polygon filter, robustness+risk reporting (type scaffolding already in codebase)
+- **v0.3 Solver** — Score/blend objective mode (lambda), spatial corridor/polygon filter, robustness+risk reporting
 - **v0.3 Atlas** — Sub-cluster refinement, refined affluence model, Solver-compatible candidate set output
 - **v0.4 Solver** — Scenario save/compare, exclusion explainability (why-excluded + nearest swap)
-- **Atlas TypeScript parity evaluation** — Per tech plan Phase 4; deferred until Python models stabilize
 
 ---
 
@@ -156,7 +164,9 @@ The storedb `store_type` column contains: `Antique`, `Thrift`, `Surplus`, `Vinta
 
 Atlas `TYPE_BASELINES` knows: `Thrift`, `Antique`, `Vintage`, `Flea/Surplus`, `Unknown`.
 
-Types like `Nautical`, `Junk`, `Boutique`, `Furniture`, `Sports`, `Discount` all silently fall through to `Unknown` during prior scoring. No normalization layer or mapping dict exists. This is a data quality issue that affects scoring for a meaningful portion of stores.
+Types like `Nautical`, `Junk`, `Boutique`, `Furniture`, `Sports`, `Discount` all silently fall through to `Unknown` during prior scoring. No normalization layer or mapping dict exists.
+
+**Resolution (per Q5):** The storedb taxonomy is intentionally broad and should not be constrained. The fix belongs at the Atlas ingestion boundary: an explicit mapping dict (`Junk → Thrift`, `Surplus → Flea/Surplus`, small/uncommon types → explicit `Unknown`). The DB does not need migration. Whether `Antique` and `Vintage` should share a single model is a follow-on data review task.
 
 #### Issue 3 — Euclidean distance in kNN spatial smoothing
 
@@ -168,13 +178,17 @@ distances = np.sqrt(np.sum((anchor_coords - coords[idx]) ** 2, axis=1))
 
 This is Euclidean on decimal degrees. At the geographic scale of the Rust Belt (roughly 5° latitude × 10° longitude), 1° of latitude ≈ 69 miles and 1° of longitude ≈ 50 miles. The resulting distance matrix is distorted, particularly east-west, and will bias spatial smoothing toward geographically incorrect neighbors. Haversine (or a simple degree-to-approximate-miles conversion) should be used instead.
 
+**Resolution (per Q2):** Not urgent for the local trip model — within a single metro the distortion is small. This becomes a real correctness concern on road trip runs spanning multiple metros. Scheduled for Tier 2 after pipeline work is done.
+
 #### Issue 4 — Score injection not wired up
 
 The solver's `Store.score` field feeds the `lambda`-blend objective (`λ·score + (1-λ)·count`). Atlas produces a `Composite` score in `scored-stores.csv`. No utility exists to merge those scores into a trip JSON `stores` array. The objective mode is implemented end-to-end in the solver but has no data feed from Atlas in practice.
 
 #### Issue 5 — Atlas IRLS implemented from scratch
 
-The posterior pipeline implements iteratively re-weighted least squares (Poisson and Negative-Binomial GLM) entirely in numpy — approximately 300 lines of custom solver code. The documented rationale is keeping the dependency footprint light. In practice, `scipy` is already a transitive dependency of the numpy/pandas ecosystem, and `statsmodels.api.GLM` would replace this with well-validated library code. The custom IRLS is harder to audit and extend. This is a maintenance cost vs. dependency scope tradeoff that warrants a deliberate decision.
+The posterior pipeline implements iteratively re-weighted least squares (Poisson and Negative-Binomial GLM) entirely in numpy — approximately 300 lines of custom solver code. The documented rationale is keeping the dependency footprint light. In practice, `scipy` is already a transitive dependency of the numpy/pandas ecosystem, and `statsmodels.api.GLM` would replace this with well-validated library code. The custom IRLS is harder to audit and extend.
+
+**Resolution (per Q4):** Python is staying, so the dependency scope concern is moot. Replacing the scratch IRLS with `statsmodels` is now unblocked. Scheduled for Tier 2 — medium effort, low urgency relative to pipeline work.
 
 #### Issue 6 — dayOfApp scope is ambiguous
 
@@ -183,7 +197,7 @@ The posterior pipeline implements iteratively re-weighted least squares (Poisson
 - Its relationship to the main `solve-day` workflow is not defined
 - It adds meaningful complexity to a package whose primary purpose is route planning
 
-It should either be wired into the main CLI as a first-class subcommand, or extracted as a standalone entry point.
+**Resolution (per Q3):** This was a prototype for a single road trip and is not in active use. No further investment. The Bayesian bandit approach — real-time stay/leave recommendations updating a posterior over store visit value — is a sound concept worth revisiting when an in-trip app experience becomes a first-class goal. Defer.
 
 #### Issue 7 — Store hours format gap between storedb and Solver
 
@@ -195,6 +209,8 @@ No conversion script or shared utility exists to bridge these representations. A
 #### Issue 8 — storedb supports only single open/close window per day
 
 The `store_hours` table has a `PRIMARY KEY (store_id, day_of_week)` constraint, meaning one row per store per weekday. The solver's `StoreOpenHours` is typed as `[string, string][]` (an array of windows), supporting stores with mid-day closures. If any stores in the corpus have split hours, this is a schema limitation that would silently drop that information.
+
+**Resolution (per Q6):** Single window per day is the right fidelity for this corpus. Stores with unusual split hours are outliers. The current schema is correct for the common case and the solver's multi-window support is a harmless forward capability. No action needed.
 
 #### Issue 9 — Coord representation inconsistency in Solver
 
@@ -212,16 +228,20 @@ Several v0.2 features — locks, reoptimizeDay, infeasibility advisor, break win
 
 ### Simplification Opportunities
 
-| Opportunity | Effort | Impact | Notes |
+| Opportunity | Effort | Impact | Status |
 |---|---|---|---|
-| Pipeline glue script | Small | High | Shell script or Makefile target connecting storedb → Atlas → trip JSON |
-| Store type normalization dict | Trivial | Medium | A mapping from storedb types to Atlas type keys prevents silent `Unknown` fallthrough |
-| Haversine in kNN (`posterior.py`) | Trivial | Medium | Correctness fix; use `math.radians` + Haversine or approximate degrees → miles |
-| Score injection CLI utility | Small | High | Merge Atlas `scored-stores.csv` into trip JSON `score` fields |
-| Hours export utility | Small | Medium | DB minutes + day_of_week integer → solver `StoreOpenHours` HH:mm format |
-| Replace scratch IRLS with scipy | Medium | Medium | Removes ~300 lines of custom GLM math; depends on Python long-term decision |
-| dayOfApp: extract or integrate | Small | Low-Medium | Reduces package scope ambiguity |
-| Update roadmap docs to reflect v0.2 completion | Trivial | Low | Maintenance hygiene |
+| Pipeline glue script | Small | High | **Tier 1** — do now |
+| Score injection CLI utility | Small | High | **Tier 1** — do now |
+| Atlas ingestion type normalization dict | Trivial | Medium | **Tier 1** — do now |
+| Update roadmap docs to reflect v0.2 completion | Trivial | Low | **Tier 1** — quick win |
+| Haversine in kNN (`posterior.py`) | Trivial | Medium | **Tier 2** — after pipeline |
+| Hours export utility | Small | Medium | **Tier 2** — after pipeline |
+| Replace scratch IRLS with statsmodels | Medium | Medium | **Tier 2** — Python confirmed; unblocked |
+| Makefile / run script | Small | Low | **Tier 2** — operational hygiene |
+| dayOfApp: archive and document lessons | Trivial | Low | **Deferred** — prototype only |
+| Antique/Vintage model consolidation | Small | Medium | **Deferred** — needs data review |
+| Multi-window store hours schema | N/A | N/A | **No action** — single window confirmed correct |
+| Atlas TypeScript port | Large | Speculative | **Deferred** — not near-term |
 
 ---
 
@@ -234,11 +254,18 @@ Several v0.2 features — locks, reoptimizeDay, infeasibility advisor, break win
 - Atlas's mathematical design (V/Y model, shrinkage, ECDF) is well-reasoned and documented
 - The Solver is more complete than the docs suggest — less work remaining than it looks
 
-**Gaps:**
-- No automated end-to-end pipeline from storedb → Atlas → Solver
-- Store type taxonomy divergence between storedb and Atlas causes silent scoring degradation
-- Euclidean kNN approximation in `posterior.py` is a correctness issue for geographic smoothing
-- The `dayOfApp` feature is ambiguously scoped within the solver package
-- No hours conversion utility means open hours data in the DB cannot flow into solver runs without manual work
+**Gaps (as of March 2026):**
+- No automated end-to-end pipeline from storedb → Atlas → Solver — the primary outstanding blocker
+- Atlas ingestion silently maps `Junk`, `Boutique`, `Surplus`, and other storedb types to `Unknown` instead of explicit fallback categories
+- Euclidean kNN in `posterior.py` is a correctness issue for multi-metro road trips (not local trips)
+- Store hours data cannot flow from the DB into solver runs without a manual conversion step
+- The scratch IRLS implementation is a maintenance liability now that Python is confirmed long-term
 
-**Bottom line:** This is a well-designed project past the prototype stage in both components. The primary readiness gap is not algorithm quality or code structure — it is the **operational pipeline** connecting the pieces. Resolving Tier 1 issues above and answering the six open questions would put the project in a strong position for the v0.3 development cycle.
+**Resolved (no longer open):**
+- Usage model: local trip is primary today; pipeline is the path to road trip use
+- Type taxonomy: storedb stays expansive; Atlas narrows at ingestion via explicit mapping
+- dayOfApp: deferred — prototype-only, lessons noted for future in-trip app
+- Python vs. TypeScript: Python stays; TypeScript port is speculative generality
+- Multi-window hours: no action; single window per day is correct for this corpus
+
+**Bottom line:** This is a well-designed project past the prototype stage in both components. The primary readiness gap is not algorithm quality or code structure — it is the **operational pipeline** connecting the pieces. The Florida trip is the near-term proving ground. Tier 1 work unblocks it directly.
