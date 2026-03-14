@@ -38,7 +38,7 @@ from atlas.diagnostics import (
     write_json,
     write_parquet,
 )
-from atlas.scoring import PosteriorPipeline, clamp_score, compute_prior_score
+from atlas.scoring import PosteriorPipeline, clamp_score, compute_prior_score, normalize_store_type
 
 
 class _CaptureResult:
@@ -404,6 +404,17 @@ def _handle_score(args: argparse.Namespace) -> None:
         stores["Latitude"] = stores["Lat"]
     if "Longitude" not in stores.columns and "Lon" in stores.columns:
         stores["Longitude"] = stores["Lon"]
+
+    if "Type" in stores.columns:
+        original_types = stores["Type"].copy()
+        stores["Type"] = stores["Type"].map(normalize_store_type)
+        changed = stores.loc[stores["Type"] != original_types, ["StoreId", "Type"]].copy()
+        changed["original"] = original_types[changed.index]
+        for _, row in changed.iterrows():
+            print(
+                f"[atlas] type normalized: {row['StoreId']}  {row['original']!r} → {row['Type']!r}",
+                file=sys.stderr,
+            )
 
     observations = None
     if args.mode in {MODE_POSTERIOR, MODE_BLENDED}:

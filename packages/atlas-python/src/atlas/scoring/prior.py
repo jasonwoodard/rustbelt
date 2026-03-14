@@ -48,6 +48,37 @@ AFFLUENCE_COEFFICIENTS: Dict[str, AffluenceCoefficients] = {
 }
 
 
+# Maps storedb store_type values to the canonical Atlas type labels used in
+# TYPE_BASELINES.  Applied at ingestion time by the CLI before scoring so that
+# type mismatches are caught and logged once, not silently swallowed per-row.
+TYPE_INGESTION_MAP: Dict[str, str] = {
+    # Functional equivalents
+    "Junk": "Thrift",
+    # Consolidate storedb Surplus/Flea variants into the joint model
+    "Surplus": "Flea/Surplus",
+    "Flea": "Flea/Surplus",
+    # Niche types too small for a distinct model; route to explicit Unknown
+    "Nautical": "Unknown",
+    "Boutique": "Unknown",
+    "Furniture": "Unknown",
+    "Sports": "Unknown",
+    "Discount": "Unknown",
+}
+
+
+def normalize_store_type(raw_type: str) -> str:
+    """Return the canonical Atlas type for a raw storedb ``store_type`` value.
+
+    Types already known to Atlas (``Thrift``, ``Antique``, ``Vintage``,
+    ``Flea/Surplus``, ``Unknown``) pass through unchanged.  Unmapped values
+    not present in either ``TYPE_INGESTION_MAP`` or ``TYPE_BASELINES`` also
+    resolve to ``Unknown``.
+    """
+    if raw_type in TYPE_BASELINES:
+        return raw_type
+    return TYPE_INGESTION_MAP.get(raw_type, "Unknown")
+
+
 def get_type_baseline(store_type: str) -> TypeBaseline:
     """Return the baseline scores for the provided ``store_type``."""
 
@@ -338,9 +369,11 @@ __all__ = [
     "AffluenceCoefficients",
     "AFFLUENCE_COEFFICIENTS",
     "TYPE_BASELINES",
+    "TYPE_INGESTION_MAP",
     "clamp_score",
     "compute_prior_score",
     "get_affluence_coefficients",
     "get_type_baseline",
     "knn_adjacency_smoothing",
+    "normalize_store_type",
 ]
