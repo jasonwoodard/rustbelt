@@ -122,25 +122,37 @@ rustbelt solve-day \
 
 ---
 
-## Type normalization
+## Store type mapping
 
-Atlas normalizes storedb `store_type` values at ingestion time before scoring.
-The mapping is defined in `packages/atlas-python/src/atlas/scoring/prior.py`
-(`TYPE_INGESTION_MAP`):
+Atlas is intentionally rigid: it recognises exactly five store types
+(`Thrift`, `Antique`, `Vintage`, `Flea/Surplus`, `Unknown`) and carries no
+knowledge of storedb's operational classifications. The storedb export view
+is responsible for translating DB types to Atlas-canonical types before
+they leave the database.
 
-| storedb type | Atlas type |
-|-------------|-----------|
-| `Junk` | `Thrift` |
-| `Surplus` | `Flea/Surplus` |
+The mapping lives in `storedb/build-run-views.sql` inside `v_store_score_out`:
+
+| storedb `store_type` | Exported `Type` |
+|----------------------|----------------|
+| `Thrift` | `Thrift` |
+| `Antique` | `Antique` |
+| `Vintage` | `Vintage` |
+| `Flea/Surplus` | `Flea/Surplus` |
 | `Flea` | `Flea/Surplus` |
-| `Nautical`, `Boutique`, `Furniture`, `Sports`, `Discount` | `Unknown` |
-| `Thrift`, `Antique`, `Vintage`, `Flea/Surplus`, `Unknown` | *(unchanged)* |
+| `Surplus` | `Flea/Surplus` |
+| `Junk` | `Thrift` |
+| anything else | `Unknown` |
 
-Remapped types are logged to stderr:
+If a type slips through the export unresolved, Atlas logs a warning to stderr
+and scores the store with the `Unknown` baseline:
 
 ```
-[atlas] type normalized: SHOP-001  'Junk' → 'Thrift'
+[atlas] warning: unrecognized store type 'Nautical' — scored with 'Unknown' baseline.
+        Check the storedb export view (build-run-views.sql).
 ```
+
+To add a new type: update the `CASE` in `build-run-views.sql` and re-run
+`sqlite3 rustbelt.db < storedb/build-run-views.sql` to refresh the view.
 
 ---
 

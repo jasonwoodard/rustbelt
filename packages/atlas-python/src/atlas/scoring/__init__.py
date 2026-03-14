@@ -8,7 +8,6 @@ from .prior import (
     get_affluence_coefficients,
     get_type_baseline,
     knn_adjacency_smoothing,
-    normalize_store_type,
 )
 
 __all__ = [
@@ -20,5 +19,4 @@ __all__ = [
     "get_affluence_coefficients",
     "get_type_baseline",
     "knn_adjacency_smoothing",
-    "normalize_store_type",
 ]
