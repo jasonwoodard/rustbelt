@@ -1,40 +1,43 @@
-.mode csv
+-- Atlas export queries for the Makefile pipeline.
+-- Executed by: make score BATCH=<name>
+--
+-- The Makefile calls each query individually with sqlite3 -csv -header,
+-- routing output to out/<BATCH>/{stores,affluence,observations}.csv.
+-- Do not run this file directly with sqlite3 < atlas-run-prep.sql.
 
--- 1. EXPORT STORES DATA (atlas_store_input.csv)
-.output ../packages/atlas-python/inputs/atlas_store_input.csv
-
--- Select all store details, filtering directly by the batch name in store_batches
-SELECT s.*
+-- [stores] Required by all Atlas scoring modes.
+-- Columns: StoreId, Name, Type, Lat, Lon, GeoId
+SELECT s.StoreId, s.Name, s.Type, s.Lat, s.Lon, s.GeoId
 FROM v_store_score_out AS s
 JOIN store_batches AS b ON s.StoreId = b.store_id
--- WHERE b.batch_name = 'Detroit-Set'; -- <<< TARGET BATCH NAME HERE
---WHERE b.batch_name = 'AnnArbor-Set'; -- <<< TARGET BATCH NAME HERE
---WHERE b.batch_name = 'Cleveland-Set'; -- <<< TARGET BATCH NAME HERE
---WHERE b.batch_name = 'Buffalo-Set'; -- <<< TARGET BATCH NAME HERE
-WHERE b.batch_name = 'Catskills-Set'; -- <<< TARGET BATCH NAME HERE
+WHERE b.batch_name = :batch;
 
-
--- 2. EXPORT AFFLUENCE DATA (atlas_affluence_input.csv)
-.output ../packages/atlas-python/inputs/atlas_affluence_input.csv
-
-SELECT
-    a.*
+-- [affluence] Required for prior-only and blended modes.
+-- Columns: GeoId, MedianIncome, Pct100kHH, Education, HomeValue, Turnover
+SELECT a.*
 FROM v_affluence_out AS a
-WHERE
-    -- GeoIds must be present in the subset of ZIP codes belonging to the targeted stores
-    a.GeoId IN (
-        SELECT DISTINCT
-            s.GeoId
-        FROM v_store_score_out AS s
-        JOIN store_batches AS b ON s.StoreId = b.store_id
-        --WHERE b.batch_name = 'Detroit-Set' -- <<< REPEAT THE TARGET BATCH NAME HERE
-        --WHERE b.batch_name = 'AnnArbor-Set' -- <<< REPEAT THE TARGET BATCH NAME HERE
-        --WHERE b.batch_name = 'Cleveland-Set' -- <<< REPEAT THE TARGET BATCH NAME HERE
-        --WHERE b.batch_name = 'Buffalo-Set' -- <<< REPEAT THE TARGET BATCH NAME HERE
-        WHERE b.batch_name = 'Catskills-Set' -- <<< REPEAT THE TARGET BATCH NAME HERE
+WHERE a.GeoId IN (
+    SELECT DISTINCT s.GeoId
+    FROM v_store_score_out AS s
+    JOIN store_batches AS b ON s.StoreId = b.store_id
+    WHERE b.batch_name = :batch
+);
 
-    );
-
--- 3. RESET OUTPUT AND MODE
-.output
-.mode column
+-- [observations] Required for posterior-only and blended modes.
+-- Columns: StoreId, DateTime, DwellMin, PurchasedItems, HaulLikert, ObserverId, Spend, Notes
+SELECT
+    COALESCE(NULLIF(s.store_id, ''), printf('S%06d', s.store_pk)) AS StoreId,
+    o.observed_at    AS DateTime,
+    o.duration_min   AS DwellMin,
+    o.item_purch_count AS PurchasedItems,
+    o.value_score    AS HaulLikert,
+    o.observer       AS ObserverId,
+    o.spend_usd      AS Spend,
+    o.observe_notes  AS Notes
+FROM observations o
+JOIN stores s ON o.store_id = s.store_pk
+WHERE s.store_id IN (
+    SELECT b.store_id
+    FROM store_batches b
+    WHERE b.batch_name = :batch
+);

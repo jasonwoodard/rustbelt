@@ -39,6 +39,7 @@ from atlas.diagnostics import (
     write_parquet,
 )
 from atlas.scoring import PosteriorPipeline, clamp_score, compute_prior_score
+from atlas.scoring.prior import TYPE_BASELINES
 
 
 class _CaptureResult:
@@ -404,6 +405,17 @@ def _handle_score(args: argparse.Namespace) -> None:
         stores["Latitude"] = stores["Lat"]
     if "Longitude" not in stores.columns and "Lon" in stores.columns:
         stores["Longitude"] = stores["Lon"]
+
+    if "Type" in stores.columns:
+        known_types = set(TYPE_BASELINES.keys())
+        for raw_type in stores["Type"].unique():
+            if raw_type not in known_types:
+                print(
+                    f"[atlas] warning: unrecognized store type {raw_type!r} — "
+                    "scored with 'Unknown' baseline. "
+                    "Check the storedb export view (build-run-views.sql).",
+                    file=sys.stderr,
+                )
 
     observations = None
     if args.mode in {MODE_POSTERIOR, MODE_BLENDED}:

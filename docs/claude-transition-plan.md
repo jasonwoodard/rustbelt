@@ -49,12 +49,12 @@ Single window per day is the right level of fidelity for now. Stores with unusua
 
 ### Tier 1 — Do Now (Unblocks the Florida Trip and the Local → Road Trip Pipeline)
 
-| # | Issue | Why Now |
-|---|---|---|
-| 1.1 | **Atlas → Solver pipeline glue** | The biggest day-to-day friction point. Nothing connects storedb export → Atlas score → trip JSON. A thin script or Makefile target unblocks the full end-to-end flow. |
-| 1.2 | **Score injection utility** | Merges Atlas `scored-stores.csv` into trip JSON `score` fields. The solver's λ-blend objective is wired up and waiting for this data feed. Required to make the pipeline actually useful. |
-| 1.3 | **Atlas ingestion type normalization** | Add an explicit mapping dict at the Atlas ingestion boundary: `Junk → Thrift`, `Surplus/Flea → Flea/Surplus`, `Nautical/Boutique/Furniture/Sports/Discount → Unknown` (explicit, not silent). Follow-on: confirm whether `Antique` and `Vintage` should share a model. |
-| 1.4 | **Update docs roadmap to reflect v0.2 completion** | v0.2 features are shipped and tested. The "in progress" markers create a false picture of where the project stands. Quick and low-risk. |
+| # | Issue | Why Now | Status |
+|---|---|---|---|
+| 1.1 | **Atlas → Solver pipeline glue** | The biggest day-to-day friction point. Nothing connects storedb export → Atlas score → trip JSON. A thin script or Makefile target unblocks the full end-to-end flow. | ✅ Done — `Makefile` at repo root with `score`, `inject`, `plan` targets; `storedb/atlas-run-prep.sql` reworked as a documented SQL reference; `docs/pipeline.md` added. |
+| 1.2 | **Score injection utility** | Merges Atlas `scored-stores.csv` into trip JSON `score` fields. The solver's λ-blend objective is wired up and waiting for this data feed. Required to make the pipeline actually useful. | ✅ Done — `scripts/inject_scores.py`; also callable via `make inject`. |
+| 1.3 | **Store type boundary: DB moulds to Atlas** | Atlas is intentionally rigid — it recognises five types and warns loudly on anything else. The storedb export view owns the translation; no storedb knowledge leaks into Atlas code. | ✅ Done — `CASE` mapping in `build-run-views.sql` (`v_store_score_out`); Atlas warns to stderr on unrecognized types rather than silently normalizing. |
+| 1.4 | **Update docs roadmap to reflect v0.2 completion** | v0.2 features are shipped and tested. The "in progress" markers create a false picture of where the project stands. Quick and low-risk. | ✅ Done — implementation state table updated below. |
 
 ---
 
@@ -111,7 +111,7 @@ Connected by versioned CSV/JSON schemas (`/schema/atlas/v1/`), a SQLite store da
 | Version | Documented As | Actual State |
 |---|---|---|
 | v0.1 | MVP ✅ | Fully implemented |
-| v0.2 | In Progress | Largely complete — locks, reoptimizeDay, infeasibility advisor, break window all present and tested |
+| v0.2 | ~~In Progress~~ **✅ Complete** | Locks, reoptimizeDay, infeasibility advisor, and break window are all implemented and tested |
 | v0.3 | Planned | Partially in — `robustnessFactor`, `maxDriveTime`, `maxStops`, and `lambda` objective are all present in types and heuristics |
 | v0.4 | Stretch | Not started |
 
