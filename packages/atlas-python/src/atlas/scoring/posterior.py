@@ -276,6 +276,30 @@ def _infer_coordinate_columns(frame: pd.DataFrame) -> tuple[str | None, str | No
     return None, None
 
 
+def _haversine_distances(anchor_coords: np.ndarray, point: np.ndarray) -> np.ndarray:
+    """Return great-circle distances in km from each row of *anchor_coords* to *point*.
+
+    Parameters
+    ----------
+    anchor_coords:
+        Shape ``(n, 2)`` array of ``[lat, lon]`` pairs in decimal degrees.
+    point:
+        Shape ``(2,)`` array of ``[lat, lon]`` in decimal degrees.
+    """
+    R = 6371.0  # Earth's mean radius in km
+
+    lat1 = np.radians(anchor_coords[:, 0])
+    lon1 = np.radians(anchor_coords[:, 1])
+    lat2 = np.radians(point[0])
+    lon2 = np.radians(point[1])
+
+    dlat = lat2 - lat1
+    dlon = lon2 - lon1
+
+    a = np.sin(dlat / 2.0) ** 2 + np.cos(lat1) * np.cos(lat2) * np.sin(dlon / 2.0) ** 2
+    return 2.0 * R * np.arcsin(np.sqrt(np.clip(a, 0.0, 1.0)))
+
+
 def _knn_smooth_sparse_predictions(
     stores: pd.DataFrame,
     theta: np.ndarray,
@@ -304,7 +328,7 @@ def _knn_smooth_sparse_predictions(
     smoothed_value = value.copy()
 
     for idx in np.where(mask_sparse)[0]:
-        distances = np.sqrt(np.sum((anchor_coords - coords[idx]) ** 2, axis=1))
+        distances = _haversine_distances(anchor_coords, coords[idx])
         if len(distances) == 0:
             continue
         neighbour_count = min(k, len(distances))
