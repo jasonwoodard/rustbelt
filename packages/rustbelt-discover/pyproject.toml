@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rustbelt-discover"
+version = "0.1.0"
+description = "Store location discovery via Google Places API → storedb ingestion"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [
+  {name = "Rust Belt Team"}
+]
+dependencies = [
+  "requests>=2.31",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+]
+
+[project.scripts]
+rustbelt-discover = "discover.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
