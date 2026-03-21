@@ -254,9 +254,15 @@ fields are left untouched.
 
 #### `store_google` table
 
+> **Schema note:** Despite its name, `store_google.store_id` is an `INTEGER`
+> column and a foreign key to `stores.store_pk` — not the text `store_id` field.
+> The implementer must bind the `store_pk` integer value here, not the short
+> text code.
+
 ```sql
+-- store_google.store_id = stores.store_pk (INTEGER FK, despite the column name)
 INSERT INTO store_google (store_id, google_url, google_cid, last_seen_at)
-VALUES (?, ?, ?, datetime('now'))
+VALUES (?, ?, ?, datetime('now'))  -- bind store_pk for the first ?
 ON CONFLICT(store_id) DO UPDATE SET
   google_url   = excluded.google_url,
   google_cid   = COALESCE(excluded.google_cid, store_google.google_cid),
@@ -469,6 +475,35 @@ Entry point: `rustbelt-discover` (registered via `pyproject.toml` console_script
   the DB currently updates hours and google metadata only. A `--refresh-hours`
   flag could explicitly target an existing batch of stores for a hours-only
   refresh pass without inserting new stores.
+
+---
+
+## 14. Architectural Decision: `store_pk` as Canonical Store Identifier
+
+**Decision (recorded here for implementation awareness):**
+
+The short `store_id` text code (e.g., `AAPTS`, `PG`) was a bootstrap convention
+from a pre-DB spreadsheet era. Going forward, `store_pk` (the integer surrogate
+key) is the canonical store identifier across the full pipeline — trip JSON stop
+IDs, Atlas score files, Solver input, and all pipeline glue scripts.
+
+**Implications for this spec:** `rustbelt-discover` correctly inserts with
+`store_id = NULL` and relies on `store_pk`. No further action needed here.
+
+**Implications for the broader pipeline (out of scope for this spec, tracked
+here to avoid re-litigating):**
+
+| Component | Current behavior | Target behavior |
+|-----------|-----------------|-----------------|
+| Trip JSON `stores[].id` | `store_id` short code | `store_pk` as string (e.g. `"42"`) |
+| `v_store_score_out` | `COALESCE(store_id, printf('S%06d', store_pk))` | `CAST(store_pk AS TEXT)` directly |
+| `inject_scores.py` | matches on `StoreId` from export view | unchanged — follows the view |
+| `store_id` column | still exists; manually assigned for curated stores | retained as a human label, not a system key |
+
+The `v_store_score_out` COALESCE is already a valid bridge and can remain until
+the trip JSON convention is formally migrated. The migration is a single-pass
+find-and-replace across existing trip JSON files plus a minor update to the
+export view — low risk, do when convenient.
 
 ---
 
