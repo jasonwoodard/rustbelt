@@ -2,7 +2,47 @@
 
 import pytest
 
-from discover.places import _parse_cid, _parse_us_address
+from discover.places import GooglePlacesClient, _parse_cid, _parse_us_address
+
+
+class _FakeResponse:
+    def __init__(self, payload, status_code=200):
+        self._payload = payload
+        self.status_code = status_code
+        self.text = ""
+
+    def json(self):
+        return self._payload
+
+
+class _RecordingSession:
+    """Captures the request kwargs of the last call and returns a canned page."""
+
+    def __init__(self, payload):
+        self._payload = payload
+        self.calls = []
+
+    def request(self, method, url, **kwargs):
+        self.calls.append({"method": method, "url": url, **kwargs})
+        return _FakeResponse(self._payload)
+
+
+class TestNearbySearchRequestShape:
+    def test_uses_location_bias_circle_not_restriction(self):
+        # Text Search (New) rejects a circle under locationRestriction (400);
+        # a circle is only valid under locationBias. Guard against regressing.
+        session = _RecordingSession({"places": []})
+        client = GooglePlacesClient(session=session, api_key="k")
+
+        client.nearby_search(
+            lat=37.27, lon=-79.94, radius_meters=48280.0, search_text="thrift store"
+        )
+
+        body = session.calls[0]["json"]
+        assert "locationBias" in body
+        assert "locationRestriction" not in body
+        assert body["locationBias"]["circle"]["radius"] == 48280.0
+        assert body["textQuery"] == "thrift store"
 
 
 class TestParseCid:

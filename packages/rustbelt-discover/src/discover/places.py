@@ -136,7 +136,9 @@ class GooglePlacesClient:
 
             body: dict = {
                 "textQuery": search_text,
-                "locationRestriction": {
+                # Text Search (New) only accepts a circle under locationBias;
+                # locationRestriction is rectangle-only and 400s on a circle.
+                "locationBias": {
                     "circle": {
                         "center": {"latitude": lat, "longitude": lon},
                         "radius": radius_meters,
